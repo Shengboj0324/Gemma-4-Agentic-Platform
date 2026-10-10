@@ -187,6 +187,7 @@ def main():
     runtime.add_argument('--biolink-offline',action='store_true',help='Use inspected task-172 runtime and public schema replay')
     runtime.add_argument('--conda-testbed',action='store_true',help='Use reviewed /opt/conda/envs/testbed runtime with no installer leftover')
     runtime.add_argument('--miniconda-testbed',action='store_true',help='Use reviewed /opt/miniconda3/envs/testbed runtime with no installer leftover')
+    runtime.add_argument('--python37-testbed',action='store_true',help='Use verified /opt/zenithsync-py37 Python3.7.16 runtime with no installer leftover')
     args=p.parse_args()
     profile=validate_profile(json.loads(args.profile.read_text()) if args.profile else {
         'instance_id':INSTANCE,'trajectory_id':TRACE,'image':IMAGE,
@@ -228,8 +229,11 @@ def main():
     os.environ.setdefault('DOCKER_HOST',subprocess.check_output(
         ['docker','context','inspect','--format','{{.Endpoints.docker.Host}}'],text=True,timeout=15).strip())
     environment={'TEST_TMPDIR':'/tmp'}
-    if args.biolink_offline or args.conda_testbed or args.miniconda_testbed:
+    explicit_runtime = args.biolink_offline or args.conda_testbed or args.miniconda_testbed or args.python37_testbed
+    if explicit_runtime:
         runtime_bin='/opt/miniconda3/envs/testbed/bin' if args.miniconda_testbed else '/opt/conda/envs/testbed/bin'
+        if args.python37_testbed:
+            runtime_bin='/opt/zenithsync-py37/bin'
         environment.update(PATH=runtime_bin+':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
                            PYTHONDONTWRITEBYTECODE='1')
     if args.biolink_offline:
@@ -263,7 +267,12 @@ def main():
         if provenance['base_commit']!=profile['base_commit']:
             raise ValueError('Wrong source base')
         prepare_source_workspace(manager,cid,snapshot_commit=provenance['snapshot_commit'],
-                                 source_tree=provenance['source_tree'],installer_leftover=not (args.biolink_offline or args.conda_testbed or args.miniconda_testbed))
+                                 source_tree=provenance['source_tree'],installer_leftover=not explicit_runtime)
+        if args.python37_testbed:
+            check=manager.exec(cid,"python -c 'import sys; assert sys.executable == \"/opt/zenithsync-py37/bin/python\"; assert sys.version_info[:3] == (3, 7, 16); print(sys.version)'",timeout=30)
+            if check.exit_code:
+                raise ValueError('Historical Python runtime identity check failed')
+            receipt['historical_python_version']=check.stdout.strip()
         if args.biolink_offline:
             from zenithsync.replay_resources import stage_resources
             receipt['offline_resources']=stage_resources(manager,cid,

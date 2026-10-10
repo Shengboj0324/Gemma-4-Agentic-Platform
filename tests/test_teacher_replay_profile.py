@@ -7,6 +7,19 @@ def call(name,arguments):
 
 
 class TeacherReplayProfileTests(unittest.TestCase):
+    def test_historical_runtime_cannot_be_combined_with_another_runtime(self):
+        import subprocess
+        import sys
+        from pathlib import Path
+        script=Path(__file__).resolve().parents[1]/'scripts/replay_source_teacher.py'
+        for flag in ('--conda-testbed', '--miniconda-testbed', '--biolink-offline'):
+            with self.subTest(flag=flag):
+                result=subprocess.run([sys.executable,str(script),'--output',
+                    '/tmp/zenithsync-unused-py37-check','--python37-testbed',flag],
+                    capture_output=True,text=True,timeout=15)
+                self.assertEqual(result.returncode,2)
+                self.assertIn('not allowed with argument',result.stderr)
+
     def test_source_runtime_options_are_mutually_exclusive(self):
         import subprocess
         import sys

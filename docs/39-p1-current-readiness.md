@@ -17,7 +17,7 @@ cycle; do not append historical logs to this summary.
 | Data supply | 16 quarantined examples, 16 tasks, 15 declared repository groups; 314,028 input and 97,254 supervised tokens | Abundant, diverse, approved data; the 3×50M processed-target-token plan is not supplied |
 | Task alignment | Publisher controls and bounded semantic checks for selected candidates; Boltons derivative repairs the reproduced compatibility failure | Final content-bound review for every admitted task; passing finite cases is not universal correctness |
 | Attribution | Selected exact repository and dependency notices retained; teacher and assistant-derived actions distinguished | Complete source, observation, dependency and teacher-term review |
-| Split isolation | Lineage refresh 009 is incomplete: six HTTP 403 responses; audit 008 is historical evidence | Freeze splits and review semantic duplicates, detached copies and historical lineage; current IDs do not prove independence |
+| Split isolation | Authenticated lineage audit 010 resolves 15 declared groups, two historical names and four reserved names; no cross-boundary ID/network-root overlap | Freeze splits and review semantic duplicates, detached copies and historical lineage; current IDs do not prove independence |
 | Local training code | Latest CPU suite: 400 tests, 367 passed, 33 skipped | Skipped environments, full-model GPU corroboration and long-running stability |
 | Artifact ingestion | Corpus 019 uploaded to R2, restored into an empty directory and validated; schedules match byte-for-byte | Repeat with the final admitted bundle on the actual Runpod volume |
 | GPU validation | Earlier single synthetic full-model update/reload only | Real-corpus long-sequence memory, throughput, checkpoint/resume and bounded failure handling |
@@ -31,7 +31,7 @@ cycle; do not append historical logs to this summary.
 - [Restored corpus inspection](../evidence/data/training-corpus-inspection-019/report.json)
 - [Integration and schedule equality check](../evidence/data/corpus019-integration-check-001/report.json)
 - [Explicit training rejection](../evidence/data/training-corpus-denial-018/report.json)
-- [Current repository lineage screen](../evidence/data/current-corpus-lineage-009/report.json)
+- [Current repository lineage screen](../evidence/data/current-corpus-lineage-010/report.json)
 - [Latest CPU regression](../evidence/p1/signac-search-regression-001/regression.json)
 - [Boltons derivative review](../evidence/data/boltons205-compat-review-001/report.json)
 - [Corpus integration evidence archived in R2](../evidence/data/corpus019-integration-publish-001/receipt.json)

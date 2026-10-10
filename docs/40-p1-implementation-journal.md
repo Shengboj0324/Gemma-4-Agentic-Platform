@@ -2842,3 +2842,112 @@ not a passing split audit. Earlier audit 008 remains historical evidence only.
 This does not block quarantine assembly but must be resolved before admission.
 Integration check: evidence/data/corpus019-integration-check-001/report.json.
 No full-model test, training gain, abundant-data claim or GPU restart is implied.
+
+
+## Corpus 019 authenticated lineage recovery
+
+Audit 010 used the existing authenticated GitHub CLI for public repository
+metadata only. All 21 requested names resolved: 15 declared corpus groups, two
+historical names and four reserved repositories. No cross-boundary repository ID
+or declared fork-network-root overlap was found. The six HTTP 403 responses in
+audit 009 remain preserved; corpus019 integration check 001 describes that earlier
+state and is not rewritten. Detached copies, semantic duplication, historical
+lineage and model-pretraining overlap remain unproven. No admission gate changes.
+
+
+## Additional parser/serialization cohort triage 004
+
+Pinned source/evaluator/teacher material was extracted for price-parser 43,
+dict2xml 27 and jsons 86. Original source at each declared base and selected LICENSE
+files returned HTTP 200. Conservative credential-indicator screening passed for
+the extracted action lists; this is not a secret-free certification.
+
+Price-parser: 12 source-function cases combine four whitespace forms (NBSP,
+narrow NBSP, tab and doubled space) with three currency prefixes. Exact Decimal
+amount checks: base 3/12, teacher 9/12, reference 12/12. Normalized amount_text:
+base 0/12, teacher 0/12, reference 12/12. The initial review's assumption that the
+teacher fixed every numeric case was contradicted by tab inputs; initial script
+is retained. The revised review reports actual outcomes and holds the candidate;
+no passing criterion was lowered for admission. This is AST-selected execution
+of actual functions, not full-package publisher qualification.
+
+Dict2xml: static source analysis finds that the wrapper forwards all options into
+Converter, while the teacher only adds data_sorter to its constructor. Publisher
+requirements also pass iterables_repeat_wrap and closed_tags_for, still absent
+from the constructor. Hold pending corrected implementation and runtime controls.
+Jsons variable-length tuple dispatch remains pending historical runtime review.
+No corpus increment or training approval results from this triage. Corpus 019 and
+the stopped GPU boundary remain unchanged.
+
+
+## Jsons86 historical runtime and paired-control failure
+
+Pinned registry digest bfe70ea2c78e2563ca2e41e3dc423adc5fd629ea4a56b70769993febe899b84d
+and PR head e986c3350134a0943d75326b50a20ec42a4478ca (metadata selects head_commit).
+Base probe confirms aa565f530b3e72c5854cf11b10b1d90daa85f047 with 571 reachable
+commits before isolation. Snapshot verification confirms 112 tracked files,
+one parentless commit, inaccessible base/head objects and enumerated oracle-file
+absence. Mounted filesystem only; inherited layers are not audited.
+
+All ten publisher tuple tests ran: base 8 pass / 2 fail, reference and teacher
+9 pass / 1 fail. The new variable-length tuple test fails only in the base.
+However test_load_namedtuple_with_types fails in all three with a datetime
+DeserializationError, contradicting its required pass-to-pass transition.
+Controls correctly reject qualification. Pytest logs identify Python3.9 while
+publisher installation metadata requests Python3.7; this discrepancy is observed,
+not yet proved to cause the failure. All control containers were removed.
+
+Two preflight file-hydration failures were retained before the successful test
+execution. No acceptance condition was removed. Next: isolate named-tuple failure
+and historical dependency/interpreter requirements before replay admission.
+Corpus019 remains unchanged and Runpod remains stopped.
+
+
+## Jsons86 named-tuple runtime failure isolated
+
+The required named-tuple test fails alone with pytest-randomly disabled, excluding
+order dependence for this reproduction. Installed runtime: Python3.9.20,
+typish1.9.3, pytest8.3.3. Source default_namedtuple_deserializer reads _field_types
+to choose each field type; Python3.9 removed that NamedTuple attribute in favor
+of __annotations__ (official documentation:
+https://docs.python.org/3.13/library/typing.html#typing.NamedTuple).
+
+Causal probe002 in fresh subprocesses: with untouched Python3.9 metadata, two
+explicit datetime-string inputs deserialize correctly, while list/dict inputs
+using the datetime default raise DeserializationError. Restoring only the test
+class's historical _field_types metadata yields four correct results. The
+initial diagnostic incorrectly expected all four untouched cases to fail; that
+assertion failure and cleanup are preserved. The corrected diagnostic narrows
+the causal claim to default-value handling, rather than changing acceptance.
+
+This intervention is diagnostic only: no publisher test or production source is
+changed, and it does not qualify the candidate. The next required step is an
+actual Python3.7 environment with pinned dependencies, followed by unchanged
+paired controls. Corpus019 remains unchanged; no training or GPU use occurred.
+
+
+## Jsons86 actual Python3.7 runtime and passing publisher controls
+
+Built a separate /opt/zenithsync-py37 environment with Python3.7.16 and pip22.3.1
+on the isolated source image. Ten pinned Python wheels (including typish1.9.3 and
+pytest7.4.4) were checked against PyPI size and SHA-256 and installed with
+--no-index --no-deps. pip check passed. Exact conda package records, explicit
+package URLs/checksums, pip freeze, wheel metadata and notices were retained.
+This is an archived historical qualification environment, not a recommendation
+for the product runtime. The environment solve used network access; test containers
+remained offline.
+
+Snapshot revalidation still matches 112 tracked files, one parentless commit,
+inaccessible base/solution objects and enumerated oracle absence. All ten original
+publisher cases ran without test edits or the diagnostic metadata intervention:
+base 9 pass / 1 fail, reference 10/10, teacher 10/10. Every publisher transition
+matches; source remains unchanged by tests and all containers were removed.
+The legacy NamedTuple attribute is naturally present in Python3.7.16. This
+corroborates the prior isolated metadata diagnosis; pytest also changed to a
+Python3.7-compatible version, so the full-environment comparison alone is not a
+single-variable experiment.
+
+Evidence: jsons86-controls-002/comparison.json,
+jsons86-py37-packages-001/runtime.json, jsons86-py37-verify-001/verification.json.
+Native trajectory replay and independent semantic completion remain outstanding.
+Corpus019 and all training-admission gates are unchanged; Runpod remains stopped.
