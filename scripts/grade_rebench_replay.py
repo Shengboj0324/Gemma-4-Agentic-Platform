@@ -9,6 +9,7 @@ sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.pytest_controls import compare_controls, compare_candidate
 from scripts.run_rebench_controls import validate_profile
+from zenithsync.source_imports import source_pythonpath
 from scripts.qualify_swe_rebench_evaluator import PROBE, PLUGIN
 from scripts.compare_source_snapshot import run_image
 
@@ -42,7 +43,7 @@ def main():
              args.snapshot/'verification.json', args.snapshot/'input-bindings.json',
              Path(__file__), ROOT/'scripts/qualify_swe_rebench_evaluator.py',
              ROOT/'zenithsync/pytest_controls.py', ROOT/'scripts/compare_source_snapshot.py',
-             ROOT/'scripts/run_rebench_controls.py']
+             ROOT/'scripts/run_rebench_controls.py', ROOT/'zenithsync/source_imports.py']
     paths += [args.controls/role/name for role in ('base','reference')
               for name in ('outcomes.json','runtime.json','receipt.json')]
     identities = {str(path):file_record(path) for path in paths}
@@ -93,6 +94,7 @@ def main():
              'tests':base64.b64encode((args.inputs/'tests.patch').read_bytes()).decode()}
     settings={'BASE':snapshot['snapshot_commit'],'TREE':snapshot['source_tree'],'ROLE':'candidate',
               'PYTHON':profile['python'],'MODULE':profile['module'],'EXPECTED_ORIGIN':profile['expected_origin'],
+              'SOURCE_PYTHONPATH':source_pythonpath(profile['import_root'], '/testbed') if 'import_root' in profile else '',
               'ALLOWED_PATHS':allowed,'TEST_TARGETS':profile['test_targets'],'PATCHES':patches,
               'PLUGIN':PLUGIN,'RESOURCE_PAYLOAD':'','RESOURCE_ADAPTER':''}
     probe=''.join(f'{key}={value!r}\n' for key,value in settings.items())+PROBE

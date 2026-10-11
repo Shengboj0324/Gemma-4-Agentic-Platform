@@ -24,6 +24,7 @@ from zenithsync.source_workspace import prepare_source_workspace
 from zenithsync.trajectory_import import convert_swe_hero_history
 from zenithsync.replay_completion import validate_completion_plan
 from zenithsync.source_credentials import require_no_credential_indicators
+from zenithsync.source_imports import source_pythonpath
 from zenithsync.replay_correction import verify_correction_result
 
 INSTANCE='tornadoweb__tornado-34edd2e8020b42cd16c3dc9a8c0417b9fae1e6d4'
@@ -202,7 +203,7 @@ def preflight(messages, prefix=PREFIX):
 
 def validate_profile(profile):
     required={'instance_id','trajectory_id','image','base_commit','source_root','repo','max_tool_calls'}
-    if not isinstance(profile,dict) or set(profile)!=required:
+    if not isinstance(profile,dict) or set(profile) not in (required, required | {'import_root'}):
         raise ValueError('Exact replay profile fields required')
     if re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',profile['repo']) is None:
         raise ValueError('Invalid repository')
@@ -218,6 +219,8 @@ def validate_profile(profile):
         raise ValueError('Simple source-root directory required')
     if type(profile['max_tool_calls']) is not int or not 1<=profile['max_tool_calls']<=100:
         raise ValueError('Replay call ceiling must be 1-100')
+    if 'import_root' in profile:
+        source_pythonpath(profile['import_root'], '/workspace')
     return profile
 
 
@@ -282,6 +285,10 @@ def main():
             runtime_bin='/opt/zenithsync-py37/bin'
         environment.update(PATH=runtime_bin+':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
                            PYTHONDONTWRITEBYTECODE='1')
+    if 'import_root' in profile:
+        if args.biolink_offline:
+            raise ValueError('Explicit import root cannot override resource replay environment')
+        environment['PYTHONPATH'] = source_pythonpath(profile['import_root'], '/workspace')
     if args.biolink_offline:
         if instance!='biolink__biolink-model-toolkit-172':
             raise ValueError('Biolink resource profile only qualified for task 172')
@@ -294,6 +301,7 @@ def main():
         raise ValueError('Completion plan source action identity mismatch')
     receipt={'source':identity,'trajectory_id':trace,'instance_id':instance,
         'credential_screen_source':file_record(ROOT/'zenithsync/source_credentials.py'),
+        'source_imports':file_record(ROOT/'zenithsync/source_imports.py'),
         'profile':profile,'image':image,'script':file_record(Path(__file__)),
         'action_counts':dict(Counter(a['kind'] for a in actions)),
         'training_approved':False,'new_model_evaluated':False,

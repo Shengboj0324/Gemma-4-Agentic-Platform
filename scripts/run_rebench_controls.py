@@ -8,13 +8,14 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
+from zenithsync.source_imports import source_pythonpath
 from scripts.compare_source_snapshot import run_image
 from scripts.qualify_swe_rebench_evaluator import PLUGIN, PROBE
 
 
 def validate_profile(profile):
     required = {'instance_id', 'python', 'module', 'expected_origin', 'test_targets'}
-    if not isinstance(profile, dict) or set(profile) != required:
+    if not isinstance(profile, dict) or set(profile) not in (required, required | {'import_root'}):
         raise ValueError('Exact execution profile fields required')
     if (not isinstance(profile['instance_id'], str) or not profile['instance_id']
             or not isinstance(profile['module'], str)
@@ -32,6 +33,8 @@ def validate_profile(profile):
         raise ValueError('Nonempty relative test targets required')
     if len(targets) != len(set(targets)):
         raise ValueError('Duplicate test target')
+    if 'import_root' in profile:
+        source_pythonpath(profile['import_root'], '/testbed')
     return profile
 
 
@@ -46,7 +49,7 @@ def main():
     bound = {str(p): file_record(p) for p in
              [args.resolution, args.inputs / 'receipt.json', args.profile, Path(__file__),
               ROOT / 'scripts/qualify_swe_rebench_evaluator.py',
-              ROOT / 'scripts/compare_source_snapshot.py']}
+              ROOT / 'scripts/compare_source_snapshot.py', ROOT / 'zenithsync/source_imports.py']}
     resolution = load_json(args.resolution)
     inputs = load_json(args.inputs / 'receipt.json')
     profile = validate_profile(load_json(args.profile))
@@ -83,6 +86,7 @@ def main():
         settings = {'BASE': base, 'TREE': tree, 'ROLE': role,
                     'PYTHON': profile['python'], 'MODULE': profile['module'],
                     'EXPECTED_ORIGIN': profile['expected_origin'], 'ALLOWED_PATHS': [],
+                    'SOURCE_PYTHONPATH': source_pythonpath(profile['import_root'], '/testbed') if 'import_root' in profile else '',
                     'TEST_TARGETS': profile['test_targets'], 'PATCHES': payload,
                     'PLUGIN': PLUGIN, 'RESOURCE_PAYLOAD': '', 'RESOURCE_ADAPTER': ''}
         probe = ''.join(f'{key}={value!r}\n' for key, value in settings.items()) + PROBE

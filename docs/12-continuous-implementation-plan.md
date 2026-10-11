@@ -3069,3 +3069,306 @@ restore, lineage, schedule and denial checks. Training remains unapproved.
 Use byte-verified temporary runtime staging for Desktop hydration failures;
 do not relax identity guards. Prefer existing images and verified duplicate
 cache removal while local storage is constrained.
+
+
+Corpus029 is the current integrated quarantine: 25 tasks / 24 declared groups,
+148,523 supervised tokens. R2 publish/restore, identical schedules, lineage020
+and explicit training denial verified. Expand reviewed source diversity and
+resolve attribution/admission gates before a GPU campaign. Three 50M processed
+target campaigns remain a plan, not supplied data. Keep Runpod stopped.
+
+
+Marshmallow-dataframe19: complete runtime qualification only after local storage
+headroom is established. Static review confirms a typed-index required-policy
+difference and prepares 36 unexecuted acceptance cases. Do not count static
+checks as publisher passes. Prefer auditing reusable/retired project caches
+before another image pull; retain model files, unfinished work and recovery
+sources. This is a local-capacity issue, not a reason to restart paid Runpod.
+
+
+Marshmallow-dataframe19 runtime hold supersedes the capacity defer: scoped
+project-only build-cache cleanup allowed the pinned image to run locally.
+Teacher fails one of18 publisher tests and six of36 finite typed-index cases.
+An attributed correction must preserve dtype-dependent requiredness, then pass
+runtime, native replay, context and admission checks. Corpus029 unchanged;
+Runpod remains stopped. Continue scoped cache management with before/after IDs.
+
+
+### Marshmallow-dataframe19 correction checkpoint
+
+The explicit reference-informed assistant correction makes an index required if
+and only if `index_dtype is not None`. It passes all 18 publisher cases and all
+36 finite schema cases (three dtype configurations, three row counts, four index
+presence conditions), with unchanged input payloads. These finite checks do not
+establish universal dtype correctness.
+
+Native attempt 002 completed the original trajectory; attempt 003 ran the
+correction and its nine local assertions at 40 charged calls. Admission remains
+held: the submitted patch also contains the teacher-created `reproduce_issue.py`,
+so the strict production-patch identity check rejected it. Both containers were
+removed. Original native test commands also encountered source-package import
+failures; the isolated publisher/semantic controls explicitly set the src path.
+These observations must be resolved and retained honestly before qualification.
+
+Evidence: `evidence/data/marshdf19-correction-review-001/report.json`,
+`evidence/data/marshdf19-native-003/receipt.json`, and
+`evidence/data/marshdf19-native-003/submitted.patch`.
+Next: constrain the completion to the production diff, explicitly qualify the
+src-layout runtime, independently grade the replay, and audit context/targets.
+Corpus029 remains unchanged and quarantined. No GPU was used; Runpod remains
+reserved for the explicit user restart and later GPU readiness gates.
+
+Correction evidence archived in R2: 72 files, 449,234 bytes; remote hash
+verification passed (`evidence/data/marshdf19-correction-publish-001/receipt.json`).
+This evidence archive has not been restore-tested.
+
+
+### Marshmallow-dataframe19: native correction verified, context hold
+
+This checkpoint supersedes the earlier native patch/import hold. Native attempt
+006 uses the explicit `import_root=src` profile, removes only byte-verified
+teacher-created diagnostic scripts, and submits exactly one production file.
+The final patch is 1,563 bytes, SHA-256
+`4cb320c90944de66586bc71b4245b1d1eaacab8a8c2ea06be78d0329dedc9d1a`.
+Independent grading matches all 18 publisher cases. The original five command
+errors remain in the reconstructed observations; these include offline pip,
+unsuccessful searches, and the pre-correction typed-index failure.
+
+Admission remains **held**: 25,649 input tokens + 8,192 output reserve = 33,841,
+which exceeds the 32,768 context cap by 1,073. The history has 84 messages,
+41 exchanges and 4,229 supervised tokens; native execution uses 40 charged calls.
+No truncation, context-policy relaxation, or corpus addition was performed.
+Corpus029 remains authoritative and quarantined.
+
+Shared replay and grading now accept a validated, explicit checkout-relative
+import root. Grading retains exact module-origin validation. The full regression
+run passed 402 tests, with 17 skipped (419 total); earlier hydration-induced
+failures are preserved. This is local pipeline qualification, not GPU readiness.
+Evidence: `evidence/data/marshdf19-correction-review-002/report.json`,
+`evidence/data/marshdf19-standard-grade-001/report.json`,
+`evidence/data/marshdf19-mechanical-admission-001/report.json`, and
+`evidence/p1/source-import-regression-001/full-suite-003.log`.
+Next: retain this candidate outside the corpus and qualify diverse candidates
+that satisfy the unchanged context, provenance and correctness requirements.
+
+The updated qualification bundle is archived in R2: 94 files, 915,118 bytes,
+with remote hash verification (`evidence/data/marshdf19-correction-publish-002/receipt.json`).
+This evidence archive has not been restore-tested.
+
+
+### Triage 009: API schemas and spelling captions
+
+Prepared pinned teacher actions, exact-base production files and licenses,
+evaluator patches, image identities and capacity checks for apispec950 and
+spelling177. Source actions pass the known credential-indicator screen; replay
+preflight accepts 36 and 32 charged calls respectively. Production syntax trees
+match the reference edits (for spelling, only literal TEXT_NODES set order is
+normalized). This is static evidence, not package execution or native token fit.
+
+The official OpenAPI 3.0.2 Schema Object specification says additionalProperties
+defaults to true. The issue's claim that omission only permits an empty object
+is incorrect; qualification must measure explicit schema output and downstream
+constraints without adopting that premise. Spelling checks must cover caption
+text, existing node categories, inline markup and suppression behavior.
+
+The earlier stochatreat26 counterexamples remain a hold; its existing evidence
+was reused rather than overwritten. An attempted duplicate extraction stopped
+before overwriting the existing directory, and its failure log was retained.
+
+Image metadata is pinned, but no new image was pulled. Missing compressed layers
+are 434,285,633 bytes (apispec) and 484,700,275 bytes (spelling); these do not bound
+extraction size. Host free space was about 5.3 GB at inspection. Next: review
+reclaimable project caches, then qualify one task runtime at a time. No Runpod
+use and no corpus change. The readiness summary was reconciled to corpus029,
+including current hashes, 51 files, 148,523 target tokens and 24 planned updates.
+
+Triage009 archive: 49 files, 215,823 bytes, R2 remote hash verification passed
+(`evidence/data/qualification-triage009-publish-001/receipt.json`); archive restore
+not yet tested.
+
+
+### Apispec950 runtime correction
+
+The pinned image was acquired after a capacity check. One unused temporary task
+shard copy (101,556,119 bytes) was deleted only after verifying the retained shared
+cache hash and absence of open handles. Original repository data and the model
+were preserved. The source snapshot preserves 56 tracked files and one parentless
+commit; the original solution object was absent, so ancestry was not asserted.
+Python 3.9.21 / pytest 8.3.5 imports the exact checkout module.
+
+Publisher controls: base 115/117, teacher and reference 117/117. Independent
+finite checks: base fails six requested-output cases; teacher and reference fail
+nine exact metadata-preservation cases. Six remove closed or typed restrictions;
+three true-to-empty-schema changes are representation differences. Three version
+configurations are not independent statistical samples.
+
+The explicit assistant correction preserves accumulated additionalProperties
+metadata and supplies an empty schema only if that key is absent. It passes all
+117 publisher cases and all 36 finite checks. The invariant and its assumptions
+are recorded in evidence/data/apispec950-correction-review-001/scope.md.
+Next: native replay with attributed correction and byte-checked temporary-file
+cleanup, independent exact-patch grading, observation review and token admission.
+No corpus change or GPU usage. Runtime correctness of selected cases is not
+training readiness or proof of learned performance.
+
+Apispec runtime/correction archive: 150 files, 950,299 bytes; remote hashes
+verified (`evidence/data/apispec950-runtime-publish-001/receipt.json`). This
+evidence archive has not been restore-tested.
+
+
+### Apispec950 native qualification complete
+
+Native attempt 001 completed with 37 charged calls and submitted exactly the
+intended one-file production patch (743 bytes, SHA-256
+231b4599022cd1b6038ef6ef3a97eb009a28e8a91f4cb017140e0a801c16893f).
+The attributed completion checks default and explicit metadata and removes three
+teacher-created diagnostic files only after matching their SHA-256 identities.
+The container was removed. Independent publisher grading passes all 117 cases.
+
+History: 78 messages, 38 exchanges, 23,112 input tokens and 4,244 supervised
+tokens. With 8,192 output reserve and a 32,768 context limit, margin is 1,464.
+Mechanical admission checks pass; training approval remains false. Observed
+errors are preserved: offline flit_core installation failure, one empty grep
+result, and two invocations of legacy tests whose expectations are changed by
+the publisher test patch. These are not silently relabeled as passing commands.
+The first history export was rejected on Desktop file hydration and retained;
+a subsequent checked export succeeded without weakening provenance guards.
+
+Next: integrate the hash-bound selection at
+`evidence/data/apispec950-quarantine-candidate-001/selection.json` into corpus030;
+publish, empty-directory restore, recount tokens, compare schedules, and refresh
+lineage/admission-denial evidence. Corpus029 remains authoritative until that
+integration is verified. No GPU use or learned model-performance claim.
+
+Native qualification archive: 76 files, 908,807 bytes, remote R2 hashes verified
+(`evidence/data/apispec950-native-publish-001/receipt.json`). This evidence archive
+has not been restore-tested.
+
+
+### Corpus030 integration verified
+
+Added the corrected, attributed Apispec950 native replay to quarantine. Corpus030
+contains 26 examples/tasks in 25 declared repository groups, 535,379 input tokens
+and 152,767 supervised tokens. Its 53-file bundle is 5,928,050 bytes. R2 publication
+and restore into an empty directory both passed hash verification. Original and
+restored schedules are byte-identical: seed 7401, one epoch, 25 updates, 9,216
+supervised tokens per update cap and zero target overshoot. This is scheduling
+validation, not executed optimizer updates.
+
+Manifest SHA-256: 806c1ffe57ccee1fa1f6b2d8c73f5b17533786850314126e653599d24428c74b.
+Content SHA-256: 310d3c9bc725ab7afe86f9461d9e65de57a934ab1a9577ef8fc15bc2f8626847.
+The refreshed public-metadata lineage audit resolves 25 declared groups, two
+historical names and four reserved names without current-ID/fork-network overlap.
+This does not establish semantic, historical or pretraining independence.
+
+All four admission gates remain null and training-purpose loading rejects the
+bundle. The independent supply audit finds 26 sequence-fit examples but only 24
+fit input plus the 8,192 output reserve; Emcee295 and CloudEvents172 remain
+reserve exceptions in quarantine. Repetition cannot make this sufficient unique
+data for the three planned 50M-token candidates. Next: expand qualified diverse
+data, complete content-bound attribution and split reviews, and resolve remaining
+admission holds before GPU validation. Runpod was not used.
+
+Corpus030 integration evidence: 26 files, 136,267 bytes, R2 hash-verified
+(`evidence/data/corpus030-integration-publish-001/receipt.json`). The corpus itself
+is restore-tested; the separate evidence archive has not been restore-tested.
+
+
+## Storage and recovery checkpoint — October 10, 2026
+
+The PennyLane dependency archive was restored from R2 into an empty directory:
+107 files, 1,005,376,281 bytes, all content-verified. See
+`evidence/data/storage-capacity-audit-001/backend-restore-receipt.json`.
+The 231 wheel-cache paths shared only 58 inodes; they were not four independent
+copies. After verifying local hashes and no open handles, 289 wheel paths
+(the original cache links plus 58 newly restored copies) were evicted.
+Recipes, manifests, model files, datasets, Docker images and containers were
+preserved. See `evidence/data/dependency-cache-eviction-001/receipt.json`.
+Historical wheel-cache paths are now absent: restore the preserved manifest
+from R2 into a fresh directory before rebuilding that dependency environment.
+Free space after cleanup was 5,299,523,584 bytes, a point-in-time system reading;
+concurrent system changes prevent attributing its entire change to this cleanup.
+No new training data or training approval resulted. Runpod was not used.
+Next: remeasure capacity before the spelling177 runtime acquisition, then resume
+candidate qualification and corpus expansion. Keep R2 publication incremental;
+verify recovery before evicting unique local artifacts.
+
+Storage recovery/eviction evidence: eight files, 178,838 bytes, published and remotely hash-verified in R2 (`evidence/data/storage-recovery-publish-001/receipt.json`). This separate audit archive has not been restore-tested.
+
+
+## Spelling177 runtime qualification — October 10, 2026
+
+Pinned image acquisition and a 41-file exact-tree source snapshot completed.
+Normal solution ancestry verification passed; the initial absence-check assertion
+failed because the solution object was present. That observation is retained.
+The sanitized runtime has one commit and inaccessible old base/solution objects.
+
+All 11 publisher transitions reproduce: base passes nine; teacher and reference
+pass ten, with the declared docstring FAIL_TO_FAIL preserved. Ten additional
+Sphinx integration cases have four base failures and zero teacher/reference
+failures. The cases cover direct/repeated captions, existing title/body/list text,
+literal suppression, mixed caption text, document exclusion and a custom word list.
+A separate observation shows emphasized caption text is skipped in all variants;
+this is recorded as a shared limitation, not comprehensive markup correctness.
+
+Review: `evidence/data/spelling177-runtime-review-001/report.json` and `scope.md`.
+No native replay, token audit, corpus addition or training admission is claimed.
+Next: replay the teacher under the unchanged call/context limits, independently
+grade the submitted patch, and complete attribution/split/admission review.
+Runpod was not used. Corpus030 remains the current quarantined corpus.
+
+Spelling177 runtime evidence: 103 files, 666,402 bytes, uploaded and remotely hash-verified in R2 (`evidence/data/spelling177-runtime-publish-001/receipt.json`); this archive has not been restore-tested. After image/snapshot validation, local free space measured about 3.1 GiB; do not acquire another image without a fresh capacity review.
+
+
+## Spelling177 native replay and quarantine candidate — October 10, 2026
+
+Native replay001 completed 32 charged calls and removed its container. The final
+386-byte patch changes only sphinxcontrib/spelling/builder.py. Independent grading
+matches all 11 reference outcomes: ten passes and the declared docstring failure.
+Eight teacher shell errors remain in the recorded history, including grep no-match,
+the pre-fix reproduction, and broader suite failures. No full-suite pass is claimed.
+The earlier ten finite semantic cases remain passing for teacher and reference;
+emphasized caption text remains a documented shared omission.
+
+The 68-message, 33-exchange untruncated history has 20,807 input tokens and 4,433
+supervised tokens. After the 8,192 output reserve, 3,769 context tokens remain.
+Mechanical admission checks pass, with training approval false. The candidate is
+prepared in `evidence/data/spelling177-quarantine-candidate-001/selection.json`.
+The bound review is `evidence/data/spelling177-observation-review-001/report.json`.
+History and token export each encountered a cloud-file hydration identity change;
+failed attempts were preserved and retried without weakening file identity checks.
+
+Next: integrate this candidate into a new quarantined corpus version, restore it
+from R2, compare deterministic schedules and refresh lineage/duplicate review.
+Corpus030 remains current until that integration completes. Data sufficiency,
+rights/split admission and full-model validation remain open. Runpod was not used.
+
+Spelling177 native evidence and token candidate: 54 files, 496,208 bytes, uploaded and remotely hash-verified (`evidence/data/spelling177-native-publish-001/receipt.json`). This archive has not been restore-tested.
+
+
+## Corpus031 integration — October 10, 2026
+
+Spelling177 is integrated into the next quarantined corpus: 27 examples/tasks,
+26 declared repository groups, 556,186 input tokens and 157,200 supervised tokens.
+The 55-file, 6,155,247-byte bundle exceeds the prior 6 MB cap; this reviewed
+integration uses a 6.5 MB transfer/inspection cap. The byte cap does not relax
+sequence length, tool-call, output-reserve or admission policy.
+
+Manifest SHA-256: de6cf69928394b7860693a99acd198520f58b63841b544e260c79c1cb7afce1c.
+Content SHA-256: 6b613de0bf8d82656c84d9aea69d43a757d6390e625ffa5ac7d29a2e06227376.
+R2 publication and empty-directory restore both verify. Original/restored schedule,
+updates and report bytes match: seed 7401, one epoch, 26 updates, 9,216-target cap,
+157,200 target tokens, zero overshoot. This plans updates; it does not execute them.
+
+Authenticated lineage audit022 resolves 26 declared groups, two historical names
+and four reserved names, with no current ID/network-root overlap. This is not proof
+of semantic, historical or pretraining independence. All four admission fields
+remain null, and training-purpose loading rejects the restored quarantine corpus.
+All 27 sequences fit the length cap; 25 satisfy input plus output reserve. Emcee295
+and CloudEvents172 remain reserve exceptions. A 50M-target campaign would reuse
+about 318.07 corpus-equivalent passes, which does not provide new independent data.
+
+Next: expand diverse qualified data and complete content-bound rights, split and
+training admission review. Runpod remains unused; P1 remains incomplete.
+
+Corpus031 integration evidence: 26 files, 140,204 bytes, published and remotely hash-verified (`evidence/data/corpus031-integration-publish-001/receipt.json`). The corpus is restore-tested; the separate integration evidence archive has not been restore-tested.

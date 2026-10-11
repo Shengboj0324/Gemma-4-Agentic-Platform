@@ -73,7 +73,9 @@ try:
             if any(path not in ALLOWED_PATHS for path in changed):
                 raise RuntimeError('Candidate changes outside task-specific source allowance')
     python=PYTHON
-    origin=subprocess.run([python,'-c','import importlib; print(importlib.import_module('+repr(MODULE)+').__file__)'],cwd='/testbed',
+    source_path=globals().get('SOURCE_PYTHONPATH', '')
+    origin_env={**os.environ, 'PYTHONPATH':source_path} if source_path else None
+    origin=subprocess.run([python,'-c','import importlib; print(importlib.import_module('+repr(MODULE)+').__file__)'],cwd='/testbed',env=origin_env,
                           capture_output=True,text=True,timeout=30)
     result['import']={'returncode':origin.returncode,'stdout':origin.stdout.strip(),'stderr':origin.stderr}
     if origin.returncode or origin.stdout.strip()!=EXPECTED_ORIGIN:
@@ -87,7 +89,7 @@ try:
         import zlib
         (out/'resources.json').write_bytes(zlib.decompress(base64.b64decode(RESOURCE_PAYLOAD)))
         (out/'offline_resources.py').write_text(RESOURCE_ADAPTER)
-    env={**os.environ,'PYTHONPATH':'/audit','PYTHONDONTWRITEBYTECODE':'1'}
+    env={**os.environ,'PYTHONPATH':'/audit'+(':'+source_path if source_path else ''),'PYTHONDONTWRITEBYTECODE':'1'}
     before=hashlib.sha256(git('diff','--binary','HEAD','--')).hexdigest()
     result['tests_started']=True
     with (out/'pytest.log').open('w') as log:
