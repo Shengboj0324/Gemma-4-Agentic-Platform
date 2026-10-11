@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .artifacts import file_record, load_json
 from .replay_history import native_replay_history
+from .replay_completion import completed_replay_history, validate_completion_plan
 
 
 def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
@@ -57,8 +58,28 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
     allowed = {tool['function']['name'] for tool in data['tools']}
     if len(allowed) != len(data['tools']) or allowed != set(replay['available_tools']):
         raise ValueError('Native tool schema set mismatch')
-    reconstructed = native_replay_history(data['events'], system=messages[0]['content'],
-        problem=messages[1]['content'], allowed_tools=allowed)
+    projection = dict(system=messages[0]['content'], problem=messages[1]['content'],
+                      allowed_tools=allowed)
+    completion_count = 0
+    if 'completion_plan' in replay:
+        plan = validate_completion_plan(replay['completion_plan'])
+        paths['source_actions'] = attempt / 'actions.json'
+        paths['completion_implementation'] = Path(__file__).with_name('replay_completion.py')
+        for name in ('source_actions', 'completion_implementation'):
+            identities[name] = file_record(paths[name])
+        if (identities['source_actions'] != plan['source_actions']
+                or identities['patch'] != plan['final_patch']
+                or identities['completion_implementation'] != replay.get('completion_module')
+                or receipt.get('completion_plan') != plan):
+            raise ValueError('Completion provenance mismatch')
+        reconstructed = completed_replay_history(data['events'], plan=plan, **projection)
+        completion_count = len(plan['commands'])
+    else:
+        if ('completion_plan' in receipt or any(
+                event.get('kind') == 'completion' or 'adapter_authored' in event
+                for event in data['events'])):
+            raise ValueError('Completion events require a bound plan')
+        reconstructed = native_replay_history(data['events'], **projection)
     if reconstructed['messages'] != messages or reconstructed['mapping'] != data['mapping']:
         raise ValueError('History differs from captured native exchanges')
     if type(receipt['exchanges']) is not int or receipt['exchanges'] != len(data['mapping']):
@@ -101,7 +122,8 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
         'policy': {'max_input_tokens': max_input_tokens, 'output_reserve': output_reserve,
                    'max_tool_calls': max_tool_calls},
         'input_tokens': input_count, 'supervised_tokens': supervised,
-        'native_tool_calls': actual_calls, 'mechanical_blockers': blockers,
+        'native_tool_calls': actual_calls, 'assistant_completion_calls': completion_count,
+        'mechanical_blockers': blockers,
         'mechanical_checks_passed': not blockers, 'training_approved': False,
         'remaining_gates': ['rights_and_attribution', 'frozen_split_and_duplicate_review',
                             'source_and_evaluator_qualification', 'training_runtime_and_memory'],

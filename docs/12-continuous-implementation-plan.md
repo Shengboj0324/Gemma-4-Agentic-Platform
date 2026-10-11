@@ -38,6 +38,17 @@ P4–P6 are iterative. Building and testing a training pipeline is part of the a
 
 ## Acceptance and correctness
 
+Current data-supply constraint (corpus 028): 141,883 quarantined supervised tokens
+would require approximately 352.40 corpus-equivalent passes per 50M-token
+candidate. The three-candidate objective remains unchanged; this small corpus
+does not supply it. Before a training streak, expand reviewed task diversity,
+freeze splits, quantify token reuse, and resolve context-policy exceptions.
+The [supply audit](../evidence/data/corpus028-supply-review-001/report.json) finds
+24/24 sequences within the 32,768-token training length, but only 22/24 within
+the separate 8,192-token output-reserve policy. Emcee 295 and CloudEvents 172
+need an explicit, validated resolution before admission under that policy.
+Do not silently truncate histories or weaken the gate to increase data counts.
+
 Every cycle closes with these six assessments, marking a category inapplicable only with a reason:
 
 1. **Mathematical validity:** maintain a claim ledger linking assumptions, derivation or proof, implementation, numerical tolerances, counterexamples, and limits. Check boundary cases and dimensions. A coverage-surrogate theorem does not prove repair success; a continuous concave allocation argument does not establish optimality for unknown discrete task responses.

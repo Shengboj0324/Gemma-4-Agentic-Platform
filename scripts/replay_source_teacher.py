@@ -63,6 +63,9 @@ def adapt_source_search(command, prefix):
     glob = r'[A-Za-z0-9_.*?-]+'
     patterns = (
         r'grep -n ' + quoted(phrase) + ' ' + path,
+        r'grep -n ' + quoted(r'[A-Za-z_][A-Za-z_0-9]*\\\[') + ' ' + path,
+        r'grep -n ' + quoted(r'(?:[A-Za-z_][A-Za-z_0-9]*)?\\\[-?[0-9]+\\\]') + ' ' + path,
+
         r'grep -n -A [1-9][0-9]? -B [1-9][0-9]? ' + quoted(alternatives) + ' ' + path,
         r'grep -rn ' + quoted(alternatives) + ' ' + path,
         r'find ' + path + r' -name ' + quoted(glob)
@@ -89,6 +92,27 @@ def adapt_source_search(command, prefix):
         mapped = '/workspace' + ('' if relative == '.' else '/' + relative)
         start, end = match.span('path')
         return command[:start] + mapped + command[end:]
+    return None
+
+
+def adapt_source_local_command(command):
+    """Bind a small standalone command grammar to the prepared repository root.
+
+    No shell operators, expansions, arbitrary flags or nonlocal paths are accepted.
+    This maps reviewed root-relative actions; it does not emulate persistent shell
+    working-directory changes. Execution remains in the disposable offline container.
+    """
+    filename = r'[A-Za-z_][A-Za-z_0-9]*\.py'
+    patterns = (
+        r'python ' + filename,
+        r'python -m pytest ' + filename + r'(?: -v)?',
+        r'python -m unittest ' + filename,
+        r'rm ' + filename + r'(?: ' + filename + r')*',
+        r'git status',
+        r'git diff ' + filename,
+    )
+    if any(re.fullmatch(pattern, command) for pattern in patterns):
+        return 'cd /workspace && ' + command
     return None
 
 
@@ -125,6 +149,10 @@ def preflight(messages, prefix=PREFIX):
                 search = adapt_source_search(args['command'], prefix)
                 if search is not None:
                     actions.append({'index':index,'kind':'shell','command':search, **shell_metadata})
+                    continue
+                local = adapt_source_local_command(args['command'])
+                if local is not None:
+                    actions.append({'index':index,'kind':'shell','command':local, **shell_metadata})
                     continue
                 if set(args)=={'command'} and args['command']=='python --version':
                     actions.append({'index':index,'kind':'shell','command':args['command'], **shell_metadata})

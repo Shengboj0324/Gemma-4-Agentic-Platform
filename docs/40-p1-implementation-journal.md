@@ -2951,3 +2951,1043 @@ Evidence: jsons86-controls-002/comparison.json,
 jsons86-py37-packages-001/runtime.json, jsons86-py37-verify-001/verification.json.
 Native trajectory replay and independent semantic completion remain outstanding.
 Corpus019 and all training-admission gates are unchanged; Runpod remains stopped.
+
+
+## Jsons86 native replay and bounded public API screen
+
+The replay runner now has a mutually exclusive --python37-testbed option. It
+checks the actual interpreter path and exact Python3.7.16 version before replay.
+All 15 focused replay-profile tests passed. Native replay002 completed 40 charged
+tool calls plus submission; the container was removed. A source file view failed
+because start line200 exceeded end line77, and that observation is retained.
+Alignment002 verifies the production edit matches publisher-qualified controls,
+but the submitted patch also contains reproduce_issue.py; completion must remove
+that scratch addition with explicit provenance.
+
+Semantic screen001 applies the actual native patch in an offline Python3.7
+container and passes 126 public API cases: 72 variable-length cases across four
+primitive types, nine lengths and two strict settings; 50 nested tuple cases;
+two fixed tuple cases; two named-tuple default cases. Typed comparison separates
+bool, int and float. These finite checks do not prove universal semantics,
+parallel behavior, malformed-input handling or learned-model performance.
+
+The first full regression run completed 401 tests with one failure, six errors
+and 33 skips: four integrity failures during macOS hydration and three subprocess
+timeouts. The failed log is preserved. After confirming old process handles and
+OS processes were gone, a fresh source-hydration/read pass and full rerun were
+started; at this checkpoint that process remains live and no passing full-suite
+result is claimed. Do not restart it merely for observation latency.
+Corpus019 remains unchanged. No GPU or training was started.
+
+
+## Jsons86 completed replay and finalized Python3.7 runner regression
+
+Completion001 binds exact source actions, verifies reproduce_issue.py bytes by
+SHA-256 before removal, then executes all 126 semantic assertions. Native003
+completed 42 charged calls plus submission; final1265-byte patch contains only
+the production serializer edit. The original invalid view action remains in the
+history. Container cleanup succeeded. History001: 88 messages /43 exchanges;
+tokens001: 24,218 input /5,869 supervised, untruncated within32768 context.
+Observation review explicitly distinguishes source print/catch demonstrations and
+pytest-to-head pipelines from verified passing tests. No training approval.
+
+The earlier source-hydration process eventually finished; its full regression
+rerun had one subprocess timeout. After terminal confirmation, a final rerun with
+PYTHONPYCACHEPREFIX=/tmp/zenithsync-python-cache inherited by subprocesses passed
+401 tests:368 pass,33 skip,0fail/error in15.543s. Timeouts and assertions were not
+changed. Both failed logs are preserved. Updated current readiness links this
+result; no full-model GPU or training claim follows.
+
+Corpus019 remains current. Jsons completion awaits quarantine integration,
+attribution, split and task acceptance. GPU remains stopped.
+
+## Corpus 021 assembly and Jsons integration — October 10, 2026
+
+The Jsons completion archive is confirmed in R2: 26 files, 940,033 verified
+bytes, manifest `8fa213c96cb61f3470257e3a6aa6e2dc04cc496a8c44d3d3896b84b378909e47`.
+Selection 019 added its completed replay. Corpus 020 assembly failed closed when
+macOS hydration changed a token file's ctime during inventory; the partial output
+is preserved and is not a valid corpus. The lineage preflight likewise retained
+a source-hydration failure before its successful retry.
+
+Selection 020 binds fresh candidate copies to the already verified corpus 019
+restore and the Jsons token candidate. Every copied byte identity was checked;
+no integrity check was relaxed. Corpus 021 assembled successfully with 17 examples,
+17 tasks, 16 declared repository groups, 338,246 input tokens and 103,123
+supervised tokens. Manifest:
+`58bd9b83383b86bb0cb25e322478944b58b1cd56d1ae554d75e5dbcded88cd32`.
+Content:
+`b3ecbbe9da8de54808a14d90909fac65177bffdb544dd8a13286c4c92543fad8`.
+All four gates remain null; training denial 019 confirms that training-purpose
+loading raises `Quarantine corpus cannot train`.
+
+Authenticated lineage audit 011 resolves all 22 names (16 declared groups, two
+historical aliases and four reserved repositories). No cross-boundary GitHub ID
+or declared network-root overlap was found. This does not exclude semantic
+copies, historical relationships or pretraining contamination.
+
+At this checkpoint corpus 021 publication and schedule generation are still
+running; a new completed integration must not be inferred from assembly alone.
+The GPU remains stopped. No runtime implementation changed in this cycle, and
+the previously reported 368-passed/33-skipped regression is historical evidence,
+not a new full-suite run.
+
+## Corpus 021 round-trip accepted — October 10, 2026
+
+Publication 021 and restore 020 verified all 35 files, 3,752,523 bytes. Restored
+inspection 020 agrees with assembly 021. Original schedule 025 and restored
+schedule 019 are byte-identical for schedule, update stream and report: seed
+7401, one epoch, 17 planned updates, 9,216-target update cap, 103,123 consumed
+supervised tokens, zero overshoot. Integration check 001 verifies these bindings
+and the still-null admission gates. No optimization or training was started.
+
+Schedule 024 failed its source inventory after macOS hydration changed
+training_corpus.py metadata; the partial attempt and failure record are retained.
+The successful fresh attempt kept all integrity assertions unchanged.
+
+The corpus has only 103,123 supervised tokens across 17 tasks. This is not enough
+to substantiate the planned 50M-token campaigns or a performance claim. Next
+work expands the repository qualification queue, followed by content-bound
+rights, split and task review; Runpod remains stopped.
+
+## Next repository qualification queue — October 10, 2026
+
+Corpus 021 integration evidence is archived in R2: 28 files, 277,009 verified
+bytes. Qualification batch current-003 selects 32 additional repositories from
+the pinned 2,621-trace screen, excluding the current corpus, prior batches and
+reserved evaluation names. Validation-002 rederives the selection with normal
+and reversed input order and verifies eight repositories in each of four cost
+strata. This is a purposive queue, not an unbiased success-rate sample.
+
+Authenticated batch003 lineage-001 resolves all 32 selected repositories and
+four reserved repositories, with no cross-boundary ID/network-root overlaps.
+Issue-text extraction and limited credential screening are underway; selected
+repository metadata is checked before reading issue bodies. No oracle patches
+or source commands are used by this extraction.
+
+### Batch 003 issue screening and archive completion
+
+Issue extraction completed for all 32 selected tasks, after repository identity
+checks and reserved-name exclusion. The limited source credential scanner found
+zero indicator-bearing rows; this is not certification of secret absence or
+rights clearance. No oracle columns were read and no source command was run.
+Task shards were copied into a SHA-named local cache and checked against the
+pinned join registry before reading issue content.
+
+The batch, validation, authenticated lineage, extraction/screening evidence and
+current documentation snapshot are archived in R2: 13 files, 283,507 verified
+bytes (`qualification-batch003-publish-001`). Three first-review tasks are
+csaps-3 (zero smoothing), stochatreat-26 (probability summation) and lkpy-312
+(nDCG truncation). Their teacher/evaluator extraction is in progress. None has
+runtime qualification, mathematical acceptance or training approval yet.
+
+### Numerical candidate triage completed
+
+All three selected teacher action lists and evaluator inputs were extracted.
+Two evaluator attempts failed closed on hydrated intake-receipt metadata; only
+the failed stages were retried after terminal failures. The original scripts,
+failure records and successful outputs are retained. Exact-base production
+sources and notices were fetched; the first guessed stochatreat LICENSE.txt
+path returned 404, then the exact-base tree identified LICENSE, fetched
+successfully. All three action lists passed the limited indicator screen.
+
+Triage review 002 verifies the stochatreat teacher replacements apply exactly to
+the pinned source, then evaluates the changed acceptance expressions using NumPy
+summation. The teacher's Fraction(...).limit_denominator() path rejects
+[0.123456789, 0.234567891, 0.64197532] despite a NumPy sum of 1, and accepts
+[1e-7, 0.9999998] despite a sum near 0.9999999. The publisher's tolerance rule
+accepts the former and rejects the latter. The reported [1/2, 1/3, 1/6] case
+passes both fixes and fails the original rule. This isolates a real acceptance
+regression; it is not a full-package execution claim. The teacher fix is held.
+
+Csaps and Lenskit remain pending isolated runtime controls and independent
+weighted-regression/discounted-gain checks. In particular, csaps linear-data
+examples cannot by themselves distinguish automatic smoothing from the intended
+zero-smoothing fit. None of the three is admitted to the corpus. Review 001 is
+superseded by 002, which additionally binds exact production source bytes; its
+original script is preserved as review_initial.py under the original hash.
+
+Triage archive completed: 48 files, 389,540 verified bytes in R2, recorded by
+`qualification-triage005-publish-001/receipt.json`. No extraction or transfer
+process from this cycle remains pending. Next: isolated csaps and Lenskit
+runtime controls, independent mathematical checks, then observation review.
+
+## Csaps zero-smoothing qualification — October 10, 2026
+
+Pinned the declared publisher image to
+`sha256:a00331f4efcff7a4e8d41d5c63c9bb0712b89c66f61353bd6d156cece8090623`.
+The base probe confirms commit 6b73408ecd9d39f5f3c292a8b0446601353e6bac.
+A sanitized snapshot retains all 10 tracked files, a single parentless commit,
+no accessible old base/solution commits and no enumerated mounted oracle files.
+Inherited image layers remain outside that isolation claim. The task interpreter
+is Python 3.9.21, NumPy 2.0.2, SciPy 1.13.1, pytest 8.3.4; both conda paths
+resolve to the same interpreter file.
+
+Full-file controls retained one deliberately skipped large-vectorization test.
+The strict comparator rejected that run. A separate run executes all 46
+publisher-declared nodes explicitly: base 45 passed/1 failed; reference and
+teacher candidate 46 passed; every expected transition matches. The skipped
+case is not represented as passed or silently removed from the full-file record.
+
+An independently derived weighted-affine oracle uses exact Fraction moments and
+verifies both normal equations exactly. The zero-smoothing source update is the
+weighted orthogonal projection onto the affine nullspace of its second-divided-
+difference matrix. Curvature minimization alone does not uniquely select an
+affine fit; the projection characterization supplies that distinction. Both
+fixes pass 324 vectorized zero-smoothing cases, 6,480 scalar comparisons and 162
+interpolation cases, with maximum absolute error 2.4868995751603507e-14. The base
+fails the zero-smoothing assertion. Cases cover n=3..8, three moderate grids,
+three positive-weight patterns, three non-affine patterns and two output
+channels. This does not establish arbitrary-conditioning or universal accuracy.
+The source's separate two-point branch reports smooth=1 and is outside these
+zero-smoothing cases.
+
+Native replay 003 preserves two no-match grep errors and adds the independent
+checks as an explicitly assistant-authored completion. It uses 32 charged calls
+plus submission; container cleanup is confirmed. The production patch is 420
+bytes, SHA 6e150cc65b9a8688542d9a1a6f7b8702a6acf00dab8fbd620096be8db57fca45,
+and its hunk content matches the controlled teacher edit. No scratch files are
+in the submission. History 001 has 68 messages/33 exchanges. Token audit 002
+verifies 20,802 input tokens and 6,244 supervised tokens without truncation,
+with matching collator accounting. Original unseeded demonstrations and print-
+only checks are retained but are not used as statistical evidence.
+
+One completion, two history inventories and one token inventory failed closed
+on macOS hydration metadata changes; failed attempts are retained and only
+terminal stages were retried. No assertions, tolerances or admission gates were
+relaxed. The candidate selection and review bindings are ready for quarantine
+assembly; corpus021 remains the last integrated corpus. No production runtime
+implementation changed in this cycle and no new full regression suite is claimed.
+Runpod remains stopped.
+
+Csaps qualification archive verified in R2: 138 files, 1,015,891 bytes
+(`csaps3-qualification-publish-001/receipt.json`). All replay, history, token
+and transfer processes from this cycle are terminal. Next: integrate the
+quarantined candidate with a fresh corpus round-trip, then qualify Lenskit.
+
+## Corpus 022 integration — October 10, 2026
+
+The Csaps candidate is integrated in quarantine: 18 examples/tasks, 17 declared
+repository groups, 359,048 input and 109,367 supervised tokens. Manifest SHA
+3e9424ea3f8bfc4a0018cd45c9ccb86357c54c4d8156e58ffbc47096a410664d; content SHA
+fbab5bdc37acd1487897d76a0a80b8ccc8873bfb6d13db88e9e49def910d27c3. Publication
+022 and restore 021 verify 37 files/3,985,491 bytes. Inspection 021 agrees with
+assembly. Original schedule 026 and restored schedule 020 match byte-for-byte:
+seed 7401, one epoch, 18 planned updates, 9,216-target cap, zero target overshoot.
+
+Authenticated lineage 012 resolves 17 declared groups, two historical aliases
+and four reserved names without a cross-boundary current ID/network-root
+overlap. Semantic duplication and historical provenance remain separate work.
+Denial 020 confirms training-purpose loading rejects the quarantine corpus; all
+four gates remain null. Integration check 001 binds these assertions. No model
+training or new full regression run is implied. Runpod remains stopped.
+
+The next numerical candidate is Lenskit task 312. Its runtime image is resolved
+to an immutable digest; pulling and runtime qualification are separate from
+corpus022 acceptance. Its metric oracle must follow the declared discount
+convention rather than silently substituting a different nDCG definition.
+
+Corpus022 integration archive is verified in R2: 22 files, 282,006 bytes
+(publish attempt002). Attempt001 returned a generic ValueError without a
+passing receipt; its exact cause was not exposed by the CLI. Before retrying,
+the staged archive and all transfer-source identities were reverified. The
+failed attempt and diagnosis limits are retained.
+
+## Lenskit nDCG runtime qualification — October 10, 2026
+
+Pinned publisher image
+sha256:d346e23eccfcc530fc12796ec926a912c0d617acd321ba5c7834040887eb6237
+and verified the base 0716300a91e55b54e3da150c5fa8355af79fa745. Sanitized image
+sha256:3db7134d030d36da8af8d26aa7dd26d6789c289d4efed9769dab865c0b59182c
+retains 154 exact tracked files, one parentless commit, inaccessible old commits
+and no enumerated mounted evaluator files. Runtime: Python 3.9.20, NumPy 1.22.4,
+SciPy 1.13.1, pytest 8.3.3. Both conda interpreter paths resolve to one file.
+
+All 20 publisher-declared nodes are controlled: base 19 pass/1 fail, reference
+and teacher 20 pass, with every outcome transition matching. The independent
+70-digit Decimal oracle checks 5,850 finite metric cases plus 4,875 exact
+suffix-invariance comparisons. Both fixes pass with maximum absolute error
+1.1102230246251565e-16; the base fails the oracle. Cases enumerate 65 unique-item
+recommendation lists, five graded/binary truth patterns, three explicit discount
+conventions, and five positive cutoffs plus None. Ground-truth nonmutation is
+also checked. Default discount is max(1, log2(rank)), not log2(rank+1).
+
+This is finite enumeration, not an unbiased success estimate. Zero ideal gain,
+negative cutoffs, duplicate recommendations and malformed inputs remain outside
+these bounded-score claims. Runtime review 001 binds the results. Native teacher
+replay has been initiated; observation review, token validity and training
+admission are not yet established. Runpod remains stopped.
+
+
+## Lenskit 312 completed native qualification
+
+The completed replay `lenskit312-native-003` used 26 charged tool calls plus
+submission and confirmed container removal. The first replay broad top-N pytest command timed out after 30 seconds.
+The completed replay instead recorded a bus error (exit 135) in shared-memory
+code; that actual error remains in the reconstructed history. The assistant-authored completion passed 5,850 independent discounted
+gain cases and 4,875 suffix-invariance checks, matching the separate controls
+exactly (maximum absolute error 1.1102230246251565e-16). These are finite checks
+on unique-item lists, nonnegative relevance and positive ideal gain, not a
+universal numerical guarantee or a full top-N suite pass.
+
+The submitted and controlled diffs have different hunk representations. Applying
+each to the retained exact base produces identical source bytes. The review also
+checks the single changed file, completion bindings and retained bus error.
+History construction initially failed a strict inventory check when macOS hydrated
+the task shard; that failure is preserved. Retrying after hydration completed
+produced 56 messages and 27 tool exchanges. The pinned tokenizer and collator
+agree on 24,556 input tokens and 5,880 supervised tokens without truncation.
+
+Evidence: `evidence/data/lenskit312-observation-review-002/report.json`,
+`lenskit312-native-history-001/receipt.json`, and `lenskit312-tokens-001/report.json`.
+Corpus 022 remains the current integrated corpus; this candidate has not yet been
+added. Rights, split and final task admission remain unresolved. No GPU or training
+was used.
+
+Review correction: the first observation review carried an inaccurate timeout
+limitation copied from replay 001, despite binding replay 003's actual bus-error
+event. Review 002 explicitly asserts exit 135 and the fatal bus-error text. The
+original review and first R2 qualification archive are preserved as superseded
+evidence; the correction archive must accompany them. No token/history bytes
+were changed and no full-suite pass is claimed.
+
+
+## Corpus 023 integration and R2 round trip
+
+Added the Lenskit completion candidate using corrected observation review 002
+and quarantine selection 002. Corpus 023 contains 19 tasks, 18 declared repository
+groups, 383,604 input tokens and 115,247 supervised tokens. All admission gates
+remain null, and training-purpose loading rejects with `Quarantine corpus cannot
+train`. No optimizer was run.
+
+R2 publication and restoration verified all 39 files (4,259,039 bytes). Inspection
+of the restored corpus matches assembly. Original schedule 027 and restored
+schedule 021 match byte-for-byte for schedule, updates and report: seed 7401,
+one epoch, 19 updates, 9,216-target update cap and zero overshoot. Lineage audit
+013 resolved 20 source names (including historical aliases) and four reserved
+names without cross-boundary ID or declared fork-network overlap. The initial
+lineage inventory failed on source-file hydration; its log is retained and the
+terminal attempt was retried after hydration. Semantic independence is unproven.
+
+Integration verification: `evidence/data/corpus023-integration-check-001/report.json`.
+Manifest: c56c4442c2946b6b56b29a84c3775d20536dc9d06717a1cdd8ea2aafff0ea106.
+Content: 5ba766c6c4d4fa8aca5975605241a1a38ddb38c4d2537ea2dc7f740a1b36cdf5.
+The corpus is still far below the requested data supply; repetition would not
+create additional unique tasks or independent evidence. Runpod remains stopped.
+
+
+## Qualification triage 006: boundary and parsing tasks
+
+Extracted the exact batch-003 teacher/task pairs for xhistogram 20, conllu 35
+and gitignore_parser 38. No source commands were executed. Each action list
+passed the existing limited credential-indicator screen. Exact-base production
+files and license notices were fetched successfully, and each teacher production
+replacement matched uniquely. These are provenance checks, not rights approval.
+
+The xhistogram publisher patch increments the final edge by a fixed 1e-8. An
+independent interval-membership oracle exposed four discrepancies across 44
+scalar boundary cases at scales 1e-12, 1, 1e12 and 1e16: the increment can admit
+values above the edge, or round away and still exclude the edge. The base also
+fails four cases. The teacher uses equality to move only the final-edge values
+from overflow to the last bin and matches all 44 cases. This verifies isolated
+NumPy indexing expressions only; weighted/density/multidimensional and Dask
+behavior still require runtime checks. The teacher also removes an empty-array
+demonstration and uses print-only checks, so those observations cannot establish
+assertion-backed correctness.
+
+Conllu's teacher/reference regex edits agree syntactically; malformed labels,
+ID grammar and multi-pair parsing still need tests. Gitignore's teacher stringifies
+paths whereas the publisher checks exact str type, so subclass handling and
+str/Path parity need independent checks. All three remain outside corpus 023.
+Evidence: `evidence/data/qualification-triage006-review-001/report.json`.
+
+
+## Xhistogram runtime boundary checks and environment hold
+
+The pinned raw image ran 192 full-array numerical cases per role: 1D/2D,
+four boundary scales, weighted/unweighted, density/counts, three block settings,
+and NumPy/Dask. The teacher correction passed all cases, preserving 96 lazy Dask
+results. Base and the publisher's isolated numerical insertion failed all 192
+constructed boundary cases. This is targeted diagnosis, not a general benchmark.
+
+Snapshot 002 independently preserves all 34 tracked files with one parentless
+commit and removes checked history/oracle paths from the mounted filesystem.
+Build 001 failed because the PR head object is absent; build 002 explicitly
+requires absence and does not assert ancestry. The initial interpreter probe
+incorrectly imported unrelated SciPy, which is not installed; probe 002 records
+the actual NumPy/Dask/xarray dependencies. Both failures are retained.
+
+All 25 publisher nodes ran in each snapshot role: base 21 passed/4 failed,
+reference and candidate 24 passed/1 failed. Candidate fixes exactly the three
+right-edge cases and matches reference outcomes. However, the three declared
+Dask failures now pass, and the declared-passing 3D-density case fails in every
+role with a NumPy 2.0.2 inhomogeneous-shape reduction error. The strict comparator
+rejects this mismatch. Runtime qualification is held pending dependency
+compatibility diagnosis; expectations were not weakened. No task was added to
+corpus 023 and no agent/GPU training ran. See
+`evidence/data/xhistogram20-control-drift-001/report.json`.
+
+
+## Xhistogram single-dependency diagnostic
+
+NumPy's official 1.24 release notes document the removal of implicit ragged-array
+creation (https://numpy.org/doc/1.24/release/1.24.0-notes.html). A PyPI-hash-verified
+NumPy 1.23.5 CPython 3.9 Linux wheel was installed offline, without dependency
+resolution, over the isolated snapshot. Python, Dask, xarray and pytest version
+fields remain unchanged; this is not an exhaustive environment-equivalence proof
+or a reconstruction of the unpinned Python 3.6 publisher environment.
+
+The 3D-density test now passes in every role. Base: 22 pass/3 fail; complete
+reference and candidate: 25 pass/0 fail. The only base failures are the three
+reported right-edge cases. All 192 independent finite boundary/weight/density
+cases also pass for the candidate in the diagnostic snapshot; the complete
+reference patch fails the targeted boundary oracle. The three declared Dask
+FAIL_TO_FAIL cases still pass for all roles, so the unchanged strict comparator
+continues to reject exact publisher-transition reproduction. Training admission
+and native replay qualification are not granted by this diagnostic.
+
+Build 001 failed because BuildKit interpreted the bare local image ID as a
+registry name. Build 002 uses a unique local tag whose image ID was checked before
+and after the build. The failed attempt and immutable input records are retained.
+Evidence: `evidence/data/xhistogram20-compat-review-001/report.json`.
+
+
+## Conllu 35 runtime preparation
+
+The pinned task image was downloaded after a free-space check. Base HEAD matches
+the joined task and 454 commits were reachable before sanitization. The first
+snapshot build failed because the selected PR-head object is absent. Its receipt
+and Docker log record failure; the wrapper then stalled on an iCloud source read
+while formatting the error. After checking its exact PID/command and absence of
+child processes, the wrapper was terminated (exit 143), preserving the failure
+artifacts. A fresh context explicitly requiring solution absence built snapshot
+002. This verifies absence during construction, not ancestry.
+
+The interpreter probe identifies Python 3.9.20 and pytest 8.3.3, importing
+`/testbed/conllu/parser.py`. A finite grammar oracle contains 2,974 cases and
+round-trip assertions; it is prepared but not yet executed. Independent snapshot
+verification is pending a separate source-file hydration read. No qualification,
+corpus change or training admission is implied by this preparation.
+
+
+## Conllu 35 snapshot and runtime qualification
+
+Independent snapshot verification now passes: 21 exact tracked files, one
+parentless commit, checked old commits inaccessible and enumerated oracle paths
+absent from the mounted filesystem. A preflight hydration metadata change in
+`source_snapshot.py` was rejected and retained; the retry kept all checks.
+
+All 49 publisher nodes reproduce declared transitions: base 48 pass/1 fail;
+reference and candidate 49 pass. The independent character-grammar oracle ran
+2,974 finite cases: base 288 mismatches, reference and candidate zero. Candidate
+and reference each passed 366 serialization round trips. Scope includes short
+label strings, five canonical ID forms, selected malformed input fallbacks and
+inverted range errors; this is not complete CoNLL-U conformance.
+
+Runtime review: `evidence/data/conllu35-runtime-review-001/report.json`. Native
+replay preparation has started using a hash-verified source cache and the isolated
+image. Corpus 023 is unchanged, and training admission remains ungranted.
+
+
+## Conllu 35 completed replay and token audit
+
+Completion replay 003 finished with 37 charged calls plus submission, and the
+container was removed. Its final 578-byte patch exactly matches the retained
+reference production patch; the two print-only demonstration files were removed
+by explicit assistant-authored completion commands. The independent 2,974-case
+checker then completed with zero mismatches and 366 round trips. The original
+commit lookup error at source index 68 is retained, rather than suppressed.
+Replay 002 failed its source inventory during hydration before execution; its
+partial actions and diagnostic log are retained.
+
+History 001 contains 78 messages and 38 tool exchanges. The pinned tokenizer
+and collator agree on 24,056 input tokens and 5,893 supervised tokens without
+truncation. Observation review 001 binds the final patch, command results,
+semantic counts and masks. A separate source-bound language argument explains
+backward acceptance inclusion and its limits, including newly reached invalid
+ID exceptions; it is not proof-assistant verification or full format compliance.
+
+`conllu35-quarantine-candidate-001` is ready for quarantine assembly. Corpus 023
+is still the current integrated corpus. No training admission or learned model
+performance is claimed.
+
+
+## Corpus 024 integration and restore verification
+
+Added the completed Conllu candidate to quarantine. Corpus 024 contains 20 tasks
+across 19 declared repository groups, 407,660 input tokens and 121,140 supervised
+tokens. All admission gates remain null; training-purpose loading still rejects
+with `Quarantine corpus cannot train`. No optimizer was run.
+
+R2 publication and restoration verified 41 files totaling 4,525,271 bytes.
+Inspection of the restored bundle matches assembly. Original schedule 030 and
+restored schedule 022 have identical schedule, update and report bytes: seed 7401,
+one epoch, 20 planned updates, 9,216-target update cap and zero overshoot.
+Lineage audit 014 resolved 21 source names including historical aliases and four
+reserved names, without cross-boundary IDs or declared fork-network roots. This
+does not establish semantic independence.
+
+The initial lineage audit and schedules 028/029 rejected hydration metadata
+changes; their failure records and partial outputs are preserved. After reading
+all inventory-bound source files before retry, schedule 030 passed without
+weakening any check. Integration verification is in
+`evidence/data/corpus024-integration-check-001/report.json`.
+Manifest SHA-256: cf8a26f3e94d7ea0f971cbb94068c2dec91746aa4d15047062acef84d0af485a.
+Content SHA-256: 960d74ba3f66d24f36289861509cbc28a188f248562dcdea98837a32286519d5.
+Data remains far below the planned campaign supply and is not training-admitted.
+
+
+## Corpus 024 integration evidence archive
+
+Completed October 10, 2026 (transfer receipts dated October 11 UTC).
+Revalidated every input bound by the existing corpus024 integration report before
+staging an explicit allowlist of receipts, schedules, lineage data, source scripts,
+failed preflight evidence and documentation snapshots. No credentials or whole
+workspace directory were staged. The archive contains 29 files / 324,042 bytes.
+
+R2 publish and fresh-directory restore both returned verified receipts. The restored
+archive also passed the local manifest verifier. The publish reused seven objects
+and uploaded 22. Manifest SHA-256:
+`38a6328cfc8bba505736af077b54876aab64b5577fdeafc8ae9b9417812ee028`.
+Evidence: `evidence/data/corpus024-integration-publish-001/receipt.json` and
+`evidence/data/corpus024-integration-restore-001/receipt.json`.
+The archived documentation is the pre-archive snapshot; these receipt links and this
+journal entry were added afterward. Production code was unchanged, so no additional
+CPU-suite result is claimed. The previous goal turn supplied a live stopped-pod
+check; this cycle advances evidence durability and restore validation locally.
+
+P1 remains incomplete. Corpus024 is quarantine-only, with 20 tasks and 121,140
+supervised tokens. No training admission or GPU readiness was established. Keep
+Runpod stopped. Next local qualification: Gitignore38 path semantics; Xhistogram20
+remains held pending resolution of historical publisher-transition discrepancies.
+
+
+## Gitignore38 runtime and independent path qualification
+
+The previous goal cycle completed corpus024 evidence archival and restore verification.
+This cycle advances the next candidate without using Runpod. Pulled the pinned
+Gitignore38 image after checking available disk capacity; reproduced the exact base
+with 66 reachable commits. Built a snapshot requiring the solution commit already
+absent, then verified eight tracked files, one parentless commit, inaccessible old
+commits and absence of enumerated oracle files in the mounted filesystem. This
+does not audit inherited image layers.
+
+Python 3.9.20 and pytest 8.3.3 reproduce all 12 publisher transitions: base 11 pass,
+reference and teacher 12 pass. Independent literal-rule, precedence and directory
+negation checks cover 120 targeted cases. Base has 40 mismatches; reference has
+two plain-str-subclass slash-preservation mismatches; teacher has zero. Empty str
+still raises IndexError, and arbitrary custom path classes and complete Git
+semantics are not established. The scoped preservation argument and limitations
+are in `evidence/data/gitignore38-runtime-review-001/scope.md`.
+
+All runtime test containers reported successful cleanup. Native replay, observation
+attribution, and corpus admission remain pending. Corpus024 remains unchanged and
+quarantined. No production code changed, no GPU session ran, and no statistical
+model-performance gain is claimed.
+
+Runtime evidence archive verified in R2: 86 files, 131,847 bytes. Receipt:
+`evidence/data/gitignore38-runtime-publish-001/receipt.json`. No archive restore
+was run for this candidate in this cycle; publish verifies remote object hashes.
+
+
+## Gitignore38 native replay and adapter compatibility
+
+Expanded the replay adapter with a narrow grammar for root-relative Python test
+commands, selected git status/diff commands, removal of explicitly named local
+Python scratch files, and escaped bracket grep searches. Source command text and
+search escapes are retained; root-relative commands are bound to /workspace.
+This does not emulate arbitrary persistent shell directory changes. Rejection
+tests cover shell operators, expansions, unsafe paths and unreviewed flags.
+
+Focused regression: 21 tests passed. Full native-environment regression: 404 tests,
+387 passed, 17 skipped, 17.714 seconds. Earlier runs failed because cloud-backed
+files changed metadata while hydrating; their full logs are preserved. Integrity
+checks were not relaxed. This environment differs from the earlier 33-skip suite;
+no GPU or skipped-environment coverage is claimed.
+
+Native002 completed 33 tool calls and cleanup. Native003 adds one explicitly
+assistant-authored completion call asserting all 120 independent path cases;
+34 tool calls completed and cleanup succeeded. The 607-byte submitted production
+patch produces the same file bytes as the runtime-qualified teacher patch.
+Source errors at indices 28 (original TypeError reproduction), 38 (unsupported
+directory expectation), and 54 (grep no match) remain in the recorded history.
+
+History001 contains 72 messages and 35 exchanges. Tokens003 exports 15,369 input
+and 4,251 supervised tokens without exceeding the 32,768 input cap. Earlier token
+exports rejected hydration changes in training_masks.py and training_batch.py;
+earlier history attempts rejected hydration changes in the task shard and protocol
+fixture. No failed attempt is counted as passing. Corpus024 is unchanged; this
+candidate still needs integration and final admission review. Runpod stays stopped.
+
+Native evidence archive: 35 files / 652,172 bytes, remote hashes verified.
+Receipt: `evidence/data/gitignore38-completion-publish-001/receipt.json`.
+No restore of this native archive was performed in this cycle.
+
+
+## Corpus 025 integration and restore verification
+
+Added the reviewed Gitignore38 completion to quarantine using token and observation
+identity bindings. Reused corpus024 examples only after checking restored bytes
+against their manifest identities. Corpus025 contains 21 tasks, 20 declared
+repository groups, 423,029 input tokens and 125,391 supervised tokens.
+
+Manifest SHA-256: `5dc4fb2ee99ce2f5a1b1587dc32ec533a44e892fe75081c87e8721a262d229cc`.
+Content SHA-256: `4fb93bd1b0f9f6f41846897b4df3a957e131aa5180a92d842bf035181530aceb`.
+R2 publish025 and restore024 verified 43 files / 4,694,369 bytes. Restored
+inspection024 agrees with assembly025. Original schedule031 and restored schedule023
+are byte-identical, including their reports: one epoch, seed 7401, 20 planned updates,
+9,216-supervised-token update cap, exactly 125,391 targets and zero overshoot.
+No optimizer steps were performed.
+
+Authenticated lineage015 resolves 26 names (20 declared groups, two historical
+aliases and four reserved repositories), with no cross-boundary IDs or declared
+fork-network roots. Semantic duplicates and historical independence remain
+unproven. All four admission fields are null and training-purpose loading fails
+with `Quarantine corpus cannot train`. Runpod remains stopped. The next work is
+expanding qualified task supply and completing content-bound admission reviews;
+this small corpus does not supply the three planned 50M-token campaigns.
+
+Integration evidence archive verified in R2: 23 files / 311,021 bytes.
+Receipt: `evidence/data/corpus025-integration-publish-001/receipt.json`.
+Archived documentation predates this receipt link. The corpus itself was restored
+and inspected; the separate evidence archive was remotely hash-verified on publish.
+
+
+## Triage 007 and ASDF1853 runtime qualification
+
+Reviewed three additional pinned-cohort tasks: Lmfit487 error-state recovery,
+Munch52 default-valued YAML loading, and ASDF1853 converter validation. Exact-base
+production sources and licenses fetched successfully. Limited credential-indicator
+screen passed for all three action sets. No source actions were executed during
+static review. One evaluator extraction rejected hydration metadata drift; the
+failure log was retained and extraction completed after hydration.
+
+Lmfit's teacher clears the error list but omits the reference error_msg reset;
+Munch's teacher specializes DefaultMunch while the reference generalizes subclass
+construction. Their runtime consequences remain unmeasured. ASDF's ConverterProxy
+AST matches the reference; import cleanup differs. Triage archive verified in R2:
+45 files / 214,865 bytes, receipt qualification-triage007-publish-001.
+
+ASDF's pinned image matches base f3f60705343b1f0ad521cf780b330f2eabf103fa.
+The first absent-solution build failed; the ancestry-checking build succeeded.
+Snapshot verification matches 887 tracked files, one parentless commit, old
+commits inaccessible and enumerated oracle files absent in the mounted filesystem.
+Python 3.9.21 / pytest 8.3.4 imports the intended module. Publisher controls reproduce
+all 28 transitions (base 26 pass; reference and candidate 28 pass). Independent
+set-intersection checks cover 1,024 combinations; base 67 mismatches, reference and
+candidate 0. The exact finite combinatorial count is derived in the scoped review.
+No wildcard/general converter theorem, statistical model gain or training
+admission follows. Native replay is next; corpus 025 remains unchanged. All
+probe/test containers reported successful cleanup. Runpod remains stopped.
+
+ASDF runtime archive verified in R2: 88 files / 169,961 bytes. Receipt:
+`evidence/data/asdf1853-runtime-publish-001/receipt.json`. Remote object hashes
+were verified on publish; no restore of this evidence archive ran in this cycle.
+
+
+## ASDF native replay and corpus 026 integration
+
+ASDF native001 completed 28 tool calls and container cleanup. The submission
+contained the converter change and a reproduction script. An explicitly
+assistant-authored completion removed three source-created scratch scripts and
+asserted all 1,024 independent tag-set cases. Native002 completed 30 calls,
+verified cleanup and submitted only the 1,565-byte converter patch. Applying it
+to the pinned base produces the same file bytes as the runtime-qualified teacher
+patch. The no-match grep at source index 28 and old warning-test failure at 44
+remain in the history. Neither is represented as a passing test.
+
+History001: 64 messages, 31 exchanges. Tokens001: 19,911 input and 5,025
+supervised tokens, untruncated. Native evidence archive: 27 files / 591,209 bytes,
+R2 verified receipt asdf1853-completion-publish-001. No new shared production
+code change or CPU regression result is claimed in this cycle.
+
+Corpus 026 contains 22 tasks / 21 declared repository groups, 442,940 input and
+130,416 supervised tokens. Manifest:
+`711580a0d1798811c0040b15e6e27c54939203d333efff8c2bcd07d3992ec087`.
+Content: `234e924198305fdf0b3624b649d5edc0738161cbccdc80e26d8265685db91450`.
+R2 publish026 and restore025 verified 45 files / 4,912,935 bytes; inspection025
+agrees with assembly026. Original schedule032 and restored schedule024 are
+byte-identical: one epoch, seed 7401, 21 planned updates, 9,216 target-token
+update cap, exactly 130,416 target tokens and zero overshoot. No optimizer ran.
+
+Lineage016 resolves 27 names: 21 declared groups, two historical aliases and
+four reserved repositories. No cross-boundary repository-ID or declared network
+root overlap was found; semantic and historical independence remain unproven.
+All admission fields remain null, and training-purpose loading rejects the
+quarantine corpus. Runpod remains stopped. Lmfit and Munch behavioral differences,
+corpus-scale attribution, frozen splits and sufficient data volume remain open.
+
+Integration evidence archive verified in R2: 23 files / 319,038 bytes. Receipt:
+`evidence/data/corpus026-integration-publish-001/receipt.json`. Documentation
+snapshots in the archive precede this receipt link. Corpus restore is verified;
+the separate evidence archive has publish-time remote hash verification only.
+
+
+## Completion-aware mechanical admission
+
+The previous goal cycle completed ASDF replay and corpus 026 integration. This
+cycle closes a shared-tooling gap: replay_admission previously reconstructed only
+ordinary histories, although the history builder already supported explicitly
+authored completion steps. It now selects completion-aware reconstruction and
+checks source-action identity, final-patch identity, completion implementation
+identity, matching history/replay plans, command results and authorship mappings.
+Undeclared completion events are rejected. Added calls remain charged to the same
+tool budget, and training_approved remains false.
+
+Nineteen focused tests pass, including tampered commands, results, authorship,
+source actions and plan bindings. Full native-environment suite: 413 tests,
+396 passed, 17 skipped, 17.486 seconds. No GPU coverage is claimed.
+
+Validated the implementation against actual ASDF evidence: regenerated paired
+controls under an explicit standard execution profile, checked all 28 publisher
+transitions, and graded the exact native002 submitted patch in a fresh container.
+All 28 cases match the reference, with no disagreements and successful cleanup.
+The mechanical assessor passes with no blockers: 30 calls including 2 completion
+calls, 19,911 input tokens plus 8,192 output reserve = 28,103 <= 32,768. Source errors
+and completion authorship remain in the reconstructed history. This does not
+resolve rights, semantic split isolation, all runtime qualifications or training
+readiness. Corpus 026 bytes and admission fields are unchanged; Runpod stays stopped.
+
+Completion-admission evidence archive verified in R2: 44 files / 107,454 bytes.
+Receipt: `evidence/data/completion-admission-publish-001/receipt.json`. Publish
+verified remote hashes; no archive restore ran in this cycle.
+
+
+## Standard mechanical assessment: Gitignore38 and Conllu35
+
+Extended standard paired controls and exact native-patch grading to two more
+completed replays. Gitignore matches all 12 reference nodes; Conllu matches all
+49. All grading containers report cleanup and unchanged tracked source during
+tests. Mechanical assessments pass with training_approved=false.
+
+Gitignore: 34 charged calls (one explicit completion), 15,369 input plus 8,192
+output reserve = 23,561 / 32,768; 4,251 supervised tokens. Conllu: 37 charged
+calls (two explicit completions), 24,056 input plus 8,192 reserve = 32,248 /
+32,768; 5,893 supervised tokens. Conllu has only 520 tokens of margin, requiring
+re-audit after prompt or schema changes. Both use the 40-call assessment limit.
+
+The first batch used the wrong Conllu history directory. No passing admission
+receipt was produced for that attempt. Its log is retained; the follow-up used
+conllu35-native-history-001 after checking every token-audit history binding.
+No replay or grader needed repeating. Source observations and completion
+authorship are preserved.
+
+Three corpus examples now have current standard exact-patch and completion-aware
+mechanical assessments: ASDF, Gitignore and Conllu. This is not corpus-wide
+qualification. Rights, frozen semantic split review, sufficient data volume and
+GPU checks remain open. Corpus026 and its null admission fields are unchanged.
+No shared code changed in this cycle; the previous 413-test result is retained.
+Runpod remains stopped.
+
+Assessment archive verified in R2: 77 files / 185,695 bytes. Receipt:
+`evidence/data/completion-admission-batch-publish-001/receipt.json`. Remote hashes
+were verified during publish; this archive was not restore-tested in this cycle.
+
+
+## Corpus 026 supply and context-policy audit
+
+Revalidated the restored corpus against manifest
+`711580a0d1798811c0040b15e6e27c54939203d333efff8c2bcd07d3992ec087`.
+Independent shifted-label and input accounting matches 130,416 supervised and
+442,940 input tokens across 22 tasks and 21 declared repository groups. All
+sequences fit 32,768 tokens. The separate 8,192-token output-reserve screen
+passes 20/22: Emcee 295 exceeds it by 2,828 tokens; CloudEvents 172 by 2,237.
+This is not an admission or model-runtime test. No histories were truncated.
+
+A 50M-token campaign represents exactly 3125000/8151 (about 383.39) current
+corpus-equivalent passes. Repetition does not create new tasks or independent
+observations. The campaign objective is unchanged and supply remains insufficient.
+The current readiness summary and implementation plan now record these constraints.
+
+Source and report: `evidence/data/corpus026-supply-source-001/audit.py` and
+`evidence/data/corpus026-supply-review-001/report.json`. The audit executed
+successfully using the production inspection loader; no production code changed,
+so the prior full regression result remains the latest suite evidence.
+Seven files / 45,674 bytes were published and remotely hash-verified in R2,
+receipt `evidence/data/corpus026-supply-publish-001/receipt.json`. This small
+evidence archive was not independently restore-tested; corpus 026 itself was
+restored and validated earlier. Runpod remains stopped.
+
+
+## Lmfit 487 exact-base runtime qualification
+
+Resumed the original pending probe and file-read processes; both completed.
+The source image matches base `6c87262fcfd3c361b197c6769852f76366113246`
+and initially exposes 2,987 reachable commits. Built snapshot
+`sha256:c69caebdbf28f749b25f5a271625ef9361720b00563e1b0a8b162bcbc16c0fae`
+and independently verified all 210 tracked files, one parentless commit,
+inaccessible old base/head objects and absence of enumerated evaluator assets.
+This checks the mounted filesystem, not inherited image-layer confidentiality.
+Runtime: Python 3.9.21, pytest 8.3.4, asteval 1.0.5, exact local Lmfit module.
+
+All 13 publisher nodes reproduced expected transitions: base 12 pass, reference
+and candidate 13 pass. Independent finite recovery checks use 3 invalid syntax
+forms × 3 integer-valued expressions × 2 assignment methods = 18 sequences,
+each with two invalid-valid cycles. All 18 fail on base and pass for both fixes.
+Integer expectations 12, 34 and 8 avoid numerical-tolerance ambiguity; this is
+finite functional evidence, not a universal mathematical guarantee.
+
+The candidate can retain an empty `error_msg` after recovery, while reference
+clears it to None. Shared-evaluator and nonempty diagnostic state are unresolved;
+no native replay or training admission is claimed. Corpus 026 is unchanged.
+Sources and evidence are under `evidence/data/lmfit487-runtime-source-001`,
+`lmfit487-controls-001`, `lmfit487-semantic-controls-001` and
+`lmfit487-runtime-review-001`. All completed probe/test containers reported
+successful cleanup. No shared production code changed; full regression was not
+repeated. Runpod remains stopped.
+
+Runtime evidence archive: 85 files / 262,026 bytes, published and remotely
+hash-verified in R2. Receipt: `evidence/data/lmfit487-runtime-publish-001/receipt.json`.
+This archive has not been independently restore-tested.
+
+
+## Lmfit 487 diagnostic counterexamples and teacher hold
+
+Four additional deterministic sequences exercise actual NameError and division
+errors, followed by a valid assignment, a new syntax error and final recovery.
+The target is either the original parameter or another parameter that shares
+the exact evaluator object. No internal error state is manually injected.
+
+Both NameError sequences expose a teacher defect: `missing_symbol+1` fails,
+`x+4` is then assigned without evaluation, and the unrelated invalid expression
+`x+` raises SyntaxError with the old missing-symbol message. The reference clears
+the message. Both fixes ultimately recover value 15 on `x+5`; numeric recovery
+alone therefore misses this diagnostic regression. The four sequences are
+finite counterexamples, not an estimate of failure prevalence.
+
+The content-bound review holds the uncorrected teacher. A derivative must identify
+the assistant-authored correction and repeat native replay and exact-patch grading;
+the original trajectory must not be silently relabeled as correct. Corpus 026
+remains unchanged. Source: `evidence/data/lmfit487-runtime-source-001/diagnostic_check.py`.
+Results and review: `lmfit487-diagnostic-controls-001` and
+`lmfit487-diagnostic-review-001` under `evidence/data`.
+All diagnostic containers returned successful export and cleanup statuses.
+No shared production code changed and no GPU was used.
+
+Diagnostic archive published and remotely hash-verified in R2: 17 files /
+37,475 bytes. Receipt: `evidence/data/lmfit487-diagnostic-publish-001/receipt.json`.
+The archive has not been independently restore-tested.
+
+
+## Lmfit 487 explicitly authored derivative
+
+Added `error_msg = None` after the teacher's in-place error-list clear. This is
+an assistant-authored derivative; the original teacher remains held. The patch
+passes 13/13 publisher cases, 18 finite recovery sequences and four diagnostic
+sequences with observed results identical to reference. This does not prove
+behavior for arbitrary external aliases of the error list.
+
+Native002 replays the uncorrected teacher and preserves two errors: source68
+uses removed NumPy `asfarray` in an algebraic-constraint test; source72 calls
+`__set_expression` without Python name mangling. Native005 retains both errors,
+adds one explicit correction/cleanup/assertion command, and submits the exact
+553-byte patch SHA256 `96cb40cb35de84f2336a4d69ce55b0249b0e8cc2adca14410566b22aeed8c336`.
+The added command succeeds and verifies same/shared evaluator recovery. All
+40 permitted tool calls are used; container cleanup is confirmed.
+
+Exact-patch grading matches all 13 reference cases. History002 has 84 messages
+and 41 exchanges. Tokens002 exports an untruncated 21,298-input / 5,514-target
+sequence; input plus 8,192 reserve is 29,490 (3,278 context margin). Mechanical
+admission001 passes with no blockers, while training_approved remains false.
+Rights, split gates and corpus integration remain pending. Corpus026 is unchanged.
+
+Failed preflights were retained: attempts001/003 hit source-shard hydration
+metadata drift; attempt004 hit source_credentials.py hydration drift before
+container start. A hash-verified /tmp shard cache and hydrated bound sources
+allowed retry005. Evaluator re-extraction first stopped on registry hydration,
+history001 on protocol exchanges.json hydration, and tokens001 on training_masks.py
+hydration; subsequent executions retained all integrity guards and succeeded.
+No shared production code changed; no full regression repeat was warranted.
+No GPU was used.
+
+Corrected-candidate evidence archive published and remotely hash-verified in R2:
+124 files / 858,107 bytes; `evidence/data/lmfit487-correction-publish-001/receipt.json`.
+This archive has not been independently restore-tested.
+
+
+## Corpus 027 quarantine integration
+
+Added the explicitly corrected Lmfit candidate to verified corpus026 bytes.
+Corpus027: 23 examples/tasks, 22 declared repository groups, 464,238 input and
+135,930 supervised tokens. Manifest SHA256
+`391f7884476c1fa2545615a086fe03a80328505860d8d7631e085f3414c95e4a`;
+content SHA256 `bc57e23b1c2bc207a21401066f81d6de3ab9fe969ddb433dbf2e247b58424ff4`.
+Measured bundle: 47 files / 5,146,579 bytes. Explicit byte cap raised to 6,000,000.
+
+R2 publish027 and restore027 verified; fresh restore directory is
+`/tmp/zenithsync-training-corpus-restored-027`. Inspection026 agrees with assembly027.
+Seed7401, one epoch, 9,216-target update cap yields 22 updates and zero overshoot.
+Schedule033 and restored-schedule025 are byte-identical, including reports.
+Schedule SHA256 `db94a18e7a7252f0a73c6ffaf5b55c2cffa7cf74840d9990cafd462d3c5b67d5`;
+prefix SHA256 `0c56972fada889949064ca072e7bd963e65d3097c72b79a26e3266380909f9e5`.
+Explicit denial025 returns `Quarantine corpus cannot train`; all four admission
+fields remain null. Integration-check001 confirms these facts.
+
+Authenticated lineage018 resolved 28 names: 22 declared groups, two historical
+aliases, four reserved repositories. No cross-boundary ID/network-root overlap
+was found; this is not proof of semantic or pretraining independence.
+Supply audit: 23/23 fit the training length, 21/23 fit the separate output-reserve
+policy. Emcee and CloudEvents exceptions remain. Each 50M campaign represents
+exactly 5000000/13593 (~367.84) current-corpus-equivalent passes. Data sufficiency
+and admission are still open; the campaign objective is unchanged.
+
+Failed outputs retained: restore026 ended with generic ValueError and no passing
+receipt (cause not conclusively diagnosed). A later inspection of that directory
+passed corpus loading but failed at hashing a cloud-hydrating loader source, so
+no passing inspection receipt was produced. Lineage017 failed its final source
+inventory during hydration. Fresh restore027 ran byte-identical transfer sources
+from /tmp to avoid source eviction; lineage018 hydrates bound sources before
+hashing. Integrity guards remain unchanged.
+
+No shared production code changed; corpus inspection, scheduling, rejection and
+round-trip verification were the relevant checks. Runpod remains stopped.
+
+Integration and supply evidence archive: 24 files / 99,060 bytes, published
+and remotely hash-verified in R2; receipt
+`evidence/data/corpus027-integration-publish-001/receipt.json`. The corpus was
+restore-tested; this separate small evidence archive was not.
+
+
+## Munch 52 runtime qualification and incomplete-teacher hold
+
+Pinned image digest `12b95ab79504cc9ef295ac978dd40d1a6ccbb9cd9aa307af851585fac284c269`,
+1,351,559,372 compressed bytes. Base probe matches
+`dede29c5e8bde7ca575365d50dd44f8fc12a5991` with 184 reachable commits.
+Snapshot `35327b86c6110824739502262b2404dcf8bc2b308092ccbc7edab9dfad335069`
+independently verifies 20 tracked files, one parentless commit, inaccessible old
+base/head objects and absent enumerated evaluator files. Scope is mounted
+filesystem, not inherited image-layer confidentiality. Python3.9.20/pytest8.3.3
+imports exact `/testbed/munch/__init__.py`.
+
+Publisher controls: base5/6, reference6/6, teacher6/6; transitions reproduced.
+Independent checks: six classes × four graph shapes × two loaders + six custom
+constructor cases = 54. Graph shapes cover nesting, list-contained mappings,
+shared aliases and cycles. Checks require exact subclass identity for each
+mapping, sentinel identity for defaults, distinct/memoized factory values and
+preserved alias/cycle identities. Base fails45, reference0, teacher27.
+Teacher repairs DefaultMunch and its subclass but leaves ChildMunch type loss
+and DefaultFactoryMunch/ChildFactory TypeError. These are remaining base
+deficiencies rather than introduced regressions. The uncorrected teacher is
+held for incomplete general subclass support, with no native replay/admission.
+
+Semantic run001 completed all containers but failed final source inventory on
+macOS hydration; its outputs are retained, not treated as a passing comparison.
+A retry to the same populated output was rejected; a fresh run002 completed
+with all input bindings and cleanup confirmed. Runtime source and review are
+`evidence/data/munch52-runtime-source-001` and `munch52-runtime-review-001`;
+authoritative finite comparison is `munch52-semantic-controls-002/comparison.json`.
+No shared production code changed. Corpus027 remains unchanged; Runpod remains stopped.
+
+Munch runtime evidence archived in R2: 96 files / 237,729 bytes, remote hashes
+verified; receipt `evidence/data/munch52-runtime-publish-001/receipt.json`.
+This evidence archive has not been independently restore-tested.
+
+
+## Munch 52 reference-informed corrected derivative
+
+Retained the teacher's DefaultMunch-specific loader and added a generic Munch
+classmethod informed by the inspected reference. This explicitly attributed
+derivative supports ordinary/custom subclasses and DefaultFactoryMunch without
+silently replacing the original teacher. Publisher cases pass 6/6 and all 54
+subclass/default/graph cases pass. Added 12 compatibility cases check omitted,
+positional and keyword defaults for DefaultMunch and a subclass across nesting
+and aliases. Teacher and derivative pass 12/12; reference fails 8/12. These checks
+preserve teacher behavior, not a claim that the publisher specifies every call form.
+
+Native001 records original teacher execution (38 calls). Native002 adds one
+correction/cleanup/assertion action and submits the expected 1,059-byte patch,
+SHA256 `16691be769c060cd4163b60521431bfb6a448a0117cc5ebf42a303f15db38df2`.
+Both retain source index 80's exit 128 old-Git-object lookup failure caused by the
+sanitized history. Added checks pass, cleanup succeeds, final calls 39/40.
+Standard exact-patch grading matches 6/6 reference cases. History001 contains
+82 messages/40 exchanges; tokens001 exports 24,332 input/5,953 supervised tokens
+without truncation. Input+reserve=32,524, leaving 244 tokens. Mechanical
+admission002 passes with no blockers; training_approved remains false.
+
+Mechanical assessment001 failed before writing a passing receipt because
+replay_completion.py hydration changed metadata. A prematurely invoked review
+then failed on the missing assessment receipt, leaving empty review001.
+The completed assessment002 and review002 are authoritative. All integrity
+guards were retained. No shared production code changed; relevant validation
+was finite runtime, replay, exact-patch grade, token audit and mechanical checks.
+Corpus027 is unchanged pending integration; Runpod remains stopped.
+
+Corrected Munch evidence archive: 125 files / 832,963 bytes published and
+remotely hash-verified in R2; receipt
+`evidence/data/munch52-correction-publish-001/receipt.json`. This separate
+evidence archive has not been independently restore-tested.
+
+
+## Corpus 028 corrected Munch integration
+
+Added the explicitly corrected Munch example to verified corpus027 bytes.
+Corpus028 contains 24 examples/tasks, 23 declared repository groups, 488,570
+input and 141,883 supervised tokens. Manifest SHA256
+`4e0c5cea950900735c89df72550a07ac8305f87d2305792d7cad410265e69ea9`;
+content SHA256 `3433a9a4b3d1e657c01e8383c1dbc7c381490b61424a50a21aea8d42d711a1f3`.
+The 49-file bundle is 5,414,857 bytes, within the retained 6,000,000-byte cap.
+
+R2 publish028 and restore028 verified. Fresh restore directory:
+`/tmp/zenithsync-training-corpus-restored-028`; inspection027 matches assembly028.
+Seed7401, one epoch, 9,216-target update cap produces 23 updates and zero overshoot.
+Schedule034 and restored-schedule026 match byte-for-byte, including reports.
+Schedule SHA256 `3baaaa0128d4daaf4df2266468ec39293fe29b254dc92cab9c162cefbe9fff30`;
+prefix SHA256 `a4869579a14018d6d70cdb716ba7b5505f3e19b5fd875dd639c0898a8b66c1d5`.
+Denial026 explicitly rejects training with `Quarantine corpus cannot train`;
+all four admission fields remain null. Integration verification passed.
+
+Authenticated lineage019 resolves 29 names (23 groups, two historical aliases,
+four reserved repositories), with no cross-boundary ID/fork-root overlap.
+This does not establish semantic or pretraining independence. Supply audit:
+24/24 sequences fit training length; 22/24 satisfy the output reserve policy.
+Emcee/CloudEvents remain exceptions. A 50M campaign represents exactly
+50000000/141883 (~352.40) current-corpus-equivalent passes. That repetition
+does not establish sufficient diverse data. Munch's individual context margin
+remains 244 tokens and must be rechecked after prompt/tool changes.
+
+No shared production code changed; relevant checks were corpus validation,
+schedule equality, explicit rejection, lineage screening and R2 restore.
+The implementation plan and current readiness summary now describe corpus028.
+No GPU was used; Runpod remains stopped.
+
+Integration and supply evidence archive: 24 files / 102,223 bytes published
+and remotely hash-verified in R2; receipt
+`evidence/data/corpus028-integration-publish-001/receipt.json`. The corpus was
+restore-tested; the separate evidence archive was not independently restored.
+
+
+## Qualification triage 008: three distinct repositories
+
+Selected Importlab23, icontract115 and marshdf19 from the existing bounded
+32-repository cohort, preserving task/trajectory/source identity and reserved
+repository exclusion. Teacher actions, evaluator patches and exact-base
+production files are extracted. Production/reference/teacher Python parses;
+known credential indicators were not detected in the selected actions. This
+indicator screen is not a proof that arbitrary content is secret-free.
+
+Static differences establish the next checks, not runtime success/failure:
+Importlab strips .__init__ after converting separators to dots; reference
+strips a separator-delimited __init__ first. Literal dotted filenames and path
+precedence require review. Icontract's teacher returns the underlying function
+before checking contracts when argument count exceeds signature-name count;
+valid variadic calls may bypass pre/postconditions and snapshots. Marshmallow
+dataframe teacher makes indexes unconditionally optional and synthesizes range
+values, whereas reference keeps explicit-dtype indexes required. Typed/missing/
+null/mismatched/empty-index cases need runtime evaluation.
+
+Exact-base license retrieval: Importlab LICENSE and marshmallow-dataframe
+LICENSE returned 200. Icontract LICENSE returned 404 (retained); the exact-base
+GitHub tree identified LICENSE.txt, fetched successfully with its own receipt.
+First extraction stopped on batch.json hydration; failed log and script are
+retained. Retry binds batch identity before processing and rechecks it after
+hydration at completion; integrity guards are unchanged.
+
+Source: `evidence/data/qualification-triage-source-008`; authoritative review:
+`evidence/data/qualification-triage008-review-001/report.json`. No new container
+images were downloaded. Local free space measured about 7 GiB, so runtime image
+work needs capacity review. No shared production code changed; corpus028 is
+unchanged. No GPU was used; Runpod remains stopped.
+
+Triage evidence archive published and remotely hash-verified in R2: 40 files /
+175,483 bytes; `evidence/data/qualification-triage008-publish-001/receipt.json`.
+This separate archive has not been independently restore-tested.
