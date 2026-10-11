@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.trajectory_import import convert_swe_hero_history
+from zenithsync.source_bytes import verified_source_bytes
 
 
 def main():
@@ -17,7 +18,9 @@ def main():
     parser.add_argument('--instance-id', default='biolink__biolink-model-toolkit-172')
     parser.add_argument('--trajectory-id', help='Review one exact census-bound trajectory')
     args = parser.parse_args()
+    snapshot_implementation = file_record(ROOT / 'zenithsync/source_bytes.py')
     import json
+    import pyarrow as pa
     import pyarrow.parquet as pq
     census = ROOT / 'evidence/data/swe-hero-corpus-001/census'
     report = load_json(census / 'report.json')
@@ -51,7 +54,10 @@ def main():
                 or intake['dataset'] != 'nvidia/SWE-Hero-openhands-trajectories'
                 or intake['revision'] != '150bc119e52c647216fce285fd801f16b6fd745b'):
             raise ValueError('Source provenance mismatch')
-        records = pq.read_table(path, columns=['instance_id', 'trajectory_id', 'repo', 'trajectory'],
+        # Parse the exact verified bytes, not a second file-backed read that can
+        # race cloud hydration or eviction between metadata and Parquet reads.
+        payload = verified_source_bytes(path, identity, max_bytes=512 * 1024**2)
+        records = pq.read_table(pa.BufferReader(payload), columns=['instance_id', 'trajectory_id', 'repo', 'trajectory'],
                                filters=[('trajectory_id', '=', row['trajectory_id'])]).to_pylist()
         if (len(records) != 1 or records[0]['instance_id'] != row['instance_id']
                 or records[0]['repo'] != row['repo']):
@@ -68,10 +74,14 @@ def main():
         summary = {'trajectory_id': row['trajectory_id'], 'source': source, 'metadata': row,
                    'actions': file_record(destination / 'actions.json'),
                    'counts': dict(Counter(action['name'] for action in actions)),
+                   'parser_input': {'kind': 'verified_immutable_bytes', 'max_bytes': 512 * 1024**2,
+                                    'implementation': snapshot_implementation},
                    'training_approved': False, 'executed': False}
         (destination / 'receipt.json').write_bytes(canonical_json(summary))
         summaries.append(summary)
         print({'trajectory': row['trajectory_id'], 'counts': summary['counts']}, flush=True)
+    if file_record(ROOT / 'zenithsync/source_bytes.py') != snapshot_implementation:
+        raise ValueError('Source snapshot implementation changed during extraction')
     (args.output / 'report.json').write_bytes(canonical_json({
         'traces': summaries, 'census': file_record(census / 'report.json'),
         'script': file_record(Path(__file__)), 'training_approved': False}))

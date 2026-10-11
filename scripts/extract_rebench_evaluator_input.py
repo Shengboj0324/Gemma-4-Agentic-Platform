@@ -6,6 +6,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
+from zenithsync.source_bytes import verified_source_bytes
+
+MAX_SOURCE_BYTES = 512 * 1024**2
 
 
 def main():
@@ -13,6 +16,8 @@ def main():
     parser.add_argument('--resolution', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    snapshot_path = ROOT / 'zenithsync/source_bytes.py'
+    snapshot_implementation = file_record(snapshot_path)
     resolution_identity = file_record(args.resolution)
     task = load_json(args.resolution)['task']
     official_path = ROOT / 'evidence/p1/task-index-001/receipt.json'
@@ -36,22 +41,25 @@ def main():
             or intake['revision'] != '89cdfbab4ab1bd8f5a658bb212d1b63624f4f881'
             or shard['identity'] not in intake['downloaded'].values()):
         raise ValueError('Source provenance mismatch')
+    import pyarrow as pa
     import pyarrow.parquet as pq
+    payload = verified_source_bytes(source, shard['identity'], max_bytes=MAX_SOURCE_BYTES)
     filters = [('instance_id', '=', task['instance_id'])]
     identity_columns = ['instance_id', 'repo', 'base_commit', 'environment_setup_commit']
-    rows = pq.read_table(source, columns=identity_columns, filters=filters).to_pylist()
+    rows = pq.read_table(pa.BufferReader(payload), columns=identity_columns, filters=filters).to_pylist()
     if (len(rows) != 1 or rows[0]['repo'].casefold() in reserved
             or any(rows[0][key] != task[key] for key in identity_columns)):
         raise ValueError('Task identity mismatch before oracle access')
     columns = ['patch', 'test_patch', 'meta', 'install_config',
                'FAIL_TO_PASS', 'FAIL_TO_FAIL', 'PASS_TO_PASS', 'PASS_TO_FAIL']
-    rows = pq.read_table(source, columns=columns, filters=filters).to_pylist()
+    rows = pq.read_table(pa.BufferReader(payload), columns=columns, filters=filters).to_pylist()
     if len(rows) != 1:
         raise ValueError('Nonunique oracle record')
     row = rows[0]
     if any(not isinstance(row[k], str) or not row[k].strip() for k in ['patch', 'test_patch']):
         raise ValueError('Expected nonempty text patches')
-    if (file_record(source) != shard['identity'] or file_record(intake_path) != shard['intake']
+    if (file_record(snapshot_path) != snapshot_implementation
+            or file_record(source) != shard['identity'] or file_record(intake_path) != shard['intake']
             or file_record(args.resolution) != resolution_identity
             or file_record(official_path) != official_identity
             or file_record(registry_path) != registry_identity):
@@ -65,6 +73,8 @@ def main():
                'source_registry': registry_identity, 'script': file_record(Path(__file__)),
                'files': {name: file_record(args.output / name)
                          for name in ['reference.patch', 'tests.patch', 'metadata.json']},
+               'parser_input': {'kind': 'verified_immutable_bytes', 'max_bytes': MAX_SOURCE_BYTES,
+                                'implementation': snapshot_implementation},
                'training_approved': False, 'scope': 'Evaluator-only; never expose oracle patches to agent.'}
     (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
     print({'task': task['instance_id'], 'files': receipt['files']})

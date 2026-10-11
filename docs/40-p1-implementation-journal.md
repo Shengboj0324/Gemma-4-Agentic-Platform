@@ -4527,3 +4527,547 @@ Next: expand diverse qualified data and complete content-bound rights, split and
 training admission review. Runpod remains unused; P1 remains incomplete.
 
 Corpus031 integration evidence: 26 files, 140,204 bytes, published and remotely hash-verified (`evidence/data/corpus031-integration-publish-001/receipt.json`). The corpus is restore-tested; the separate integration evidence archive has not been restore-tested.
+
+
+## Cohort010 static triage and queue reconciliation — October 10, 2026
+
+Reviewed three pinned existing-cohort traces: Numba6653 (35 planned calls),
+Mwclient365 (30), Pika851 (38). All pass action preflight; no native token length
+or runtime success is inferred. Numba's production AST matches the reference and
+is next for offline runtime qualification. Test absent/present/empty values,
+deprecated-prefix precedence and warnings, plus publisher nocuda controls.
+
+Hold the original Mwclient teacher pending state-transition review: it only sets
+exists inside a newtimestamp branch and omits publisher metadata/delete/move
+updates. The issue's suggested timestamp guard was explicitly uncertain.
+Hold Pika pending default/logging review: its default Normal Shutdown differs
+from the publisher's Normal shutdown, and it lowers an extra logger's severity.
+These are static discrepancies, not measured runtime failures.
+
+`qualification-batch003-status-001/report.json` projects the 32-task cohort onto
+corpus031: ten tasks represented (possibly through corrected derivatives), six
+explicit holds, one next runtime candidate and fifteen not qualified by this
+reconciliation. The original frozen batch remains unchanged.
+
+Numba runtime image is pinned at
+sha256:f829d7620787dd998e0614dcba60f20c661fe1dbb90181199dea91e49fb74a53.
+The layer-reuse screen estimates 810,263,089 absent compressed bytes; this does
+not bound extracted space. Host free space changed to about 7.59 GB during this
+cycle without project cleanup, so remeasure before acquisition. No image was
+pulled, no corpus was added and Runpod was not used in this cycle.
+
+Cohort010 evidence: 50 files, 361,577 bytes, remotely hash-verified in R2 (`qualification-triage010-publish-001/receipt.json`). The task-status projection is separately published and hash-verified (`qualification-batch003-status-publish-001/receipt.json`). Neither new archive has been restore-tested.
+
+
+## Numba6653 pinned runtime qualification — October 10, 2026
+
+Acquired the pinned image after a fresh capacity check (~7.59 GB available;
+~5.20 GB immediately after acquisition). Its HEAD was not the task base. Accepted
+snapshot build002 normalizes the verified image HEAD to the declared base;
+915 tracked files match, with one reachable commit and inaccessible old base,
+solution and original image-head objects. This is mounted-filesystem validation.
+Build001 encountered cloud hydration drift in a final identity check; that failure
+is retained. Build002 used byte-identical stable inputs with unchanged guards.
+
+Python3.7.16/pytest7.4.4 imports numba.cuda.envvars from the exact task source.
+The single publisher regression fails on base and passes on teacher/reference.
+Thirty-six environment/default combinations yield 27 base value failures and
+zero teacher/reference failures. Warning checks and three invalid-prefix cases
+pass across all variants. Empty-string presence, deprecated-prefix precedence
+and default-object identity are explicitly checked. No GPU was used, and no
+full Numba suite, native teacher replay or learned-model result is claimed.
+
+Review: `evidence/data/numba6653-runtime-review-001/report.json` and `scope.md`.
+Next: replay the 35-call teacher, independently grade the exact submitted patch,
+and audit untruncated native context and supervision masks before integration.
+Corpus031 remains current. Runpod was not used; P1 remains incomplete.
+
+Numba6653 runtime archive: 99 files, 131,663 bytes, published and remotely hash-verified in R2 (`evidence/data/numba6653-runtime-publish-001/receipt.json`). This separate archive has not been restore-tested.
+
+
+## Numba6653 native replay — October 10, 2026
+
+Native replay001 completed 35 charged calls, with container cleanup verified.
+The 362-byte submitted patch changes only numba/cuda/envvars.py. Independent
+exact-patch grading passes the single publisher regression; no full-suite claim.
+Two teacher errors are preserved: a no-match grep and the pre-fix reproduction.
+The prior 36 environment/default combinations and three invalid-prefix checks
+remain bounded semantic evidence, not a trained-model or GPU result.
+
+The 74-message, 36-exchange history is untruncated: 16,388 input tokens and
+5,897 supervised tokens, with 8,188 tokens remaining after the 8,192 reserve.
+Mechanical checks pass, training approval false. The candidate is ready for
+quarantine integration (`numba6653-quarantine-candidate-001/selection.json`).
+The bound review is `numba6653-observation-review-001/report.json`.
+Cloud hydration interrupted evaluator/admission inventories; failed attempts
+are documented. The passing admission uses stable byte-identical history/token
+copies and unchanged integrity checks. No output was treated as passing early.
+
+Next: corpus integration, verified R2 restore, deterministic schedule comparison
+and refreshed lineage/supply review. Corpus031 remains current until that work
+completes. Runpod was not used and P1 remains incomplete.
+
+Numba6653 native evidence and token candidate: 55 files, 377,865 bytes, uploaded and remotely hash-verified in R2 (`evidence/data/numba6653-native-publish-001/receipt.json`). This archive has not been restore-tested.
+
+
+## Corpus032 integration — October 10, 2026
+
+Numba6653 is integrated: 28 quarantined examples/tasks, 27 declared repository
+groups, 572,574 input tokens and 163,097 supervised tokens. The 57-file bundle
+is 6,335,601 bytes and remains within the explicit 6.5 MB cap.
+Manifest SHA-256: f2a7d2c76913c6ab63d49809cb8113f2f31e5248b0a564b181fa13f308c38b8a.
+Content SHA-256: 95c2ff7beaf23a3bfef27a0c7c25c299e42c2bbccf6cbdd618fea11ee11ff474.
+
+R2 publish and empty-directory restore verify. Original and restored schedule,
+updates and report bytes match: seed 7401, one epoch, 27 planned updates,
+9,216-target update cap, exactly 163,097 supervised tokens, zero overshoot.
+No optimizer step or training performance is implied by schedule construction.
+All four admission fields remain null; training-purpose loading rejects the data.
+
+Lineage023 resolves 27 declared groups, two historical names and four reserved
+names without current ID/network-root overlap. Historical/semantic independence
+remains unproven. All 28 examples fit 32,768 tokens; 26 meet the separate output
+reserve policy. Emcee295 and CloudEvents172 remain reserve exceptions. A 50M-token
+campaign would consume about 306.57 corpus-equivalent passes; repetition does
+not add independent tasks. Data abundance and final rights/split approval remain
+unmet. The supply audit was retried after a loader-file hydration guard failure;
+no integrity check was weakened.
+
+Next: expand diverse qualified supply and complete remaining admission reviews.
+Runpod was not used; P1 remains incomplete.
+
+Corpus032 integration evidence: 27 files, 144,165 bytes, uploaded and remotely hash-verified (`evidence/data/corpus032-integration-publish-001/receipt.json`). Corpus032 is restore-tested; the separate integration evidence archive has not been restore-tested.
+
+
+## Verified source-byte ingestion and cohort011 triage — October 10, 2026
+
+A real Rally teacher extraction passed file hashing but failed PyArrow's subsequent
+file-backed footer read. The exact OS cause is unproven; cloud hydration/eviction
+is a plausible contributor. `verified_source_bytes` now captures at most the pinned
+size plus one byte (512 MiB cap), verifies exact length/SHA-256, and supplies a
+PyArrow BufferReader. Existing census, rights/provenance, metadata linkage and
+post-extraction file drift checks remain unchanged. The helper identity is recorded.
+This cap bounds captured bytes, not arbitrary parser decompression memory.
+
+Three focused tests pass: modified/truncated/extended bytes reject; oversized
+inputs reject before open; an actual filtered Parquet parse survives replacement
+of the source path after capture, while a new capture of that changed path rejects.
+All three real candidate extractions succeed. Full suite attempt001 recorded one
+unrelated server-source hydration error. Attempt002: 422 tests, 405 passed, 17 skipped.
+No GPU or optional-environment coverage is claimed.
+
+Static review: SoftLayer2188 matches the reference AST and has 35 planned calls;
+prioritize complete CLI behavior checks, not only truthiness snippets. Rally1469
+has 39 calls and matches the connection default edit; the reference also changes
+a chart metric, so review issue/test scope explicitly. Pylutron20 has 34 calls but
+joins device-name components with spaces instead of underscores. Hold it pending
+exact-name contract and rights review: root LICENSE returned 404; root metadata
+showed no license/copying-named file. No runtime candidate was executed here.
+
+Evidence: `qualification-triage011-review-001` and
+`evidence/p1/source-byte-snapshot-regression-001`. Corpus032 remains current;
+no training admission changed. Runpod was not used; P1 remains incomplete.
+
+Cohort011 and verified-byte ingestion evidence: 47 files, 260,658 bytes, uploaded and remotely hash-verified (`evidence/data/qualification-triage011-publish-001/receipt.json`). This archive has not been restore-tested.
+
+
+## SoftLayer2188 runtime qualification — October 10, 2026
+
+The pinned source snapshot matches 753 tracked files and exposes only one reachable
+commit; base/solution commits and known evaluator paths are inaccessible in the
+mounted repository. Inherited Docker-layer bytes remain outside this audit.
+Publisher controls reproduce exactly: base 3/4, reference and teacher 4/4.
+The 28-case CLI grid (seven query tuples × two types states × two advanced states)
+has six base failures and no reference/teacher failures. Exact exit codes, API
+method routing and argument lists are checked through the real CLI and the
+repository's local XML-RPC fixture server. No external service correctness claim.
+
+The earlier static type description is corrected: query is a tuple of strings;
+a tuple containing an empty string is truthy even though its joined query is empty.
+Types takes precedence over advanced; advanced with no query is accepted. The
+initial direct search import failed because CLI.command was not initialized;
+probe002 imports CLI.core first, matching normal initialization. Both attempts
+are preserved. Python 3.9.21 / pytest 8.3.5 and exact source origins were verified.
+
+Evidence: `softlayer2188-runtime-review-001`, `softlayer2188-controls-001`, and
+`softlayer2188-semantic-controls-001`. Native replay, untruncated token auditing,
+content-bound review and integration remain pending. Corpus032 is unchanged;
+no training approval, learned gain or full-model guarantee follows from this work.
+No production code changed; the existing CPU suite result remains 405 passed and
+17 skipped, not a new suite execution. Runpod was not used.
+
+Local storage remains constrained (about 3 GiB available at the current check).
+Only 7,530 regenerable task bytecode files were removed after an open-handle check
+in the preceding acquisition step; receipt: `bytecode-cache-cleanup-001`.
+No additional large downloads were needed for this runtime qualification.
+
+SoftLayer runtime archive: 114 files, 2,904,966 bytes; R2 publication and fresh-directory restoration both verified. Receipts: `softlayer2188-runtime-publish-001` and `softlayer2188-runtime-restore-001`.
+
+
+## SoftLayer2188 native replay and token qualification — October 10, 2026
+
+Native replay completed with 35 charged calls, 74 messages and 36 exchanges. The
+431-byte submitted patch changes only `SoftLayer/CLI/search.py`; SHA-256:
+`0be7e50c36cb4e94c2e3a49e9836f3539d41c9cee812b911b704548d97209bf4`.
+Independent grading matches all four publisher cases. The last native test command
+passes seven existing CLI/manager tests. Earlier failures remain visible: original
+bug reproduction at index14; offline external API errors at44/58/70; obsolete
+embedded diagnostic working directories at52/56/62. No full-suite or external API
+success is asserted. The history ends with observed native patch submission, not
+unverified teacher finish prose.
+
+Untruncated pinned-tokenizer audit: 16,291 input / 2,850 supervised tokens. Reserve
+margin = 32,768 - 16,291 - 8,192 = 8,285. Mechanical linkage, grading and mask/budget
+checks pass with training_approved=false. Candidate remains pending content-bound
+review and corpus integration; corpus032 remains authoritative. Evidence:
+`softlayer2188-observation-review-001`, `softlayer2188-standard-grade-001`,
+`softlayer2188-tokens-001`, `softlayer2188-mechanical-admission-001`.
+
+Cloud hydration changed file metadata during local evaluator/history checks;
+stable cached sources and copied receipts were used without weakening integrity
+checks. Existing task-cache files were hard-linked into the stable runtime, not
+redownloaded. No production code changed, no full CPU suite was rerun and Runpod
+was not used. P1 remains incomplete.
+
+Native replay evidence archive: 62 files, 414,112 bytes; uploaded and remotely hash-verified in R2 (`softlayer2188-native-publish-001/receipt.json`). This separate native archive has not been restore-tested; the earlier runtime archive has.
+
+
+## Corpus033 integration and R2 round trip — October 10, 2026
+
+SoftLayer2188 joins quarantine after its linked runtime and native observation
+review; its seven failed commands remain preserved. Corpus033 contains 29 tasks
+and 28 declared repository groups, with 588,865 input and 165,947 supervised tokens.
+No training admission is granted. Assembly and independent shifted-label recount
+agree. The 59-file, 6,514,884-byte bundle is published and restored from R2. Its
+manifest SHA-256 is `de181d6fb9014532d3394a0bef42ee2b47a54c183a7a7770b783f7d98bb0f0db`.
+
+Original and restored schedule.json, updates.jsonl and report.json are byte-identical:
+seed7401, one epoch, 27 planned updates, cap9216 targets/update, 165947 consumed
+supervised tokens, zero overshoot. These are planning outputs, not optimizer steps.
+All four admission gates remain null; training-purpose load rejects exactly with
+`Quarantine corpus cannot train`. All29 sequences fit32768;27 satisfy the separate
+8192-token reserve screen. Emcee295 and CloudEvents172 remain reserve exceptions.
+50M/165947 is about301.30 corpus-equivalent passes, not sufficient unique supply.
+
+Lineage024 resolves34 names (28 declared groups, two historical names and four
+reserved names) with no current repository-ID or declared-fork-root cross-boundary
+overlap. Detached copies, historical overlap, semantic duplication and pretraining
+contamination remain unexcluded. No claim of statistical independence follows.
+
+Preparation attempt001 caught an incorrect expected-token literal introduced while
+adapting the prior script. The assertion stopped staging before assembly; corrected
+attempt002 preserved the actual2850-target audit and assembled successfully. The
+partial first staging remains separate. Production code and policies were unchanged;
+no new full CPU suite or GPU test is claimed. Runpod was not used. P1 is incomplete.
+
+Evidence: corpus033-integration-check-001, corpus033-supply-review-001,
+training-corpus-publish-033, training-corpus-restore-033, training-corpus-denial-031,
+and current-corpus-lineage-024. Corpus033 supersedes032 as the current quarantine
+bundle. Next: broaden reviewed task supply and complete content-bound admission.
+
+Corpus033 integration evidence archive: 26 files, 147,284 bytes, uploaded and remotely hash-verified (`corpus033-integration-publish-001/receipt.json`). The corpus itself is restore-tested; this separate evidence archive is not.
+
+
+## Rally1469 scope resolution and capacity hold — October 10, 2026
+
+The pinned issue and live upstream PR1469 identify the cleanup-default change.
+The PR base SHA matches the task. Its four-file list excludes chart_generator.py,
+which the dataset reference additionally changes from maximum to median. The
+origin of that extra change is unproven; its omission is not classified as failure
+of the issue's cleanup requirement. The full publisher reference and197-case
+transition table remain intact for eventual runtime comparison. Static AST review
+confirms the teacher's exact default change and forwarding into both connector
+paths. This is not real connector execution or proof of leak mitigation.
+
+Public source responses, pinned issue text, static checks and a concrete runtime
+plan are retained under rally1469-upstream-scope-001 and rally1469-scope-review-001.
+The runtime plan requires all197 publisher cases and real/static connector option
+checks, session cleanup,39-call native replay, exact patch grading and token audit.
+No performance gain is inferred from the publisher's relaxed timing tolerances.
+
+Registry metadata is pinned without downloading layers: new compressed bytes
+579,427,803; free host bytes3,215,695,872. Compressed sizes do not bound extraction.
+The existing5GB acquisition guard is unmet, so image pull/runtime work did not
+start. Next local infrastructure work is verified task-specific storage recovery;
+Runpod remains unused. Corpus033 and all training-admission gates are unchanged.
+
+Rally1469 scope evidence: 19 files, 95,609 bytes, published and remotely hash-verified in R2 (`rally1469-scope-publish-001/receipt.json`); this archive has not been restore-tested.
+
+
+## Scoped Docker build-cache recovery — October 10, 2026
+
+Removed six explicitly identified immutable/private/reclaimable records in the
+ZenithSync Python3.7 build-cache chain, leaf first. Rechecked each record immediately
+before deletion and required its read-only ID filter to select exactly one ID.
+All six are absent afterward; all image and container IDs are unchanged. No model,
+source dataset, evidence, image, container or volume was deleted. Other large
+cache records lacked established project ownership and were preserved.
+
+The first filter syntax was rejected before mutation; corrected documented syntax
+was preview-checked. The largest selected record was reported as657.5MB. Host free
+space changed asynchronously and was about3.5GiB in the follow-up df; this is not
+an exact attribution of released bytes. The5GB acquisition guard remains unmet,
+so Rally1469 was not pulled. Evidence: scoped-build-cache-cleanup-003. Runpod was
+not used, corpus033 is unchanged, and P1 remains incomplete. Continue verified
+local storage recovery before further large image acquisition.
+
+Cleanup evidence: 10 files, 16,092 bytes, uploaded and remotely hash-verified in R2 (`scoped-build-cache-publish-003/receipt.json`); no restore test for this audit archive.
+
+
+## Restore-test duplicate eviction — October 10, 2026
+
+Allocation inspection found the repository's teacher Parquet shards cloud-backed
+with zero currently allocated blocks; removing those paths would not meaningfully
+recover host storage. The completed mini-source restore-test directory instead
+held a resident428,839,266-byte duplicate shard. A fresh R2 publish/readback pass
+verified the existing53-file431,730,739-byte manifest; the exact local shard hash
+was rechecked, lsof showed no handles, and inode/size/mtime were checked before
+unlinking this one duplicate. Original dataset paths and all other restore-test
+files remain. The historical restore receipt remains valid evidence of the past
+restore, but its directory is no longer complete and must be restored before reuse.
+
+Evidence: restore-cache-eviction-001, including the pinned manifest and fresh
+remote verification receipt. Host free bytes after eviction:4,168,867,840; still
+below the5GB image acquisition guard. No Rally image was pulled, no GPU was used,
+and corpus033/training gates are unchanged. An external-storage path question is
+pending; do not infer authorization or an answer from elapsed time. Continue work
+that fits local capacity and preserve unique data. P1 remains incomplete.
+
+Restore-cache eviction audit:5 files,14,736 bytes uploaded and remotely hash-verified in R2 (`restore-cache-eviction-publish-001/receipt.json`); separate audit archive not restore-tested.
+
+
+## Immutable evaluator and history parser inputs — October 10, 2026
+
+Extended the existing verified_source_bytes helper to evaluator extraction and
+replay-history construction. Both Parquet reads now consume the same SHA-256/size
+verified immutable byte payload, capped at512MiB. Source provenance, reserved-repo
+screening, identity-before-oracle/body access and final source/input drift checks
+remain active. Receipts bind the snapshot helper and parsing mode. This avoids
+reopening a changing source path inside the parser; it does not suppress metadata
+hydration failures, bound arbitrary decompressed memory or promise error-free I/O.
+
+Four new integration tests exercise both real Parquet readers: transient path
+replacement between reads leaves the verified snapshot unchanged; corruption after
+metadata inspection rejects before parsing; persistent post-read drift rejects
+without emitting output; reserved repositories reject before snapshot/parsing.
+The existing three snapshot tests also pass. Full local suite:426 tests,409 passed,
+17 skipped. The original suite process was retained while cloud-backed Python
+source hydration was requested; no retry was substituted for this passing result.
+
+A fresh isolated runtime processed real SoftLayer inputs. All three evaluator
+files and all three history/tools/mapping files match prior outputs byte-for-byte;
+new receipts bind parser provenance. Prior runtime and evidence remain unchanged.
+Evidence: evidence/p1/task-reader-snapshot-regression-001. Corpus033 remains current,
+no training approval changed, no GPU used. P1 remains incomplete. Storage recovery
+and broader data/admission work remain necessary before Rally image acquisition.
+
+Task-reader code and validation archive:15 files,159,702 bytes uploaded and remotely hash-verified in R2 (`evidence/p1/task-reader-snapshot-publish-001/receipt.json`); separate archive not restore-tested.
+
+
+## Recoverable image eviction and Rally1469 runtime qualification — October 10, 2026
+
+The held flake8-fancy-header image had no container references or derived images.
+Its pinned registry descriptor was verified live before nonforced exact-reference
+removal. The initial RepoTags check rejected Docker's digest-as-tag representation;
+inspection confirmed the sole entry was the same pinned reference. All other image
+IDs and all container IDs stayed unchanged. Model/data/evidence files were preserved;
+the exact pull recipe is recorded. Recovery depends on registry availability, not
+an image-byte backup in R2. Free bytes rose4,124,770,304 to5,714,190,336. Eviction
+receipt: fancyheader-image-eviction-001; audit archive6files28,923bytes remotely
+hash-verified in R2, not restore-tested.
+
+The recovered capacity passed the unchanged5GB acquisition guard. Rally's pinned
+image pulled successfully; free bytes afterward3,889,389,568. Its base checkout
+matched and PR-head commit was explicitly absent. Snapshot verification preserved
+241tracked files, one reachable commit, and absence of known evaluator paths.
+Inherited image layers are outside the mounted-filesystem audit. Python3.9.21,
+pytest6.2.5 and exact esrally.async_connection source origin were verified.
+
+All197 publisher cases reproduce: base196/197, reference and teacher197/197.
+Twelve real object cases cross absent/True/False cleanup options, static/TCP
+connectors and use_ssl False/True. Both fixes pass12/12; base fails four default
+cases. Tests check policy, connector class, timer setup, session/connector close,
+timer cancellation and no remaining asyncio tasks. No network requests or TLS
+handshake occur. Do not claim leak prevention or performance gains from these tests.
+
+Evidence: rally1469-runtime-review-001, rally1469-controls-001 and
+rally1469-semantic-controls-001. Native39-call replay, exact patch grading, token
+qualification and integration remain pending. Corpus033 is unchanged; Runpod was
+not used. P1 remains incomplete. No production change or new full CPU suite here.
+
+Rally runtime evidence:108files989,017bytes uploaded and remotely hash-verified in R2 (`rally1469-runtime-publish-001/receipt.json`); this archive is not restore-tested. All six publisher/semantic test containers have successful cleanup receipts.
+
+
+## Rally1469 native replay: mechanical pass, content hold — October 10, 2026
+
+Replay completed39 charged calls,82 messages and40 exchanges with no tool-error
+events. The2185-byte two-file patch updates code and its documentation; independent
+exact-patch grading matches197/197 publisher cases. The last native test command
+reports13 passed. Untruncated audit:21320 input/4638 supervised tokens, reserve
+margin3256; mechanical linkage, grading and budget checks pass, training=false.
+
+Content review independently holds the original trajectory: event78 creates a
+script that only checks connection attributes but prints TLS1.3/Elasticsearch
+memory-leak prevention; event80 runs it successfully. Observed stdout is not proof
+of that inference. The unsupported script text is an assistant tool argument and
+therefore relevant to supervised labels even though tool responses are masked.
+No TLS exchange, affected server, repeated-cycle memory measurement or sustained
+leak test supports the claim. Do not admit this original to corpus033. A corrected,
+explicitly authored and freshly replayed derivative must preserve provenance and
+meet budgets; silently editing old actions/observations is not acceptable.
+
+Evidence: rally1469-observation-review-001, including exact claim-producing events,
+rally1469-standard-grade-001 and rally1469-mechanical-admission-001. The first
+new-runtime tokenizer call lacked model-intake metadata; the established pinned
+runtime completed successfully. No model weights/GPU used, no production changes,
+no new full CPU suite. Corpus033 and P1 admission remain unchanged/incomplete.
+
+Rally native/content-hold archive:53files1,277,020bytes uploaded and remotely hash-verified in R2 (`rally1469-native-publish-001/receipt.json`); not restore-tested. Corpus033 still contains29 tasks and excludes Rally1469.
+
+
+## Corpus033 claim review, first detailed batch — October 11, 2026
+
+Screen resolved29/29 exact histories,44 lexical spans in23 histories. All44
+excerpts were triaged; only four histories received detailed contextual review in
+this batch. Negated guarantees and conditional success messages are not automatic
+failures. Signac622 and Lenskit312 original histories require claim correction
+before promotion. Lenskit recorded equal1.0 scores followed by a hard-coded
+inequality sentence; Signac's summary claims all functionality preserved despite
+only finite checks. Lmfit487 complete-fix wording remains under scope review.
+Boltons205's three recorded comparisons are true despite weak unconditional
+success control flow. Full histories and selected messages are hash-bound in
+corpus033-claim-review-001. Later bounded checks were considered, not ignored;
+they do not remove earlier supervised claims. No source history, corpus, label,
+or admission receipt changed. No fresh runtime execution or production-code
+change; no GPU or large download. Review is incomplete and P1 remains active.
+
+Claim review archive: 9 files, 382,108 bytes uploaded, remotely hash-verified, and independently restored from R2 (`corpus033-claim-review-publish-003`, `corpus033-claim-review-restore-001`). Two earlier inventory attempts rejected cloud hydration metadata changes; explicit hydration allowed the unchanged integrity checks to pass. Four full-history hashes and every selected-message binding were independently verified.
+
+
+## Corpus033 claim review, second contextual batch — October 11, 2026
+
+Reviewed selected flagged claims and execution context in six additional histories:
+Statsmodels8339, Emcee295, Numba6653, Werkzeug2971, Dynaconf413 and Gitignore38.
+This brings distinct contextual reviews to 10, not full semantic approvals.
+Emcee's initial walker-count failure precedes an explicit setup correction and a
+computed True result. Gitignore's failed comprehensive diagnostic never reaches
+its success print; later finite edge checks pass. Numba and Werkzeug successes
+are guarded by real comparisons/assertions. Statsmodels' five-test summary is
+conditional, but the later shape-printing smoke check is not numerical validation.
+Preserve these distinctions rather than classify every success phrase as false.
+Numba's deprecated-fallback title is misleading despite a correctly documented
+ignored-variable expectation in the body; note it for derivative cleanup.
+
+A recursive argument-value screen found zero nested string leaves in all 29 exact
+histories; no additional matches under the existing patterns. This closes only
+that structural coverage question, not semantic review. Six history identities
+and 39 selected-message bindings independently verified. No production code,
+corpus contents or training approval changed; no GPU or fresh runtime replay.
+Evidence: corpus033-claim-review-002. Earlier original-history holds remain open.
+
+Second review archive: 14 files, 489,332 bytes uploaded and remotely hash-verified, then independently restored from R2 (`corpus033-claim-review-publish-004`, `corpus033-claim-review-restore-002`). Production tests were not rerun for this evidence-only review; no new runtime qualification is claimed.
+
+
+## Corpus033 claim review, third contextual batch — October 11, 2026
+
+Reviewed selected claim contexts in Datetransform2, Jsons86, Munch52, Importlab23,
+Apispec950 and Numkit8: 16 distinct histories across three batches. Datetransform
+has a swallowed exception branch, but its recorded empty-frame call succeeded.
+Jsons explicitly denies a universal guarantee. Munch's optional-dependency skip
+branch was not taken. Importlab initially fails two expectations, then explicitly
+changes them before a passing rerun; the revised expectations still need independent
+contract justification. Apispec checks seven schema mappings but does not propagate
+its Boolean return into process exit status. Actual recorded comparisons pass.
+
+Numkit's nine finite odd-window division comparisons pass. Exact algebra proves
+(w-1)//2=k and -(w-1)//2=-k for w=2k+1. A separate local arithmetic check at
+k=2**54+1 demonstrates that floating true division rounds down by one, so the
+small-case float equality cannot be generalized to arbitrary integers. This is an
+arithmetic scope boundary, not a feasible huge-array test or a smoothing defect.
+Full original histories and selected messages are preserved and hash-verified in
+corpus033-claim-review-003. No original history, corpus, production code or training
+approval changed. No GPU or fresh candidate replay. Prior content holds remain.
+
+Third review archive: 14 files, 537,989 bytes uploaded and remotely hash-verified, then independently restored from R2 (`corpus033-claim-review-publish-006`, `corpus033-claim-review-restore-003`). Initial packaging rejected a cloud-hydrated screen.py metadata change; explicit hydration and a fresh stage passed the unchanged integrity checks. Six source histories and 26 selected-message bindings verified. Evidence-only work did not rerun the production suite.
+
+
+## Corpus033 lexical-context pass and correction queue — October 11, 2026
+
+Fourth batch reviews Workalendar493, PennyLane5716/5831, PySyft250,
+CloudEvents172, Csaps3 and ASDF1853. Coverage verification initially rejected six
+omitted message contexts from the first batch; those were read with execution
+observations and preserved in an additive supplement, leaving old reports intact.
+Consolidation now verifies all 44 matched spans across 23 flagged histories and
+145 exact selected-message bindings. Six unflagged histories are not approved by
+absence of matches. Full semantic review remains outstanding for every history.
+
+PennyLane5716's first run reports 6/7 despite zero exit status; later 8/8 omits the
+multi-batch case and only samples decomposition parameters. PennyLane5831's failed
+matrix-call diagnostic is preserved before its explicit correction. CloudEvents
+names transitivity without a triple/implication check, and broad preservation
+wording exceeds the finite tests: original joins Signac/Lenskit in the claim-
+correction queue. ASDF's guarantee phrase is an explicit limitation and its exact-
+tag enumeration records 1024 cases, zero mismatches. Selected finite successes
+remain evidence; they do not erase earlier supervised overclaims.
+
+Correction queue records three original-history claim holds, two scope/contract
+reviews, six diagnostic-quality follow-ups, and other selected-context or no-match
+states. It is not loader enforcement or admission approval. Existing quarantine
+continues to block training. No production code, corpus, model or original history
+changed; no GPU or fresh candidate runtime execution. No production-suite rerun for
+this evidence-only review. Next work: resolve claims with explicit replayed
+derivatives and independent contract evidence, plus broader semantic review.
+
+Complete review-chain archive: 47 files, 1,993,596 bytes uploaded and remotely hash-verified, then independently restored from R2 (`corpus033-claim-review-publish-008`, `corpus033-claim-review-restore-004`). All correction-queue source identities also verified against restored report files. Initial stage007 rejected cloud hydration metadata change; stage008 passed the same integrity guard.
+
+
+## Explicit action amendment primitive and Lenskit derivative — October 11, 2026
+
+Added zenithsync/replay_amendment.py: validates explicit assistant authorship,
+canonical source and derived action-list identities, ordered unique amendment
+ordinals, exact text preimages, and only whole shell-command/create-text changes.
+Deep-copy construction preserves caller inputs, action order, metadata and paths.
+This is provenance machinery, not a command sandbox; callers still require source
+preflight, fresh native execution and full qualification. No observations are
+accepted or emitted. Five focused tests cover tampering, forged/invalid fields,
+no-op changes, duplicate indices, source immutability and shell amendments.
+Full local suite: 431 tests, 414 pass, 17 skipped.
+
+Lenskit prepared derivative changes three diagnostic create actions (10,20,27):
+compute reproduction comparisons and remove overbroad/static success narration.
+All three diagnostic scripts compile; source repair action13 is unchanged.
+Original histories/actions are retained. Local snapshot image is available.
+Native driver and history projection do not yet consume amendment plans; reconcile
+original completion binding and add replay provenance checks before any execution
+or training use. Evidence: lenskit312-claim-amendment-001 and
+p1/action-amendment-regression-001. No Runpod, model update or fresh replay occurred.
+
+Action-amendment archive: 10 files, 110,055 bytes uploaded and remotely hash-verified, then restored successfully from R2 (`action-amendment-publish-002`, `action-amendment-restore-001`). First packaging attempt rejected cloud hydration metadata drift; a fresh stage passed the unchanged inventory guard.
+
+
+## Native amendment integration and fresh Lenskit replay — October 11, 2026
+
+Native replay now accepts explicit amendment plans, preserves original-actions.json,
+checks credentials on derived text, and binds plan/module/original/derived bytes.
+History projection verifies changed native tool arguments, source event order and
+counts; completion must bind derived actions, with separate authorship mappings.
+Tests reject original calls relabeled as amended, changed paths, missing events,
+wrong ordering and original-action completion bindings. A task-reader integration
+test exercises actual history projection and rejects substituted command evidence.
+
+Full suite: 435 tests, 418 pass, 17 skip. Earlier focused/full runs hit inventory
+metadata guards while macOS hydrated source files; failed full run001 is preserved,
+and hydrated run002 passed without disabling guards. Fresh isolated runtime used
+the existing Lenskit image, no new image download or Runpod. Native replay completed
+26 charged calls; exact548-byte patch matches the prior repair, cleanup verified.
+One original test command again times out at30seconds and is preserved. Completion
+records5850 finite metric cases,4875 suffix checks, max error1.1102230246251565e-16.
+History:56messages27exchanges, three separately attributed amended actions. Token
+audit:19836input5644supervised,4740reserve margin after8192 output tokens.
+
+Evidence: lenskit312-amended-native/history/tokens/review-001 and
+p1/action-amendment-integration-regression-002. Prepared claim amendment001 remains
+historical. Independent derivative grading, mechanical admission and full content
+review are pending. Corpus033 is unchanged and training remains denied.
+
+Amendment integration/fresh replay archive: 26 files, 669,139 bytes uploaded and remotely hash-verified, then restored successfully from R2 (`lenskit312-amended-publish-002`, `lenskit312-amended-restore-001`). Initial archive attempt rejected preserve.py cloud hydration metadata drift; fresh stage passed unchanged integrity checks.

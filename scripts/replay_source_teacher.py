@@ -18,7 +18,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from zenithsync.artifacts import canonical_json,file_record
+from zenithsync.artifacts import canonical_json,file_record,load_json
+from zenithsync.replay_amendment import amend_actions
 from zenithsync.container_cleanup import cleanup_owned_container
 from zenithsync.source_workspace import prepare_source_workspace
 from zenithsync.trajectory_import import convert_swe_hero_history
@@ -228,6 +229,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--profile',type=Path)
+    p.add_argument('--amendment-plan',type=Path, help='Explicit source action text derivative; fresh observations only')
     p.add_argument('--completion-plan',type=Path,
                    help='Explicit hash-bound assistant actions before source terminal submission')
     p.add_argument('--source-shard',type=Path,default=ROOT/'artifacts/data/quarantine/swe-hero-001/data/train-00000-of-00014.parquet')
@@ -263,6 +265,18 @@ def main():
         raise ValueError('Teacher task linkage mismatch')
     converted=convert_swe_hero_history(matches[0]['trajectory'])
     actions=preflight(converted['messages'],profile['source_root'])
+    original_actions = actions
+    amendment = None
+    amendment_identity = None
+    amendment_module = None
+    if args.amendment_plan is not None:
+        amendment_identity = file_record(args.amendment_plan)
+        amendment = load_json(args.amendment_plan)
+        amendment_module = file_record(ROOT/'zenithsync/replay_amendment.py')
+        actions = amend_actions(original_actions, amendment)['actions']
+        require_no_credential_indicators(actions)
+        if file_record(args.amendment_plan) != amendment_identity:
+            raise ValueError('Amendment plan changed before replay')
     completion = None
     completion_identity = None
     if args.completion_plan is not None:
@@ -297,6 +311,8 @@ def main():
     manager.client.images.get(image)
     args.output.mkdir(parents=True,exist_ok=False)
     (args.output/'actions.json').write_bytes(canonical_json(actions))
+    if amendment is not None:
+        (args.output/'original-actions.json').write_bytes(canonical_json(original_actions))
     if completion is not None and file_record(args.output/'actions.json') != completion['source_actions']:
         raise ValueError('Completion plan source action identity mismatch')
     receipt={'source':identity,'trajectory_id':trace,'instance_id':instance,
@@ -311,6 +327,11 @@ def main():
     if completion is not None:
         receipt.update(completion_plan=completion, completion_plan_file=completion_identity,
                        completion_module=file_record(ROOT/'zenithsync/replay_completion.py'))
+    if amendment is not None:
+        receipt.update(amendment_plan=amendment, amendment_plan_file=amendment_identity,
+                       amendment_module=amendment_module,
+                       original_actions=file_record(args.output/'original-actions.json'),
+                       derived_actions=file_record(args.output/'actions.json'))
     cid=None;events=[]
     try:
         cid=manager.start()
@@ -397,6 +418,12 @@ def main():
                 raise ValueError('Completion plan changed during replay')
             if file_record(args.output/'submitted.patch') != completion['final_patch']:
                 raise ValueError('Native submitted patch differs from completion plan')
+        if amendment is not None:
+            if (file_record(args.amendment_plan) != amendment_identity
+                    or file_record(ROOT/'zenithsync/replay_amendment.py') != amendment_module
+                    or file_record(args.output/'original-actions.json') != amendment['source_actions']
+                    or file_record(args.output/'actions.json') != amendment['derived_actions']):
+                raise ValueError('Amendment provenance changed during replay')
         receipt.update(status='replayed_not_graded',patch=file_record(args.output/'submitted.patch'),
                        tool_calls=ctx.tool_calls)
     finally:

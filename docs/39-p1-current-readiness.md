@@ -2,7 +2,7 @@
 
 Updated October 10, 2026. **P1 is incomplete. Keep the Runpod GPU stopped.**
 No real training corpus is admitted and no learned coding-performance gain has
-been demonstrated. The latest completed local integration is corpus 031, including the explicitly corrected
+been demonstrated. The latest completed local integration is corpus 033, including the explicitly corrected
 Lmfit, Munch, Importlab and Apispec replays and their diagnostic/compatibility checks.
 
 This file is the current acceptance summary. Cycle details, failed attempts and
@@ -10,6 +10,39 @@ superseded results are preserved in the [implementation journal](40-p1-implement
 The [implementation plan](12-continuous-implementation-plan.md) retains the phase
 scope and campaign assumptions. Update this summary and the journal after each
 cycle; do not append historical logs to this summary.
+
+## Training-content review — October 11, 2026
+
+Corpus 033 remains quarantined. Contextual review now covers all 44 lexical matches
+across 23 flagged histories; 145 exact selected-message bindings were verified.
+Six histories had no lexical match, which is not semantic approval. Recursive
+argument inspection found no nested string values in these 29 histories.
+
+The [correction queue](../evidence/data/corpus033-claim-review-004/correction-queue.json)
+requires explicit claim corrections for the Signac622, Lenskit312 and CloudEvents172
+original histories. Lmfit487 completion wording and Importlab23 changed expectations
+need scope/contract review. Six other histories have diagnostic-quality follow-ups.
+Conditional success, explicitly negated guarantees and preserved failed attempts
+are distinguished from unsupported claims; neither keyword counts nor exit code
+alone determine correctness. Full content and admission review remains outstanding.
+
+This queue is evidence, not an admission mechanism: the existing quarantine gate
+continues to deny training. No corpus bytes, original histories or earlier review
+reports were rewritten. Corrected derivatives require explicit provenance, fresh
+replay and renewed grading, token and content qualification. Rally1469 remains a
+separate held candidate outside corpus 033.
+The complete 47-file review chain is uploaded and restore-verified in R2.
+
+Lenskit's [fresh amended replay](../evidence/data/lenskit312-amended-review-001/report.json)
+completed 26 charged calls with verified container removal. Its 56-message history
+attributes all three amended actions explicitly, preserves one 30-second timeout,
+and retains the same source patch. Finite completion checks again report 5,850
+metric cases and 4,875 suffix checks. Token audit: 19,836 input, 5,644 supervised,
+4,740-token margin after reserving 8,192 output tokens. Replay and projection now
+verify original/derived action bindings and bind completion to the derived list.
+The 435-test local suite passes with 17 skips. Independent derivative grading,
+mechanical admission and full content review remain pending; corpus 033 is unchanged.
+The 26-file implementation/replay archive is uploaded and restore-verified in R2.
 
 ## Storage status
 
@@ -20,24 +53,48 @@ and open-handle checks; historical wheel-cache paths must be restored before reu
 The model, datasets, recipes, Docker images and containers were preserved.
 See the [recovery receipt](../evidence/data/storage-capacity-audit-001/backend-restore-receipt.json)
 and [eviction receipt](../evidence/data/dependency-cache-eviction-001/receipt.json).
-Local capacity remains constrained; remeasure before acquiring another image.
+Six unused project Python 3.7 build-cache records were also removed with exact-ID checks; Docker image and container IDs are unchanged. See the [cleanup receipt](../evidence/data/scoped-build-cache-cleanup-003/receipt.json). A 428,839,266-byte duplicate restore-test shard was also evicted after fresh R2 and local hash verification; the original source remains. See the [eviction receipt](../evidence/data/restore-cache-eviction-001/receipt.json). That historical restore directory now requires restoration before reuse. The held fancyheader image cache was subsequently evicted after a live pinned-registry check, preserving other image/container IDs. This recovered sufficient capacity to acquire Rally; free space after that pull was 3.89 GB. See the [image eviction receipt](../evidence/data/fancyheader-image-eviction-001/receipt.json). Remeasure before another image acquisition.
 
 ## Acceptance status
 
 | Requirement | Verified evidence | Remaining acceptance work |
 | --- | --- | --- |
-| Data supply | 27 quarantined examples, 27 tasks, 26 declared repository groups; 556,186 input and 157,200 supervised tokens | Abundant, diverse, approved data; the 3×50M processed-target-token plan is not supplied |
+| Data supply | 29 quarantined examples, 29 tasks, 28 declared repository groups; 588,865 input and 165,947 supervised tokens | Abundant, diverse, approved data; the 3×50M processed-target-token plan is not supplied |
 | Task alignment | Publisher controls and bounded semantic checks for selected candidates; Boltons derivative repairs the reproduced compatibility failure | Final content-bound review for every admitted task; passing finite cases is not universal correctness |
 | Attribution | Selected exact repository and dependency notices retained; teacher and assistant-derived actions distinguished | Complete source, observation, dependency and teacher-term review |
-| Split isolation | Authenticated lineage audit 022 resolves 26 declared groups, two historical names and four reserved names; no cross-boundary ID/network-root overlap | Freeze splits and review semantic duplicates, detached copies and historical lineage; current IDs do not prove independence |
-| Local training code | Latest CPU suite in native environment: 419 tests, 402 passed, 17 skipped | Skipped environments, full-model GPU corroboration and long-running stability |
-| Artifact ingestion | Corpus 031 uploaded to R2, restored into an empty directory and validated; schedules match byte-for-byte | Repeat with the final admitted bundle on the actual Runpod volume |
+| Split isolation | Authenticated lineage audit 024 resolves 28 declared groups, two historical names and four reserved names; no cross-boundary ID/network-root overlap | Freeze splits and review semantic duplicates, detached copies and historical lineage; current IDs do not prove independence |
+| Local training code | Latest CPU suite in native environment: 435 tests, 418 passed, 17 skipped | Skipped environments, full-model GPU corroboration and long-running stability |
+| Artifact ingestion | Corpus 033 uploaded to R2, restored into an empty directory and validated; schedules match byte-for-byte | Repeat with the final admitted bundle on the actual Runpod volume |
 | GPU validation | Earlier single synthetic full-model update/reload only | Real-corpus long-sequence memory, throughput, checkpoint/resume and bounded failure handling |
 | Product performance | No demonstrated learned held-out gain | Train and compare against a frozen baseline on uncontaminated held-out tasks |
 
 ## Current corpus and evidence
 
-Spelling177 is integrated into quarantined corpus031.
+Evaluator extraction and replay-history construction now also use one verified immutable byte snapshot for both Parquet reads. Four new real-parser integration tests and real SoftLayer output equivalence pass; see the [reader regression report](../evidence/p1/task-reader-snapshot-regression-001/report.json).
+
+Teacher extraction now parses a bounded, SHA-256-verified immutable byte snapshot
+rather than reopening a cloud-backed Parquet path. Provenance and final drift
+checks remain active. Three regression tests and three real candidate extractions
+pass; the latest full native suite passes 409 of 426 tests, with 17 skipped. See the
+[ingestion regression report](../evidence/p1/source-byte-snapshot-regression-001/report.json).
+SoftLayer2188 passes all four publisher cases and all 28 finite CLI cases; its 35-call native replay independently passes all four publisher cases. The untruncated history has 16,291 input and 2,850 supervised tokens, with an 8,285-token reserve margin. Mechanical checks pass and the candidate is integrated into quarantined corpus 033; final training-content approval remains pending. See the [native observation review](../evidence/data/softlayer2188-observation-review-001/scope.md) for seven preserved command failures. Its 114-file runtime evidence archive is uploaded and restore-verified in R2. The separate 62-file native archive is remotely hash-verified, but not restore-tested. See the [runtime review](../evidence/data/softlayer2188-runtime-review-001/scope.md). Rally1469 scope is resolved against upstream; its extra reference chart edit is outside the stated issue. Runtime now passes all 197 publisher cases and all 12 bounded connector/session checks; native replay and token qualification now pass, but the original is held for unsupported leak-prevention claims in teacher-written validation code. See the [content hold](../evidence/data/rally1469-observation-review-001/scope.md) and [runtime review](../evidence/data/rally1469-runtime-review-001/report.json). See the [scope and runtime plan](../evidence/data/rally1469-scope-review-001/scope.md).
+Pylutron20 is held for delimiter and unresolved license issues. See the
+[static decisions](../evidence/data/qualification-triage011-review-001/decisions.json).
+
+
+Numba6653 is integrated into quarantined corpus033 after a 35-call native replay.
+Its one-file patch passes independent grading on the single publisher regression.
+The untruncated history has 16,388 input and 5,897 supervised tokens, leaving
+8,188 after the output reserve. Mechanical checks pass; training approval is false.
+Two observed shell errors remain recorded. See the [native review](../evidence/data/numba6653-observation-review-001/report.json)
+and [bounded runtime review](../evidence/data/numba6653-runtime-review-001/report.json).
+Mwclient365 and Pika851 remain held for state/default/logging discrepancies; the
+[static decisions](../evidence/data/qualification-triage010-review-002/decisions.json)
+and [historical cohort projection](../evidence/data/qualification-batch003-status-001/report.json)
+record their scope. Numba is integrated in quarantine; no example is admitted for training.
+
+
+Spelling177 is integrated into quarantined corpus033.
 Its 32-call native replay submits one production file; independent grading matches
 all 11 reference outcomes, including the expected docstring failure. The untruncated
 history has 20,807 input and 4,433 supervised tokens, leaving 3,769 after the output
@@ -47,7 +104,7 @@ See the [native observation review](../evidence/data/spelling177-observation-rev
 and [bounded runtime review](../evidence/data/spelling177-runtime-review-001/report.json).
 
 
-The corrected Apispec950 replay is integrated into quarantined corpus031.
+The corrected Apispec950 replay is integrated into quarantined corpus033.
 The explicit assistant correction submits a one-file patch in 37 charged calls,
 passes 117 independently graded publisher cases and the previously recorded 36
 finite metadata/schema checks. Its 78-message, 38-exchange history contains
@@ -81,7 +138,7 @@ An attributed correction now passes 30 path checks and all 30 graded publisher
 cases after a 38-call native replay. Mechanical checks pass; history is 23,697
 input / 6,640 supervised tokens, with 879 tokens of output-reserve margin.
 See the [correction review](../evidence/data/importlab23-correction-review-001/report.json).
-The corrected replay is integrated into corpus 031; training admission remains pending.
+The corrected replay is integrated into corpus 033; training admission remains pending.
 
 Icontract 115's uncorrected teacher is held outside the corpus. It passes all
 25 publisher tests but bypasses preconditions, postconditions and snapshots in
@@ -106,10 +163,10 @@ It retains the teacher's DefaultMunch override: reference alone fails eight of
 those compatibility checks, which are not asserted publisher requirements.
 Native replay and exact-patch grading pass; mechanical assessment passes with
 39/40 calls and 24,332 input / 5,953 supervised tokens. Only 244 tokens remain
-after the output reserve. The corrected derivative is integrated into corpus 031; training admission is pending.
+after the output reserve. The corrected derivative is integrated into corpus 033; training admission is pending.
 See the [corrected review](../evidence/data/munch52-correction-review-002/report.json).
 
-The original Lmfit 487 teacher is held; its corrected derivative is in corpus 031: its independently verified
+The original Lmfit 487 teacher is held; its corrected derivative is in corpus 033: its independently verified
 210-file source snapshot preserves the exact base tree. Base/reference/teacher
 publisher results are 12/13, 13/13 and 13/13; 18 finite expression-recovery
 sequences fail on the base and pass for both fixes. The teacher sometimes retains
@@ -129,28 +186,28 @@ and a teacher diagnostic's invalid private-method call. See the
 [corrected assessment](../evidence/data/lmfit487-mechanical-admission-001/report.json).
 The derivative increases quarantined supply, not admitted training supply.
 
-The [corpus 031 supply audit](../evidence/data/corpus031-supply-review-001/report.json)
+The [corpus 033 supply audit](../evidence/data/corpus033-supply-review-001/report.json)
 revalidates the restored manifest and independently recounts shifted-label targets.
-All 27 sequences fit 32,768 tokens; 25 also satisfy the separate mechanical policy
+All 29 sequences fit 32,768 tokens; 27 also satisfy the separate mechanical policy
 `input_tokens + 8192 <= 32768`. Emcee 295 and CloudEvents 172 fail that reserve
 screen. This does not invalidate their training-length accounting, and passing
 the screen does not establish full admission. The input count already includes
 supervised tokens; adding those tokens again would double-count them.
 
-One 50M-target-token campaign is exactly `50000000/157200`, approximately 318.07,
+One 50M-target-token campaign is exactly `50000000/165947`, approximately 301.30,
 current-corpus-equivalent passes. This is descriptive token reuse, not an exact
 scheduler epoch count or independent evidence. No corpus is admitted. Expand
 diverse, reviewed supply before scheduling a campaign; do not use repetition to
 claim that the data requirement has been met.
 
-- [Assembly receipt](../evidence/data/training-corpus-assembly-031/receipt.json)
-- [R2 publish receipt](../evidence/data/training-corpus-publish-031/receipt.json)
-- [R2 restore receipt](../evidence/data/training-corpus-restore-031/receipt.json)
-- [Restored corpus inspection](../evidence/data/training-corpus-inspection-030/report.json)
-- [Integration evidence archived in R2](../evidence/data/corpus031-integration-publish-001/receipt.json)
-- [Integration and schedule equality check](../evidence/data/corpus031-integration-check-001/report.json)
-- [Explicit training rejection](../evidence/data/training-corpus-denial-029/report.json)
-- [Current repository lineage screen](../evidence/data/current-corpus-lineage-022/report.json)
+- [Assembly receipt](../evidence/data/training-corpus-assembly-033/receipt.json)
+- [R2 publish receipt](../evidence/data/training-corpus-publish-033/receipt.json)
+- [R2 restore receipt](../evidence/data/training-corpus-restore-033/receipt.json)
+- [Corpus integrity inspection](../evidence/data/training-corpus-inspection-032/report.json)
+- [Integration evidence archived in R2](../evidence/data/corpus033-integration-publish-001/receipt.json)
+- [Integration and schedule equality check](../evidence/data/corpus033-integration-check-001/report.json)
+- [Explicit training rejection](../evidence/data/training-corpus-denial-031/report.json)
+- [Current repository lineage screen](../evidence/data/current-corpus-lineage-024/report.json)
 - [Lenskit corrected observation review](../evidence/data/lenskit312-observation-review-002/report.json)
 - [Lenskit qualification archive](../evidence/data/lenskit312-qualification-publish-001/receipt.json)
 - [Required correction archive](../evidence/data/lenskit312-correction-publish-001/receipt.json)
@@ -193,12 +250,12 @@ claim that the data requirement has been met.
 - [Triage evidence archived in R2](../evidence/data/qualification-triage005-publish-001/receipt.json)
 
 Manifest SHA-256:
-`de6cf69928394b7860693a99acd198520f58b63841b544e260c79c1cb7afce1c`.
+`de181d6fb9014532d3394a0bef42ee2b47a54c183a7a7770b783f7d98bb0f0db`.
 Content SHA-256:
-`6b613de0bf8d82656c84d9aea69d43a757d6390e625ffa5ac7d29a2e06227376`.
-The restored bundle has 55 files and 6,155,247 bytes. Its one-epoch schedule uses
-seed 7401, 26 planned updates and a 9,216-supervised-token update cap. It consumes
-157,200 target tokens with zero overshoot. No optimizer steps are implied.
+`01d42a005439e35c7fae2a47aef3c6ed0c726a33ca970dc169e438d1653c84d5`.
+The restored bundle has 59 files and 6,514,884 bytes. Its one-epoch schedule uses
+seed 7401, 27 planned updates and a 9,216-supervised-token update cap. It consumes
+165,947 target tokens with zero overshoot. No optimizer steps are implied.
 
 All four admission fields remain null: rights/attribution, split isolation,
 runtime qualification and task alignment. Training-purpose loading rejects with
@@ -212,7 +269,7 @@ Icontract remains above the call budget; corrected Marshmallow remains above
 the context-reserve budget. The existing stochastic-assignment candidate remains held for demonstrated
 probability-validation counterexamples. Triage 009 has runtime evidence for the API-schema candidate and static
 evidence for spelling-caption nodes. The corrected API candidate is integrated with verified restore and schedule
-accounting. Spelling runtime remains pending; review capacity before another image pull. Neither is approved data.
+accounting. Spelling, Numba and SoftLayer are integrated into quarantine. Rally1469 has passed native/mechanical checks but remains excluded for unsupported validation claims; Pylutron20 remains held on delimiter and rights questions. None is approved training data.
 Measure local capacity before any additional container image downloads.
 
 1. Continue diverse task qualification. ASDF1853 passes 28 publisher tests and
