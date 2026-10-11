@@ -3033,3 +3033,39 @@ were read. Evidence binding: `corpus018-integration-check-001/report.json`.
 The 3x50M processed-target-token campaigns are still not supplied by an abundant,
 approved corpus. No training or GPU use occurred. Continue diverse qualification,
 attribution and split review; keep the Pod stopped.
+
+
+#### Icontract 115 qualification update
+
+The teacher is excluded pending an explicitly attributed correction: 25/25
+publisher passes conceal nine contract-bypass counterexamples among 15 valid
+variadic-call checks. A correction must preserve contract execution and pass
+publisher controls, argument-binding checks, native replay and content-bound
+admission assessment before corpus consideration. Runtime evidence is published
+and hash-verified in R2 (icontract115-runtime-publish-001). Corpus028 and the
+three planned 50M processed-target-token campaigns are unchanged; adequate data
+supply remains unresolved. Keep Runpod stopped during this local qualification.
+
+
+Icontract correction follow-up: bounded mapping now passes the 25 publisher,
+15 variadic and 152 mapping/call-shape tests. Native integration remains held:
+40 source calls plus an appended correction exceed current 40-call policy.
+Do not trim history or relax admission implicitly. Continue qualifying other
+sources while considering an explicitly authored fresh episode separately.
+
+
+Importlab 23 follow-up: runtime qualification found a filename-boundary
+regression despite 30/30 publisher passes. Prioritize an attributed correction
+that distinguishes path separators from literal dots, then native replay,
+context-budget audit and grading. Its 37 source calls leave up to three calls
+under existing policy, subject to actual replay validation. Corpus028 remains
+unchanged; no GPU restart is needed for this work.
+
+
+Importlab corrected replay now passes 30 graded cases and mechanical checks
+at 38 calls, with 23,697 input / 6,640 supervised tokens and 879 reserve margin.
+Next integrate its explicitly attributed candidate, then repeat corpus hash,
+restore, lineage, schedule and denial checks. Training remains unapproved.
+Use byte-verified temporary runtime staging for Desktop hydration failures;
+do not relax identity guards. Prefer existing images and verified duplicate
+cache removal while local storage is constrained.

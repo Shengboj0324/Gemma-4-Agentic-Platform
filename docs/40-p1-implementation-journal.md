@@ -3991,3 +3991,152 @@ unchanged. No GPU was used; Runpod remains stopped.
 Triage evidence archive published and remotely hash-verified in R2: 40 files /
 175,483 bytes; `evidence/data/qualification-triage008-publish-001/receipt.json`.
 This separate archive has not been independently restore-tested.
+
+
+### Icontract 115 runtime qualification — teacher held
+
+Local offline validation completed with Python 3.6.13 and pytest 7.0.1,
+importing the exact task module. Snapshot build001 failed because the pinned
+image lacks the solution commit. A separate disposable-container Git probe
+verified solution absence and base availability. Build002 explicitly used the
+already-absent path; no ancestry claim is made. Independent verification checks
+58 tracked files, one parentless commit, inaccessible old commits and absent
+known oracle paths. This covers mounted files, not inherited Docker layers.
+
+Publisher controls002: base 24/25; reference and candidate 25/25, with every
+publisher transition matched. Controls001 completed test processes but failed
+its final source identity inventory on macOS hydration of
+compare_source_snapshot.py. Its outputs and source are retained; controls002
+warms files before the final unchanged-identity comparison without weakening it.
+
+Semantic-controls001: 3 contract kinds × 5 argument counts = 15 finite cases.
+For body(*args), signature-name count is one but 2, 3 and 5 positional arguments
+are valid. Candidate returns body directly on all nine such cases, skipping
+preconditions, postconditions and snapshots; reference has zero mismatches.
+Base also fails nine cases, but raises IndexError before body execution.
+Equal failure counts do not indicate equivalent behavior. These checks establish
+concrete counterexamples, not statistical prevalence or general correctness.
+
+Decision: hold uncorrected teacher; no native replay or corpus addition.
+Corpus028 remains unchanged, and Runpod remains stopped. No shared production
+code changed. Runtime review: evidence/data/icontract115-runtime-review-001/report.json.
+Archive manifest: evidence/data/icontract115-runtime-manifest-001.json
+(122 files, 255,875 bytes). Publication status is recorded separately in
+evidence/data/icontract115-runtime-publish-001/receipt.json; this evidence
+archive has not been independently restore-tested.
+
+R2 publication completed with status verified; all archived content was remotely
+hash-verified. This is not an independent restore test.
+
+
+### Icontract 115 assistant correction — runtime passes, replay policy hold
+
+Removed the teacher early return and replaced unbounded mapping indexing with
+zip(param_names, args). For finite sequences P and A, zip enumerates exactly
+indices below min(len(P), len(A)), matching reference guarded assignment.
+Default initialization and keyword override order remain unchanged. This is a
+bounded-mapping equivalence argument, not general Python signature correctness.
+
+Corrected-controls001: all 25 publisher cases match reference; base passes 24.
+Corrected-semantics001: all 15 cases pass for candidate/reference; base fails 9.
+Corrected-binding001: all 152 cases pass for candidate/reference; base fails 85.
+The latter covers 140 mapping combinations (5 name counts × 7 argument counts ×
+4 keyword overlays) and 12 fixed/variadic/keyword-only/mixed call-shape cases.
+These are deterministic checks, not independent statistical samples. Invalid
+calls with rejecting preconditions are excluded because exception priority is
+not specified by these acceptance checks.
+
+Source trace has 40 charged calls. At least one appended correction makes 41,
+exceeding current 40-call policy. No source history was trimmed, no native replay
+or token audit performed, and no corpus addition made. A future independently
+authored episode must preserve its own provenance; policy changes need explicit
+rationale and broader evaluation. The runtime derivative alone is not trainable.
+
+First correction-script preflight failed with KeyError before runtime because
+it used the final action instead of the matched edit. Failed source retained as
+controls-preflight.py; fixed source stores teacher_edit explicitly. No shared
+production code changed. Corpus028 unchanged; Runpod remains stopped.
+
+Evidence: icontract115-correction-review-001/report.json. Archive inventory:
+65 files / 246,789 bytes. R2 publication receipt is
+icontract115-correction-publish-001/receipt.json; no independent restore test.
+
+Correction evidence R2 publication completed: status verified, remote hashes
+checked; independent restore remains untested.
+
+
+### Importlab 23 runtime qualification — filename-boundary regression
+
+Source trajectory has 37 charged calls, leaving possible room under the 40-call
+policy for an explicit correction. Pinned image pulled after capacity review:
+661,973,636 compressed bytes in layers absent from local RootFS identities;
+this does not bound uncompressed growth. No unrelated images were removed.
+
+Build001 failed its ancestry requirement. Build002 explicitly checks solution
+absence before sanitization; no ancestry claim is made. Independent snapshot
+verification confirms 33 exact-base tracked files, one parentless commit,
+inaccessible historical commits and absent known oracle files. This covers
+mounted filesystem, not inherited image layers.
+
+Runtime Python 3.9.20 / pytest 8.3.3 differs from metadata Python 3.6.
+Publisher controls001: base 29/30, teacher/reference 30/30, every expected
+transition matched. Semantic-controls001: 30 finite POSIX cases; base fails 8,
+teacher fails 4, reference none. Teacher turns foo.__init__.py into foo and
+pkg/foo.__init__.py into pkg.foo; each is tested with and without a preceding
+search-root miss. These are two filename counterexamples, not four independent
+statistical observations. Literal filename dots are not path separators.
+Base preserves those inputs, so this is a new regression. No claim is made
+that dotted filenames are ordinary import-statement identifiers.
+
+Root __init__, nested packages, dotted directories, ordinary modules and
+non-.py extensions are covered. Windows and precedence between two successful
+roots are not covered. Teacher held; no correction, native replay, token audit
+or corpus integration. Shared production code unchanged; Runpod stays stopped.
+
+Runtime review: evidence/data/importlab23-runtime-review-001/report.json.
+Archive inventory: 87 files / 222,705 bytes; publication receipt:
+evidence/data/importlab23-runtime-publish-001/receipt.json. Independent archive
+restore not tested.
+
+Importlab runtime archive publication completed with status verified; remote
+content hashes checked. Independent restore remains untested.
+
+
+### Importlab 23 corrected replay and subdirectory command mapping
+
+Assistant correction strips an actual separator-delimited __init__ before dot
+conversion. Corrected publisher controls and 30 finite POSIX path checks pass.
+The original trace required a previously unsupported literal command:
+cd <source>/tests && ./run_all.sh. Added narrow subdirectory/script mapping;
+execution-parity test preserves working directory, stdout and nonzero exit,
+while rejection tests cover traversal, nonlocal roots, options and shell syntax.
+This grammar is replay compatibility, not a general shell security boundary.
+
+Original native001: 37 calls; corrected native002: 38 calls including one
+explicit assistant completion. Source actions preserved; native commands have
+no nonzero exit. Final patch 610 bytes, SHA-256
+0f1fc92f4f19c5f99a3b6c003c6f80f860f03de27ee90f4c302e50d09627d9b9.
+Both disposable containers removed. Plan001 failed during source hydration;
+plan002 is authoritative. Standard controls003 and grade001 establish all 30
+publisher matches. History001 has 80 messages / 39 exchanges; tokens003 has
+23,697 input / 6,640 supervised tokens, no truncation, 879-token output-reserve
+margin. Mechanical-admission001 passes, training_approved remains false.
+
+Desktop hydration interrupted evaluator extraction, controls001, tokens001/002
+and history preflight. Byte-equal code/input staging at
+/tmp/zenithsync-importlab23-validation-runtime-001 allowed final controls/token
+checks without weakening file_record; stable-runtime001 binds staged identities.
+Retain failed artifacts; do not label incomplete attempts passing.
+
+Full suite initial run: 416 tests, one failure/four errors caused by hydration
+inside identity guards, 17 skipped. Retry after hydration: 416 tests, 399 passed,
+17 skipped, zero failures/errors in 18.314 seconds. Logs retained under
+evidence/p1/subdirectory-replay-regression-001. This does not verify skipped
+GPU/dependency environments or full model training.
+
+Storage: verified three byte-identical 245,825,405-byte shard010 temporary
+caches and no open file handles. Removed only Lenskit/Optuna duplicate caches;
+retained /tmp/zenithsync-lmfit487-source-cache-001. Logical bytes removed:
+491,650,810. Audit evidence/data/local-cache-dedup-001. Historical receipts keep
+original paths; reusable bytes remain in the retained cache. No model or Docker
+pruning. Corpus028 unchanged; Runpod stays stopped.

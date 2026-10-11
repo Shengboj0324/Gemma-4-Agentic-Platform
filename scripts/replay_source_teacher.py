@@ -116,6 +116,20 @@ def adapt_source_local_command(command):
     return None
 
 
+def adapt_source_subdirectory_script(command, prefix):
+    """Map a literal repository subdirectory and script without changing shell semantics."""
+    match = re.fullmatch(
+        r'cd (?P<directory>/[A-Za-z0-9_./-]+) && \./(?P<script>[A-Za-z_][A-Za-z_0-9-]*\.sh)',
+        command)
+    if match is None:
+        return None
+    directory = match['directory']
+    if not directory.startswith(prefix + '/'):
+        return None
+    relative = source_path(directory, prefix)
+    return 'cd /workspace/' + relative + ' && ./' + match['script']
+
+
 def preflight(messages, prefix=PREFIX):
     require_no_credential_indicators(messages)
     actions=[]
@@ -153,6 +167,10 @@ def preflight(messages, prefix=PREFIX):
                 local = adapt_source_local_command(args['command'])
                 if local is not None:
                     actions.append({'index':index,'kind':'shell','command':local, **shell_metadata})
+                    continue
+                subdirectory = adapt_source_subdirectory_script(args['command'], prefix)
+                if subdirectory is not None:
+                    actions.append({'index':index,'kind':'shell','command':subdirectory, **shell_metadata})
                     continue
                 if set(args)=={'command'} and args['command']=='python --version':
                     actions.append({'index':index,'kind':'shell','command':args['command'], **shell_metadata})

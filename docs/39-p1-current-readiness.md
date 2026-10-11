@@ -19,12 +19,33 @@ cycle; do not append historical logs to this summary.
 | Task alignment | Publisher controls and bounded semantic checks for selected candidates; Boltons derivative repairs the reproduced compatibility failure | Final content-bound review for every admitted task; passing finite cases is not universal correctness |
 | Attribution | Selected exact repository and dependency notices retained; teacher and assistant-derived actions distinguished | Complete source, observation, dependency and teacher-term review |
 | Split isolation | Authenticated lineage audit 019 resolves 23 declared groups, two historical names and four reserved names; no cross-boundary ID/network-root overlap | Freeze splits and review semantic duplicates, detached copies and historical lineage; current IDs do not prove independence |
-| Local training code | Latest CPU suite in native environment: 413 tests, 396 passed, 17 skipped | Skipped environments, full-model GPU corroboration and long-running stability |
+| Local training code | Latest CPU suite in native environment: 416 tests, 399 passed, 17 skipped | Skipped environments, full-model GPU corroboration and long-running stability |
 | Artifact ingestion | Corpus 028 uploaded to R2, restored into an empty directory and validated; schedules match byte-for-byte | Repeat with the final admitted bundle on the actual Runpod volume |
 | GPU validation | Earlier single synthetic full-model update/reload only | Real-corpus long-sequence memory, throughput, checkpoint/resume and bounded failure handling |
 | Product performance | No demonstrated learned held-out gain | Train and compare against a frozen baseline on uncontaminated held-out tasks |
 
 ## Current corpus and evidence
+
+Importlab 23's teacher is held: it passes all 30 publisher tests but fails four
+of 30 POSIX path checks by truncating two literal dotted filenames. Base
+preserves those filenames; reference passes all 30 checks. See the
+[runtime review](../evidence/data/importlab23-runtime-review-001/report.json).
+An attributed correction now passes 30 path checks and all 30 graded publisher
+cases after a 38-call native replay. Mechanical checks pass; history is 23,697
+input / 6,640 supervised tokens, with 879 tokens of output-reserve margin.
+See the [correction review](../evidence/data/importlab23-correction-review-001/report.json).
+Corpus028 remains unchanged pending integration.
+
+Icontract 115's uncorrected teacher is held outside the corpus. It passes all
+25 publisher tests but bypasses preconditions, postconditions and snapshots in
+nine of 15 valid variadic-call checks; reference passes all 15. Base fails those
+nine with IndexError, whereas the teacher runs the body without contracts.
+See the [runtime review](../evidence/data/icontract115-runtime-review-001/report.json).
+An assistant-authored, reference-informed correction now passes 25 publisher,
+15 variadic and 152 bounded-mapping/call-shape checks. Its original trace already
+uses 40 tool calls, leaving no room for appended correction under current policy.
+See the [correction review](../evidence/data/icontract115-correction-review-001/report.json).
+No corrected native replay or training admission is claimed.
 
 The original Munch 52 teacher remains held. It passes all six
 publisher tests but fails 27 of 54 finite subclass/default/YAML-graph checks;
