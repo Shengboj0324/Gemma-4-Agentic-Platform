@@ -21,6 +21,7 @@ def main():
         grade=args.grade, tokens=args.tokens, max_input_tokens=args.max_input_tokens,
         output_reserve=args.output_reserve, max_tool_calls=args.max_tool_calls)
     result['implementation'] = file_record(ROOT / 'zenithsync/replay_admission.py')
+    result['outcome_verifier'] = file_record(ROOT / 'zenithsync/rebench_grade_evidence.py')
     args.output.mkdir(parents=True, exist_ok=False)
     (args.output / 'report.json').write_bytes(canonical_json(result))
     print({key: result[key] for key in ('mechanical_checks_passed', 'mechanical_blockers', 'training_approved')})

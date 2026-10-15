@@ -1,13 +1,13 @@
 # P1 acceptance checklist
 
-Checkpoint: October 8, 2026. **P1 is not accepted.** This checklist separates evidence by scope; a passing receipt is not a substitute for reviewing what its verifier actually measured. Operational handoff: [document 25](25-p1-deployment-handoff.md). Detailed history: [document 24](24-p1-implementation-status.md).
+Checkpoint: October 11, 2026; historical rows retain their original evidence scope. **P1 is not accepted.** This checklist separates evidence by scope; a passing receipt is not a substitute for reviewing what its verifier actually measured. Operational handoff: [document 25](25-p1-deployment-handoff.md). Detailed history: [document 24](24-p1-implementation-status.md).
 
 | Requirement | Current evidence and scope | Decision |
 |---|---|---|
 | Complete local checkpoint, config and tokenizer | [Storage receipt](../evidence/p1/storage-001/receipt.json); complete manifest and safetensors interval/byte-count checks | CPU storage checks passed |
 | Publisher version identity | [Authenticated v2 listing](../evidence/p1/model-provenance-001/receipt.json) matches all eight filenames and sizes | Listing matched; publisher supplies no byte hashes, so cryptographic publisher identity is unproven |
 | Numerical checkpoint integrity | [Numerical scan](../evidence/p1/weight-numerics-001/receipt.json): every BF16 value finite, every scale positive/finite, full-file hash matched | Passed within these predicates; no inference correctness claim |
-| Architecture correspondence | [410 quantized text projections](../evidence/p1/quantized-layout-001/receipt.json) match config and packed/scale dimensions | Text-layout checks passed and the real loader succeeded; exhaustive unquantized vision/embedding/norm correspondence remains unqualified |
+| Architecture correspondence | [Complete descriptor comparison](../evidence/p1/architecture-layout-001/report.json): all 2,009 tensors accounted for, including 410 quantized projections and 779 unquantized tensors; pinned Transformers 5.13.1 meta constructor plus independent W4 dimension rules | Complete name/shape correspondence passed; BF16 dtype checked for unquantized tensors. No new weight-value scan, numerical-equivalence proof or GPU qualification |
 | Tokenizer and conversation serialization | [Pinned tokenizer](../evidence/p1/tokenizer-002/receipt.json), [conversation template](../evidence/p1/conversation-002/receipt.json) | CPU fixtures and one real generated tool continuation passed |
 | Official generated-output parser | [Official parser probe](../evidence/p1/parser-runtime-001/receipt.json): six expected fixtures match; duplicate-key and scientific-notation limitations observed | Partial: real nonstreaming calls observed; first attempt had 11 malformed writes, second attempt had 29 schema-valid calls. Cause of variability and streaming remain unqualified |
 | Real task assets and evaluator separation | Agent-visible projection, pinned Requests snapshot, matching graph/embedding bundle; reference patches excluded | Small P1 development pilot prepared; full training corpus deliberately not claimed |
@@ -33,3 +33,18 @@ Checkpoint: October 8, 2026. **P1 is not accepted.** This checklist separates ev
 The user's training objective remains in scope for subsequent phases. One-update adapter export/reload now has direct full-checkpoint evidence. Reward correctness, full-model resume, the three candidate token budgets, data-mixture comparisons and held-out gains remain P5–P6 obligations. Neither a training-token target nor an implementation-cycle duration overrides failed qualification gates.
 
 No requirement is waived by the number of tests or amount of documentation. The official Requests source-selection defect, unverified hidden-grader parity and tool-call variability remain material. GPU inference evidence now exists; training readiness does not follow from it.
+
+
+October 12 recovery update: [current worker recovery evidence](../evidence/p1/training-deployment-recovery-evidence-001/report.json) binds a newly published/restored 42-file source bundle and independently restored corpus056. Eight isolated CLI checks and 58 focused CPU tests pass, with zero test skips; actual training-purpose corpus loading rejects quarantine. Earlier harness errors are retained. This updates local deployment recovery evidence only; it does not accept P1 or qualify the full model for training.
+
+
+October 15 data/ingestion update: [Corpus059 integration](../evidence/data/corpus059-integration/restoration.json)
+records44tasks/43repositorygroups and248180supervised shifted targets, quarantined
+with zero training-admitted tokens. R2 publication and independent restoration pass.
+[Restored ingestion002](../evidence/p1/corpus059-ingestion-002/report.json) verifies
+current42-file worker identity, identical original/restored9-update schedules and
+real worker refusal before model access. [Resume checks](../evidence/p1/corpus059-ingestion-002/resume-verification.json)
+cover all10boundaries and10corrupted cursors. These checks do not qualify optimizer
+recovery or full-model training. The initial bytecode-extra inventory failure is
+retained alongside the successful rerun. Data sufficiency, rights, privacy, final
+splits and remaining runtime/evaluator gates are not waived. P1 remains unaccepted.

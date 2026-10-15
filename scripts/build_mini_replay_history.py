@@ -10,6 +10,7 @@ from zenithsync.replay_history import mini_replay_history
 from zenithsync.submission_reconciliation import scratch_cleanup_command
 from zenithsync.resource_replay_binding import verify_resource_replay_binding
 from zenithsync.replay_correction import verify_correction_binding
+from zenithsync.mini_replay_amendment import verify_mini_amendment_binding
 
 
 def main():
@@ -26,11 +27,13 @@ def main():
              ROOT / 'zenithsync/replay_history.py', ROOT / 'zenithsync/conversation.py',
              ROOT / 'zenithsync/resource_replay_binding.py',
              ROOT / 'zenithsync/replay_correction.py',
+             ROOT / 'zenithsync/mini_replay_amendment.py', ROOT / 'zenithsync/replay_amendment.py',
              ROOT / 'zenithsync/submission_reconciliation.py', ROOT / 'zenithsync/artifacts.py']
     bindings = {str(path): file_record(path) for path in paths}
     attempt = load_json(args.attempt / 'receipt.json')
     candidate = load_json(args.candidate)
     profile = load_json(args.profile)
+    amendment = verify_mini_amendment_binding(profile, attempt)
     correction = verify_correction_binding(profile, attempt)
     if correction is not None:
         source_patch = args.attempt / 'source-intended.patch'
@@ -75,7 +78,7 @@ def main():
         raise ValueError('Adapter cleanup differs from the reviewed standalone action')
     result = mini_replay_history(events,
         source_messages=candidate['messages'], system=protocol['messages'][0]['content'],
-        problem=task['problem_statement'], allowed_tools=names, correction_plan=correction)
+        problem=task['problem_statement'], allowed_tools=names, correction_plan=correction, amendment_plan=amendment)
     if any(file_record(path) != bindings[str(path)] for path in paths):
         raise ValueError('History projection inputs changed')
     args.output.mkdir(parents=True, exist_ok=False)
@@ -92,6 +95,9 @@ def main():
                        'Original teacher reasoning is omitted.',
                        'Adapter-authored cleanup and submission are synthetic actions.',
                        'Serialization is not training admission or semantic validation.']}
+    if amendment is not None:
+        receipt['amendment'] = amendment
+        receipt['limitations'].append('Diagnostic command amendments are explicitly assistant-authored, not original source actions.')
     if resource_proof is not None:
         receipt['resource_environment'] = resource_proof
         receipt['limitations'].append('Recorded current response bodies alter the environment; rights and historical equivalence are not established.')

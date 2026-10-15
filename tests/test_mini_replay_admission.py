@@ -100,6 +100,121 @@ class MiniAdmissionTests(unittest.TestCase):
     def identity(self, name):
         return file_record(self.root / name)
 
+    def make_go_evidence(self):
+        import json
+        from zenithsync.go_test_controls import compare_go_runs
+        task = load_json(self.root / 'task.json')
+        task['FAIL_TO_PASS'] = ['TestFix']
+        self.write('task.json', task)
+        grading = load_json(self.root / 'grade/report.json')
+        grading['inputs']['task.json'] = self.identity('task.json')
+        runs = {}
+        for role in ('base', 'reference', 'candidate'):
+            outcome = 'fail' if role == 'base' else 'pass'
+            events = [{'Action': 'start', 'Package': 'p'},
+                      {'Action': 'run', 'Package': 'p', 'Test': 'TestFix'},
+                      {'Action': outcome, 'Package': 'p', 'Test': 'TestFix'},
+                      {'Action': outcome, 'Package': 'p'}]
+            text = ''.join(json.dumps(event) + '\n' for event in events)
+            (self.root / 'grade' / role / 'tests.jsonl').write_text(text)
+            for name in ('tracked-before.patch', 'tracked-after.patch'):
+                (self.root / 'grade' / role / name).write_bytes(b'fixture tracked diff')
+            runtime = {'tests_started': True, 'go_exit': int(role == 'base'),
+                       'tracked_diff_unchanged_by_tests': True,
+                       'tracked_before': self.identity('grade/' + role + '/tracked-before.patch'),
+                       'tracked_after': self.identity('grade/' + role + '/tracked-after.patch')}
+            self.write('grade/' + role + '/runtime.json', runtime)
+            runs[role] = {'stdout': text, 'exit_code': runtime['go_exit']}
+        grading.update(evaluator_kind='go_test_json_v1', no_test_packages=[],
+            go_comparison=compare_go_runs(**runs, expectations={
+                'FAIL_TO_PASS': ['TestFix'], 'PASS_TO_PASS': [],
+                'FAIL_TO_FAIL': [], 'PASS_TO_FAIL': []}, no_test_packages=[]))
+        self.write('grade/report.json', grading)
+
+    def test_native_go_admission_and_unchanged_pytest_contract(self):
+        self.make_go_evidence()
+        report = assess_mini_replay_bundle(**self.args)
+        self.assertTrue(report['mechanical_checks_passed'])
+        self.assertFalse(report['training_approved'])
+        self.assertEqual(report['grading_backend'], 'swe_rebench_v2_go_test_json_reference')
+
+    def test_go_tracked_mutation_rejected_even_when_flag_claims_unchanged(self):
+        self.make_go_evidence()
+        changed = self.root / 'grade/candidate/tracked-after.patch'
+        changed.write_bytes(b'changed by tests')
+        runtime = load_json(self.root / 'grade/candidate/runtime.json')
+        runtime['tracked_after'] = file_record(changed)
+        self.write('grade/candidate/runtime.json', runtime)
+        with self.assertRaisesRegex(ValueError, 'changed tracked source'):
+            assess_mini_replay_bundle(**self.args)
+
+    def test_go_raw_log_mismatch_rejected(self):
+        self.make_go_evidence()
+        log = self.root / 'grade/candidate/tests.jsonl'
+        log.write_text(log.read_text().replace('"pass"', '"fail"'))
+        with self.assertRaises(ValueError):
+            assess_mini_replay_bundle(**self.args)
+
+    def test_unknown_evaluator_rejected(self):
+        grading = load_json(self.root / 'grade/report.json')
+        grading['evaluator_kind'] = 'made_up'
+        self.write('grade/report.json', grading)
+        with self.assertRaisesRegex(ValueError, 'Unsupported evaluator'):
+            assess_mini_replay_bundle(**self.args)
+
+    def make_mocha_evidence(self):
+        import json
+        from zenithsync.mocha_controls import compare_mocha_publisher
+        self.make_go_evidence()
+        grading = load_json(self.root / 'grade/report.json')
+        runs = {}
+        for role in ('base', 'reference', 'candidate'):
+            failing = role == 'base'
+            test = {'title': 'TestFix', 'fullTitle': 'suite TestFix',
+                    'currentRetry': 0, 'err': {'message': 'mismatch'} if failing else {}}
+            report = {'stats': {'tests': 1, 'passes': int(not failing),
+                               'failures': int(failing), 'pending': 0},
+                      'tests': [test], 'passes': [] if failing else [test],
+                      'failures': [test] if failing else [], 'pending': []}
+            text = json.dumps(report)
+            (self.root / 'grade' / role / 'tests.json').write_text(text)
+            runtime = load_json(self.root / 'grade' / role / 'runtime.json')
+            runtime['mocha_exit'] = runtime.pop('go_exit')
+            self.write('grade/' + role + '/runtime.json', runtime)
+            runs[role] = {'text': text, 'exit_code': runtime['mocha_exit']}
+        grading.pop('go_comparison')
+        grading.pop('no_test_packages')
+        grading.update(evaluator_kind='mocha_json_v1',
+            mocha_comparison=compare_mocha_publisher(runs,
+                fail_to_pass=['TestFix'], pass_to_pass=[]))
+        self.write('grade/report.json', grading)
+
+    def test_mocha_admission_preserves_context_gate(self):
+        self.make_mocha_evidence()
+        report = assess_mini_replay_bundle(**self.args)
+        self.assertTrue(report['mechanical_checks_passed'])
+        self.assertFalse(report['training_approved'])
+        self.assertEqual(report['grading_backend'], 'swe_rebench_v2_mocha_json_reference')
+        args = dict(self.args, max_input_tokens=2, output_reserve=1)
+        report = assess_mini_replay_bundle(**args)
+        self.assertIn('input_plus_output_reserve_exceeds_context', report['mechanical_blockers'])
+
+    def test_mocha_raw_report_and_tracked_mutation_rejected(self):
+        self.make_mocha_evidence()
+        path = self.root / 'grade/candidate/tests.json'
+        original = path.read_text()
+        path.write_text(original.replace('"passes": 1', '"passes": 2'))
+        with self.assertRaises(ValueError):
+            assess_mini_replay_bundle(**self.args)
+        path.write_text(original)
+        changed = self.root / 'grade/candidate/tracked-after.patch'
+        changed.write_bytes(b'mutated')
+        runtime = load_json(self.root / 'grade/candidate/runtime.json')
+        runtime['tracked_after'] = file_record(changed)
+        self.write('grade/candidate/runtime.json', runtime)
+        with self.assertRaisesRegex(ValueError, 'changed tracked source'):
+            assess_mini_replay_bundle(**self.args)
+
     def test_supplemental_controls_are_recomputed_from_bound_profile(self):
         node = 'test.py::test_backend'
         self.write('evaluator-profile.json', {'supplemental_pass_to_pass': [node]})

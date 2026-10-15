@@ -235,6 +235,7 @@ def main():
         settings = {'BASE': base, 'TREE': tree, 'ROLE': role,
             'PYTHON': profile['python'], 'MODULE': profile['module'],
             'EXPECTED_ORIGIN': profile['expected_origin'],
+            'SOURCE_PYTHONPATH': root + ('/src' if profile.get('layout', 'src') == 'src' else ''),
             'ALLOWED_PATHS': args.allowed_source_path,
             'TEST_TARGETS': targets, 'PATCHES': patches, 'PLUGIN': PLUGIN,
             'RESOURCE_PAYLOAD': '', 'RESOURCE_ADAPTER': ''}

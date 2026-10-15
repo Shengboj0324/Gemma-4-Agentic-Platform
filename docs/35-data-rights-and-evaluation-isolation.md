@@ -287,3 +287,207 @@ Final CPU suite: 298 tests, 274 passed, 24 skipped. The two-example corpus,
 labels and schedules are unchanged; no GPU was used. Next: complete remaining
 attribution and admission review, expand corpus coverage, and qualify GPU
 execution only after the exact candidate bundle is ready.
+
+
+### October 11 — Current-corpus attribution evidence index
+
+Created a 30-row inventory bound to the Corpus045 manifest. Six explicitly
+located historical rights/attribution reports are indexed, with their retained
+notice files copied only after SHA256 and size verification. The other rows
+are marked not indexed in this pass, not asserted to lack all existing evidence.
+No current-history rights binding is claimed from historical report presence.
+The easy-ptvsd material report explicitly records a missing ptvsd notice.
+
+Next actions: map current observed files and dependency output to notice coverage,
+resolve that recorded missing notice, and index remaining exact source captures.
+This is an evidence inventory, not legal clearance or a training authorization.
+Evidence: corpus045-attribution-index-001. No corpus admission gate changed.
+The broader CPU regression is still running through local dependency imports;
+no overall result is claimed. Runpod unused.
+
+
+### October 11 — ptvsd 3.0.0 notice supplement
+
+Investigated the easy-ptvsd dependency capture gap against the exact installed
+version. The PyPI 3.0.0 source archive is 51 KB and matches the release SHA256
+44fe6af915711b5f144d5344fa24b524d6b19cb0dbd784e177e3e65935d458dc.
+It contains no standalone LICENSE/NOTICE file. Its seven Python package files
+carry Microsoft copyright and Apache-2.0 headers; all seven match the installed
+files byte-for-byte in the pinned easy-ptvsd runtime. The offline export container
+exited successfully and was removed.
+
+Preserved those headers and the separately fetched official Apache license text
+in ptvsd300-supplement-001. The historical missing-file report remains unchanged;
+this is a supplementary evidence capture, not blanket rights clearance. Current
+trajectory observation coverage, other dependencies and corpus admission remain
+open. Sources: https://pypi.org/project/ptvsd/3.0.0/ and
+https://www.apache.org/licenses/LICENSE-2.0.txt .
+Runpod unused. The existing broad CPU regression process remains pending.
+
+## Candidate lexical screening and duplicate-family planning
+
+`scripts/audit_issue_similarity.py` accepts an explicitly selected JSON list of
+`{"task_id": "...", "issue": "..."}` records. Supply the source manifest's
+SHA-256 and size through `--sha256` and `--size-bytes`; do not treat a newly
+computed hash as independent provenance. Exclude reserved sources before
+exporting their issue bodies. The CLI performs no source authorization itself.
+
+The command accepts `--jaccard 1/2`, `--containment 4/5`, `--shingle-width 5`,
+`--max-bytes`, `--max-documents`, `--max-total-tokens`,
+`--max-candidate-pairs` and `--max-pair-visits`. Both thresholds must be positive
+and at most one. Scores are emitted as exact numerator/denominator pairs.
+Normalization is NFKC, casefold and token shingles; it is a lexical heuristic
+that can erase semantically important case or whitespace. Short texts use their
+complete token tuple. A resource-limit failure yields no successful report;
+increase a limit only after assessing available memory and work cost.
+
+For shingle posting lengths n_s, counting work is bounded before execution by
+sum_s n_s(n_s-1)/2. Unique shingle sets prevent repeated words from increasing
+pair intersections. Strictly positive thresholds permit zero-intersection pairs
+to be omitted exactly. These facts establish counting correctness for this
+representation, not semantic duplicate recall.
+
+After reviewing flags, pass justified task-ID lists to
+`zenithsync.splits.merge_leakage_groups(draft, links)`. It merges connected
+families without altering task splits, repositories or input identities, and
+rejects cross-split components. It only accepts draft manifests; the caller must
+preserve the reviewed evidence and bind the resulting manifest before a separate
+admission decision. Repository-network constraints are additional to these links.
+
+The candidate-leakage-plan-001 draft is a planning artifact for 1,575 tasks and
+1,573 families. Its input hashes identify issue text, not tokenized trajectories.
+Do not use it as a substitute for corpus046's native-history/token identity or a
+frozen development/confirmation split. The two exact issue-text pairs are Mobly
+164/165 and Hidrokit121/122; patch equivalence has not been established.
+
+
+## Selected committed-source capture — October 11
+
+`zenithsync.source_capture.capture_tracked_sources` exports explicit regular
+files from a separately qualified Git commit/tree. It checks tracked cleanliness
+before and after capture, resolves literal paths, rejects symlinks/submodules,
+preflights all selected blob sizes against per-file and aggregate byte limits,
+and verifies each returned blob against its Git object hash. The report is
+written only after final snapshot checks; a partially written directory without
+a report is not successful evidence. Callers must preserve a failed directory
+and choose a fresh output path for a retry.
+
+The caller supplies expected commit/tree identities and the desired source and
+notice paths. It does not discover all embedded notices, establish source rights
+or approve training. Objects are read from Git rather than potentially filtered
+checkout bytes. This supports bounded captures for repositories larger than the
+older whole-tree export limit, without silently dropping requested files.
+
+Seven new tests exercise actual temporary Git repositories, bad identities and
+paths, dirty and changing snapshots, symlinks, literal pathspecs, exact byte
+boundaries, preflight rejection before blob reads and corrupted blob output.
+The first run exposed an incorrect test-fixture byte count (31 instead of32);
+the fixture expectation was corrected and retained in the evidence trail.
+Fourteen targeted tests, including review-coverage regression, then passed.
+
+Applied to the pinned Rally snapshot: seven files /88,905 bytes, including
+LICENSE and NOTICE, were captured in an offline disposable container. All eight
+direct read observations match the original blobs plus the two source edits in
+recorded order. Source notices and a transformation supplement are preserved in
+`evidence/data/rally1469-attribution-001`. This does not exhaustively cover
+indirect shell output, installed dependencies or teacher-service terms.
+
+
+### Linkding selected shell attribution — 2026-10-11
+
+`evidence/data/linkding691-attribution-001/report.json` binds the exact corpus048
+Linkding history and token audit to nine preserved committed source blobs
+(91,188 bytes). Three complete `cat` observations and two context `grep`
+observations match exactly; the post-edit source observation is reconstructed
+from the recorded message-14 heredoc without executing that command. The
+original MIT `LICENSE.txt` is preserved unchanged. The attribution bundle has
+22 files / 173,979 bytes and is independently R2 restore-verified by
+`linkding691-attribution-publish-001` and `linkding691-attribution-restore-001`.
+
+This closes only selected source-observation checks. Recursive grep output,
+scratch programs, diffs, dependencies, dataset/teacher attribution and complete
+redistribution review remain open. The local source receipt identifies
+`nvidia/Open-SWE-Traces` revision
+`e192b26a43b8d09f156eeee781aef8e6bd5108ba`; its preserved card declares
+CC BY 4.0. This is a pinned local declaration, not a fresh publisher check or
+blanket source/teacher rights clearance. Do not substitute SWE-Hero provenance
+for this example. Corpus048 remains quarantined; no admission gate changed.
+
+No production code changed in this step. Five exact observation comparisons,
+all nine source identities, corpus/history/token-audit bindings and the R2
+restore were checked. The existing 493-test CPU result remains the latest full
+regression, not a newly executed suite. Runpod was not used. Local disk has
+approximately 1.4 GiB free; avoid large downloads until scoped cleanup is
+verified against archives and current consumers.
+
+
+### Linkding exact dataset lineage — 2026-10-11
+
+`evidence/data/linkding691-dataset-lineage-001/report.json` reselects exactly
+one trajectory from the hash-verified Open-SWE shard and reproduces the
+pre-replay candidate messages, response links, terminal status, tool schema and
+source metadata. Only five source columns were selected; reference-patch
+metadata was not loaded. The pinned dataset README was freshly downloaded at
+revision `e192b26a43b8d09f156eeee781aef8e6bd5108ba` and matches the intake
+SHA256 exactly. The archive includes NVIDIA attribution, its citation, CC BY
+4.0 declaration/link and a description of downstream modifications.
+
+The shard path and pinned card identify Qwen3.6-27B. A fresh model metadata
+lookup resolved revision `6a9e13bd6fc8f0983b9b99948120bc37f49c13e9`; its
+LICENSE was preserved at that immutable revision and identifies Apache 2.0.
+This is the currently observed model revision, not proof of the original
+generation revision or original generation-service terms. The archive does not
+replace the separate Linkding source-notice supplement or establish full rights
+clearance. Corpus048 and its null admission gates remain unchanged.
+
+The 12-file / 206,911-byte bundle is R2 published and independently
+restore-verified (`linkding691-dataset-lineage-publish-001` / `restore-001`).
+No production code changed; exact data/conversion and remote-content identity
+checks ran, not a new full regression. Runpod remained unused. Next provenance
+work must close uncovered source/dependency observations and assess coverage
+across the remaining corpus, alongside held-out split and privacy gates.
+
+
+### Final-input credential indicator screening — 2026-10-11
+
+Added `zenithsync/corpus_credentials.py` and
+`scripts/screen_corpus_credentials.py`. The CLI binds the tokenizer bytes to
+the corpus assets and uses IndexedCorpus inspection to screen every split.
+Complete decoded inputs include masked prompts/tool observations as well as
+assistant targets. Special tokens are retained; unknown token IDs fail instead
+of being silently dropped. Reports contain only rule names and character/line
+locations, never matched values. Inputs exceeding the character ceiling fail
+without truncation. Corpus files and training admission remain unchanged.
+
+Corpus048 screen003 covers 32 examples, 625,609 input tokens and 2,080,927
+decoded characters: zero indicators in the four existing rule families
+(private-key headers, AWS access IDs, GitHub tokens and authorization literals).
+This is not a general PII, entropy, obfuscation or privacy clearance. All 26
+targeted corpus/credential tests pass, including five new scanner tests.
+The previous 493-test full regression predates this new module; it is not a
+full-suite result for this change.
+
+Attempt002 stopped on macOS cloud-hydration metadata drift during source
+hashing; its failure log is preserved. Screen003 used a stable temporary source
+runtime with strict identity checks unchanged. Eleven evidence files / 52,807
+bytes are R2 published and independently restore-verified under
+`corpus048-credentials-publish-003` / `corpus048-credentials-restore-003`.
+Source and tests are in `evidence/data/corpus048-credentials-003`.
+
+Repeat this screen for each new corpus identity; do not reuse this result for
+changed token arrays. Broader privacy review, rights, held-out splits and GPU
+qualification remain open. Runpod was unused.
+
+
+### Hcloud547 notice binding — 2026-10-11
+
+Current NVIDIA card still declares CC BY4.0 and explicitly describes SFT and
+distillation use. Hcloud547 attribution package binds complete source/test
+observations5/7, modified source27 and exact diffs31/41 to source at
+1d97017b303caa29379e7202a04814985604bea2 with retained Hetzner MIT notice.
+Pinned Open-SWE dataset and Qwen3.6 teacher notices are inherited with hash
+checks from the existing lineage archive, not represented as new generation
+provenance. ATTRIBUTION.md records modifications, fresh replay and omitted
+teacher reasoning. No public redistribution or corpus-wide approval asserted.
+Evidence:hcloud547-attribution-001. This source-observation coverage does not
+resolve every dependency/output or historical teacher-service question.

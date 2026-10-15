@@ -55,7 +55,7 @@ out=pathlib.Path('/audit');out.mkdir()
 result={'role':ROLE,'tests_started':False}
 def git(*args):
     return subprocess.run(['git','-c','safe.directory=/testbed',*args],cwd='/testbed',
-                          capture_output=True,check=True,timeout=30).stdout
+                          stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True,timeout=30).stdout
 try:
     if git('rev-parse','HEAD').decode().strip()!=BASE:
         raise RuntimeError('Wrong checkout base')
@@ -76,7 +76,7 @@ try:
     source_path=globals().get('SOURCE_PYTHONPATH', '')
     origin_env={**os.environ, 'PYTHONPATH':source_path} if source_path else None
     origin=subprocess.run([python,'-c','import importlib; print(importlib.import_module('+repr(MODULE)+').__file__)'],cwd='/testbed',env=origin_env,
-                          capture_output=True,text=True,timeout=30)
+                          stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=30)
     result['import']={'returncode':origin.returncode,'stdout':origin.stdout.strip(),'stderr':origin.stderr}
     if origin.returncode or origin.stdout.strip()!=EXPECTED_ORIGIN:
         raise RuntimeError('Module does not import from task checkout')

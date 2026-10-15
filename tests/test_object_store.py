@@ -1,5 +1,6 @@
 """Fault-injected object transport tests, separate from live R2 evidence."""
 
+import errno
 import io
 import os
 from pathlib import Path
@@ -120,6 +121,62 @@ class ObjectStoreTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.store.restore(self.manifest, self.root / "too-large", max_bytes=1)
         self.assertEqual(self.client.uploads, 0)
+
+    def test_insufficient_disk_rejected_before_download(self):
+        destination = self.root / 'no-space'
+        usage = shutil.disk_usage(self.root)._replace(free=0)
+        with patch('zenithsync.object_store.shutil.disk_usage', return_value=usage), \
+                patch.object(self.client, 'get_object') as get:
+            with self.assertRaises(OSError) as raised:
+                self.store.restore(self.manifest, destination, max_bytes=100)
+            self.assertEqual(raised.exception.errno, errno.ENOSPC)
+            get.assert_not_called()
+        self.assertFalse(destination.exists())
+        self.assertEqual(list(self.root.glob('.restore-*')), [])
+
+    def test_midstream_disconnect_closes_body_and_allows_clean_retry(self):
+        self.store.publish(self.source, self.manifest)
+        original = self.client.get_object
+        bodies = []
+
+        class InterruptedBody(io.BytesIO):
+            def read(self, size=-1):
+                if self.tell():
+                    raise ConnectionError('synthetic midstream disconnect')
+                return super().read(1)
+
+        def interrupted(**kwargs):
+            response = original(**kwargs)
+            if response['ContentLength']:
+                data = response['Body'].read()
+                response['Body'].close()
+                response['Body'] = InterruptedBody(data)
+                bodies.append(response['Body'])
+            return response
+
+        destination = self.root / 'interrupted'
+        with patch.object(self.client, 'get_object', side_effect=interrupted):
+            with self.assertRaises(ConnectionError):
+                self.store.restore(self.manifest, destination, max_bytes=100)
+        self.assertTrue(bodies)
+        self.assertTrue(all(body.closed for body in bodies))
+        self.assertFalse(destination.exists())
+        self.assertEqual(list(self.root.glob('.restore-*')), [])
+        self.store.restore(self.manifest, destination, max_bytes=100)
+        verify(destination, self.manifest)
+
+    def test_disk_exhaustion_during_fsync_never_promotes_bundle(self):
+        self.store.publish(self.source, self.manifest)
+        destination = self.root / 'disk-exhausted'
+        with patch('zenithsync.object_store.os.fsync',
+                   side_effect=OSError(errno.ENOSPC, 'synthetic disk exhaustion')):
+            with self.assertRaises(OSError) as raised:
+                self.store.restore(self.manifest, destination, max_bytes=100)
+            self.assertEqual(raised.exception.errno, errno.ENOSPC)
+        self.assertFalse(destination.exists())
+        self.assertEqual(list(self.root.glob('.restore-*')), [])
+        self.store.restore(self.manifest, destination, max_bytes=100)
+        verify(destination, self.manifest)
 
     def test_source_drift_is_rejected_before_upload(self):
         (self.source / "a").write_bytes(b"changed")

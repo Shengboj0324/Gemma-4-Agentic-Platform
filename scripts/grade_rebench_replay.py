@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.pytest_controls import compare_controls, compare_candidate
-from scripts.run_rebench_controls import validate_profile
+from scripts.run_rebench_controls import validate_profile, control_environment_prefix
 from zenithsync.source_imports import source_pythonpath
 from scripts.qualify_swe_rebench_evaluator import PROBE, PLUGIN
 from scripts.compare_source_snapshot import run_image
@@ -97,9 +97,10 @@ def main():
               'SOURCE_PYTHONPATH':source_pythonpath(profile['import_root'], '/testbed') if 'import_root' in profile else '',
               'ALLOWED_PATHS':allowed,'TEST_TARGETS':profile['test_targets'],'PATCHES':patches,
               'PLUGIN':PLUGIN,'RESOURCE_PAYLOAD':'','RESOURCE_ADAPTER':''}
-    probe=''.join(f'{key}={value!r}\n' for key,value in settings.items())+PROBE
+    probe=control_environment_prefix(profile)+''.join(f'{key}={value!r}\n' for key,value in settings.items())+PROBE
     args.output.mkdir(parents=True,exist_ok=False)
-    result=run_image(image,args.output/'candidate',probe=probe,generated_grading_tests=True)
+    result=run_image(image,args.output/'candidate',probe=probe,generated_grading_tests=True,
+                     entrypoint=profile['python'], platform=profile.get('platform', 'linux/amd64'))
     runtime=load_json(args.output/'candidate/runtime.json')
     if (any(result[key]!=0 for key in ('returncode','copy_returncode','cleanup_returncode'))
             or result['state']['OOMKilled'] or 'error' in runtime

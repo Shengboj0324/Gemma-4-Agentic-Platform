@@ -5071,3 +5071,5890 @@ historical. Independent derivative grading, mechanical admission and full conten
 review are pending. Corpus033 is unchanged and training remains denied.
 
 Amendment integration/fresh replay archive: 26 files, 669,139 bytes uploaded and remotely hash-verified, then restored successfully from R2 (`lenskit312-amended-publish-002`, `lenskit312-amended-restore-001`). Initial archive attempt rejected preserve.py cloud hydration metadata drift; fresh stage passed unchanged integrity checks.
+
+
+## October 11 — amendment-aware admission
+
+Bound original/derived actions, amendment implementation and matching history plan
+in replay admission; reconstruct amended histories with optional completion.
+Added 15 inherited/new amendment-path tests. Final isolated full suite: 450 run,
+433 passed, 17 skipped. Evidence: amendment-admission-regression-005. Runs001–003
+retain hydration-guard failures; run004 retains missing isolated fixture failures.
+Final changed sources match repository bytes. No Runpod use or training approval.
+Lenskit independent derivative grading and full content review remain next.
+
+Implementation and regression archive: 8 files, 378,822 bytes, uploaded and
+restore-verified in R2 (amendment-admission-publish-001/restore-001).
+
+
+## October 11 — independent amended Lenskit grading
+
+Fixed snapshot controls requiring an unused registry field for task-only historical
+resolutions. Snapshot provenance checks remain required; no-snapshot execution
+still requires registry resolution. Three regression tests added; full isolated
+suite: 453 run, 436 passed, 17 skipped. The isolated validation copy was refreshed
+with this runner/test revision; earlier report source hashes retain their scope.
+
+Fresh controls002: 19 base passes, 20 reference passes, exact publisher transitions.
+Exact amended patch grade001: 20 cases match, no disagreements. Admission001
+passes mechanical checks with training_approved false. Selected-message review001
+records computed before/after diagnostics, finite oracle counts and the retained
+broader-suite timeout; full content review remains open. Original corpus033 stays
+unchanged. All evaluation containers were removed. No Runpod use.
+
+Amended qualification archive: 58 files, 755,958 bytes, uploaded and restore-verified
+in R2 (`lenskit312-amended-qualification-publish-001` / `restore-001`).
+
+
+## October 11 — Lenskit complete history review and source visibility
+
+The first amended history supplied an exact edit preimage never present in prior
+native observations: read_file stopped at line150. Held that version; do not infer
+fabrication in the original teacher, whose tools/conditioning differ. Added an
+explicit fourth amendment to source inspection, then freshly replayed and graded.
+The function preimage is now observable before the edit. All56 messages reviewed
+and hash-bound; one broader-suite timeout remains. Grading20/20, mechanical checks
+pass, finite completion5850metric/4875prefix, input21197/supervised5667, reserve
+margin3379. Same548-byte patch,26calls; container cleanup verified.
+
+Evidence: lenskit312-full-history-review-001 and lenskit312-observed-*001.
+Derivative eligible for quarantine replacement, not admitted. Corpus033 remains
+unchanged. Next integrate the reviewed derivative and continue the other queued
+content corrections. No Runpod use; no production code change or new suite claim.
+
+Source-observed replay/review archive: 30 files,716322bytes, uploaded and
+restore-verified in R2 (`lenskit312-observed-publish-001`/`restore-001`).
+
+
+## October 11 — corpus 034 Lenskit replacement and restore
+
+Assembled 29 examples across 29 tasks and 28 declared repository groups: exactly
+one Lenskit derivative replacement, with 28 manifest records unchanged. Corpus 033
+is preserved. Totals: 585,506 input tokens and 165,734 shifted supervised targets.
+The manifest and content identities are bound in corpus034-integration-check-001.
+
+R2 publish034/restore034 verified 59 files totaling 6,476,957 bytes. Independent
+restored target recount passed. Schedule040 and restored032 match byte-for-byte:
+seed 7401, one epoch, 27 updates, 9,216-target update cap, 165,734 targets and zero
+overshoot. Training is denied on both local and restored bundles; all four
+admission fields remain null. Emcee and CloudEvents still fail the output-reserve
+policy; 27 examples satisfy it. No GPU use or learned-performance claim.
+
+50,000,000 / 165,734 is approximately 301.69 corpus-equivalent passes. Abundant
+data remains unmet. Next address held Signac/CloudEvents content and expand
+reviewed, diverse supply.
+
+Integration evidence archive: 17 files, 77,385 bytes, uploaded and restore-verified
+in R2 (corpus034-integration-publish-001 / restore-001).
+
+
+## October 11 — Signac diagnostic amendment and fresh replay
+
+Prepared explicit amendments to three created diagnostic files: computed type
+reporting, failure-propagating typed finite comparisons, and a bounded actual-CLI
+verifier instead of universal compatibility claims. Offline snapshot experiment:
+base rejected, repaired candidate accepted, Boolean/integer mutant rejected;
+tracked source unchanged by diagnostics and container removed.
+
+Fresh replay: 37 charged calls, unchanged 658-byte patch, cleanup verified,
+78 messages / 38 exchanges. Tokens: 22,794 input / 6,013 supervised; 1,782 reserve
+margin. Original shell-test timeout retained. The 292 typed / 8 CLI verifier runs
+twice; count unique coverage once. Exact grading on the dependency-qualified
+image and full content review remain next, including historical external-control
+wording and test-edit context. No corpus replacement or training admission.
+
+Signac amendment archive: 26 files, 625,385 bytes, uploaded and restore-verified
+in R2 (`signac622-amended-publish-001` / `restore-001`).
+
+
+## October 11 — Signac independent grading and child Python environment
+
+Independently reverified the dependency-qualified image: unchanged source tree,
+one reachable parentless commit, inaccessible old commits and absent known oracle
+paths. Generic controls001 failed because shell children selected the wrong
+Python and lacked deprecation. This infrastructure failure was not a repair score.
+
+Added explicit Boolean python_on_path to reviewed control profiles. Both control
+and candidate probes use the same shared prefix; default behavior is unchanged.
+Tests reject ambiguous flags and PATH separators, and verify preserved fallback
+PATH. Full suite: 455 run, 438 passed, 17 skipped.
+
+Controls002 reproduce 35 base passes and 36 reference passes across all 36 exact
+publisher identities. Candidate grade001 matches all 36; mechanical admission
+passes. All containers removed. Full history review remains pending, including
+external-control wording. Corpus034 remains unchanged; no training or Runpod use.
+
+Qualification/code archive: 84 files, 408,957 bytes, uploaded and restore-verified
+in R2 (signac622-amended-qualification-publish-001 / restore-001).
+
+
+## October 11 — Signac full-history attribution correction
+
+Full review found external-control success text in the bounded verifier. Removed
+that claim from both final demo and completion through explicit version002 plans,
+then freshly replayed. Kept the original observation records and grading.
+
+New replay: 37 charged calls, 78 messages, same source patch, verified cleanup.
+Independent grading matches all 36 cases; mechanical admission passes. Tokens:
+22,789 input / 6,011 supervised, 1,787 reserve margin. The added test strengthens
+expectations; its pass is distinct from independent evaluation. Two failed searches
+and one shell timeout remain. The bounded verifier repeats twice; coverage counts
+once. Corpus034 unchanged; full-history review qualifies quarantined replacement,
+not training. No production-code changes or new whole-suite claim in this cycle.
+
+First review-preservation attempt rejected scope.md hydration metadata drift.
+A stable script retry verifies existing copied evidence byte-for-byte and retains
+all integrity guards.
+
+
+### Signac review archive verified — October 11
+
+The second preservation attempt also rejected cloud hydration metadata drift.
+The successful attempt reads the scope note into a stable temporary file, checks
+its bytes against the repository source, and checks the staged archive identity
+against the report binding. Existing integrity guards remain enabled.
+
+The corrected full-review bundle contains 29 files / 624,776 bytes. R2 publish
+and independent restore both passed: evidence/data/signac622-full-review-publish-001
+and evidence/data/signac622-full-review-restore-001. The transfer manifest is
+saved with signac622-full-history-review-002. The preservation script executed
+its history, patch, grade, attribution and review-coverage assertions successfully.
+No production code changed; no new full-suite result is claimed.
+
+Corpus034 remains the current quarantined corpus. Next: integrate exactly this
+reviewed Signac replacement, recheck token accounting and deterministic schedules,
+and publish/restore the new corpus. Rights, split and training-runtime gates remain
+open. Runpod was not used. No local datasets or Docker resources were deleted.
+
+
+## October 11 — Corpus035 reviewed Signac integration
+
+Replaced exactly the reviewed Signac example; the other 28 manifest example
+records remain identical to corpus034. All four admission gates remain null.
+Manifest SHA-256: 7da9134f9b5f944e7fce325fe63fd3c057123b44be5ecef4abdad3a2061b5bc5.
+Independent restored counting: 584,017 input / 165,360 shifted supervised tokens.
+The 59-file, 6,460,954-byte corpus is uploaded and independently restore-verified.
+Original and restored one-epoch schedules match exactly: seed 7401, 26 updates,
+165,360 targets, zero overshoot, maximum update budget 9,216 targets. Both local
+and restored training loads reject quarantine. Emcee295 and CloudEvents172 retain
+the two 32,768-context / 8,192-output-reserve exceptions.
+
+No production code changed; the prior 455-test result is not a new test run.
+This cycle validates replacement lineage, corpus integrity, deterministic scheduling
+and closed training gates, not GPU readiness or learned performance. No Runpod use.
+Next: correct and freshly qualify the held CloudEvents history, resolve remaining
+content/split/rights gates, and expand verified diverse data before training.
+
+Integration evidence archive also uploaded and independently restore-verified:
+16 files / 75,916 bytes; corpus035-integration-publish-001 and restore-001.
+Scoped git diff whitespace validation passed.
+
+
+## October 11 — CloudEvents attributed diagnostic corrections
+
+Prepared six explicit source-action amendments (16, 27, 30, 33, 35, 40), preserving
+originals and the source edit. Corrected unsupported transitivity and compatibility
+claims, misleading generated-default expectations and reflected-equality wording;
+added assertions for the reported finite results. Six corrected diagnostics pass
+on the real patched snapshot and each rejects a deliberately wrong equality
+implementation. The unpatched issue reproduction fails. These mutation checks
+qualify diagnostic failure propagation, not independent task grading.
+
+Fresh replay completed: 39 charged calls, 82 messages, 40 exchanges, same 470-byte
+source patch, container removal verified. Preserved initial suite/import dependency
+failures and the expected pre-fix reproduction failure. Token audit is untruncated:
+26,988 input / 7,519 supervised. Input plus 8,192 output reserve exceeds 32,768
+by 2,412 tokens; this remains an explicit exception, not silent truncation.
+
+The inherited completion checks a finite relation on 32 constructed events: eight
+keys with four representatives each, 1,024 ordered pairs and 32,768 triples. There
+are 8 * 4^3 = 512 true transitivity antecedents. These related exhaustive cases
+are not independent random samples or universal axioms for arbitrary payloads.
+The preserved foreign-class counterexample demonstrates cross-type asymmetry.
+
+Next: independent grading, full 82-message review and explicit context-budget
+decision before any corpus replacement. Corpus035 is unchanged and quarantined.
+No Runpod use, no production-code change, no new full-suite claim. Preservation
+initially rejected cloud hydration of the old patch; stable-byte staging retained
+the inventory guard and verified the old/new patch identity successfully.
+
+CloudEvents amended evidence archive: 27 files / 785,902 bytes, uploaded and
+independently restore-verified in R2. Receipts: cloudevents172-amended-publish-001
+and cloudevents172-amended-restore-001. Scoped diff whitespace check passed.
+
+
+## October 11 — CloudEvents independent grade and admission failure
+
+Staged exact evaluator resolution, metadata, oracle patches and prior verified
+snapshot separately from agent replay. Fresh paired controls use the same source
+image and HTTP test-file target. All 26 publisher identities match expected
+transitions: 18 base passes, 26 reference passes. Fresh candidate grading matches
+all 26 with zero disagreements. Exact source preimage was present in message27
+before the sole edit in message36. This partial check is not a full history review.
+
+Mechanical admission rejects input_plus_output_reserve_exceeds_context and remains
+training_approved=false. Retain the 2,412-token shortfall, earlier failed attempts
+and corpus035 unchanged. Next: reduce avoidable diagnostic code/output verbosity
+through explicit action amendments with retained cases and failure propagation,
+then fresh replay, token audit, grading and full content review. Do not silently
+truncate observations, remove failure evidence or lower the reserve to pass.
+No production-code change or new whole-suite claim; no Runpod use.
+
+Qualification archive: 48 files / 113,092 bytes, uploaded and independently
+restore-verified in R2. Receipts: cloudevents172-amended-qualification-publish-001
+and restore-001. Scoped git diff whitespace check passed.
+
+
+## October 11 — CloudEvents concise diagnostic derivative
+
+Explicitly replaced five repetitive diagnostic scripts with concise finite checks;
+retained the prior asserted shell command as the sixth amendment from original
+source actions. Preserved non-event categories, generated-default observations,
+subclass comparisons, equality/reflexivity/symmetry and inequality checks. Fresh
+constructors use independent attribute dictionaries and explicit stable values;
+case-category preservation is not a formal observational-equivalence claim.
+Source repair and action order remain unchanged. No history truncation.
+
+Validation001 rejected cloud hydration metadata drift while staging the old patch;
+validation002 uses the stable prior replay patch. All six diagnostics pass on the
+real candidate and reject wrong-comparison mutants; base reproduction fails.
+Fresh replay: 39 calls, 82 messages, 40 exchanges, container removed. Initial
+suite/dependency failures and pre-fix failure remain. Grade: 26/26 publisher cases.
+Untruncated tokens: 23,420 input / 4,836 supervised. Reserve margin: 1,156 tokens.
+Mechanical admission passes with no blockers; training approval stays false.
+
+Full content review is pending. Corpus035 remains unchanged; next is complete
+review before any quarantined replacement. No production change, new whole-suite
+claim, Runpod use or new learned-performance evidence.
+
+Concise derivative archive: 40 files / 686,275 bytes, uploaded and independently
+restore-verified in R2. Receipts: cloudevents172-compact-publish-001 and restore-001.
+Scoped git diff whitespace check passed.
+
+
+## October 11 — CloudEvents full review and corpus036
+
+Read all 82 reconstructed messages and bound each canonical message to its hash.
+The complete source was observed before editing; original suite collection and
+network-disabled Sanic installation failures are preserved. Targeted tests and
+finite diagnostics have scoped claims. Debug defaults are observations. Finite
+relation arithmetic is checked: eight classes of four representatives produce
+512 true transitivity antecedents across 32,768 triples. No universal Python
+payload equality, full suite, original teacher reasoning or model gain is claimed.
+Full review permits quarantined replacement only; all admission gates remain open.
+
+Corpus036 changes exactly CloudEvents; 28 records unchanged. Manifest SHA-256:
+d7404e128d6f976448a97179be355aa8862f0d0cfe6c2f8b6daac7ef49d1c8c4.
+Independent restored counts: 580,624 input / 162,807 shifted supervised tokens.
+59 files / 6,425,167 bytes uploaded and independently restored. Original/restored
+seed7401 one-pass schedules are byte-identical: 26 updates and zero overshoot.
+Both training loads reject quarantine. Emcee295 is the sole remaining reserve
+exception; CloudEvents now fits without truncation. No production changes or
+new whole-suite claim. No Runpod use. Next: Lmfit/Importlab scope contracts,
+remaining diagnostic follow-ups and diverse-data expansion with rights/split gates.
+
+Full-review and integration evidence archive: 19 files / 94,391 bytes uploaded
+and independently restore-verified in R2. Receipts: corpus036-integration-publish-001
+and restore-001. Scoped diff whitespace validation passed.
+
+
+## October 11 — Importlab disputed expectation contract review
+
+Executed nine actual OSFileSystem cases in each of four isolated, digest-pinned
+source roles: base, original teacher, reference and corrected candidate. All
+36 executions retain source-origin and unchanged-source checks. Both disputed
+root expectations agree across all four roles. The original teacher strips a
+literal .__init__ suffix incorrectly; the corrected candidate matches reference
+in all nine cases. Scope note gives the non-injective normalization counterexample
+and local slice-equivalence argument. No universal filesystem/platform claim.
+
+The narrow expectation-change concern is resolved, but no full history approval
+is issued: preservation wording still needs review and reference-informed repair
+attribution remains required. Corpus036 unchanged. Containers removed. No Runpod
+use, production-code change or new full regression-suite claim.
+
+Contract-review archive: 24 files / 17,393 bytes uploaded and independently
+restore-verified in R2. Receipts: importlab23-contract-review-publish-001 and
+restore-001. Scoped git diff whitespace validation passed.
+
+
+## October 11 — Importlab graph-wrapper false-success correction
+
+History inspection found graph unittest stderr reporting six tests with one error
+(missing python3.6), while run_command returned status ok / exit0. The source
+wrapper discarded result.wasSuccessful(). Prepared a one-action shell amendment
+that exits zero only for a nonempty successful test run. The original is retained.
+
+Real-source paired execution confirms original exit0 and corrected exit1 for the
+same six-test graph error. Explicit synthetic fixtures separately check a passing
+one-test run exits0 and an empty run exits1. These are wrapper tests, not graph
+correctness evidence. Source unchanged by qualification; containers removed.
+
+Fresh full replay completed with 38 charged calls, 80 messages and 39 exchanges.
+History message55 now records a failed command with the actual graph error.
+The final source patch and reference-informed completion remain unchanged.
+Untruncated token audit: 24,306 input / 6,664 supervised; output reserve margin270.
+Fresh independent grading and full content review remain pending; corpus036 is
+unchanged and training unapproved. No production-code change, new whole-suite
+claim or Runpod use.
+
+Failure-reporting derivative archive: 27 files / 607,665 bytes uploaded and
+independently restore-verified in R2. Receipts: importlab23-exit-publish-001 and
+restore-001. Scoped git diff whitespace validation passed.
+
+
+## October 11 — Importlab exit-corrected replay qualification
+
+Staged exact evaluator resolution, source metadata, grading profile and prior
+verified snapshot independently of replay. Fresh controls reproduce 29 base
+passes and 30 reference passes across 30 exact publisher identities, with all
+expected transitions matching. Candidate grade matches all 30; zero disagreements.
+Mechanical admission passes with no blockers and training_approved=false.
+The 270-token context reserve margin remains valid; no truncation or gate lowering.
+
+This verifies the new replay's repair and evidence linkage, not full repository
+correctness or learned-model improvement. Full 80-message content review remains
+pending; the source completion remains reference-informed. Corpus036 unchanged.
+All qualification containers were removed. No production-code change, new full
+regression-suite claim or Runpod use.
+
+Qualification archive: 48 files / 95,958 bytes uploaded and independently
+restore-verified in R2. Receipts: importlab23-exit-qualification-publish-001 and
+restore-001. Scoped git diff whitespace validation passed.
+
+
+## October 11 — Importlab full-history content review
+
+Completed review of all 80 reconstructed messages, with per-message canonical
+hash bindings and contiguous review sections. Verified initial and completion
+preimages, retained five failed command observations, and linked the independent
+four-role contract review. Root expectation edits are supported by base/reference
+behavior. The original teacher literal-dot defect is repaired only by the explicitly
+reference-informed completion; no independent teacher success is claimed.
+
+Documented truncated full-suite output, unobserved utility helper definition,
+wrong-directory runner, missing-python3.6 graph failure, repeated checks and finite
+assertion domains. The local separator-normalization argument explains the defect
+without claiming universal import correctness. Existing independent grading is
+30/30; this content review does not rerun or expand its coverage.
+
+Eligible for replacement within quarantine; corpus036 remains unchanged. Training
+rights, frozen splits/duplicates, abundant data and GPU qualification remain open.
+No production-code changes or Runpod use. The seven-file review/history/source
+archive (124,357 bytes) was published and independently restored with matching
+hashes in R2; receipts are importlab23-full-review-publish-001 and restore-001.
+Next: integrate the reviewed derivative with exact one-record replacement, recount
+tokens and verify restored scheduling and continued training rejection.
+
+
+## October 11 — Corpus037 Importlab integration
+
+Replaced exactly one reviewed Importlab record; the other 28 records match
+corpus036 exactly. All admission gates remain null. Independently recounted
+581,233 input tokens and 162,831 shifted supervised targets from restored token
+payloads. All 59 corpus files (6,431,876 bytes) passed R2 publish and independent
+restore verification. Original/restored schedule and update files match byte for
+byte: 27 updates, seed 7401, one epoch, cap 9216 and zero target overshoot. Restored
+training loading rejects quarantine. Emcee295 remains the sole reserve exception.
+
+No production changes or GPU use; this is corpus integrity and accounting evidence,
+not learned performance or training approval. Remaining work includes Lmfit wording
+and other content checks, rights, frozen splits, data abundance and GPU runtime
+qualification. Prior corpus and failed-attempt evidence remain preserved.
+
+Integration evidence archive: 15 files / 76,341 bytes uploaded and independently
+restore-verified in R2. Scoped documentation whitespace checks passed.
+
+
+## October 11 — Lmfit diagnostic claim correction
+
+Selected-message review identified swallowed failures and complete-fix claims
+in the corrected Lmfit history. Prepared three explicitly attributed amendments
+to original actions 28, 36 and 39, retaining source event indices and original
+actions. Validated all three finite programs on the exact corrected patch in the
+pinned local image. Four synthetic failure injections now produce nonzero exits.
+The first validator accidentally changed an assertion message instead of a return
+statement; preserved that failed attempt and corrected the injection in version002.
+Both containers were removed; no source patch change or Runpod use.
+
+Corpus037 remains unchanged. Next: bind the existing completion to the derivative,
+replay from fresh source, audit tokens, grade independently and review full content.
+This is diagnostic validation only, not replay or training acceptance.
+
+Claim-correction archive: 15 files / 66,613 bytes published and independently
+restore-verified in R2. Both the failed and corrected validation evidence are retained.
+
+
+## October 11 — Lmfit amended replay qualification
+
+Rebound the assistant completion to the exact derived actions and replayed all
+40 charged calls in a fresh isolated container. Both known failed source commands
+remain observations. The same 553-byte source patch was submitted and the container
+removed. Projected 84 messages / 41 exchanges; untruncated tokenizer audit counts
+20,804 input and 5,221 supervised tokens, leaving 3,772 tokens beyond the 8192-token
+output reserve. No model inference or training was performed.
+
+Fresh independent controls reproduce 12 base and 13 reference passes across 13
+exact publisher identities with expected transitions. Candidate grading matches
+all 13; mechanical checks pass and training_approved remains false. An initial
+token-audit path error and missing-comparison grading invocation failed before
+those respective operations; corrected invocations are tokens-002 and grade-002.
+No old observations were substituted. Corpus037 is unchanged; full content review
+and remaining admission gates remain open. No Runpod use or production-code change.
+
+Replay qualification archive: 61 files / 571,271 bytes uploaded and independently
+restore-verified in R2. Receipts: lmfit487-claim-qualification-publish-001 and restore-001.
+
+
+## October 11 — Lmfit complete review and second derivative
+
+Read and hash-bound all 84 messages of claim-history-001. Held that derivative
+because the full pytest pipeline reports head's zero exit despite a collection
+error, and another basic diagnostic could print success without the expected
+exception. Prepared six total attributed amendments: previous three plus the
+initial reproducer, pipeline and basic diagnostic. Also explicitly assert clearing
+in the five-function diagnostic. Preserved original actions and observations.
+
+Fresh replay completed 40 calls, retained four failed observations, and submitted
+the identical 553-byte patch. Untruncated history: 21,161 input / 5,269 supervised
+tokens, 3,415 reserve margin. Fresh candidate grading matches all 13 publisher
+cases against the existing separately verified controls; mechanical checks pass.
+The second derivative still requires observation/content review before replacement.
+Corpus037 and all admission gates remain unchanged. No Runpod use.
+
+The full review distinguishes finite expression recovery from arbitrary diagnostic
+state, list-alias equivalence, concurrency, and repository-wide compatibility.
+Selected 15-test success explicitly deselects the NumPy API failure; it is not a
+full-suite success. Initial reproduction and full-suite collection failure now
+propagate to process status. No production code or model-performance claim changed.
+
+Second-derivative archive: 35 files / 632,338 bytes published and independently
+restore-verified in R2. Receipts: claim-qualification-publish-002 and restore-002.
+
+
+## October 11 — Lmfit review closure and corpus038
+
+Verified all 84 previous message bindings, exact identity of 71 unchanged messages,
+and inspected all 13 changed messages. Checked finite reproducer failure/success,
+explicit expression clearing, collection-error propagation, required SyntaxError
+and recovered-value assertions. Parameter tests retain the same twelve identities
+despite randomized order; the algebraic traceback differs only by random seed.
+The selected 15 passes still explicitly exclude one case. Prior scope limits and
+assistant/reference-informed authorship remain recorded. The review binding script
+was corrected to interpret write_file's size as character count, not UTF-8 bytes.
+
+Integrated exactly one Lmfit replacement into corpus038; other 28 records unchanged.
+All admission gates remain null. Independent restored payload recount: 581,096 input
+and 162,586 shifted supervised targets. All 59 files / 6,430,594 bytes pass R2 upload
+and independent restore verification. Original/restored schedules and update files
+match byte-for-byte: 27 updates, one epoch, seed 7401, 9216 cap, zero target overshoot.
+Restored quarantine rejects training. Emcee295 remains the sole reserve exception.
+
+No production-code change or Runpod use. Remaining work: six diagnostic-quality
+follow-ups, remaining semantic reviews, rights and frozen split qualification,
+abundant diverse data, and training runtime validation. Full-scale P1 remains open.
+
+Integration/review archive: 18 files / 95,716 bytes uploaded and independently
+restore-verified in R2. Receipts: corpus038-integration-publish-001 and restore-001.
+
+
+## October 11 — Datetransform finite diagnostic correction
+
+Inspected the complete 22-line base implementation, exact source repair and selected
+diagnostic actions/results. The comprehensive diagnostic swallows empty-dataframe
+exceptions and claims a time-mode comparison it does not perform. Replaced one
+created-file action explicitly, preserving original action text and source event 38.
+New checks cover 12 configurations and six paired comparisons with exact columns,
+fixture values, object identity and unchanged copy-input frames. Calendar constants
+were independently checked with datetime.
+
+In the pinned offline source image, base fails, corrected source passes, and four
+explicit synthetic faults fail. Patch bytes remain unchanged; container removed.
+This does not qualify arbitrary dataframe types, timezone/NaT/boundary cases or
+nested-object copying, and does not establish a statistical performance estimate.
+The prior trajectory and corpus038 remain unchanged. Next inspect remaining history
+claims, then fresh replay, token audit and independent grading. No Runpod use.
+
+Diagnostic archive: 15 files / 60,396 bytes uploaded and independently restore-verified
+in R2. Receipts: datetransform-diagnostic-publish-002 and restore-002.
+
+
+## October 11 — Datetransform revised diagnostic replay
+
+Verified shard009 in place against its pinned SHA-256 without creating another
+large local copy. Fresh offline replay executed 27 charged calls and submitted
+the identical 608-byte patch; container removed. Constructed 58 messages / 28
+exchanges and audited 14,550 input / 4,292 supervised tokens without truncation.
+Reserve margin is 10,026 tokens beyond 8192. The no-match grep remains a failed
+observation. Repeated one-case repository runs are not independent task evidence.
+
+Fresh base/reference controls reproduce 1/3 and 3/3 publisher passes with exact
+transitions. Candidate grading matches all three; mechanical checks pass, training
+approval false. Inspected remaining original history: compatibility comparison
+checks returned columns while requested default mutation behavior changes. Its
+wording must remain scoped in full amended-history review. Corpus038 unchanged.
+No production change or Runpod use.
+
+Replay qualification archive: 60 files / 388,922 bytes uploaded and independently
+restore-verified in R2. Receipts: datetransform-amended-qualification-publish-001 and restore-001.
+
+
+## October 11 — Datetransform review and corpus039 integration
+
+Completed scoped review of all 58 messages: 51 unchanged and seven changed
+observations/actions inspected. Four pytest changes are duration-only. The retained
+compatibility diagnostic checks the returned column list, not old mutation behavior;
+its printed conditions and shape probes are observations, not assertion suites.
+The twelve-configuration diagnostic has explicit assertions and finite scope.
+No-match grep remains a failed result. Source preimage, scratch deletion and
+one-file submission were checked; repeated one-case runs are not independent samples.
+
+Replaced exactly one record in corpus039; 28 are unchanged from corpus038. R2
+publish and independent restore verify 59 files / 6,435,778 bytes. Restored token
+recount: 581,520 input / 162,304 shifted supervised targets. Original/restored
+schedule and update files match: 26 updates, seed 7401, one epoch, cap 9216 and
+zero target overshoot. Restored training load rejects quarantine. Emcee295 remains
+the only reserve exception. No production-code change or Runpod use.
+
+Remaining: five diagnostic follow-ups, broader semantic/rights/frozen-split review,
+data expansion and training runtime qualification. No learned-model gain is claimed.
+
+Integration/review archive: 18 files / 92,680 bytes uploaded and independently
+restore-verified in R2. Receipts: corpus039-integration-publish-001 and restore-001.
+
+## October 11 checkpoint — Apispec exit-status qualification
+
+Corrected the diagnostic aggregate exit status, then rebound its cleanup hash to
+the amended bytes. Preserved failed replay 001 and documented pre-replay hydration
+rejection 002; fresh replay 003 completes. No integrity guard was weakened.
+Paired controls reproduce 115/117 base and 117/117 reference passes. Independent
+candidate grading matches all 117 identities. Untruncated audit: 78 messages,
+37 calls, 23,126 input / 4,250 supervised tokens, 1,450 reserve margin.
+Mechanical admission passes; no learned model was evaluated. Corpus039 unchanged.
+Next: inspect the complete Apispec history before quarantine replacement, continue
+the remaining diagnostic reviews, then rights/split and diverse-data expansion.
+Keep Runpod stopped. Full P1 and training readiness are unproven.
+
+R2 preservation verified: 70 files / 1,062,451 bytes uploaded and independently
+restored. Receipts: apispec950-exit-publish-001 and restore-001.
+
+## October 11 checkpoint — Apispec reviewed replacement, corpus040
+
+Full 78-message review identified stale Actual text, unconditional final success
+and four pytest pipelines. Seven explicit action amendments now compute observed
+values, propagate aggregate status and run pytest directly. Fresh replay preserves
+four failed tool results and the same final source patch. Three finite final
+comparisons pass; base and four injected faults fail as expected. Publisher grading
+matches 117/117 cases. The 563-pass baseline precedes source edits and must not be
+reported as a final full-suite pass. Review also corrects the issue's OpenAPI
+rationale: https://spec.openapis.org/oas/v3.0.2.html#schema-object specifies omitted
+additionalProperties defaults to true. This is an explicit-output repair.
+
+Fresh audit: 23,621 input / 3,885 supervised tokens, 955 reserve margin, 78 messages
+and 37 calls. Qualification/review archive: 46 files / 760,877 bytes uploaded and
+independently restored. Corpus040 replaces exactly one record; 28 unchanged.
+Corpus: 582,029 input / 161,945 supervised targets, 59 files / 6,441,443 bytes,
+uploaded and independently restored. Independent recount agrees; original/restored
+27-update schedules match byte-for-byte with zero overshoot. Training rejects
+quarantine; Emcee295 remains the sole context reserve exception.
+
+Preserved failures: source hydration timed out before replay; complete source read
+verified the pinned hash before fresh replay. Assembly001 selected an existing
+output path and was rejected; assembly002 uses a fresh output and verifies the old
+corpus unchanged. No guard was weakened. No production-code change or Runpod use.
+Next: Pennylane5716, Statsmodels8339, Boltons205 and Numba6653 diagnostic reviews;
+broader rights, split/duplicate review; diverse data expansion and runtime testing.
+P1 remains incomplete and no learned-model improvement has been demonstrated.
+
+Integration/accounting archive: 15 files / 76,454 bytes published and independently
+restore-verified. Receipts: corpus040-integration-publish-001 and restore-001.
+
+## October 11 checkpoint — Pennylane5716 finite diagnostics
+
+Reviewed the three weak diagnostic scripts. Replacements use fixed random input,
+propagate aggregate failure and check names, wires, list lengths and all 36
+parameters for an eight-operation, three-slice decomposition fixture. Three
+broadcast shapes match 117 separate executions at rtol=atol=1e-10; unbatched checks
+are smoke checks only. Six injected faults are rejected. Fourteen subprocess
+observations include base failures, the original false-zero result and corrected
+candidate results. The multi-batch limitation remains a failed 6/7 observation.
+First container launch used an absent default Python path; second uses the declared
+/usr/local/bin/python and completes with cleanup. A preservation assertion initially
+miscounted observations as 13; an explicit set of 14 named executions replaced it
+before archival. No source guard or diagnostic result was weakened.
+
+Corpus040 unchanged. Next: bind these amendments through the mini-source replay
+path, run a fresh replay/grading/token audit and full semantic review, then consider
+quarantine replacement. Remaining diagnostic, rights/split, data-expansion and
+runtime gates stay open. No production-code changes, training or Runpod use.
+
+Diagnostic evidence archive: 20 files / 37,854 bytes uploaded to R2 and independently
+restore-verified. Receipts: pennylane5716-diagnostic-publish-001 and restore-001.
+
+## October 11 checkpoint — mini-source amendment integration
+
+Added hash-bound shell-command amendment support to mini-source replay, history
+reconstruction and admission. Reuses the existing amendment validator, preserves
+original trace bytes and indices, rejects terminal modification, and records
+assistant authorship per changed event. Profile/replay/history provenance must
+agree. New rejection tests cover hashes, altered calls, authorship, source index,
+terminal changes and missing/orphaned claims; 27 targeted tests passed.
+
+Pennylane source ordinals 11,19,28 are amended. Fresh snapshot verification required
+stable copied build inputs because the historical receipt bound old verifier code
+and cloud hydration changed metadata. No guard was weakened. Fresh replay completes
+with 74 messages, 35 charged calls and the same patch. Full publisher plus supplemental
+grading matches 44 cases; paired base/reference counts are 32/44. Untruncated audit:
+18,874 input / 5,791 supervised, 5,702 reserve margin. Mechanical admission passes;
+full semantic review and quarantine integration remain pending. Corpus040 unchanged.
+
+The first broad regression ran 459 tests but failed (1 failure, 10 errors, 17 skips):
+source hydration triggered integrity guards and three CLI subprocesses timed out.
+That failed log is retained; stable local source-copy regression is required before
+claiming a full pass. No training, Runpod use or learned-model improvement claim.
+
+Implementation/replay qualification archive: 63 files / 779,663 bytes uploaded and
+independently restore-verified in R2 (pennylane5716-amended transfer receipts).
+
+Stable-copy regression completed: 459 tests, 442 passed, 17 skipped in 17.537s.
+An intermediate local-copy run lacked two fixture paths; both were restored. All
+three logs and tested-source hashes are preserved in mini-amendment-regression-003.
+The seven changed implementation/test files match the tested copy byte-for-byte.
+
+Regression archive independently restored from R2: four files / 70,868 bytes;
+receipts mini-amendment-regression-publish-003 and restore-003.
+
+
+## Corpus041: completed Pennylane semantic review and R2 integration — October 11, 2026
+
+Reviewed every reconstructed message, including full cleanup code. The issue proposes
+the layer-axis fix. The exact rank argument covers (L,W,3) and (B,L,W,3), while the
+unsupported multi-batch diagnostic remains a failed tool result. Decomposition
+parameter checks and 117 separate-execution comparisons are finite consistency
+checks; repeated tests are not additional independent tasks. Original reproduction
+exit zero is observational only. Review permits quarantine replacement, not training.
+
+Exactly one corpus040 example was replaced; the other 28 records are unchanged.
+Corpus041 has 579,746 input / 160,597 shifted supervised tokens, independently
+recounted after R2 restoration. All 59 files / 6,415,283 bytes match. The local and
+restored schedules match byte-for-byte: 27 updates, seed 7401, one epoch, zero target
+overshoot. Quarantine training rejection is verified. Only Emcee295 exceeds the
+input-plus-8192-output-reserve policy. All admission gates remain unset.
+
+Evidence: training-corpus-selection-040, training-corpus-assembly-041,
+corpus041-integration-check-001, training-corpus-schedule-047,
+training-corpus-restored-schedule-039 and corpus041 transfer receipts.
+No production code changes in this integration; prior 459-test regression remains
+scoped to its recorded source hashes. No Runpod use or learned-performance claim.
+Next: three remaining diagnostic follow-ups, broader semantic and rights/split review,
+diverse-data expansion and full training-runtime qualification. P1 remains incomplete.
+
+Full semantic review and integration archive independently restored from R2:
+19 files / 95,647 bytes; corpus041-integration-publish-001 and restore-001.
+
+
+## Boltons205 diagnostic correction — October 11, 2026
+
+The pinned real package reproduces false success on the base: the original final
+script prints false comparisons, prints an unconditional all-pass banner, and exits
+zero. Seven explicit assistant amendments add missing comparisons and correct
+custom-key ordering commentary. All seven corrected scripts pass on the existing
+candidate patch. Each of 19 assertions, forced false separately, produces a nonzero
+exit with AssertionError and no final success banner. This tests reachability and
+failure propagation; it is not independent numerical-oracle or general-correctness
+proof. Earlier base reproduction remains observational. Existing compatibility
+completion is preserved and rebound to the derived action identity.
+
+Evidence: boltons205-diagnostic-001 and diagnostic-validation-002. First validation
+used an alias created only by native replay and failed before checks; the second
+uses the snapshot's /testbed root. Both removed their containers. The 34-file,
+99,114-byte diagnostic archive is uploaded and independently restored from R2.
+Fresh native replay attempt 001 rejected shard metadata changing during cloud
+hydration; the guard remains intact. Fresh replay/grading/review remain pending.
+Corpus041 remains unchanged. No Runpod use; P1 and training admission are incomplete.
+
+Fresh native replay 002 completed with 31 charged calls and verified container
+cleanup; the 948-byte final patch is unchanged. Evidence:
+boltons205-amended-native-002. History projection, token audit, independent grading
+and full semantic review remain pending before quarantine replacement.
+
+Native replay archive independently restored from R2: seven files / 148,495 bytes;
+boltons205-amended-native-publish-001 and restore-001.
+
+
+## Corpus042: Boltons semantic qualification and integration — October 11, 2026
+
+Full 66-message review completed, including both assistant completion commands.
+The bounded interpretation distinguishes printed observations, repeated original
+repository tests, publisher tests and exact-Fraction permutation checks. The default
+queue aliases the sorted backend. Numeric-string compatibility is restored by the
+explicit assistant completion, not by the intermediate teacher patch. No universal
+numeric or compatibility claim. Fresh publisher controls: base 0/2, reference 2/2,
+candidate 2/2. Token audit: 20,215 input / 6,926 supervised; reserve margin 4,361.
+Mechanical admission passes. The first assessment used an obsolete local runtime
+without amendment-aware reconstruction and rejected the history; the current
+repository-equivalent admission module passes with all guards preserved.
+
+Exactly one example replaced; 28 records unchanged from corpus041. Corpus042 has
+580,237 input / 161,157 shifted supervised tokens, independently recounted after R2
+restore. All 59 files / 6,421,400 bytes verified. Local and restored schedules are
+byte-identical: 27 updates, seed 7401, one epoch and zero overshoot. Restored training
+is denied, all admission gates remain unset, and only Emcee295 exceeds the output
+reserve policy. No production implementation change or Runpod use in this cycle.
+
+Evidence: boltons205-full-history-review-001, amended-grade-001,
+amended-admission-002, corpus042-integration-check-001 and corpus042 transfer
+receipts. Remaining work includes Statsmodels8339 and Numba6653 diagnostics,
+broader semantic/rights/split review, diverse data expansion and full runtime
+qualification. P1 remains incomplete; no learned performance improvement measured.
+
+Qualification and integration archive independently restored from R2: 67 files /
+488,959 bytes; corpus042-integration-publish-001 and restore-001.
+
+
+## Statsmodels8339 finite diagnostic correction — October 11, 2026
+
+Four explicitly attributed action amendments replace unsupported white-noise lag
+and p-value expectations, unchecked output shapes and swallowed verification errors.
+The strengthened numerical diagnostic computes centered lagged dot products and
+first-maximum penalized lag selection independently of statsmodels acf/selection.
+It preserves this snapshot's inclusion of lag zero in the threshold calculation;
+that is implementation matching, not endorsement of statistical optimality. P-value
+references share SciPy chi-square survival functions; no independent tail-probability
+or post-selection calibration claim. Fixtures use finite nonconstant data, model_df=0.
+
+Pinned offline validation passes twelve direct-sum/fixed-lag cases across six fixed
+samples and two statistic modes. All five injected numerical/structure faults and
+fifteen forced contract assertions fail as required. The original comprehensive
+script's zero exit despite reported failure is reproduced on base. All four amended
+scripts pass on the existing candidate patch. Explicit completion preserves the
+failed p>0.05 null-sample counterexample and explains its meaning. Scratch hashes
+are rebound to amended bytes; fresh native replay remains required.
+
+Evidence: statsmodels8339-diagnostic-001 and diagnostic-validation-001. Native
+attempt 001 was rejected during cloud hydration because shard metadata changed;
+no identity guard was weakened. Corpus042 is unchanged. P1 remains incomplete;
+no Runpod or trained-model evaluation in this cycle.
+
+Diagnostic archive independently restored from R2: 25 files / 81,428 bytes;
+statsmodels8339-diagnostic-publish-001 and restore-001.
+
+Fresh native replay 002 completed: 33 charged calls, 34 exchanges, 70 messages,
+130 repository diagnostic tests passed, unchanged 603-byte source patch and
+verified cleanup. The expected null-sample p>0.05 assertion fails with observed
+p=0.03719492177943689; its failure and subsequent explanation remain in history.
+Token audit: 14,841 input / 4,181 supervised, 9,735 reserve margin. No truncation.
+The eight-file / 106,018-byte native replay archive is independently restored from
+R2; reconstructed history/tokens are saved locally pending the next qualification
+archive. Independent grading, admission and full semantic review remain pending.
+
+
+## Statsmodels8339 full semantic and publisher qualification — October 11, 2026
+
+All 70 reconstructed messages reviewed, including the deliberate failed null-sample
+assertion and all completion/cleanup commands. The issue itself supplies both
+initialization diagnoses. The finite running-maximum invariant explains the repair;
+no general statistical calibration or external-paper equivalence is asserted.
+Original 1/4/130 diagnostic test runs overlap. Fresh independent publisher grading
+uses 131 full identities: base 130 passed, reference/candidate 131 passed and all
+transitions match. The historical original-image control failure remains preserved;
+this new evidence is specific to the verified snapshot and exact replay patch.
+
+Mechanical admission passes: 14,841 input / 4,181 supervised tokens, 33 charged
+calls, 9,735 reserve margin. Full review permits quarantine replacement, with rights,
+frozen splits/duplicates, data scale and GPU runtime still unresolved. Corpus042
+remains unchanged pending integration. No production-code changes or Runpod use.
+Evidence: statsmodels8339-amended-grade-001, amended-admission-002 and
+statsmodels8339-full-history-review-001.
+
+Qualification archive independently restored from R2: 44 files / 566,819 bytes;
+statsmodels8339-qualified-publish-001 and restore-001. This includes reconstructed
+history, token export, paired grading, admission and full semantic review.
+
+
+## Corpus043: Statsmodels reviewed replacement — October 11, 2026
+
+Integrated the reviewed 70-message Statsmodels derivative, preserving its explicit
+assistant authorship and intentional failed null-sample assertion. Exactly one
+record replaced; all other 28 are unchanged. Corpus043 has 575,084 input / 158,892
+shifted supervised tokens, independently recounted after R2 restoration. All 59
+files / 6,361,386 bytes match. Original/restored schedules are byte-identical:
+27 updates, seed 7401, one epoch, zero target overshoot. Quarantine training refusal
+is verified; all admission gates remain unset. Emcee295 is the only reserve-policy
+exception. This checkpoint does not demonstrate model learning or GPU readiness.
+
+Evidence: corpus043-integration-check-001, training-corpus-selection-042,
+training-corpus-assembly-043 and corpus043 transfer receipts. Next: Numba6653
+diagnostic review, broader semantic/rights/split reviews, diverse-data expansion
+and full training-runtime qualification. No production-code changes or Runpod use.
+
+Integration evidence independently restored from R2: 16 files / 77,952 bytes;
+corpus043-integration-publish-001 and restore-001. Numba source inspection confirms
+NUMBAPRO values are ignored with a warning; the diagnostic fallback wording and
+unasserted warning behavior require correction, while original evidence stays intact.
+
+
+## Numba6653 deprecated-prefix diagnostic correction — October 11, 2026
+
+Two explicit assistant amendments correct the misleading “working fallback” claim:
+NUMBAPRO_ is ignored with a warning and returns the supplied default. Diagnostics
+now check the default, exactly one NumbaWarning and identifying message text. The
+reproduction's third comparison now contributes to process exit status. Pinned
+real-package checks reject the base defect and pass on the candidate. Ten separate
+injected faults (missing/duplicate warning, wrong category/message, wrong return,
+across two scripts) are rejected. The original reproduction's false success after
+a wrong deprecated return is reproduced. This is function-level validation, not
+CUDA hardware execution or a general warning-filter/concurrency guarantee.
+
+Evidence: numba6653-diagnostic-001 and diagnostic-validation-002. Validator source
+001 had a quoting syntax error and ran no checks; source 002 fixes that and all
+checks pass, with container cleanup verified. Fresh native replay attempt 001
+rejected shard metadata changes during cloud hydration, without weakening guards.
+Replay qualification remains pending; corpus043 is unchanged. No Runpod use.
+
+Fresh native replay 002 completed: 35 charged calls, 36 exchanges and 74 messages;
+unchanged 362-byte source patch, verified container cleanup. Token audit is
+untruncated: 16,381 input / 6,152 supervised, with 8,195 output-reserve margin.
+Diagnostic archive is independently restored from R2: 21 files / 111,390 bytes.
+Independent grading and full semantic review remain pending before replacement.
+
+Native replay, history and token archive independently restored from R2:
+14 files / 409,020 bytes; numba6653-amended-replay-publish-001 and restore-001.
+
+
+### October 11 — Numba failure reporting and bounded claims
+
+The completed replay review exposed a pytest-to-head pipeline that hid a CUDA
+collection error, a CPU JIT example without result assertions, and a catch-all
+import check that could accept unexpected failures. Added three explicit command
+amendments alongside the two prior deprecated-warning amendments. Verified the
+real pytest exit 2, rejection of deliberately wrong JIT output and import failure,
+and four separately labeled output/status fixtures. Fresh replay and independent
+publisher grading pass their bounded checks; patch unchanged. Mechanical admission
+passes, with 17,157 input and 6,353 supervised tokens. Final content-review record
+and corpus integration are next; no training authorization or general CUDA claim.
+The 55-file / 534,569-byte qualification bundle is uploaded and independently
+restore-verified in R2. Corpus043 remains current. Runpod unused.
+
+
+### October 11 — Reviewed Numba integrated into corpus044
+
+Completed the 74-message semantic review, retaining the no-match grep, base
+reproduction failure and CUDA collection error. Explicitly limited driver checks,
+CPU JIT and CUDASIM-variable retrieval claims; the issue itself supplies the defect.
+Replaced exactly one corpus record, preserving the other 28 byte-for-byte at the
+manifest-record level. Corpus044 has 575,853 input and 159,348 supervised tokens.
+All 59 files / 6,370,249 bytes are uploaded and independently restored from R2.
+Independent shifted-label accounting matches, schedules are byte-identical with
+27 updates and no target overshoot, and restored training loads reject quarantine.
+All four admission gates remain null; Emcee295 is still a reserve exception.
+Next work: broader corpus semantic/rights/split qualification, substantial data
+expansion, and eventual full-model runtime qualification. No Runpod use and no
+learned model-performance claim. Integration review evidence is preserved separately.
+
+
+### October 11 — New repository batch004
+
+Selected and independently verified 32 new repository candidates against corpus044,
+excluding prior batches and reserved/current repository names. All four rank strata
+have eight selections; no exclusion overlap. The queue is not new training data.
+Rechecked the 38,705,625-target optimistic single-pass ceiling for one trace per
+screened task; this is below a 50M campaign and precedes prompt masks/rejections.
+Next: issue/action and credential screening beginning with fuzzyfinder19, then
+source lineage, rights and bounded runtime checks. No image downloads or Runpod.
+Source-proxy counts must not be interpreted as native target counts. Three
+cloud-hydration failures were resolved through hash-verified stable metadata copies.
+Evidence: qualification-batch-current-004; preservation receipts identify R2 status.
+
+
+### October 11 — Fuzzyfinder19 extraction and finite oracle
+
+Extracted 27 source actions from hash-verified immutable Parquet bytes, with
+reserved-repository checks before parsing and a full-message credential-indicator
+screen before displaying content. The standard extractor first rejected hydration
+metadata drift; the bounded snapshot extraction retains source digest verification.
+Inspected the action sequence and independently checked the extracted matching
+function with 6,344 finite ASCII subsequence/order comparisons. Reproduced hidden
+pytest failure in the original final wrapper and an omitted valid match in printed
+expectations. This candidate remains held pending explicit diagnostic amendments,
+publisher contract/source checks, native replay, grading and content/token reviews.
+No added corpus row, learned gain, new image download or Runpod use. Preserve
+triage evidence in R2 with independent restoration before local cleanup.
+
+
+### October 11 — Fuzzyfinder19 held for API contract mismatch
+
+Extracted pinned publisher issue/reference/tests after source-identity and reserved
+repository checks. The required publisher keyword is ignore_case=False; the teacher
+instead implements case_sensitive=True, matching the issue snippet but incompatible
+with the reference API. Exact extracted-function execution confirms TypeError for
+the publisher keyword and correct matching through the teacher keyword. No full
+publisher test-suite claim follows. Preserve both findings; do not silently change
+the API to obtain a passing grade. Candidate excluded pending task-alignment
+resolution, with any future amendment explicitly reference-informed. Continue
+batch004 elsewhere; corpus044 unchanged. One mistyped image ID was rejected before
+container creation; corrected validation succeeded. No Runpod or image download.
+
+
+### October 11 — MkDocs Merge18 finite structural validation
+
+Extracted pinned teacher and publisher records and inspected 33 actions. The teacher
+index-based update passes 2,343 finite unaliased-tree oracle comparisons; the
+publisher value-based update disagrees in 381, with a concrete path-collision
+witness preserved. This does not substitute for actual repository/publisher grading.
+An initial fixture unintentionally shared dictionaries and failed; preserved that
+failure and separately demonstrated repeated-reference double prefixing. The stated
+successful domain excludes aliases and cycles. The reproduction script also hides
+the base defect by omitting equality and exit checks. Next: explicit diagnostic
+amendments, exact base/source and runtime validation. No corpus addition, learned
+performance claim, GPU use or container download. Preserve triage through R2
+publish and independent restore; receipts establish transfer completion.
+
+
+### October 11 — MkDocs Merge selected-source compatibility
+
+Five files were fetched from the exact task base commit, including the source,
+original test file and MIT notice. The teacher replacement text matches that
+source exactly. The first package probe failed on missing ruamel.yaml before
+any test result. A second probe used the existing Python 3.12.4 interpreter with
+that dependency, verified imports from each staged role directory, applied the
+publisher test patch unchanged and executed its four unittest methods: base 3/4,
+reference 4/4, teacher 4/4. This is selected-source compatibility evidence, not
+the publisher Python 3.9 environment, complete checkout or native replay.
+The corrected reproduction now compares complete trees and exits 1 on base,
+0 on reference and 0 on teacher. Two hash-bound assistant amendments retain the
+source repair: reproduction failure propagation and narrower final-example wording.
+Fresh native replay, qualified grading and token/content review remain pending.
+Evidence: mkdocsmerge18-package-validation-001/002 and amendments-002.
+The initial amendment receipt overcounted charged calls: 33 normalized actions
+include three think records and finish, leaving 29 charged calls. The corrected
+receipt supersedes that count; action and amendment bytes are unchanged.
+
+No Runpod or container download; corpus044 remains unchanged.
+
+
+### October 11 — Complete MkDocs Merge source and compatibility boundary
+
+The complete 19-blob source snapshot now matches every Git blob and reconstructed
+tree hash, rooted at fb7fec40eca289ec02883709c8715c9babea78ba, linked to the
+publisher base commit. Publisher image metadata is pinned; about 688 MB of
+compressed layers appear missing locally, with unknown unpacked growth and only
+about 3.7 GiB free. No image pull was attempted.
+Executing all five repository unittest methods on Python 3.12.4 exposed a shared
+compatibility error: this source assigns a dict to distutils _path_created, while
+the installed implementation expects a set. Base passes 3/5; reference and teacher
+pass 4/5. All three fail the filesystem merge test with the same AttributeError.
+The initial probe that expected a complete pass is preserved. The corrected
+reproduction still exits 1/0/0 on base/reference/teacher. This does not establish
+publisher Python 3.9 or native replay readiness. Next: prepare a bounded compatible
+Python 3.9 runtime using the verified tree, or use the pinned publisher image once
+local capacity permits. Do not alter production source/tests to hide this error.
+Evidence: mkdocsmerge18-image-001, snapshot-001 and full-tree-validation-001/002.
+
+Corpus044 unchanged; Runpod unused. Snapshot and failures preserved through R2.
+
+
+### October 11 — MkDocs Merge Python 3.9 validation
+
+A cached Python 3.9.23 ARM64 image and a hash-verified 109,478-byte pure-Python
+ruamel.yaml 0.17.21 wheel were used offline. All five repository test methods ran
+without skips on the complete pinned source tree: base 4/5, reference 5/5,
+teacher 5/5. The filesystem merge test that failed on Python 3.12 now passes in
+all roles. Corrected reproduction exits are 1/0/0. Imported paths point into the
+staged role trees, and all source bytes remain unchanged after testing.
+This resolves the observed compatibility obstacle for this specific environment;
+it does not qualify the original AMD64 publisher image or a native agent replay.
+No new Docker image or GPU was required. Only the small pinned wheel was downloaded.
+Next: prepare a bounded native replay runtime with explicit architecture/provenance,
+verify actual call/context budgets and preserve the diagnostic amendments.
+Evidence: mkdocsmerge18-py39-validation-001 and py39 transfer receipts.
+
+Corpus044 unchanged; Runpod unused. Native replay and training admission remain pending.
+
+
+### October 11 — MkDocs Merge actual submitted-patch grading
+
+The reconstructed Python 3.9.23 ARM64 runtime completed a fresh native teacher
+replay: 29 charged calls, 62 history messages, and a 729-byte source-only patch.
+Token audit reports 15,614 input tokens and 4,876 supervised tokens, without
+truncation, with 8,962 tokens remaining after the configured output reserve.
+The exact runtime and replay bundle (55 files / 91,835,477 bytes) was uploaded
+and independently restored from R2 with byte verification.
+
+Independent grading applied the actual submitted patch (SHA256
+2c49a54bcfb200059b977dd449492ffd2d1597009a53c5fd512128a1a1b0e8a1)
+to the pinned source tree, alongside unchanged publisher tests. All five test
+methods executed with zero skips: base 4/5, publisher reference 5/5, submitted
+patch 5/5. The corrected diagnostic exits 1/0/0 respectively. Import origins
+and unchanged source bytes were checked; the grading container was removed.
+This qualifies only the reconstructed ARM64 environment, not the original
+AMD64 publisher image. Its testbed interpreter is a stdlib venv, not a Conda
+installation. Earlier finite structural checks do not imply general correctness.
+
+Full 62-message content review and mechanical admission remain pending before
+corpus integration. Corpus044 is unchanged; training remains unapproved.
+Runpod was not used. Evidence: mkdocsmerge18-native-002, tokens-001,
+native-restore-001 and native-grade-001 under evidence/data.
+
+The independent grading bundle (79 files / 120,412 bytes) is also uploaded
+and independently restore-verified in R2; see native-grade-publish-001 and
+native-grade-restore-001 receipts.
+
+
+### October 11 — MkDocs Merge complete history review
+
+All 62 messages were read and reviewed, with indexed findings covering each
+message exactly once. Thirty tool exchanges include 29 charged calls and terminal
+submission. The actual history retains one failed tool result: the corrected
+base reproduction at message 29. No grep error appears in this replay. Both
+attributed diagnostic amendments are present; existing tests remain unchanged,
+and the submitted patch edits only source. Finite scratch tests assert expected
+results and propagate failures. No general alias/cycle guarantee is supported.
+
+Content review is complete for this history, but admission remains pending.
+The independent unittest grading on reconstructed ARM64 needs a correctly bound
+report accepted by the admission pipeline; do not relabel it as original publisher
+image grading. Rights, frozen splits, evaluator qualification and training runtime
+gates remain open. Corpus044 unchanged; no Runpod use.
+Evidence: evidence/data/mkdocsmerge18-full-history-review-001/report.json.
+
+
+### October 11 — MkDocs Merge pytest qualification and mechanical admission
+
+Fresh isolated pytest runs on the exact reconstructed ARM64 image now retain
+full node identities and setup/call/teardown phases. All four publisher-declared
+transitions match; the filesystem merge test is explicitly recorded as one
+supplemental pass-to-pass test, not misrepresented as a publisher declaration.
+Base passes 4/5; reference and actual native candidate pass 5/5, with no skipped
+or missing phases, collection errors, outcome disagreements or source mutation.
+All containers cleaned up. Image, source tree, native receipt and patch identities
+are bound in the report; runtime provenance remains explicitly reconstructed.
+
+The existing mechanical replay assessor passes without changing its guards.
+Training remains unapproved; rights, split isolation, evaluator qualification
+and training runtime gates remain open. Corpus044 is unchanged.
+
+The shared test-container helper now accepts only explicit linux/amd64 or
+linux/arm64 platforms, preserving AMD64 as default and recording the selection.
+Sixteen focused unit tests passed across platform rejection, replay grading,
+control profile, admission and snapshot controls. Three live ARM64 grading runs
+exercise the new execution path. Scoped diff checks passed.
+Evidence: mkdocsmerge18-pytest-grade-001 and mkdocsmerge18-admission-001.
+Runpod unused. Next: integrate the reviewed example into a new quarantined
+corpus version, verify token accounting and restore reproducibility.
+
+
+### October 11 — Corpus045 quarantine integration
+
+Added the reviewed MkDocs Merge18 native derivative; all 29 prior example records
+remain byte-identical. Thirty tasks now total 591,467 input tokens and 164,224
+shifted supervised targets, independently recounted after R2 restoration. All
+61 files / 6,540,367 bytes were restored and verified. Original/restored exposure
+schedules are byte-identical: 27 updates, one maximum epoch, seed 7401,
+9,216-target update cap and zero overshoot. Only Emcee295 retains a reserve
+exception. Training-purpose loading rejects the restored quarantine.
+
+Initial assembly failed on the existing workspace directory guard; the second
+attempt encountered the first attempt's existing output directory. Both scripts
+are preserved. The successful third attempt uses verified copies within the
+runtime workspace and a fresh output path. No guard was weakened.
+All four corpus admission gates remain null. Corpus growth does not establish
+rights, frozen split isolation, GPU training readiness, or improved model skill.
+Next: continue diverse source qualification and address the open admission gates.
+Runpod unused. See corpus045-integration-001 and corpus transfer receipts.
+
+
+### October 11 — Current corpus repository-network isolation review
+
+Fetched only public GitHub repository metadata for all 29 corpus repositories
+and four reserved evaluation repositories. All 33 requests resolved. Verified
+response hashes and repository/fork-network IDs show no declared-name overlap
+or fork-network overlap with the reserved repositories. Infinidat/munch belongs
+to the dsc/bunch network, which is explicitly represented in the new draft.
+Thirty training tasks map to 29 network groups. The draft passes structural
+split validation and is bound to corpus045 and the captured metadata.
+
+This replaces reliance on the old two-example split draft for current coverage;
+it does not freeze the split or approve training. Metadata does not detect
+detached copies, semantic task duplication, hidden evaluation tasks or prior
+model exposure. No reserved issue text or solution/test patches were accessed.
+Remaining split requirements are enumerated in corpus045-split-review-001.
+Evidence: corpus045-lineage-001 and corpus045-split-review-001.
+Corpus unchanged; Runpod unused.
+
+
+### October 11 — Corpus045 within-training issue duplication audit
+
+Read all 30 issue texts only after verifying each complete replay history against
+the corpus token audit's pinned SHA256 and byte size. All 435 unordered pairs
+were compared: no exact or NFKC/casefold/whitespace-normalized duplicates.
+Five-token shingle intersection/union counts were independently recounted for
+every pair, with exact rational ranking. Highest Jaccard similarity is 46/662
+(approximately 0.06949) between the two PennyLane issues. Manual inspection of
+the four highest-ranked pairs finds distinct requested repairs; shared issue
+templates and GitHub link syntax contribute lexical overlap.
+
+This is not an exhaustive semantic review, statistical independence proof, or
+train/evaluation contamination clearance. No similarity threshold automatically
+admits a task. No reserved evaluation issue content was read. The two PennyLane
+examples stay in the same repository group. Training remains unapproved; current
+corpus and Runpod state unchanged.
+Evidence: corpus045-issue-audit-001/report.json, pairs.json and review.json.
+
+
+### October 11 — Restore disk preflight and interruption validation
+
+ArtifactStore.restore now checks filesystem free space against the declared
+payload bytes before creating staging or making network requests. It preserves
+the existing total-byte cap, hash validation and atomic directory promotion.
+This is a lower-bound preflight, not a reservation: metadata overhead, quotas
+and concurrent allocations can still exhaust storage.
+
+Twenty-nine object-store/corpus tests passed. New fault tests verify that
+insufficient space prevents download, a midstream disconnect closes the body
+and removes staging, and fsync ENOSPC never exposes a partial destination.
+Both interrupted cases allow a subsequent verified retry. Live R2 restore
+through the updated implementation recovered six files / 156,356 bytes.
+Two earlier wrapper attempts failed with pre-transfer ValueError and have no
+passing receipt; their root cause was not established. A diagnostic invocation
+of the same main function succeeded without implementation or credential changes.
+
+Evidence: storage-preflight-live-003 and storage-preflight transfer archive.
+This does not establish resumable partial-file downloads or GPU training
+readiness. The trainer still requires an admitted training-purpose corpus.
+Corpus045 unchanged; Runpod unused.
+
+
+### October 11 — Training deployment includes the ingestion path
+
+The separate training-worker source bundle now includes transfer_artifact.py
+and object_store.py; the main inference deployment already included them.
+Seven staged CLI entrypoints pass isolated import checks. The 39-file source
+bundle totals 209,315 bytes and contains no credentials or model weights.
+Pinned serving requirements already declare the R2 transport dependencies.
+
+Using only the staged transfer CLI from outside the repository, live R2 restore
+recovered all 61 Corpus045 files / 6,540,367 bytes. The staged corpus inspector
+verified the restored manifest and accepted inspection; training-purpose loading
+failed with the required quarantine rejection and produced no success report.
+The first staging attempt rejected an observed source ctime/flag change; reading
+the explicit source list and using fresh paths allowed the existing guard to pass.
+
+Evidence: training-deployment-storage-check-002, training-deployment-restore-001
+and training-deployment-validation-001. These prove local source closure and
+ingestion behavior, not pinned Linux CUDA, adapter training, or GPU readiness.
+Runpod unused; training admission remains closed.
+
+
+### October 11 — Current-corpus attribution evidence index
+
+Created a 30-row inventory bound to the Corpus045 manifest. Six explicitly
+located historical rights/attribution reports are indexed, with their retained
+notice files copied only after SHA256 and size verification. The other rows
+are marked not indexed in this pass, not asserted to lack all existing evidence.
+No current-history rights binding is claimed from historical report presence.
+The easy-ptvsd material report explicitly records a missing ptvsd notice.
+
+Next actions: map current observed files and dependency output to notice coverage,
+resolve that recorded missing notice, and index remaining exact source captures.
+This is an evidence inventory, not legal clearance or a training authorization.
+Evidence: corpus045-attribution-index-001. No corpus admission gate changed.
+The broader CPU regression is still running through local dependency imports;
+no overall result is claimed. Runpod unused.
+
+
+### October 11 — ptvsd 3.0.0 notice supplement
+
+Investigated the easy-ptvsd dependency capture gap against the exact installed
+version. The PyPI 3.0.0 source archive is 51 KB and matches the release SHA256
+44fe6af915711b5f144d5344fa24b524d6b19cb0dbd784e177e3e65935d458dc.
+It contains no standalone LICENSE/NOTICE file. Its seven Python package files
+carry Microsoft copyright and Apache-2.0 headers; all seven match the installed
+files byte-for-byte in the pinned easy-ptvsd runtime. The offline export container
+exited successfully and was removed.
+
+Preserved those headers and the separately fetched official Apache license text
+in ptvsd300-supplement-001. The historical missing-file report remains unchanged;
+this is a supplementary evidence capture, not blanket rights clearance. Current
+trajectory observation coverage, other dependencies and corpus admission remain
+open. Sources: https://pypi.org/project/ptvsd/3.0.0/ and
+https://www.apache.org/licenses/LICENSE-2.0.txt .
+Runpod unused. The existing broad CPU regression process remains pending.
+
+
+### October 11 — Touvlo34 source and exact recurrence triage
+
+Extracted the preselected Benardi/touvlo task from its pinned local SWE-Hero shard
+after repository exclusion and full-byte SHA256 verification. Forty-two source
+actions are retained; no source shell command was executed. The first file read
+timed out; the successful retry verified the complete pinned bytes before parsing.
+
+The extracted proposed function passes 432 finite scalar Fraction cases against
+the affine-gradient closed form theta_n=(1-alpha*scale)^n*theta_0 minus
+alpha*offset times the finite geometric sum. Base rejects the new keyword inputs.
+The candidate rejects an unwrapped positional-only extra parameter, so this
+cannot establish the source's broad any-signature claim. No convergence or NumPy
+array guarantee follows from the scalar identity checks.
+
+Source diagnostic 48 catches failures without propagating them; action 78 prints
+passed based on shapes without checking numerical values and overstates coverage.
+Correct diagnostic behavior with explicit attribution before fresh replay.
+Publisher alignment, full content review, native budgets and grading remain
+pending. Corpus045 unchanged; Runpod unused.
+Evidence: touvlo34-teacher-001 and touvlo34-static-001.
+
+
+### October 11 — Broad CPU regression failed during dependency loading
+
+Run001 completed 89 tests: 49 passed, zero assertion failures, 40 errors and
+zero skips. The first error was errno 60 while Python loaded torch.distributions.
+Subsequent errors report partially initialized Torch or missing torch.cuda.
+This is a failed qualification run, not numerical acceptance; no production
+mathematical defect is established by these import errors. Full traces retained
+in p1-data-regression-001. Versions: Torch 2.14.1, Transformers 5.13.1, PEFT 0.21.2.
+A fresh run002 imports dependencies before tests and uses a /tmp bytecode cache;
+its result is pending. No test expectation or production algorithm was changed.
+Runpod unused.
+
+
+### October 11 — Touvlo34 held after publisher contract comparison
+
+Pinned publisher extraction reveals a calling-convention mismatch. Teacher code
+retains grad(theta, X, y, **kwargs), whereas the reference and both new tests
+require grad(X, y, theta, **kwargs). An exact Fraction witness with gradient
+returning its third argument, X=5, y=7, theta0=2, alpha=1/2 and two iterations
+returns -5 under the teacher but should return 1/2 under the publisher contract.
+The argument-call log confirms the ordering discrepancy.
+
+The 432 prior scalar checks remain valid only under the teacher callback order;
+they do not qualify task alignment. Mark this candidate held; do not spend time
+on a native replay or silently alter its repair to the reference. No publisher
+suite was run, so this is a direct contract counterexample rather than a full
+repository score. Corpus045 unchanged. Evidence: touvlo34-contract-001 and
+touvlo34-evaluator-001. Runpod unused. CPU regression run002 remains pending
+in dependency import preflight.
+
+
+### October 11 — R2 recovery bypasses local source hydration failure
+
+CPU regression002 terminated during Torch import preflight with errno 60; no
+tests ran. It is no longer pending. The referenced Torch sparse source file is
+marked dataless by macOS, and the CPU environment imports repository .venv
+packages through project-host.pth. Moving bytecode to /tmp did not resolve this.
+Full CPU numerical qualification remains failed/unproven; do not start Runpod.
+
+Flake8 source extraction001 and publisher extraction001 also terminated on local
+shard reads. Restored the 200,489,804-byte teacher shard directly from R2, bound
+to the previously published manifest and pinned SHA-256
+529244ce0c3465c022565e8c6eeb3ef3d6b2981cabfb76dbed4f02c4f782722d.
+Extraction002 succeeded: 36 actions, 33 potentially charged after excluding two
+think actions and finish. Actual native budget remains unmeasured.
+
+Task PyCQA__flake8-1642 proposes catching OSError in _stat_key for nonexistent
+HOME. Action-argument review found diagnostics that catch errors without nonzero
+exit, a subprocess check accepting exit 1 without validating its output, and an
+unsupported universal backward-compatibility claim. Publisher comparison,
+full message/result review, corrected diagnostics and native grading remain
+required. No source commands were executed; corpus045 is unchanged.
+Evidence: evidence/data/flake81642-triage-001/report.json.
+
+Flake8 triage evidence: 8 files / 173,099 bytes published to R2 and independently
+restored with hash verification (flake81642-triage-publish-001 and
+flake81642-triage-restore-001). Removed only the temporary 200,489,804-byte
+R2 download after verifying its identity again; original local source and R2
+blob remain intact. No Docker, model, dependency or user data was deleted.
+
+
+### October 11 — Flake8 candidate held on error-propagation regression
+
+Recovered the 101,556,119-byte pinned publisher shard from R2 with complete
+SHA-256 verification, then extracted evaluator002. Publisher catches OSError
+only for HOME; teacher catches it inside every _stat_key invocation.
+
+Fetched config.py at base commit 446b18d35a5fa0be6b3531d30a0706fc82247313;
+its Git blob hash matches publisher patch index f5c93ce. Executed only the two
+reviewed config-discovery functions from base, reference and candidate using
+real temporary directories and controlled stat failures. In the missing-HOME
+case, base raises and both repairs return None. Four additional witnesses
+(start/ancestor crossed with FileNotFoundError/PermissionError) show base and
+reference propagating errors while candidate silently returns None.
+
+These witnesses contradict universal backward compatibility; they do not claim
+the candidate fails the publisher's single new missing-HOME test. Hold the
+unchanged teacher candidate for broader error suppression. Do not silently
+substitute the reference repair or admit this as verified training behavior.
+This was a focused differential function evaluation, not a full repository
+pytest run, native replay or general correctness proof. Source tool logs show
+23 config tests and 27 selected config-related tests passing historically; those
+are teacher logs, not newly reproduced results. Full-history review is unfinished.
+
+Evidence: evidence/data/flake81642-contract-001/report.json and
+flake81642-evaluator-002. Corpus045 unchanged; Runpod unused. CPU import
+qualification remains unresolved as recorded above.
+
+Contract archive: 14 files / 34,106 bytes published and independently restored
+with hash verification (flake81642-contract-publish-001 and restore-001).
+Removed only the identity-rechecked temporary 101,556,119-byte R2 download;
+original local shard and remote blob retained.
+
+
+### October 11 — CPU dependency import recovered outside cloud storage
+
+Created /tmp/zenithsync-cpu-local-p1-001 without a project-host.pth dependency on
+the cloud-managed repository .venv. Cached Torch 2.14.1, Transformers 5.13.1 and
+NumPy 2.5.3 wheels matched the exact SHA-256 and size in PyPI release metadata.
+PEFT 0.21.2 and dependencies were installed by pip; full install report, package
+freeze and pip-check result are retained in evidence/data/cpu-recovery-001.
+Transitive packages were freshly resolved, so this is not an assertion of exact
+identity to the earlier runtime. pip check reports no broken requirements.
+Runtime occupies approximately 725 MB; disk free was approximately 2.1 GiB.
+
+Regression003 imports Torch, Transformers and PEFT successfully and verifies
+that those module paths are under the fresh runtime prefix. This resolves the
+observed dependency-import failure for this invocation. The complete 19-module
+regression cohort has been launched; it is not yet a passing test result.
+Repository source loading may still encounter local hydration delays. Runpod
+remains unused; no full model training readiness is established.
+
+CPU recovery evidence: 7 files / 578,164 bytes uploaded to R2 and independently
+restored with hash verification (cpu-recovery-publish-001 and restore-001).
+
+Regression003 completed: 89 tests passed, zero failures, errors or skips,
+72.05 seconds reported elapsed. All 19 requested modules ran under the fresh
+CPU environment; report binds test source hashes before/after execution and
+runner identity. No production-code change was made in this recovery cycle.
+This establishes local CPU regression acceptance, including reduced Gemma,
+not full 31B or Linux GPU readiness or corpus admission. Earlier failed runs
+remain retained. Evidence: evidence/data/p1-data-regression-003.
+
+
+### October 11 — Repository-wide regression refresh launched
+
+The 89-test CPU training/data cohort is already passing. The broader repository
+suite is now being collected using the recovered local CPU runtime, with Torch
+checks enabled. Attempt001 failed before collection because the runner supplied
+a repository top-level directory although tests is not a regular package.
+Attempt002 uses the README-compatible discover start directory without that
+override; it is live, not a passing result yet. Optional dependency omissions
+will be reported as coverage gaps, not verified behavior. No production code or
+test expectation was changed. README now refers to corpus045's 30 quarantined
+examples; current readiness summary includes the recovered CPU result and held
+Touvlo, Fuzzyfinder and Flake8 candidates. Runpod remains stopped.
+
+
+### October 11 — Full-suite cache isolation and data test dependencies
+
+Attempt002 was observed reading a cloud-managed tests/__pycache__ bytecode file.
+-B disables writes but does not bypass existing cache reads. After an interrupt
+request did not promptly terminate it, a targeted SIGTERM was sent. Collection
+completed (462 tests) during this transition and four test completions reached
+the partial log. Exit143 is an interrupted run, not a suite result. The retained
+interruption record states this race explicitly; no successful run is claimed.
+
+Installed requests 2.34.2 and pyarrow 25.0.1 in the isolated CPU environment to
+exercise optional HTTP-resource and Parquet-ingestion tests. pip check passes;
+updated frozen requirements and installation report are retained. Approximate
+remaining free disk: 2.0 GiB. Attempt003 uses a separate /tmp bytecode prefix
+and prints module collection progress. It remains in progress. No production
+algorithm or test expectation changed, and no Runpod resources were used.
+Evidence: evidence/data/full-suite-recovery-001.
+
+
+### October 11 — Full local regression passes
+
+Attempt003 completed all 463 tests with zero failures, errors or skips in
+220.88 seconds including collection. This covers the current discovered local
+unittest suite under the recovered CPU runtime, including Torch, HTTP-resource
+and Parquet checks. No production algorithm or test expectation was changed.
+The runner and complete test log are retained; the receipt does not claim a
+complete before/after repository source snapshot. Prior failed/interrupted
+attempts remain preserved. Full-model GPU behavior, training-data rights and
+admission, dataset sufficiency and learned repair gains remain unproven.
+Evidence: evidence/data/p1-full-regression-003. Runpod remains unused.
+
+
+### October 11 — Corpus045 review linkage index
+
+Verified the corpus045 manifest and all 30 audit identities, then indexed
+explicitly named /tmp/zenithsync-*-full-history-review-*/report.json files.
+Nine of 30 exact history identities matched, with zero read errors. The other
+21 are not indexed by this naming/location-limited pass; this is not proof their
+reviews are absent. Older report formats and locations require reconciliation.
+Matched reports are preserved by content hash, but identity linkage alone does
+not establish complete or correct semantic review. No admission gate changed.
+Evidence: evidence/data/corpus045-review-coverage-001/report.json. Next work:
+resolve the 21 unmatched current histories against their original qualification
+and review evidence before considering task-alignment admission.
+
+
+### October 11 — Lmfit current-history review chain reconciled
+
+Expanded /tmp review/admission/semantic indexing finds exact-history evidence for
+13 of 30 examples, but mechanical admission reports are not full-content review.
+A repository evidence scan (coverage004) is still running to resolve older formats.
+Coverage003 was stopped after detecting an incorrect reused output-directory
+literal; no previous output was overwritten. Its script, log and interruption
+record remain available. Coverage002 remains an intermediate limited index.
+
+Lmfit's current history has an existing full-content-review-002 report rather
+than a full-history-review-named report. Independently verified corpus/audit/history
+identities, all 168 old/current per-message hashes, complete nonoverlapping prior
+review ranges and the exact partition of 84 current messages: 71 unchanged and
+13 reviewed changes. Both scope notes match their bound hashes. This resolves
+one of the initial 21 catalog gaps through its existing review chain. It is not
+a new semantic or rights approval; the corpus and all admission gates are unchanged.
+Evidence: evidence/data/lmfit487-review-chain-001. Runpod remains unused.
+
+
+### October 11 — Corpus evidence index and reusable review coverage checks
+
+Coverage004 completed: 219 unique named repository reports inspected, with exact
+history links for 29 of 30 current examples; Optuna3545 remains unmatched in this
+bounded scan. Mechanical admission, selected-claim reviews and full-history
+reviews remain distinct. This is not 29 semantic approvals. Nine original /tmp
+full-history report matches remain recorded separately. The expanded report and
+49-file / 518,485-byte referenced evidence archive preserve the links.
+
+Added zenithsync/review_coverage.py for native message lists with explicit full
+review sections. It checks caller-supplied file digests, byte ceilings, strict
+message-count and index coverage, canonical per-message hashes, nonempty findings,
+bounded inclusive ranges, absence of gaps/overlaps and unchanged input identities.
+Its result explicitly disclaims semantic truth, rights and training approval.
+Inherited/delta reviews require separate chain validation; they are not accepted
+as explicit full-range reviews by this API. Seven new fault/coverage tests plus
+six adjacent task-alignment and file-integrity tests pass (13 total). The prior
+463-test full-suite result predates this isolated addition; no new full-suite
+count is claimed.
+
+Applied the verifier to current Signac622: all 78 message bindings and 10 complete
+nonoverlapping review sections agree with corpus045's exact history. The bound
+scope note also matches. This reconciles its existing version002 full review,
+which the earlier /tmp-only search missed. Corpus and admission gates unchanged.
+Evidence: corpus045-review-coverage-004 and signac622-review-coverage-001.
+Runpod unused; data rights, broader semantic acceptance, abundance and GPU
+qualification remain open.
+
+
+### October 11 — Optuna evidence linkage resolved; diagnostic hold identified
+
+Optuna's observation review binds native replay events and receipt, not the
+rendered history directly. Verified the corpus audit/current history identity,
+history-receipt inputs, shared replay event/receipt identities, exact completion
+plan and submitted patch. This resolves the catalog gap by an indirect chain.
+The corpus therefore has 29 direct indexed history links and one explicitly
+verified indirect link; these are not 30 full semantic approvals.
+
+Message50 writes final_verification.py. A bounded synthetic fault probe executes
+that exact diagnostic with an injected GridSampler stub that emits no unsupported
+value warnings while the categorical stub warns. The diagnostic prints
+Inconsistent behavior yet exits zero. This is a failure-propagation witness for
+the diagnostic, not a new actual-Optuna performance or repair result. Existing
+completion assertions remain useful finite checks but do not correct earlier
+supervision. Hold this history for explicitly attributed diagnostic correction,
+fresh replay and content review. Corpus045 remains unchanged and quarantined.
+
+Evidence: evidence/data/optuna3545-review-link-001; the archive includes original
+history, linked receipts/events, original diagnostic and labeled synthetic probe.
+Full history review is not established by this linkage. Runpod unused.
+
+
+### October 11 — Optuna diagnostic corrections qualified locally
+
+Prepared four explicitly attributed source-action replacements for reproduction,
+post-fix checks, edge cases and final verification. Warning counts/categories,
+valid-value silence, mixed choices and the two-point actual in-memory study now
+use assertions. Broad compatibility claims and caught-but-unpropagated diagnostic
+errors are removed. Original implementation edit and other source actions remain
+unchanged; old records remain retained.
+
+The pinned local Optuna image was already available; no pull or Runpod use.
+Four revised programs pass against the actual patched source. The pre-repair
+reproduction exits nonzero with ValueError. Eight separately labeled injections
+(missing warnings and wrong warning categories for each program) reject with
+AssertionError. Original source hash, package origin, exact patch application,
+unchanged final diff and container cleanup were checked. This is finite diagnostic
+validation, not fresh native replay acceptance or universal repair correctness.
+
+The old finite completion is rebound to the derived action identity. Recovered
+the exact 245,825,405-byte original trajectory shard from its R2 manifest and
+verified SHA-256. Fresh amended native replay001 is launched with the existing
+40-call profile; it remains pending. Corpus045 remains unchanged and quarantined.
+Evidence: optuna3545-amendments-001 and optuna3545-diagnostic-validation-001.
+
+Fresh replay001 completed: 30 charged calls, unchanged patch SHA-256
+64a2a53b29e79186d744d165e0754ee7313f387271534f2199a30c28a3fd7740,
+finite completion passed and container removed. Source errors 32,36,46 remain
+visible (no-match grep, desired-behavior reproduction before repair and obsolete
+ValueError expectation). Reconstruction, full-content review, grading and token
+audit remain pending; no corpus replacement or training admission yet.
+
+
+### October 11 — Amended Optuna reconstruction, tokens and independent grading
+
+Reconstructed 64 messages / 31 exchanges from the amended native replay. The
+pinned tokenizer audit passes without truncation: 17,588 input tokens and 3,539
+supervised shifted targets; exported arrays and collator counts agree. The first
+audit attempt failed before encoding because its selected runtime lacked the
+model manifest. The successful attempt uses the existing pinned validation
+runtime and verifies model tokenizer assets and history identities.
+
+Independent grading attempt003 uses the actual replay patch. Base passes 8/9;
+reference and candidate pass 9/9. All publisher transitions and candidate versus
+reference cases match. Package origin, unchanged tracked diff during tests,
+input identities and container cleanup are checked. Attempts001/002 stopped
+before tests because macOS placeholder hydration changed metadata during strict
+inventory; inputs were hydrated before retry, without weakening checks.
+
+The history/token archive (11 files, 296,140 bytes) is R2 uploaded and
+restore-verified. Grading evidence (32 files, 108,890 bytes) is uploaded and independently
+restore-verified (optuna3545-amended-grade-restore-003). Full transcript
+content review and corpus replacement remain pending. Corpus045 stays unchanged
+and quarantined. No Runpod use or training approval.
+
+
+### October 11 — Full Optuna review and corpus046 replacement
+
+Read all 64 amended messages in four bounded groups, then recorded 12 exhaustive
+nonoverlapping review sections and per-message canonical hashes. The review
+retains errors at messages31/35/43: no-match search, pre-repair reproduction and
+obsolete ValueError test. Eight selected source-test passes are distinguished
+from the independent publisher-patched nine-case grading. The six-point integer
+objective oracle proves only the finite enumeration result, with unique minimum
+1 at (1,0). NumPy seeding does not establish deterministic Python random order;
+coverage assertions are order-independent. No persistence or universal claim.
+Review coverage passes and its 10-file / 134,269-byte archive is R2 restore-verified.
+
+The admission-format grading summary derives from existing three-arm outcomes,
+not a new test run. Mechanical assessment002 passes with no blockers. The first
+summary attempt rejected cloud hydration before creation; a dependent invocation
+then failed on the absent summary. Hydration completed before strict retry.
+No integrity checks were weakened.
+
+Corpus046 replaces only Optuna: 30 tasks, 29 declared repositories, 588,288 input
+tokens and 162,093 supervised shifted targets. All four admission gates remain
+null. Its 61 files / 6,507,113 bytes are R2 uploaded and independently restored.
+Independent recount agrees; restored training loading rejects quarantine. Local
+and restored schedules match byte-for-byte: 26 updates, zero overshoot, seed7401,
+max_epochs1, supervised update cap9216. Emcee295 alone exceeds the context cap
+with the 8,192-token output reserve. A 50M-token campaign needs about 308.46 passes
+of this corpus; it is not sufficient diversity.
+
+Evidence: corpus046-integration-001, corpus046-optuna-schedule-001,
+training-corpus-publish-046 / restore-046. A pre-existing schedule-046 directory
+caused initial archive preparation to stop; it was preserved, and current
+schedule evidence uses the explicit optuna path. Integration archive publication
+uses corpus046-integration-publish-002; all 15 files / 66,383 bytes are independently
+restore-verified in corpus046-integration-restore-001.
+No production code changed this cycle. No Runpod execution or training approval.
+
+
+### October 11 — Current-history attribution and split evidence binding
+
+Recovered the SWE-Hero and SWE-rebench cards at their exact intake revisions;
+SHA-256 and sizes match the original receipts. Captured Optuna's MIT notice from
+the pinned local image. A separate source capture verifies clean HEAD, tree,
+base commit, and each Git blob for README, GridSampler, distributions, grid tests
+and LICENSE. All five read_file outputs in the current Optuna history match
+exact source line slices, including the explicitly truncated first GridSampler
+read. Recorded dataset declarations, repository notice and transformation
+attribution separately. This does not clear dependencies, indirect shell output
+or original teacher-service terms, nor other 29 corpus examples.
+
+Rebound the split draft to corpus046 input identities and verified unchanged
+task/repository/leakage/split assignments for all 30 tasks. Prior repository API
+responses are hash-verified; their original observation timestamp is retained.
+No fresh network lookup is claimed. The draft remains unfrozen and does not
+establish semantic near-duplicate isolation or hidden-evaluation cleanliness.
+
+Evidence: corpus046-attribution-001; all 21 files / 170,039 bytes are R2 uploaded
+and independently restore-verified (publish-001 / restore-001). No production
+code changed, no training approval and no Runpod use.
+
+
+### October 11 — Reusable exact lexical similarity and corpus046 screening
+
+Added zenithsync/issue_similarity.py and six tests. The implementation indexes
+sets of contiguous token shingles after explicitly heuristic NFKC/casefold/space
+normalization. Short issues use their complete token tuple. For sets A and B,
+Jaccard is |A∩B|/(|A|+|B|-|A∩B|), containment is |A∩B|/min(|A|,|B|). Fractions
+are compared exactly. Each unique shingle contributes once to each posting-list
+pair, so accumulated counts equal intersections. Because both thresholds are
+strictly positive, omitted zero-intersection pairs cannot meet either threshold.
+This is exact only for the defined lexical representation, not semantic meaning.
+
+Document, total-token and candidate-pair limits reject exhaustion without a
+partial report. Callers must separately bound input bytes before parsing.
+Common boilerplate can still create quadratic candidate work; no unmeasured
+large-corpus throughput or semantic recall claim is made. Tests cover exhaustive
+independent randomized-set comparisons, input ordering, exact rational boundary,
+containment-only flags, repeated-shingle multiplicity, short Unicode text,
+invalid inputs and limit failures. All 25 targeted issue/corpus tests pass.
+
+Rebound prior issue bodies to corpus046: 29 entries identical, amended Optuna
+issue body directly checked equal. Indexed results match all 435 earlier
+exhaustive pair calculations (71 positive intersections). At exploratory
+thresholds Jaccard1/10 or containment1/5, PennyLane5716/5831 alone is flagged:
+Jaccard23/331, containment46/227. Full issues and all 46 shared shingles were
+read; overlap consists of headings, markdown, no-response placeholders and
+the existing-issue checklist. The defects differ: batched layer indexing versus
+Exp.num_steps preservation. These thresholds are not calibrated semantic tests.
+Reserved evaluation bodies remain unread; split and training remain unapproved.
+
+Evidence: corpus046-similarity-001, including source, tests, 25-test log, inherited
+issue bodies, exhaustive oracle and scoped pair review. R2 archive is 8 files /
+165,371 bytes; all files are uploaded and independently restore-verified in R2
+(corpus046-similarity-publish-001 / restore-001). No Runpod use.
+
+
+### October 11 — Bounded CLI and 1,575-task candidate screen
+
+Added scripts/audit_issue_similarity.py: exact input SHA256/size and bounded
+immutable bytes, strict duplicate-key/nonfinite JSON rejection, rational CLI
+thresholds, explicit workload limits and fresh output directory. Source selection
+and authorization must precede the CLI; it does not itself grant access to held-out
+material. Added a pair-visit budget to the core: sum_s choose(posting_size_s,2)
+is checked before pair counting, limiting repeated boilerplate work independently
+of distinct pair count. Twenty-eight targeted tests pass, including CLI rejection
+of changed bytes, oversized input, duplicate keys, nonfinite JSON and zero threshold.
+
+Exported only the existing metadata-qualified 1,575-task cohort from two already
+local pinned shards. Reserved repository checks and exact metadata checks precede
+issue-body access; no oracle patches read. First export stopped on hydration;
+second stopped because /tmp resolved to /private/tmp and the source root had not
+been canonicalized. Third explicitly resolves the allowed root and passes the
+same containment and content checks. Failed logs/scripts are retained.
+
+The cohort has 454,737 lexical tokens. Indexed screening processes 229,535
+positive pairs and 967,495 posting-pair visits. Independent exhaustive integer/set
+calculations agree across all 1,239,525 unordered pairs. At Jaccard>=1/2 or
+containment>=4/5, all five flags were read: Mobly164/165 and Hidrokit121/122 have
+exactly identical issue text and candidate leakage families; ebook-reader-dict,
+EinsteinPy and Streamlink pairs describe different requirements with shared
+funding or issue-template material. Linked image contents and patches are not
+reviewed. No guarantee for unflagged semantic duplication or hidden evaluation.
+
+Evidence: candidate-similarity-001, candidate-similarity-publish-001 / restore-001.
+The archive preserves input issues, fingerprints, source bindings, failure logs,
+production implementation, tests, oracle and scoped review. Corpus046 and all
+admission gates remain unchanged. Screening 1,575 candidates is not acquiring
+1,575 verified training trajectories. No Runpod use.
+
+R2 completion: all 18 archive files (2,392,793 bytes) are uploaded and
+independently restore-verified. No local source shard was downloaded or deleted.
+
+
+### October 11 — Enforce reviewed duplicate families in split planning
+
+Added merge_leakage_groups to the split module. It computes connected components
+of existing family membership and reviewed task links, preserves split choices,
+and rejects conflicting components. The merge is deterministic and idempotent
+at manifest level, retains prior family constraints, never mutates caller input,
+and refuses frozen manifests. Generated label collisions are explicitly rejected
+including a forced collision between two independent components. Links remain
+caller-supplied evidence; the function does not infer semantic equivalence.
+
+31 targeted tests pass: seven merge tests plus issue-similarity/CLI and corpus
+checks. Independent graph reachability across 50 seeded small graphs confirms
+component membership. An intermediate new-test syntax error was corrected;
+initial, failure and final logs are retained.
+
+The candidate draft integrates the two exact-issue families after verifying
+fingerprint and review identities: 1,575 task rows, 1,573 leakage groups. Task,
+repository, split and issue-hash fields are unchanged. All assignments remain
+provisional train; input_sha256 denotes issue bytes only in this planning artifact,
+not tokenized examples. Corpus046 is unchanged and quarantined. Reserved test
+bodies were not accessed. No training or GPU execution.
+
+Evidence: candidate-leakage-plan-001; nine files / 777,521 bytes. R2 publication
+and restoration use candidate-leakage-plan-publish-001 / restore-001. Fresh full
+local regression004 was started after the shared split-module change; its result
+remains pending until the runner terminates and the report is checked.
+
+Full regression004 completed successfully: 486 tests, zero failures/errors/skips,
+CPU Torch checks enabled. Runner elapsed time including collection: 128.87s;
+unittest execution: 64.921s. No production source changed during this run.
+The report binds its runner and captures test logs, not a complete before/after
+repository snapshot. Evidence: p1-full-regression-004. Duplicate-family evidence
+is uploaded and independently restore-verified (nine files / 777,521 bytes).
+
+Full-regression004 archive completion: four files / 79,744 bytes are uploaded
+and independently restore-verified in R2. P1 remains incomplete; GPU stays off.
+
+
+### October 11 — Rally1469 explicit diagnostic derivative
+
+Selected a held candidate with an already-local qualified runtime; no image pull
+or Runpod session. The original final script inferred TLS1.3/Elasticsearch memory
+leak prevention from constructor attributes. Replaced two created diagnostics via
+the explicit amendment mechanism (action ordinals29/38); no source patch edit,
+source action reorder or silent observation rewrite. The original validation
+script and all historical evidence remain available.
+
+The first replacement asserts seven finite constructor cases. The second creates
+actual sessions/connectors across 3 option settings × 2 static modes × 2 SSL
+settings, checking stored policy, connector type/policy, timer creation, session
+and connector closure, timer cancellation and no pending async tasks. No request
+or TLS handshake is made. It does not claim sustained memory behavior or server
+compatibility. Both diagnostics fail on the base and pass the patched source;
+five explicitly injected default/override/connector-policy faults reject. Exact
+patch application, unchanged final diff and container cleanup are checked.
+
+Fresh replay completes39 charged calls under40, no tool errors and unchanged
+2,185-byte patch4d9f24a4a36f82ba0b0f9eff929aa56d7f763ccb9a3b08b6acfbf8ee681861f6.
+History reconstruction:82 messages/40 exchanges. Pinned token audit:19,709 input,
+3,513 supervised shifted targets, no truncation and4,867 reserve margin. Fresh
+grading, full-content review and mechanical assessment remain pending before
+corpus integration. Corpus046 is unchanged, all training gates remain open.
+
+Diagnostic archive15files58,981bytes is R2 uploaded/restore-verified. Native
+archive7files150,661bytes and history/token archive7files309,926bytes are both
+uploaded and independently restore-verified in R2. No production code changed this cycle;
+prior full486-test CPU result remains the latest local suite.
+
+
+### October 11 — Rally1469 review and grading completion
+
+Fresh independent grading of the amended replay matches all 197 reference case
+outcomes with zero disagreements. Read the remaining messages 66–81, completing
+review of all 82 messages across the continued review. Fifteen explicit sections
+cover the exact history without overlaps or omissions; per-message hashes bind
+the findings. Mechanical cross-artifact assessment passes with no blockers.
+The final twelve-case check exercises connector policies and lifecycle only;
+it does not measure network requests, TLS handshakes or sustained memory leaks.
+Original teacher evidence remains separate from the two attributed amendments.
+
+Evidence: rally1469-full-history-review-001, amended-grade-001 and
+amended-admission-001 under evidence/data. The combined archive has 22 files /
+386,660 bytes and is uploaded and independently restore-verified in R2
+(rally1469-reviewed-grade-publish-001 / restore-001). Corpus046 remains unchanged;
+next action is quarantined replacement with token recount, schedule verification
+and R2 restoration. No training admission or learned-model gain is established.
+
+No production code changed; the latest full local regression remains 486 tests
+passing. Runpod remains stopped. Local disk has only about 1.5 GiB available, so
+this cycle uses existing images and small evidence bundles without large pulls.
+
+
+### October 11 — Corpus047 adds reviewed Rally; restore and schedule verified
+
+Inspected corpus046 before integration: Rally was absent. Corrected earlier
+replacement wording; this is a new quarantined addition. All 30 earlier records
+remain byte-identical. Corpus047 has 31 examples/tasks across 30 declared
+repository groups, 607,997 input tokens and 165,606 supervised shifted targets.
+Manifest SHA256 a0ffe9d3702086b123403071710da5ef84cb152a2e8b5f516e5d73c2b09cfeef.
+Its 63 files / 6,724,848 bytes are R2 published and independently restore-verified.
+Recounting restored token arrays agrees; quarantine training loads reject.
+
+With seed7401, one epoch and a9,216-supervised-token update cap, original and
+restored schedules are byte-identical:27 updates, zero target overshoot.
+Emcee295 remains the only input-plus-8,192-reserve exception. No GPU is used.
+Evidence: corpus047-integration-001, corpus047-rally-schedule-001 and
+training-corpus-publish-047 / restore-047.
+
+All465 lexical pair counts agree with an independent exhaustive set oracle.
+At Jaccard>=1/10 or containment>=1/5, Rally adds no flags. The identical prior
+PennyLane issue pair remains the only flag; its earlier template-overlap finding
+is rebound to unchanged issue bodies. Unflagged does not prove semantically
+independent, and this does not establish held-out isolation or a frozen split.
+Evidence: corpus047-similarity-001.
+
+The19-file /170,603-byte integration evidence archive is R2 published and
+independently restore-verified (corpus047-integration-publish-001 / restore-001).
+No production code changed, so the prior486-test full local regression remains
+the latest relevant suite. README and current readiness now reflect corpus047.
+Next: expand qualified diverse data and close rights/attribution and split gates;
+this165,606-target corpus is not sufficient for three50M-token candidates without
+roughly302 repeats per candidate. Keep Runpod stopped; no training is admitted.
+
+
+### October 11 — Reusable bounded source attribution capture
+
+Implemented zenithsync/source_capture.py for explicit tracked regular Git blobs.
+It checks qualified commit/tree identities, reported tracked cleanliness before
+and after capture, literal paths and blob types, per-file/aggregate sizes before
+reading content, and each Git object hash. Success reports are written last.
+The API does not infer a license, read evaluation task bodies or approve training.
+Seven new temporary-Git tests plus seven review-coverage tests pass. The initial
+fixture expected31 bytes instead of32; its failed log is retained, followed by
+the corrected passing run.
+
+An actual offline capture on Rally exports seven files /88,905 bytes, including
+LICENSE and NOTICE. All eight direct read observations match the captured base
+blobs after applying the two recorded source edits in chronological order.
+No source excerpt is silently rewritten. NOTICE preserves Elasticsearch B.V.'s
+copyright; a supplement records the project's replay and diagnostic changes.
+Indirect shell content, dependency notices and dataset/teacher requirements
+remain separate. This is source provenance, not exhaustive rights approval.
+
+Attribution archive:23 files /189,253 bytes, R2 published and independently
+restore-verified. Evidence: rally1469-attribution-001 and its publish/restore-001
+receipts. Corpus047 is unchanged and quarantined. Full local regression005 was
+started with CPU Torch checks enabled; its result will be recorded separately.
+Runpod remains stopped.
+
+
+Full regression005 completed:493 tests passed, zero failures/errors/skips, CPU
+Torch enabled. Collection plus execution took250.02s; test execution44.536s.
+No production code changed during the run. The four-file /80,736-byte test
+evidence archive is uploaded and independently restore-verified in R2; see
+p1-full-regression-005, p1-full-regression-publish-005 and restore-005. This
+supersedes the486-test local baseline. Full-model GPU qualification remains open.
+
+
+### October 11 — Corpus047 repository identity and draft split refresh
+
+Queried fresh public GitHub repository metadata for all30 candidate repositories
+and four reserved evaluation repositories. All34 resolved, with no declared-name
+or fork-network-root overlap. The33 previously observed repository identities
+are unchanged; Rally adds network root47140131. Reserved issue bodies and patches
+were not opened. This excludes observed canonical/declared-fork overlap only;
+detached copies, vendored source and semantic overlap remain outside this check.
+
+Bound all31 current examples to canonical network groups and their exact audited
+input-token hashes. The draft validates without changing task, leakage-family or
+provisional split assignments. All entries are still provisional train; there is
+no new development/confirmation cohort, frozen split or training admission.
+Evidence: corpus047-split-001.
+
+The first binding attempt passed a string to the Path-only JSON loader and failed
+before emitting the split result. The subsequent transfer found no bundle and
+wrote no passing receipt. Corrected the path type and reran successfully; the
+successful publication is corpus047-split-publish-002. Production code is
+unchanged, so the493-test full local result remains current. Runpod stays stopped.
+
+The39-file /253,263-byte lineage/split bundle is independently restore-verified
+in R2 (corpus047-split-publish-002 / restore-001). The restored draft was also
+revalidated against the current corpus identity; all31 entries remain draft.
+
+
+### October 11 — Linkding691 diagnostic derivative, fresh replay pending
+
+Revisited the held Linkding candidate using its already-local qualified snapshot.
+Its original passing publisher/argv checks do not justify the two unsupported
+assistant test claims. Built an explicit amendment plan for source indices28/44
+(two of27 shell actions); terminal, source edits and all other commands remain
+unchanged. Original teacher history is preserved separately. The first attempt
+stopped during cloud hydration metadata drift; retry retained the pinned source
+hash and unchanged strict identity checks.
+
+The requirements diagnostic asserts exact mocked argv, gzip bytes, missing-file
+SingeFileError, propagation of the same OSError and translation of an explicitly
+injected CalledProcessError. The use-case diagnostic runs a real local child
+and checks its exact argv through compressed output. Neither claims that a
+browser or external website works. Both programs reject the actual base and
+pass the actual patched checkout. Three explicit process-local faults reject:
+dropped options in each program, and swallowed exceptions in the first. Source
+origin, snapshot/tree identity, unchanged diff and container cleanup are checked.
+The original source patch's trailing-whitespace warning is retained.
+
+Evidence: linkding691-amendments-001 and linkding691-diagnostics-001. Fresh
+amended native replay, independent grading, token rendering, full-content review
+and mechanical assessment remain necessary before quarantine integration.
+Corpus047 is unchanged. No production code changed;493-test local baseline
+remains current. No image pull or GPU usage.
+
+Linkding diagnostic archive31 files /82,864 bytes is uploaded and independently
+restore-verified in R2: linkding691-diagnostic-publish-001 / restore-001.
+
+
+### October 11 — Linkding691 fresh derivative fully reviewed
+
+Fresh replay completed27 charged calls and native submission, with the original
+1,025-byte source patch unchanged (434cb0f506d81378184e83fc57e0fd3861183ea434a183c1d26b6aef777beb21).
+Container cleanup succeeds without errors. Independent paired grading reproduces
+all six publisher transitions:base5/6, reference6/6, candidate6/6.
+Reconstructed native history has58 messages /28 exchanges,17,612 input tokens
+and7,571 supervised shifted targets. No truncation;6,964 tokens remain after
+the8,192 output reserve. Mechanical assessment passes with no blockers.
+
+Read all58 messages in three bounded groups and bind findings in11 complete
+nonoverlapping sections. No-match errors at messages11/37 remain visible. The
+original three-case and four-case mock diagnostics remain finite checks; later
+attributed diagnostics assert exception outcomes and actual child argv/gzip
+behavior without website claims. Existing service tests pass4; snapshot-related
+task tests pass27 with15 deselected. These scopes are not conflated with the
+independent six-case publisher grade or an entire-repository test pass.
+
+Cloud hydration changed metadata during the first replay preflight, before
+execution. Copied hash-checked inputs to local temporary storage and reverified
+the existing snapshot. An old staged replay script lacked amendment support,
+so staged current source. A missing protocol fixture in the old staging root
+was copied from the repository. CLI assessment correctly rejected sibling
+evidence directories; the public assessor was then given their explicit common
+/private/tmp workspace without changing receipts or weakening identity checks.
+
+Evidence: linkding691-amended-native-002, amended-grade-001, amended-history-001,
+amended-tokens-001, amended-admission-002 and full-history-review-001. Original
+teacher evidence is preserved. Quarantine integration remains pending; corpus047
+is unchanged. No production code changed;493-test local baseline remains current.
+No image download, GPU execution or training approval.
+
+The complete amended Linkding bundle (259 files /1,598,228 bytes) is R2 uploaded
+and independently restore-verified: linkding691-amended-publish-001 / restore-001.
+Next action is quarantined-corpus addition with recount and restored scheduling,
+followed by attribution and updated isolation checks.
+
+
+### October 11 — Corpus048 Linkding integration and isolation update
+
+Added the fully reviewed Linkding derivative to quarantine. All31 prior records
+are unchanged. Corpus048 has32 examples/tasks across31 declared repository
+groups:625,609 input tokens and173,177 supervised shifted targets. Its65 files /
+6,921,324 bytes are published and independently restore-verified in R2.
+Manifest SHA256:36f25103da05d8791d23b5c4fc48853766dc6831d0df17c27639e2a152b796e5.
+
+Restored token-array recount agrees. With seed7401, one epoch and9,216-target
+update cap, original/restored schedules are byte-identical:28 updates, zero
+target overshoot. Quarantine training loads still reject. Emcee295 is the only
+input-plus8,192-reserve exception. Evidence: corpus048-integration-001 and
+corpus048-linkding-schedule-001, training-corpus-publish-048 / restore-048.
+
+All496 lexical pair counts match an independent exhaustive set oracle; Linkding
+adds no Jaccard>=1/10 or containment>=1/5 flags. The sole prior PennyLane template
+flag remains unchanged. The first audit stopped on source-file hydration
+metadata drift; retry uses the same hash-bound staged implementation and keeps
+all integrity checks. Successful evidence: corpus048-similarity-002.
+
+Fresh public Linkding metadata resolves repository/network ID194212327. Reused
+34 earlier hash-bound observations with their original retrieval timestamp.
+There is no known declared fork-network overlap with the four reserved repos;
+no evaluation bodies were read. All32 current token identities validate in the
+draft;31 previous assignments are unchanged. All remain provisional train,
+without a development/confirmation cohort or frozen split. Detached copies and
+semantic leakage remain outside these checks. Evidence: corpus048-split-001.
+
+The58-file /432,269-byte integration/isolation archive is independently
+restore-verified: corpus048-integration-publish-001 / restore-001. README and
+readiness reflect corpus048. No production code changed;493-test local baseline
+remains current. Runpod stays stopped and no training is approved.
+
+A50M-token candidate would require approximately288.72 corpus-equivalent passes
+on this small corpus. Further diverse qualified supply and rights/attribution
+work remain required; repetition is not a substitute for data coverage.
+
+
+### Linkding selected shell attribution — 2026-10-11
+
+`evidence/data/linkding691-attribution-001/report.json` binds the exact corpus048
+Linkding history and token audit to nine preserved committed source blobs
+(91,188 bytes). Three complete `cat` observations and two context `grep`
+observations match exactly; the post-edit source observation is reconstructed
+from the recorded message-14 heredoc without executing that command. The
+original MIT `LICENSE.txt` is preserved unchanged. The attribution bundle has
+22 files / 173,979 bytes and is independently R2 restore-verified by
+`linkding691-attribution-publish-001` and `linkding691-attribution-restore-001`.
+
+This closes only selected source-observation checks. Recursive grep output,
+scratch programs, diffs, dependencies, dataset/teacher attribution and complete
+redistribution review remain open. The local source receipt identifies
+`nvidia/Open-SWE-Traces` revision
+`e192b26a43b8d09f156eeee781aef8e6bd5108ba`; its preserved card declares
+CC BY 4.0. This is a pinned local declaration, not a fresh publisher check or
+blanket source/teacher rights clearance. Do not substitute SWE-Hero provenance
+for this example. Corpus048 remains quarantined; no admission gate changed.
+
+No production code changed in this step. Five exact observation comparisons,
+all nine source identities, corpus/history/token-audit bindings and the R2
+restore were checked. The existing 493-test CPU result remains the latest full
+regression, not a newly executed suite. Runpod was not used. Local disk has
+approximately 1.4 GiB free; avoid large downloads until scoped cleanup is
+verified against archives and current consumers.
+
+
+### Scoped local cache cleanup — 2026-10-11
+
+Completed `evidence/data/scoped-cache-cleanup-001`: removed 441,586,142 logical
+bytes from three explicitly inspected generated `.pyc` cache trees and one
+redundant SWE-Hero shard. The removed
+`/tmp/zenithsync-lmfit487-source-cache-001/train-00010-of-00014.parquet`
+is byte-identical to retained
+`/tmp/zenithsync-optuna3545-r2-source-001/source.parquet`
+(SHA256 `bf5e920077bf721832ab9fc34d1ea9275ed4cb8b5a2355bff2b6b2f598c199de`,
+245,825,405 bytes); retained content was checked again after deletion.
+Historical runners needing the old location must restore a copy from that
+retained file and verify the hash. No symlinks or shared writable aliases were
+introduced. The retained shard has its prior verified R2 recovery receipt.
+
+Filesystem free bytes increased from 1,475,829,760 to 1,932,759,040 at the
+cleanup measurement; these are transient whole-filesystem readings, not an
+exact attribution of all concurrent disk changes. Source code, model, virtual
+environments, unique evidence and shared Docker resources were preserved.
+The five-file cleanup evidence archive (3,204,182 bytes) was R2 published and
+restore-verified: `scoped-cache-cleanup-publish-001` /
+`scoped-cache-cleanup-restore-001`. This is storage maintenance, not additional
+model validation or a changed training-admission decision. Runpod was unused.
+Disk headroom remains limited; continue bounded work and verify ownership and
+recoverability before removing larger resources.
+
+
+### Linkding exact dataset lineage — 2026-10-11
+
+`evidence/data/linkding691-dataset-lineage-001/report.json` reselects exactly
+one trajectory from the hash-verified Open-SWE shard and reproduces the
+pre-replay candidate messages, response links, terminal status, tool schema and
+source metadata. Only five source columns were selected; reference-patch
+metadata was not loaded. The pinned dataset README was freshly downloaded at
+revision `e192b26a43b8d09f156eeee781aef8e6bd5108ba` and matches the intake
+SHA256 exactly. The archive includes NVIDIA attribution, its citation, CC BY
+4.0 declaration/link and a description of downstream modifications.
+
+The shard path and pinned card identify Qwen3.6-27B. A fresh model metadata
+lookup resolved revision `6a9e13bd6fc8f0983b9b99948120bc37f49c13e9`; its
+LICENSE was preserved at that immutable revision and identifies Apache 2.0.
+This is the currently observed model revision, not proof of the original
+generation revision or original generation-service terms. The archive does not
+replace the separate Linkding source-notice supplement or establish full rights
+clearance. Corpus048 and its null admission gates remain unchanged.
+
+The 12-file / 206,911-byte bundle is R2 published and independently
+restore-verified (`linkding691-dataset-lineage-publish-001` / `restore-001`).
+No production code changed; exact data/conversion and remote-content identity
+checks ran, not a new full regression. Runpod remained unused. Next provenance
+work must close uncovered source/dependency observations and assess coverage
+across the remaining corpus, alongside held-out split and privacy gates.
+
+
+### Final-input credential indicator screening — 2026-10-11
+
+Added `zenithsync/corpus_credentials.py` and
+`scripts/screen_corpus_credentials.py`. The CLI binds the tokenizer bytes to
+the corpus assets and uses IndexedCorpus inspection to screen every split.
+Complete decoded inputs include masked prompts/tool observations as well as
+assistant targets. Special tokens are retained; unknown token IDs fail instead
+of being silently dropped. Reports contain only rule names and character/line
+locations, never matched values. Inputs exceeding the character ceiling fail
+without truncation. Corpus files and training admission remain unchanged.
+
+Corpus048 screen003 covers 32 examples, 625,609 input tokens and 2,080,927
+decoded characters: zero indicators in the four existing rule families
+(private-key headers, AWS access IDs, GitHub tokens and authorization literals).
+This is not a general PII, entropy, obfuscation or privacy clearance. All 26
+targeted corpus/credential tests pass, including five new scanner tests.
+The previous 493-test full regression predates this new module; it is not a
+full-suite result for this change.
+
+Attempt002 stopped on macOS cloud-hydration metadata drift during source
+hashing; its failure log is preserved. Screen003 used a stable temporary source
+runtime with strict identity checks unchanged. Eleven evidence files / 52,807
+bytes are R2 published and independently restore-verified under
+`corpus048-credentials-publish-003` / `corpus048-credentials-restore-003`.
+Source and tests are in `evidence/data/corpus048-credentials-003`.
+
+Repeat this screen for each new corpus identity; do not reuse this result for
+changed token arrays. Broader privacy review, rights, held-out splits and GPU
+qualification remain open. Runpod was unused.
+
+
+### Full CPU regression after corpus credential screening — 2026-10-11
+
+`evidence/data/p1-full-regression-008/report.json` reports 498 tests passed,
+zero failures, zero errors and zero skips; CPU Torch checks were enabled.
+Execution took 21.420 seconds (21.553 seconds including collection and source
+checks) in the stable temporary snapshot. All 294 Python source files from
+the initial repository run match exactly. The final 297 bound inputs include
+the observation helper, serving configuration and official repository metadata
+fixture, checked unchanged before and after execution.
+
+Attempt006 ran 498 tests in the cloud-managed workspace and failed with five
+errors and one failure, all traced to strict file_record rejection of metadata
+changes during hydration. Attempt007 used the same source bytes but omitted
+two fixture files, so its 494 collected entries were not acceptance. Adding
+the unchanged fixtures restored complete 498-test discovery for attempt008.
+No integrity check was relaxed, no test was removed and no production fix was
+needed for these environment failures. All failed logs/reports are retained.
+
+The exact source snapshot, successful and failed reports, runners and comparison
+record form a 315-file / 1,800,701-byte archive, published and independently
+restore-verified in R2: `p1-full-regression-publish-008` and
+`p1-full-regression-restore-008`. This supersedes the 493-test005 result for
+current local regression. It does not establish full 31B GPU memory, throughput,
+training stability, corpus rights/admission or learned task performance.
+P1 remains incomplete and Runpod stayed unused.
+
+
+### Complete checkpoint descriptor correspondence — 2026-10-11
+
+Added `zenithsync/architecture_layout.py` and
+`scripts/verify_architecture_layout.py`. The verifier binds config bytes to the
+existing model manifest, constructs Gemma4 with pinned Transformers 5.13.1 on
+meta tensors, requires every state tensor to remain meta, and accounts for the
+exact checkpoint descriptor set. Independent existing W4/group-32 projection
+formulas agree with the meta constructor for all 410 projections; stored
+original dimensions, packed shapes and scale shapes match. All 779 remaining
+embedding/norm/vision tensors have exact expected names/shapes and BF16 dtype.
+There are 2,009 stored descriptors corresponding to 1,189 logical tensors.
+
+Evidence: `evidence/p1/architecture-layout-001/report.json`. The current header
+SHA256 matches the earlier storage receipt; its bytes and expected shapes are
+archived. This run inspects structural metadata and stored dimension integers,
+not a fresh full-weight hash or numerical weight scan. Constructor agreement
+is an implementation comparison, not independent proof of architecture
+semantics, inference accuracy, dequantization or training compatibility.
+
+Eight targeted tests pass. The malformed-extra-descriptor test initially
+exposed an unhelpful KeyError; explicit descriptor validation now rejects it
+with ValueError. The failed log is preserved. Full stable-snapshot regression009
+passes 502 tests with zero failures/errors/skips and CPU Torch enabled; elapsed
+time including collection/source checks was 21.193 seconds. This supersedes
+regression008 for the current implementation.
+
+The complete 322-file / 1,928,960-byte source and evidence archive was published
+and independently restore-verified in R2 (`architecture-layout-publish-001` /
+`architecture-layout-restore-001`). The P1 architecture checklist row is updated
+within this structural scope. Full corpus admission, data expansion, evaluation
+splits, long-context GPU training/resume and measured coding gains remain open.
+Runpod was not used.
+
+
+### Open-SWE mini-agent expansion shard000 — 2026-10-11
+
+Acquired pinned `nvidia/Open-SWE-Traces` revision
+`e192b26a43b8d09f156eeee781aef8e6bd5108ba`, shard
+`data/minisweagent/qwen36_27b/swe-rebench-v2/train-00000-of-00022.parquet`,
+with a 105,000,000-byte cap and preflight free-space check. Publisher LFS
+SHA256/size verified. Its source/card/publisher metadata bundle contains three
+files / 98,620,316 bytes and is R2 published and independently restore-verified.
+The temporary restored duplicate was removed after both local copies were
+reverified; the original remains under `/tmp/zenithsync-open-swe-mini-shard000-001`
+and is recoverable from R2. This prevents retaining two large local copies.
+
+Metadata census found 2,500 unique tasks across 1,186 repositories. Four rows
+from reserved official repository names were excluded before reading messages.
+All remaining 2,496 tasks are absent from the earlier 1,575-task source-cost
+screen; 1,135 repository names are new relative to its 902 repositories. This
+is exact spelling/casefold comparison, not semantic or fork-family clearance.
+Eligible publisher labels: 803 success, 1,454 failure, 239 unknown. Those labels
+are not independent repair verification or an estimate of agent performance.
+
+Batch-size-eight content screening covered exactly all 2,496 eligible rows:
+2,488 serialized successfully, eight were held for credential-indicator review
+without printing matched values. There are 516 traces within 40 source calls;
+226 of those have publisher success labels and span 180 repositories. Source
+call counts include the unanswered terminal call; they do not establish native
+charged-call budget, context fit or supervised-token supply. No commands were
+executed and no reference-metadata column was loaded. Independent record
+recount matches all totals. The reference solution may still occur in untrusted
+source-message content; this screen is not semantic leakage clearance.
+
+Evidence: `mini-shard000-census-001`, `mini-shard000-screen-001`, and the
+20-file / 1,709,224-byte `mini-shard000-expansion-001` archive. Source and
+expansion publish/restore receipts are verified. No new corpus records were
+admitted or added to corpus048, and no production code changed; the 502-test
+regression remains the latest full suite. Runpod was unused.
+
+Next: select a repository-diverse bounded review queue from the 226 candidates,
+retain the other outcomes and indicator holds, then establish task alignment,
+source attribution, isolated runtime, native replay, grading and token fit.
+The increased raw supply does not replace these gates or justify a 50M-token
+training campaign yet.
+
+
+### Diverse mini-agent qualification queue — 2026-10-11
+
+`qualification_sampling.stratified_repository_batch` now accepts an explicit
+`source_call_proxy` cost field while retaining its historical source-token
+default. Call counts are never relabelled as tokens. Source-cost checks reject
+unsupported fields and nonpositive/noninteger values. Four targeted sampling
+tests pass; full stable-source regression010 passes 503 tests with zero
+failures/errors/skips (22.613 seconds including collection and source checks).
+
+From shard000's 226 publisher-success/short-call candidates, excluding current
+corpus names, official reserved names, explicit holds and four previous review
+batches leaves 175 repository names. A seeded (7401) four-stratum queue selects
+16 repositories, four per rank stratum, after taking one minimum-call trace per
+repository. Independent grouping/ranking reconstruction matches exactly.
+Evidence: `mini-shard000-batch-001`. This is purposive review selection, not a
+random agent-performance sample; source call counts are not native tool budgets.
+
+Fresh GitHub observations for all 16 selected names, compared with 35 inherited
+corpus/reserved observations, identify `peopledoc/workalendar` as already
+represented. Its trace is held from this diversity queue, not rejected as an
+inherently invalid task. The final working queue has 15 distinct observed
+repository/fork-root IDs, with no match to the inherited corpus/reserved roots.
+Post-hold strata contain 3/4/4/4 records. Previous review queues were excluded
+by names only; detached copies, historical aliases outside the captured set
+and semantic duplication remain unresolved. No source repair was executed.
+Evidence: `mini-batch-lineage-001` and `mini-shard000-review-queue-001`.
+
+The 370-file / 1,928,186-byte queue, inherited/fresh lineage, exact tested source
+and full-regression evidence archive is R2 published and restore-verified
+(`mini-queue-publish-001` / `mini-queue-restore-001`). README and current
+readiness now identify regression010 as latest. Corpus048 remains unchanged
+and quarantined. Next work is task-content and source-contract review of this
+queue before any runtime downloads, with local disk capacity checked first.
+Runpod stayed unused.
+
+
+### Ember8613 source review and diagnostic counterexamples — 2026-10-11
+
+Reviewed all 31 source messages for the selected `ember-cli__ember-cli-8613`
+trace, bound to the exact shard000 row and 15-candidate queue. The source patch
+changes `@ember/jquery` from `^0.5.2` to `^0.6.0` in both blueprint package
+files, consistent with the issue. Source observations support the declarations,
+not an actual Ember transpilation/deprecation regression test. The unanswered
+last source submission remains explicitly unexecuted evidence.
+
+The message24 verification script has two reproduced weaknesses on five
+isolated synthetic fixtures: mismatches/missing files print failure but return
+zero, and unescaped regex dots falsely accept `^0x6y0`. These were executions
+of the inspected diagnostic body on synthetic files only, not task replay.
+A separately labeled project-authored JSON diagnostic checks the exact
+devDependencies values, rejects duplicate members and exits nonzero on failure.
+Seven synthetic cases give the expected outcomes; the original app blueprint
+observation also parses as JSON. The original trace is preserved, not silently
+rewritten. Decision: hold for explicit amended native qualification.
+
+An explicit nested Arrow projection of `metadata.teacher_model` identifies
+Qwen3.6-27B with `enable_thinking=false` and `reasoning_effort=null` for this row.
+Sibling reference-patch metadata was not read. This is stronger row-level
+teacher-name evidence than the dataset path alone, but does not establish
+the exact model generation revision or service terms.
+
+Evidence: `ember8613-source-review-001`. Its twelve files / 45,238 bytes were
+R2 published and independently restore-verified (`ember8613-review-publish-001`
+/ `ember8613-review-restore-001`). No production library changed; the latest
+full regression remains 503 tests. No candidate was added to corpus048.
+Required next steps: independent base/environment binding, applicable notices,
+explicit amended replay, grader comparison and native token/context audit.
+No new runtime image was downloaded and Runpod stayed unused.
+
+
+### Independent task joins and Ember pinned-source controls — 2026-10-11
+
+All 15 working-queue candidates match independent SWE-rebench-V2 task IDs and
+casefold repository names at pinned dataset revision
+`10483de0f50fe5da545942705a76c6150171af7f`. The projection reads only repository,
+instance ID, base commit, image tag, language and license; no reference or test
+patch column. Evidence: `mini-queue-task-join-002`. Attempt001 stopped on
+cloud-hydration receipt metadata drift; attempt002 used byte-verified staged
+receipt data with integrity checks unchanged. The 428,839,266-byte temporary
+shard duplicate was deleted only after both it and the retained original matched
+the pinned SHA256. No sole data copy was removed.
+
+Ember8613 is bound to base `e40d3dd4f51635b37fba4ef11023ea60b1ebdfef`.
+Exact-revision GitHub API exports preserve the two blueprint files and MIT
+license (3 files / 4,142 bytes); decoded content matches Git blob hashes.
+The app-file observation equals the pinned blob. Applying the recorded source
+patch passes git apply --check, then the exact-version diagnostic; baseline
+fails that diagnostic. Both files differ by exactly one requested dependency
+string replacement each, with all other bytes unchanged. This is declaration
+validation, not blueprint rendering, deprecation behavior or publisher grading.
+Evidence: `ember8613-source-export-001`, `ember8613-source-controls-001`.
+
+The publisher image manifest reports 1,190,545,013 compressed layer bytes,
+before extraction and workspace overhead. Only metadata was fetched; no image
+was downloaded given current disk constraints. Its tag is not yet a qualified
+immutable runtime. Explicit amended native replay and independent grading remain
+open; no example was added to corpus048.
+
+The 29-file / 60,428-byte joined-metadata/source/control archive is R2 published
+and restore-verified (`mini-task-ember-controls-publish-001` / `restore-001`).
+No production code changed; latest full regression remains 503 passing tests.
+Continue other bounded source reviews and improve local storage headroom before
+image acquisition. Runpod stayed unused.
+
+
+### Scoped Docker build-cache audit — 2026-10-11
+
+Inspected BuildKit records and selected 44 unused, immutable, unshared regular
+cache IDs matching this project's snapshot/ZenithSync build commands. Used an
+anchored ID filter and regular-cache restriction; no global Docker prune.
+Docker removed two selected records and reported 7.979 MB reclaimed. The
+remaining 42 selected records remained; do not report their approximately
+269 MB aggregate advertised size as freed. No unselected cache ID disappeared.
+Before/after hashed image/tag, container identity/image and volume inventories
+match exactly. Host free bytes did not materially improve (1,743,237,120 before,
+1,742,450,688 immediately after); VM reclamation and concurrent disk activity
+prevent treating reported cache bytes as observed host free space.
+
+Three larger unused unshared cache entries (approximately 12.289 GB advertised)
+appear outside this project. Their exact IDs and descriptions are preserved in
+`project-build-cache-cleanup-001/outside-project-proposal.json`. User approval
+was requested because this exceeds the project cleanup scope; no response or
+authorization is assumed. Do not clear those entries until authorization arrives.
+Images, containers and volumes are excluded from the proposal. Docker's
+ID-filter semantics were checked against its official buildx prune reference.
+
+The five-file / 26,883-byte audit archive is R2 published and restore-verified
+(`project-cache-cleanup-publish-001` / `project-cache-cleanup-restore-001`).
+No production change or new model test; latest full regression remains 503.
+Large runtime downloads remain deferred, but bounded source/content work can
+continue. Runpod stayed unused and P1 remains incomplete.
+
+
+### More Itertools892 diagnostic controls — 2026-10-11
+
+Reviewed the source diagnostics for `more-itertools__more-itertools-892` from
+the pinned Open-SWE mini shard. Four inspected Python diagnostic bodies
+(messages 18, 38, 54, 64) were executed only against synthetic modules in
+isolated temporary directories. All four return zero when the implementation
+ignores `strict=True`; some print failures without making the process fail.
+Thus source diagnostic exit status alone cannot establish the requested
+unequal-length exception contract. This finding does not establish that the
+source patch itself is incorrect.
+
+An independently authored checker uses exact expected outputs and requires the
+specified exception. It passes 79 finite checks on a positive synthetic fixture
+and rejects three mutants (ignored strictness, wrong exception, wrong output).
+The length grid covers 0–4 for both columns with list, tuple and iterator inputs;
+additional cases cover truncation, reverse, key priority and a custom key.
+These are finite diagnostic controls, not proof over arbitrary iterables or a
+native execution of the pinned repository. Twenty subprocess executions were
+recorded. The extracted row was reselected from the publisher-hash-verified
+source shard and compared exactly; only teacher metadata was projected from
+nested metadata, without reading reference patches.
+
+Evidence: `evidence/data/moreitertools892-diagnostic-review-001`. Preserve the
+original history; explicit diagnostic and claim amendments, pinned source
+qualification, native replay, independent grading, rights and token/context
+audits remain required. No corpus addition or training admission. No production
+code changed; the latest full production regression remains the prior 503-test
+run. Runpod stays off.
+
+The 13-file / 111,230-byte diagnostic archive is R2 published and independently
+restore-verified (`moreitertools892-diagnostic-publish-001` /
+`moreitertools892-diagnostic-restore-001`).
+
+
+### More Itertools892 pinned-source controls — 2026-10-11
+
+Fetched five selected source/test/license files at independent task base
+`1ae91eb4ff6ee9c326bc1ceb52e2d6edbdb0c3a8`, verified API content sizes and Git
+blob hashes, and retained MIT copyright 2012 Erik Rose. Applied the original
+observed patch unchanged using `git apply --check` and `git apply` on a copy.
+Executed only inspected AST-selected definitions with explicit standard-library
+bindings; no arbitrary module initialization or source shell actions executed.
+
+The five existing SortTogetherTest methods pass on both base and patch. The
+base rejects the strict keyword with TypeError; the patch raises the requested
+UnequalIterablesError on unequal nonempty-column collections. Independent
+row-index sorting agrees on 12,800 finite cases: both columns range over all
+sequences of length 0–3 on {-1,0,1}, with both strictness settings, sort orders,
+and single-column key priorities. The separately authored 79 contract checks
+also pass on the actual selected patched function, including iterator inputs.
+These cases are finite and correlated; they are not independent statistical
+samples, a confidence bound, full-module execution or native publisher grading.
+
+Observed unresolved boundary: zero outer columns return [] with strict=False
+but raise IndexError with strict=True, inherited from _zip_equal indexing its
+first iterable. Do not silently fix the teacher patch or claim universal
+correctness. Resolve intended zero-column semantics and explicitly amend weak
+diagnostics and overbroad claims before native qualification. All rights,
+full-history, context, grading and admission gates remain open; corpus048 is
+unchanged. Runpod remains off. Evidence: moreitertools892-source-controls-001.
+
+The 26-file / 1,331,901-byte selected-source/control archive is R2 published
+and independently restore-verified (`moreitertools892-source-publish-001` /
+`moreitertools892-source-restore-001`). No production code changed; the prior
+503-test production regression remains the latest such run.
+
+
+### More Itertools892 whole-module container controls — 2026-10-11
+
+Used an already-local immutable Python image
+`sha256:ae52c5bef62a6bdd42cd1e8dffef86b9cd284bde9427da79839de7a4b983e7ca`
+(ARM64 Python 3.11.15), without downloading an image or using Runpod. Base and
+unchanged candidate patch each pass all 640 cases collected from the complete
+pinned `tests/test_more.py` and its doctest loader: zero failures, errors or
+skips. These are unittest cases, including doctest cases, not 640 distinct
+repair tasks. The patched whole module also passes the 79 independent finite
+contract checks. This improves on the earlier AST-selected function controls.
+
+Each execution used network=none, read-only root and input mount, non-root user,
+no capabilities, no-new-privileges, bounded memory/CPU/PIDs and a bounded tmpfs.
+Input manifests remained identical after execution; both named containers were
+removed successfully. Only the selected source/test files were mounted. No
+credentials or host Docker socket were exposed to the containers.
+
+Evidence: `evidence/data/moreitertools892-container-controls-001`. This is a
+local alternate-runtime control, not the publisher task image, full repository
+suite, complete source-action replay or independent publisher grader. The
+zero-outer-column strict IndexError remains unresolved; original weak teacher
+diagnostics and overbroad claims still require explicit amendments. No training
+admission or corpus addition occurred. The production framework was unchanged,
+so its latest full regression remains the prior 503-test run. P1 is incomplete.
+
+The 23-file / 787,550-byte container-control archive is R2 published and
+independently restore-verified (`moreitertools892-container-publish-001` /
+`moreitertools892-container-restore-001`).
+
+
+### More Itertools892 explicit diagnostic amendments — 2026-10-11
+
+Prepared a hash-bound assistant-authored amendment plan for source message
+indices 18, 38, 52, 54 and 64. The existing converter normalizes publisher rows
+before the existing mini amendment validator derives commands. There are still
+33 source actions: five amended diagnostics and 28 byte-identical actions,
+including the patch-producing actions and terminal. Original source history is
+preserved. No source observations or teacher reasoning are fabricated/reused.
+The existing native-history projection excludes teacher reasoning and final
+narratives; amended diagnostic output avoids unsupported universal claims.
+
+The baseline diagnostic now distinguishes absence of the strict keyword from a
+missing required exception after implementation. Three later diagnostic bodies
+use the independent finite contract checker, and the doctest action now exits
+nonzero when examples fail. Every amended body checks the imported package is
+from the working source tree. Fourteen bounded, network-isolated executions on
+the existing ARM64 Python image matched expected outcomes: all five bodies pass
+on patched source; baseline and doctest controls pass on base while the three
+new-feature checks fail; all four behavioral checks reject an ignore-strict
+mutant with the intended assertion. Container cleanup succeeded for every run.
+
+Evidence: `evidence/data/moreitertools892-amendment-001`. Only extracted Python
+bodies were executed in these controls; this is not complete shell-action replay
+or publisher grading. Fresh replay remains required. The zero-outer-column
+strict IndexError remains an unresolved boundary; no patch correction was made.
+The source patch, corpus048 and production code remain unchanged. P1 remains
+incomplete, training admission is false, and Runpod remains unused.
+
+The 16-file / 145,393-byte amendment/control archive is R2 published and
+independently restore-verified (`moreitertools892-amendment-publish-001` /
+`moreitertools892-amendment-restore-001`).
+
+
+### Corpus048 staged-worker integration — 2026-10-11
+
+Refreshed the explicit 39-file training source bundle (212,876 bytes). All seven
+CLI entrypoints pass isolated help/import checks. Initial staging failed closed
+on cloud hydration metadata drift in p1-training-pilot.json; reading the explicit
+source list and rerunning the unchanged preparer into fresh paths succeeded.
+No identity guards were relaxed.
+
+Using only the staged transfer CLI from outside the repository, restored and
+verified all 65 corpus048 files / 6,921,324 bytes from R2. Staged inspection passes,
+and the seed7401, 173,177-target, one-epoch, 9,216-target/update schedule and
+update stream are byte-identical to the previous corpus048 schedule. Both the
+staged training-purpose inspector and actual corpus worker reject quarantine;
+neither creates its success/output directory. The worker rejects in CPU
+preflight before touching an explicitly nonexistent model path or loading CUDA.
+This is a negative admission control, not a positive admitted-training test.
+
+Evidence: training-deployment-corpus048-002, training-deployment-corpus048-restore-001,
+and training-deployment-corpus048-validation-001. Deployment bindings distinguish
+the R2 transfer manifest from corpus manifest and bind worker sources, model
+manifest, qualification config and inspection schedule. The config remains a
+bounded qualification config; it does not replace the planned three 50M-target
+candidates. The current small quarantined corpus is still insufficient for that
+campaign. Admission, rights, held-out split, pinned Linux/GPU and full-model
+long-context/resume qualification remain open. No production change or training;
+Runpod remains off and P1 incomplete.
+
+The 67-file / 273,164-byte worker/integration/binding archive is R2 published
+and independently restore-verified (`training-deployment-corpus048-publish-001`
+/ `training-deployment-corpus048-archive-restore-001`). The corpus objects were
+verified separately through the staged client; credentials and model weights
+are not included in this source/evidence archive.
+
+
+### Worker-enforced complete architecture gate — 2026-10-11
+
+The full corpus worker now requires the CPU-only architecture CLI before GPU
+weight allocation. A nonzero exit or 120-second timeout aborts the worker;
+returned report status, model manifest identity, GPU-free flag and all four
+complete-layout counts are verified and the report identity is recorded in
+worker output. The child has CUDA hidden without changing the parent's CUDA
+visibility. The CLI and its architecture/storage modules are included in worker
+source identity binding and the explicit deployment bundle.
+
+The refreshed 42-file bundle passes eight isolated CLI imports. The actual
+staged worker helper passes against the local checkpoint: 410 quantized
+projections, 779 unquantized tensors, 2,009 stored descriptors and 1,189 logical
+state tensors. This reads metadata and stored shape integers only; it does not
+verify numerical values, fresh whole-weight hashes or model quality. The worker
+still performs its separate full model-manifest verification before this gate.
+This local execution uses the available CPU runtime, not pinned Linux CUDA.
+
+Eleven targeted tests pass. The complete local regression (Torch enabled) passes
+506 tests with zero errors, failures or skips and stable identities for 301
+source/fixture files. Tests cover subprocess failure/timeout despite stale
+success reports, wrong model identities, bad counts and status rejection.
+Evidence: p1-full-regression-011, worker-architecture-actual-001 and
+training-deployment-architecture-check-002. First deployment staging from the
+reduced regression tree lacked a config fixture; staging the complete explicit
+source list in a separate directory resolved it without changing guards.
+
+P1 remains incomplete. No corpus admission or learned-model improvement; full
+GPU long-context, dequantization, training and resume qualification remain open.
+Runpod was not used. Corpus048 remains quarantined.
+
+The 361-file / 1,856,799-byte source, deployment and validation archive is R2
+published and independently restore-verified (`worker-architecture-publish-001`
+/ `worker-architecture-restore-001`).
+
+
+### Holidays2052 pinned-source review — 2026-10-11
+
+Reviewed the next 20-call source candidate, vacanza__holidays-2052, from the
+publisher-hash-verified Open-SWE shard. Berlin's official portal corroborates
+the one-time May8,2025 Berlin holiday (published September26,2024; updated
+April9,2025): https://www.berlin.de/aktuelles/9188766-958090-einmaliger-feiertag-am-8-mai-2025.html.
+This fact check does not qualify runtime holiday calculations or translations.
+
+Captured three pinned source/test/license files (27,206 bytes), verified their
+Git blob hashes, and applied the unchanged observed patch. Static controls prove
+exactly seven inserted lines adding the 2025 tuple to Berlin's special holiday
+table; removing it restores both complete file bytes and complete module AST.
+Three complete source observations match exact pinned source slices. The full
+file-read observation at message7 is publisher-elided: its retained head/tail
+and omitted-character count match, but no missing teacher output was invented.
+Initial control attempt001 failed on that envelope assumption; attempt002
+explicitly validates only the available partial observation.
+
+Native execution and grading remain pending. The source trace contains a failed
+translation test; substituting alias-instantiation checks does not establish
+translation support. The final diagnostic checks seven excluded years, not all
+years. Original failures remain visible. MIT LICENSE is retained; its referenced
+AUTHORS file and broader dataset/teacher rights still need binding. Evidence:
+holidays2052-source-review-001. No training admission or corpus addition;
+production code unchanged, latest regression remains 506 tests. Runpod unused.
+
+The 21-file / 172,199-byte source-review archive is R2 published and
+independently restore-verified (`holidays2052-review-publish-001` /
+`holidays2052-review-restore-001`).
+
+
+### Holidays2052 catalog and runtime qualification — 2026-10-11
+
+Acquired a bounded 3,887,028-byte exact-commit archive. All 661 selected package,
+test, build-metadata and notice files (3,933,007 bytes) match the pinned Git tree's
+blob hashes. LICENSE and referenced AUTHORS are retained. Used an already-local
+immutable Linux/amd64 Python3.10.19 image with python-dateutil2.9.0.post0 and
+pytest9.0.2; no image download or paid GPU. This is an alternate cached runtime,
+not the publisher task image. Runs are network-isolated, read-only, non-root,
+capability-free and resource-bounded; each named container is removed.
+
+Initial base and patch runs reproduce the missing compiled DE catalog: the31
+upstream tests have three localization errors. Both assertion-based repair
+diagnostics reject base and accept patch with catalogs absent. Compiled four
+pinned DE.po files (de,en_US,th,uk) with installed GNU msgfmt0.25.1 and retained
+source/output identities. This explicitly differs from upstream polib generation.
+With catalogs and ambient locale, the final diagnostic's German2020 label
+assumption fails; do not count that run as passing. With LANGUAGE=de and LC_ALL=C,
+both variants pass all31upstreamtests; diagnostic22,24,34 fail on base and pass on
+patch. This isolates missing2025 data while preserving the environment failure
+history. The new holiday label has no non-German translation in those catalogs;
+English, Thai and Ukrainian fall back to German. No translated-label claim.
+
+Evidence: holidays2052-runtime-controls-001. Native source-action replay,
+independent grading, environment/amendment provenance, token/context and admission
+remain pending. No production code change, corpus addition or training; P1 remains
+incomplete and Runpod off.
+
+The 79-file / 4,481,441-byte source/catalog/runtime archive is R2 published
+and independently restore-verified (`holidays2052-runtime-publish-001` /
+`holidays2052-runtime-restore-001`).
+
+
+### Holidays2052 complete base-tree binding — 2026-10-11
+
+Fetched only the pinned base commit bb25790e5cae5d0759a04543b6659577f62c9746
+into a disposable shallow checkout. HEAD and root tree match the independent
+GitHub metadata; all1,334tracked files /38,191,295bytes, executable modes and
+Git blob hashes match the recursive tree. The already-downloaded compressed
+archive was independently compared against every tracked file and mode, with
+no omissions/extras. Preserved the raw commit body and recomputed its Git SHA1.
+This avoids another large image download and makes the complete source, not
+just the earlier selected661files, recoverable from the bounded archive.
+
+Attempt001 used macOS /tmp without resolving its /private/tmp alias; the strict
+containment guard rejected it. Attempt002 resolves the owned root before calling
+the unchanged verifier. The checkout has one reachable upstream commit but is
+not yet a parentless sanitized snapshot. Parent commit bodies were not fetched.
+Do not claim native source replay or publisher image qualification. Next: bind
+runtime construction/catalog provenance, sanitize and independently verify the
+complete tree, then replay with fresh observations. No corpus admission or
+training. Evidence: holidays2052-full-base-binding-002.
+
+The seven-file /4,166,688-byte complete-source archive and binding evidence are
+R2 published and independently restore-verified (`holidays2052-full-base-publish-001`
+/ `holidays2052-full-base-restore-001`).
+
+
+### Holidays2052 parentless snapshot — 2026-10-11
+
+Fetched PR2052 metadata only (no patch): its base matches the independently
+bound task base, and the observed head/merge hashes identify commits that must
+remain inaccessible. Sanitized the owned shallow checkout with the existing
+source_snapshot implementation in already_absent mode. This does not claim
+solution ancestry was checked. The rebuilt root tree remains
+39440f19a2a0a4b43de098dcf426dcbe9d644e8a; the new parentless commit is
+edcbaf20163f09e3f4e64d4b5b8e6a9b00f5fa2e.
+
+Independent git ls-tree, direct SHA256/size and executable-mode comparisons
+verify all1,334files /38,191,295bytes against the prior complete base manifest.
+Exactly one commit is reachable; it has no parents. No remotes or worktree
+changes remain. Base, PR head and merge commit objects are inaccessible. The
+snapshot archive preserves the resulting Git metadata and source for replay
+construction. These checks apply to the local owned checkout, not a Docker
+runtime or inherited image layers. No known oracle paths existed in this fresh
+base-only checkout; no broader filesystem clearance is claimed.
+
+Evidence: holidays2052-snapshot-001. Next: construct an explicitly bound local
+runtime, independently verify its snapshot and catalog/locale setup, then replay
+and grade with fresh observations. No source actions were replayed in this step,
+no corpus admission occurred, and Runpod remains off. P1 remains incomplete.
+
+The eight-file /9,361,333-byte sanitized snapshot archive and evidence are R2
+published and independently restore-verified (`holidays2052-snapshot-publish-001`
+/ `holidays2052-snapshot-restore-001`).
+
+
+### Holidays2052 fresh native replay — 2026-10-11
+
+Built an offline alternate runtime from a cached immutable workalendar image,
+the exact parentless holidays snapshot and four pinned compiled catalogs, with
+LANGUAGE=de and LC_ALL=C. No parent image download or Runpod use. The final runtime
+sha256:653a8dc6d4f8c82ecd9eaf1f8681ee12e8cebf0fa7257fb76f5c4141aff33a3e
+passes independent tree/history/catalog/import checks and31upstreamtests.
+Inherited Docker layers are not audited and publisher-image equivalence is not
+claimed. The visible old worktree is removed.
+
+Retained setup failures: initial replay rejected AppleDouble files introduced by
+macOS BSD tar and the missing adapter cache directory. Python tar packaging
+omits AppleDouble entries; an explicit empty /workspace/.cache meets the existing
+adapter contract. An intermediate image recreated empty /workalendar because of
+inherited WORKDIR; setting WORKDIR / before removal prevents that. Final image
+verification requires no unexpected untracked files and no known old paths.
+No validation guard was weakened. Failed containers were removed.
+
+Fresh native replay002 completes20chargedcalls /21recordedexchanges, including
+cleanup and submit_patch. Three explicit diagnostic amendments scope translation
+fallback, assert alias labels, and limit excluded-year wording to tested years.
+No source observations or reasoning were reused. Two real errors remain visible:
+find does not follow the relocated /testbed symlink (event2), and the source's
+first chronological comparison raises StopIteration (event10); the next source
+check fixes its date/string comparison. Cleanup confirmed container removal.
+
+Native patch bytes differ from the publisher observation only in Git index-hash
+abbreviations (seven versus eight digits). Both patches independently apply to
+the pinned base and produce identical complete source-file hashes/bytes; native
+submission equals its own fresh exported patch. Evidence:
+`holidays2052-native-replay-002`. Grading, complete fresh-history review,
+token/context audits, rights/splits/admission remain pending. Corpus048 unchanged;
+P1 incomplete and Runpod off.
+
+
+### Holidays2052 history and token checkpoint — 2026-10-11
+
+The native replay archive passed independent R2 restore verification: 57 files,
+8,831,099 bytes (`holidays2052-replay-restore-001`). An immutable, hash-verified
+SWE-rebench-V2 shard supplied only repo, instance_id, base_commit and
+problem_statement. Identity matches the replay; reserved-repository exclusion
+was rechecked. No reference/test patch was read into the history.
+
+The existing history builder reconstructed 44 messages / 21 exchanges, retaining
+three explicit diagnostic amendments and fresh tool observations. Pinned Gemma
+tokenization produced 14,102 input tokens and 7,123 shifted supervised targets,
+without truncation; assistant-mask and collation target counts agree. The
+32,768-token cap passes. This does not establish GPU memory fit or repair quality.
+Evidence: `holidays2052-task-001`, `holidays2052-history-001`,
+`holidays2052-token-audit-001`. Corpus048 remains unchanged and quarantined.
+Independent grading, complete semantic review and admission remain outstanding.
+
+Setup failures were retained in archive scope: a cloud-hydrated receipt changed
+ctime and was rejected; stable rereading succeeded without weakening checks.
+The isolated history runtime lacked two required fixtures; copying the exact
+protocol/index fixtures allowed the existing builder to run. Runpod remains off.
+
+History/task/token archive publication and independent R2 restore both verified:
+11 files / 233,752 bytes. Receipts: `holidays2052-history-publish-001` and
+`holidays2052-history-restore-001`.
+
+
+### Holidays2052 independent finite repair controls — 2026-10-11
+
+The exact native submitted patch ran in the same immutable image used by its
+replay. An independently written differential oracle compares complete date-to-
+label mappings against the pinned base, permitting only Berlin May 8, 2025 with
+the issue-specified German label. It covers 1,496 configurations: German calendars
+1990–2030; four catalog languages in 2025; all 16 subdivisions plus nationwide;
+observed false/true. The candidate has zero mismatches. Eight calendar mappings
+change, each by precisely that single addition; a separate host reconciliation
+checks set additions/removals/modified labels and replay image identity.
+
+Base has eight mismatches. Wrong-year, wrong-day and wrong-label mutations have
+10, eight and eight mismatches respectively. The additional missing-Berlin
+control is byte-identical to base and is explicitly NOT counted as independent
+mutation coverage. Candidate also passes 31 upstream Germany tests. Container
+execution, export and cleanup return zero; no OOM; tracked changes remain solely
+the repaired source file. Evidence: `holidays2052-independent-controls-001`.
+
+This is a finite generated repair assessment, not publisher benchmark grading,
+statistical performance estimation, all-year/category correctness, or training
+admission. Base-relative preservation cannot establish pre-existing calendar
+accuracy. Complete history semantic review and rights/split/admission checks
+remain pending; corpus048 unchanged, P1 incomplete, Runpod off.
+
+Finite-control archive R2 publication and independent restore verified:
+27 files / 4,033,290 bytes (`holidays2052-controls-publish-001`,
+`holidays2052-controls-restore-001`).
+
+
+### Holidays2052 full semantic history review — 2026-10-11
+
+Reviewed all44 native messages in16 hash-bound sections; structural coverage
+passes. Source observation7 is exactly the first5,000 characters of the pinned
+base file, ending mid-definition. Complete subsequent tail reads expose the
+changed section. Untruncated token serialization does not establish complete
+native file observations. Two retained errors are the symlink-insensitive search
+and date/string diagnostic comparison, subsequently corrected. Reproduction is
+print-only; no failure assertion. The agent reads but does not execute upstream
+tests, and has no final prose summary. Separate evaluator passes are not injected
+into its history. Four credential-pattern families found no indicators; public
+author attribution emails remain and broad privacy clearance is not established.
+
+Evidence: `holidays2052-full-history-review-001`. Initial shard/credential/journal
+reads timed out during cloud hydration. Review publication retry003 and restore002
+succeeded:3files18,196bytes, independently verified. Publisher paired grading,
+mechanical qualification and rights/splits/admission remain pending. No corpus
+change; P1 incomplete, Runpod off.
+
+
+### Holidays2052 publisher grading and mechanical qualification — 2026-10-11
+
+After freezing the native replay/history, a hash-verified SWE-rebench-V2 shard
+supplied evaluator-only reference/test patches and declared expectations. Full
+issue/repo/base/image-name identity matches the existing task. Oracle patches
+were not appended to agent history. Publisher expectations declare43 nodes:
+one fail-to-pass Germany case and42 pass-to-pass Germany/Vietnam cases.
+The test patch also contains an unlisted Vietnam localization test. The reviewed
+profile explicitly selects publisher nodes from both files; it does not claim
+the whole patched suite was run.
+
+Existing paired evaluator machinery ran base/reference/candidate against the
+same verified sanitized image as the replay. Base passes42 and fails the target;
+reference and candidate pass43. All expected transitions match, no node-ID
+collisions/disagreements. This is an alternate cached runtime, not a claim of
+publisher-image equivalence. Evidence: `holidays2052-publisher-grade-001`.
+
+Existing mechanical admission assessor recomputed replay/history/patch identities,
+full test comparisons, amendments, mask/collation counts,20 chargedcalls and
+context budget. Checks pass with no mechanical blockers:14,102 input tokens +
+8,192 output reserve <=32,768;7,123 supervised targets. It retains training_approved
+false. The review's5,000-character native observation limit remains explicit.
+Evidence: `holidays2052-admission-001`. Rights, frozen splits, qualification scope
+and full-model runtime remain unresolved. Corpus048 unchanged; P1 incomplete,
+Runpod off.
+
+Publisher-grade archive R2 publication and independent restoration verified:
+42 files /312,224 bytes. Receipts: `holidays2052-grade-publish-001` and
+`holidays2052-grade-restore-001`.
+
+
+### Corpus049 quarantined integration — 2026-10-11
+
+Added the fully reviewed Holidays2052 derivative after binding its frozen history,
+patch, token audit and subsequent publisher mechanical qualification. All32 prior
+records remain exactly unchanged.33examples /33tasks /32declaredrepos,639,711 input
+tokens /180,300 supervised shifted targets. All admission gates null; training
+loads reject.67files7,081,742bytes uploaded and independently restored from R2.
+Original/restored deterministic one-epoch schedules are byte-identical,29updates,
+zero overshoot. Emcee295 reserve exception remains. All528 pairwise lexical
+counts agree with an independent set oracle; only the inherited PennyLane flag
+remains at existing thresholds. Updated split/privacy qualification is pending;
+provisional train assignments are not a frozen evaluation design. P1 incomplete,
+Runpod off. See corpus049 integration, similarity and transfer receipts.
+
+Corpus049 integration-evidence archive also publish/restore-verified:
+20files202,297bytes; receipts `corpus049-integration-publish-001` and
+`corpus049-integration-restore-001`.
+
+
+### Corpus049 isolation, credential and deployment checks — 2026-10-11
+
+All33 full decoded inputs (2,125,285 characters) were checked with the existing
+four credential-pattern families; zero indicators. Tokenizer asset identity is
+bound. This is not PII/obfuscation detection or privacy approval. Evidence:
+`corpus049-credentials-001`. A fresh GitHub repository response identifies
+Holidays as ID23284211. Combined with35 explicitly inherited hash-bound metadata
+observations, no known network-root overlap with the four reserved repositories
+was found. All32 prior draft assignments remain unchanged.33 draft tasks pass
+validation but all remain provisional train; no frozen heldout cohort. Evidence:
+`corpus049-split-001`. Detached copies/semantic contamination are not excluded.
+
+The42-file architecture-enforced deployment bundle was exercised from cwd/tmp
+with Python isolation: corpus inspection and byte-identical schedule reproduction
+pass, inspector training request rejects quarantine, and actual corpus worker
+rejects quarantine before model access or output creation. New deployment
+bindings pin corpus/transfer/config/model/schedule/worker identities and explicitly
+set launch_authorized=false. This does not exercise admitted-data GPU training.
+Evidence: `training-deployment-corpus049-validation-001`. Full corpus rights,
+frozen split, sufficient diverse data and full-model runtime remain outstanding.
+P1 incomplete; Runpod off.
+
+Qualification archive publish and independent R2 restore verified:
+103files560,989bytes, including latest deployment source/configuration and
+explicit launch-denied bindings. Receipts: corpus049-qualification-publish-001
+and corpus049-qualification-restore-001.
+
+
+### Hcloud547 source and diagnostic review — 2026-10-11
+
+Continued existing queue order to hetznercloud/hcloud-go547, a Go metadata client
+whitespace-parsing defect. Extracted43messages/21sourcecalls from the pinned
+mini-agent shard without reference-patch metadata. Independently retrieved four
+files at base1d97017b303caa29379e7202a04814985604bea2 with Git blob checks. Full
+source/test observations match pinned files; observed final patch applies and
+changes only body := string(bodyBytes) to strings.TrimSpace(string(bodyBytes)).
+No package runtime or fresh native replay result is claimed.
+
+Three diagnostic commands have weak failure semantics. Reproduction only prints
+errors; edge cases print success values without exact assertions; YAML mismatch
+normally prints but an empty result can panic at indexing. The broader go test
+pipeline has source-observed exit0 despite main-redeclaration build failures
+because output is piped through head. An earlier unused-import compile error is
+also retained. These require explicit diagnostic amendments and fresh replay,
+not promotion of publisher success metadata to measured success.
+
+Local Go1.24.3 darwin/arm64 exists; source requests Go1.23.2 linux/amd64. Native
+Go runtime/dependency and grading qualification remain open. No image downloaded
+and no Runpod used. Evidence: hcloud547-static-001. Corpus049 unchanged.
+
+Hcloud547 selected-source/review archive R2 publish and independent restore
+verified:23files112,275bytes. Candidate remains outside corpus049.
+
+
+### Hcloud547 local Go package controls — 2026-10-11
+
+Captured seven selected upstream metadata/instrumentation/module/license files
+from the pinned source archive, each checked against Git blob identities. The
+158,194-byte archive and selected27,199sourcebytes are preserved. Local Go1.24.3
+Darwin/arm64 executes the actual metadata package with real dependencies; no
+substituted package stubs. Baseline10upstreamtests pass. Dependency setup used
+Go checksum verification, a dedicated module cache, readonly module mode and
+a180second/256MiB-free-space stop condition; no budget stop occurred.
+
+Three independent assertion-based Go tests cover1080 complete finite boundary
+combinations (6leading x6trailing whitespace fixtures x5payloads x6status codes),
+public accessors/invalid internal spaces/empty hostname, preserved internal YAML
+formatting, HTTP status failure classification, response closure and transport/
+read-error identity. RoundTripper fixtures use no network and invoke actual
+package methods. These are explicit generated tests, not teacher or publisher
+tests. All13tests pass for the one-line candidate. Base/right-only/ASCII-only
+variants each fail2tests; internal-whitespace removal fails4. Failing variants
+stop within a test at their first mismatch, so1080-combination completion is
+claimed only for the successful candidate. Source inputs remain unchanged.
+
+Evidence: hcloud547-go-baseline-001 and hcloud547-independent-controls-001.
+This is local alternate-toolchain evidence, not LinuxGo1.23.2 compatibility,
+fresh native replay, publisher grading or training admission. Source diagnostics
+still need explicit amendments; corpus049 unchanged and Runpod off.
+
+LocalGo controls/source archive R2 publish and independent restore verified:
+69files483,006bytes. Module/build caches are not included in this archive.
+
+
+### Hcloud547 diagnostic amendments — 2026-10-11
+
+Executed all three original diagnostic bodies against actual selected base and
+candidate packages locally. Base reproduction/edge scripts print errors and YAML
+prints mismatch, yet all exit0. Candidate outputs match expectations. This
+reproduces the weak failure semantics; publisher text is not execution proof.
+
+Prepared four explicitly assistant-attributed command amendments, retaining17
+original actions:20 asserts five accessor values/errors and adds a Unicode
+boundary fixture with explicit per-iteration binding;24 panics on request/YAML
+mismatch;34 removes the head pipeline so go test exit propagates;36 names four
+scratch files explicitly. Source patch actions are unchanged. Initial print-only
+reproduction remains an observation, not a passing regression test.
+
+Ten local executions validate amended20/24 across base/candidate/three mutants.
+Only candidate passes both. Scalar checks do not catch internal-space removal;
+YAML does. YAML alone does not catch right-only or ASCII-only trim; scalar Unicode
+fixture does. Attempt001 had an incorrect expectation that scalar20 would reject
+internal removal; its exit0 output is retained. Attempt002 corrects this oracle
+expectation and verifies conjunction rejects every tested mutant, without changing
+diagnostic code. Neither test is claimed sufficient alone.
+
+Evidence: hcloud547-original-diagnostics-001 and hcloud547-amendments-002.
+Unpiped broader test and cleanup commands are not executed in this selected-source
+local qualification; full Linux runtime and fresh replay remain next. Corpus049
+unchanged, no training admission, Runpod off.
+
+Diagnostic/amendment archive R2 upload and independent restore verified:
+63files58,898bytes, including failed-expectation evidence.
+
+
+### Hcloud547 pinned Linux toolchain controls — 2026-10-11
+
+Captured official Go1.23.2 Linuxamd64 archive73,611,540bytes; SHA256
+542d3c1705f1c6a1c5a80d5dc62e2e45171af291e755d591c5e6531ef63b454e
+matches official release metadata. Validated bounded archive member paths/types
+and extracted237,143,421bytes. Mounted read-only into existing immutable cached
+Linux image, with network disabled, real module cache read-only and compiler
+cache in a768MiB memory-backed tmpfs. No new parent image or GPU used.
+
+Actual selected metadata package: base passes11/fails2; candidate passes13/fails0,
+including1080 boundary combinations. Runtime reports exactly Go1.23.2 linux/amd64.
+Container execution/cleanup return0; OOMKilled=false. Temporary compiler cache
+is removed with the container. Evidence: hcloud547-linux-controls-001.
+
+Separate offline full go mod verify fails because github.com/dave/jennifer v1.6.0
+is missing from the selected-package cache; no claim of full dependency graph
+verification. Resolve full repository dependencies before broader native replay.
+This is package-level Linux qualification, not agent replay, publisher grading
+or training admission. Corpus049 unchanged; P1 incomplete, Runpod off.
+
+Linux toolchain/control archive R2 publication and independent restore verified:
+17files73,658,728bytes. After exact hash comparison with retained original, the
+redundant73,611,540-byte restored tar was removed to limit disk growth. Receipt
+cleanup.json records that the restore directory is now intentionally partial;
+original tar, extracted runtime and remote archive remain.
+
+
+### Hcloud547 full source, dependencies and Linux base suite — 2026-10-11
+
+Reconstructed166trackedfiles/978,682bytes from the pinned source archive, checked
+every Git blob and independently computed tree067eff2c51d7fb3773fade3357fc49bef68c7f5d
+against upstream commit metadata. Initial reconstruction had a parentless local
+commit; subsequently fetched only upstream base1d97017b303caa29379e7202a04814985604bea2
+and checked it out, preserving exact tree and clean source. Sanitized snapshot
+adapter qualification remains pending.
+
+Full dependency acquisition returned57module entries with no download errors.
+Integrity guard caught go mod download adding go.sum entries; the generated
+file is preserved, pinned go.sum restored, and source cleanliness rechecked.
+Subsequent offline go mod verify succeeds without module-file drift. The first
+whole-cache archive exceeded100MiB because it duplicated compressed/expanded
+content; failure identity retained and generated duplicate archive removed.
+Replacement stores454download-cache files in62,041,447compressedbytes, omitting
+expanded directories. Go must extract those cache zips for use; archive identity
+alone does not prove an offline restore bootstrap.
+
+Full pinned upstream go test ./... on LinuxGo1.23.2 passes offline:623fully
+qualified test/subtest pass records,10passing packages,zero failed/skipped tests.
+One package hcloud/exp has no tests. Parent/subtest counts are not independent
+statistical trials. Compilation uses memory-backed temporary cache; container
+cleanup succeeds without OOM. This is base qualification, not candidate full-suite
+or native agent execution. Evidence: hcloud547-full-linux-tests-001.
+
+Next: restore/bootstrap verification, sanitized full snapshot and fresh amended
+agent replay. Corpus049 unchanged; no training admission or Runpod use.
+
+R2 publication and independent restores verified for full-source/dependency
+archive (20files62,421,634bytes) and full Linux suite evidence
+(9files525,204bytes). Dependency byte restoration passes; bootstrap execution
+from restored compressed cache remains a separate pending check.
+
+
+### Hcloud547 restored bootstrap and sanitized snapshot — 2026-10-11
+
+Fresh offline container bootstrapped exclusively from R2-restored source/cache
+archives, with no expanded host module/build cache mounted. Verified all166source
+files and454download-cache files by size/SHA256 before execution; Go extracts
+dependencies into memory-backed temporary storage. LinuxGo1.23.2 full tests
+produce623passing test/subtest records,zero failed/skipped tests. All terminal
+(package,test) outcomes exactly match prior full run, including11package keys.
+Post-test source bytes remain identical; offline go mod verify succeeds. Container
+cleanup returns0 and no OOM occurred. Evidence:hcloud547-restore-bootstrap-001.
+
+The separate owned full checkout was sanitized using existing source_snapshot
+logic. New parentless commit501233791772a3ddee2c12d91dd06d0407cb3e82 preserves
+tree067eff2c51d7fb3773fade3357fc49bef68c7f5d and all166files/978,682bytes. Independent
+ls-tree and direct-byte checks pass; upstream base/head/merge commit objects are
+inaccessible, no remotes and no dirty files. PythonPAX archive avoids AppleDouble
+entries. Scope is owned checkout; runtime filesystem/image layers still need
+qualification. Evidence:hcloud547-snapshot-001.
+
+Next: embed/mount runtime assets with an explicit disk budget, qualify the full
+snapshot container and execute amended native replay. Corpus049 unchanged;
+P1 incomplete, Runpod off.
+
+Snapshot archive (8files474,685bytes) and bootstrap execution archive
+(11files502,495bytes) are independently R2 publish/restore-verified.
+
+
+### Hcloud547 runtime assembly storage gate — 2026-10-11
+
+Prepared an offline Docker context using hardlinks to already verified Go/module/
+snapshot archives. Cached parent only; visible old worktree removal; pinned Go
+environment; warm compilation at /workspace before removing the warmup copy.
+Actual image build, relocation behavior and30second native-call timing remain
+unverified. Existing native protocol requires no mounts, so no host-volume
+bypass was introduced. Evidence:hcloud547-runtime-plan-001.
+
+Disk preflight found only343MiB free. Build is held until at least2GiB is free.
+Rechecked the three previously proposed other-project Docker cache IDs: all
+remain reclaimable, unshared, immutable, reported total about12.3GB. User approval
+is still absent. Asked whether to approve those exact cache entries or free2GB
+manually. No cache/image/container/volume/project/model deletion performed.
+The goal remains incomplete and active; this is the first current storage-gate
+checkpoint, not a completed or GPU-blocked phase. Runpod off.
+
+Prepared runtime plan is R2 publish/restore-verified:3files6,947bytes.
+
+
+### Verified duplicate archive cleanup — 2026-10-11
+
+Removed only two redundant restore-test archives: Hcloud547 module cache and
+MkdocsMerge18 image. Before removal, both matched their retained original files,
+the manifest bound to the passing restore receipt, and a fresh full streamed
+R2 SHA-256/length check. Removed 152,250,458 logical bytes; actual available
+space may differ. Those two restore directories are now intentionally partial;
+original archives and R2 objects remain. Evidence: verified-duplicate-cleanup-001.
+Other-project Docker cache cleanup remains unapproved. P1 is incomplete;
+Runpod was not used. Runtime image construction still requires 2 GiB free.
+
+Cleanup evidence is R2 publish/readback-verified: 4 files, 4,917 bytes.
+Post-cleanup filesystem reports 424 MiB available, below the 2 GiB build gate.
+
+
+### Recurring storage blocker — 2026-10-11
+
+Live filesystem check reports 421 MiB free versus the prepared runtime build
+preflight requirement of 2 GiB. The same storage constraint remains across
+three goal checkpoints, despite successful removal of verified duplicate
+archives. No approval has arrived for the explicitly proposed cross-project
+Docker caches. Runtime remains prepared_not_built; no training or GPU run
+was initiated. Goal blocked pending additional local space or approval for
+the exact proposed cache cleanup. P1 completion is not established.
+
+
+### Approved cache removal returned zero bytes — 2026-10-11
+
+User approved the original three exact cache IDs. Exact-ID prune returned zero
+bytes, including retries with --all scoped to each exact ID; all targets remain.
+Docker dependency inventory identifies eight additional descendant records, all
+reported reclaimable/unshared/immutable, approximately151MB. Retained descendant
+references are a possible cause, not yet proven. Saved complete expanded proposal
+and requested approval before extending cleanup beyond the original three IDs.
+Evidence: approved-build-cache-cleanup-001. No runtime build or Runpod use.
+
+
+### Hcloud547 runtime built and verified — 2026-10-11
+
+All11 user-approved Docker cache entries removed using exact-ID leaf-first
+pruning;7,739,768,832bytes free afterwards. Offline runtime built successfully,
+image sha256:63245c57a33c284a39b3734a844cd7f2780c33142b83d6c903426d80a7f66f89.
+Disposable offline container verifies exact166-file parentless snapshot and
+old commit inaccessibility. Warm workspace Metadata-filter command completes
+within30seconds; separate full base suite returns623 passing test/subtest
+records and no failures. Neither filtered compilation nor subtest counts imply
+independent statistical trials. Container export and cleanup succeed; no OOM.
+Evidence:hcloud547-runtime-verify-001. Fresh amended native replay and candidate
+grading remain pending. Corpus049 unchanged, training unapproved; no Runpod use.
+
+Runtime/cleanup evidence archive is R2 publish and independent restore verified:
+26files509,003bytes. Image itself remains local; this receipt covers evidence,
+not an exported image backup.
+
+
+### Hcloud547 native amended replay — 2026-10-11
+
+Raw-format preflight rejected before container creation; corrected with existing
+mini-history converter. First native replay rejected final scratch cleanup;
+fresh diagnostic run identified Go telemetry files under/workspace/.config.
+Runtime002 sets XDG_CONFIG_HOME outside repository and disables Go telemetry.
+Strict cleanup guards unchanged. Runtime snapshot/full623test checks pass again.
+Fresh replay004 completes native submit_patch and confirmed container removal.
+Source unused-import and redeclared-main failures remain visible, followed by
+source correction/cleanup and passing metadata tests. Original source terminal
+replaced with explicit cleanup/submission;4diagnostic amendments remain attributed.
+No model executed, no training admission. Corpus049 unchanged. Candidate grading
+and full history qualification remain pending. Runpod unused.
+
+Native replay archive R2 publication and independent restore verified:
+45files1,253,094bytes.21charged calls22exchanges; submitted patch exactly matches
+the source-observed patch. Original failed attempts retained in archive.
+
+
+### Hcloud547 submitted-patch controls and history — 2026-10-11
+
+Verified exact submitted patch in offline LinuxGo1.23.2 runtime002: full
+upstream suite623passing test/subtest records, no failures. Independent metadata
+suite candidate13pass0fail; base/right-only/ASCII-only11pass2fail; removing
+internal whitespace9pass4fail. Candidate completes1080finite boundary cases;
+failing controls may stop at first mismatch. All5containers exported evidence
+and removed successfully. No universal or statistical generalization guarantee.
+Pinned independent task issue extracted after frozen replay; native history
+reconstructed46messages22exchanges. Original teacher reasoning omitted, fresh
+observations retained, diagnostic amendments attributed. Publisher grading,
+token audit, full semantic review and training admission remain pending.
+Evidence:hcloud547-submitted-controls-001,hcloud547-task-001,hcloud547-history-001.
+Corpus049 unchanged. Runpod unused.
+
+Submitted-patch controls/history archive R2 publication and independent restore
+verified:41files694,719bytes.
+
+
+### Hcloud547 publisher grading and tokenizer audit — 2026-10-11
+
+Publisher evaluator extracted from hash-verified pinned shard only after native
+replay/history freeze. Three independent offline containers run full publisher
+test-patched suite: base622pass5fail, reference627pass0fail, candidate627pass0fail.
+All publisher test names resolve uniquely to package-qualified terminal records;
+all expected transitions verified, no skipped records. Parent/subtests are not
+independent statistical trials. Reference/test patches remain evaluator-only.
+Pinned model tokenizer yields16,708input tokens6,391supervised targets without
+truncation; input plus8,192response reserve24,900<=32,768. Full semantic review
+and mechanical admission remain pending; Corpus049 unchanged and all training
+gates closed. Runpod unused.
+
+Publisher-grade/token archive R2 publish and independent restore verified:
+28files1,957,741bytes.
+
+
+### Hcloud547 full history review and admission gap — 2026-10-11
+
+Reviewed all46messages in15hash-bound sections; both complete source/test reads
+match pinned files, final source exactly matches one-line replacement, and
+patch observations equal native submitted bytes. Retained errors13and35,
+print-only reproduction, cached reruns, empty symlink find and absent final
+prose explicitly documented. Four finite credential patterns found no matches;
+not privacy clearance. Shared admission currently requires pytest phases and
+pytest_exit; Go native events cannot honestly satisfy that schema. Requires
+explicit native Go outcome validation and tracked-diff before/after evidence
+before mechanical admission. No fabricated pytest-phase conversion permitted.
+Corpus049 unchanged; Runpod unused.
+
+Full review/admission-gap archive R2 publish and restore verified:4files17,715bytes.
+
+
+### Native Go control validator — 2026-10-11
+
+Added zenithsync/go_test_controls.py: raw JSON event lifecycle verification,
+package/test identity retention, explicit no-test-package allowlist, exact exit
+consistency, parent/subtest checks, unique publisher-name resolution and complete
+paired coverage. Never synthesizes pytest phases.12Go-specific adversarial tests
+and9existing pytest-control tests pass(21total). Reparsed retained Hcloud627node
+base/reference/candidate runs successfully. Admission integration and fresh
+tracked-source immutability evidence remain pending. Current506test full-suite
+receipt predates these additions; no new full-regression claim. Runpod unused.
+
+Go-validator source/test/evidence archive R2 publish and restore verified:
+5files93,805bytes.
+
+
+### Go admission integration and full regression — 2026-10-11
+
+Shared admission selects explicit go_test_json_v1 while retaining existing
+pytest behavior. It reparses native logs, checks tracked-before/after file
+identities and bytes, validates complete execution and compares publisher
+transitions. Unknown backend rejects. Added4integration tests;34targeted pass.
+Fresh Hcloud publisher grade003 binds exact replay, patch and staged validator;
+all3roles preserve tracked diff during tests. Base622pass5fail; reference and
+candidate627pass. Mechanical admission passes with no blockers, trainingfalse.
+Full staged CPU regression013:522tests,zero failures/errors/skips, Torch enabled.
+Initial regression012 skipped17Torch tests; preserved separately and superseded
+by opt-in run. This is local qualification, not31BGPU readiness or learned gain.
+Hcloud corpus integration remains pending; Corpus049 unchanged. Runpod unused.
+
+Go admission archive R2 publish and independent restore verified:39files1,923,672bytes.
+
+
+### Corpus050 quarantined integration — 2026-10-11
+
+Added fully reviewed Hcloud547;33prior records unchanged.34examples,34tasks,
+33declared repositories;656,419input tokens186,691shifted targets.69files
+7,269,569bytes R2publish/restore verified. Independent restored recount matches;
+original/restored schedules identical30updates, zero overshoot, training loads
+reject quarantine. Credential screen34examples no indicators; initial invocation
+incorrectly supplied model directory and rejected, corrected tokenizer-file
+invocation passes. Similarity/network refresh and deployment binding remain
+pending. Corpus insufficient for planned3x50M diverse-token training. Runpod unused.
+
+Integration evidence archive also R2publish/restore verified:11files57,790bytes.
+
+
+### Corpus050 isolation and deployment checks — 2026-10-11
+
+All561lexical pair counts match independent set oracle; no new Hcloud flags at
+Jaccard1/10or containment1/5. Prior PennyLane flag remains. Fresh GitHub metadata
+plus36inherited hash-bound observations show no known reserved-network overlap;
+33previous assignments unchanged. This does not freeze splits or exclude
+detached copies/semantic contamination. Staged42filetraining bundle inspection
+and30update schedule match; inspector and worker reject quarantine before model
+access/output. No GPU used. Rights, corpus scale and full training readiness open.
+
+Qualification archive R2publish/restore verified:65files444,626bytes.
+
+
+### Hcloud547 attribution coverage — 2026-10-11
+
+Created exact-history/source notice bundle covering5direct source/diff
+observations, MIT source notice and pinned inherited dataset/teacher notices.
+Current publisher card rechecked for intended SFT/distillation use. Attribution
+and transformation statement retained; whole-corpus rights remain unapproved.
+No data admission or Runpod use.
+
+Attribution archive R2publish/restore verified:11files61,163bytes.
+
+
+### Cogent2050 pinned-source screening — 2026-10-11
+
+Fetched eight source, test, configuration and license files at base
+`7cf9ba361be9822e92989476c5fb690351481a3a`; each byte sequence matches
+its Git blob identity from the non-truncated upstream tree response. The
+source-observed one-file patch applies and the modified module parses. No
+repository or trajectory code was executed. Publisher reference patch remains
+unread. The helper has redundant numeric-name handling, but that alone is not
+a demonstrated behavioral failure. Nonfinite support policy is unspecified.
+
+Original pytest pipelines at messages36,38,40,56 can mask test exit status.
+Message42 incorrectly counts the required ValueError for `a/b` as an error;
+this failure must remain visible. Copied-function print diagnostics cannot
+establish package behavior. Final submission message58 has no response.
+Next: qualify an offline package runtime and explicit diagnostic exit handling
+then replay; do not infer acceptance from publisher success or static parsing.
+The pinned package requires Python>=3.9,<3.13 and scientific dependencies
+including NumPy, SciPy and Numba; no new runtime image was downloaded.
+
+Static review archive:16files573,467bytes, R2 publish and independent restore
+verified. Receipts: `evidence/data/cogent2050-static-{publish,restore}-001`.
+Corpus050 remains unchanged at34quarantined examples. No training admission,
+Runpod use or full P1 completion is claimed.
+
+
+### Cogent2050 full source and offline baseline — 2026-10-11
+
+Verified all617 Git tree blobs (77,673,816bytes) from the pinned19,607,553byte
+archive, including the one relative symlink; rejected unsupported paths/types
+before materialization. Archive SHA256:
+`e6dcf83219508507f7ae20a446e2adc714a5566628cf903402f3d6aacf6a1439`.
+Source/inventory bundle R2publish and independent restore verified:
+7files19,777,017bytes.
+
+Built an alternate offline Python3.10.19 dependency image from retained
+Workalendar parent with NumPy1.26.4, SciPy1.14.1, Numba0.60.0 and
+pytest8.3.5. Downloaded binary wheels; install used no network and pip check
+passed. Source-image first build failed because Docker parsed bare sha256
+as a registry repository; preserved that log, rebuilt using recorded local
+parent tag. Final source image identity:
+`sha256:e19951b7a57d433b849f09f83697063bab43a464ea5fb5bb8155db8f64da9596`.
+
+Offline unmounted resource-limited probe imports Cogent3 from
+`/testbed/src/cogent3/__init__.py`; both original tree test modules pass
+199tests, zero skips, pytest exit0. Export and container cleanup succeeded,
+no OOM. This preliminary probe is not an immutable-worktree comparison,
+parentless snapshot qualification, publisher-image equivalence, native agent
+replay or patched semantic-control evidence. Inherited image layers are not
+audited. Next: construct and verify sanitized snapshot, then replay with
+reviewed diagnostic amendments. Corpus050 unchanged; no training approval
+or Runpod use. Runtime dependencies and evidence archive transfer in progress.
+
+Runtime archive upload and independent restore completed:31files109,300,288bytes. Both transfer receipts verified; dependency wheels retained in R2.
+
+
+### Cogent2050 sanitized snapshot qualification — 2026-10-11
+
+A shallow fetch of the exact base matches all617 independently acquired Git
+blob identities and modes, including the safe internal symlink. First root-tree
+assertion rejected the API response sha (which echoed the queried commit);
+retrieved commit metadata separately and verified the actual root tree
+`df92ec88ddea36898471e05a269ac4a834173d84` against local Git. No identity
+check was relaxed. Successful sanitizer preserves that tree in parentless
+commit `ee24c4f9a4fd8329874b5cf98174ba62e938e3bf`, no remotes, and one
+reachable commit. Base, PR head and merge objects are inaccessible.
+
+Snapshot container image:
+`sha256:5bda5dcaed408faac0ecea2f9c81bc2c74c4b8e498c952c5040517a0c4265881`.
+Recorded dependency parent identity checked before and after offline build.
+Container verifier confirms snapshot metadata,617tracked file bytes/modes,
+Git isolation and declared oracle-path absence. Pinned package import and
+199baseline tests pass, zero failures/errors/skips. Tracked manifest identical
+before/after tests, no untracked nonignored files; evidence export and container
+cleanup succeed, no OOM. Scope remains visible filesystem and declared paths;
+inherited image layers are not audited and publisher-image equivalence is not
+claimed. Native agent replay, semantic controls and training admission remain
+pending. Corpus050 unchanged and Runpod unused. Snapshot archive R2 transfer
+in progress:26files41,968,623bytes.
+
+Snapshot archive R2 publish and independent restore both verified:26files41,968,623bytes. Transfer receipts saved alongside snapshot verification evidence.
+
+
+### Cogent2050 fresh native replay — 2026-10-11
+
+Replay002 completes29charged calls and30exchanges, including successful native
+submit_patch and confirmed container cleanup. Four explicit amendments remove
+pytest output-filter pipelines; exact targets run directly with concise output
+and actual exit status. Patch-modifying actions remain unchanged. Original
+diagnostic errors at source26 and42 persist, along with grep/find misses at
+4,14,46. In particular the absolute-path find at4 traverses a relocated
+/testbed symlink differently; no invented successful output replaces that miss.
+Final direct pytest run reports199passed. Submitted3336bytepatch differs from
+the source-observed patch only in9-to7hex Git index abbreviations; all other
+bytes match. Training approval remains false.
+
+First preparation rejected an overly broad pipe-character count (grep regex
+alternation is not another shell pipeline). The corrected preparation checks
+the explicit spaced pipe delimiter. Initial replay invocation without the
+missing profile failed before execution; successful attempt002 retained.
+Replay archive R2publish/restore verified:9files197,835bytes.
+
+Independently extracted issue/task from hash-verified pinned V2 shard after
+replay freeze, without reference patch access. Built62message/30exchange
+history from fresh observations, omitting original teacher prose. These new
+task/history outputs still require token audit, full-content review, grading,
+semantic controls and their own R2 evidence bundle. Corpus050 unchanged;
+P1 remains incomplete, Runpod unused.
+
+
+### Cogent2050 grading hold and evaluator import-path fix — 2026-10-11
+
+Token audit:22,203input/9,723shifted supervised targets;30,395including8192
+reserve fits32768 without truncation. Fresh independent actual-package checks
+pass71valid and77invalid finite cases; four intentionally defective wrappers
+are rejected. This is finite evidence, not proof for every float/Unicode input.
+
+Publisher grading first exposed dropped src-path propagation: import preflight
+succeeded via image environment, but pytest PYTHONPATH was overwritten to
+/audit and package import failed. `scripts/qualify_rebench_v2.py` now explicitly
+passes reviewed flat/src source path through existing SOURCE_PYTHONPATH
+mechanism. Corrected offline integration reaches the intended tests. CPU full
+regression014:522tests,0failures/errors/skips,22.810s;12profile tests also pass.
+
+Reference and candidate each pass206tests with unchanged tracked diffs and
+confirmed cleanup. Base fails collection because publisher test module imports
+the new absent helper globally. Strict grader rejects collection errors; do not
+relabel them as individual fail-to-pass outcomes. Two publisher node identifiers
+are also truncated at spaces and do not match collected node IDs. Therefore
+Cogent2050 is HELD, not mechanically qualified or corpus-admitted. No grading
+contract was weakened. Move data expansion to the next distinct repository;
+revisit this held task only with an explicit independently validated evaluation
+protocol. Evaluator-only patches remain outside training history.
+
+Task/history/token/grading/semantic evidence archive prepared:69files696,619bytes,
+R2 transfer in progress. Corpus050 remains34quarantined examples and186,691
+supervised targets; rights/split/scale/GPU gates remain open. Runpod unused.
+
+Qualification archive R2publish and independent restore verified:69files696,619bytes. Saved both receipts; all new task/history/semantic/grading data in this bundle are backed up.
+
+
+### Next repository screening and KubeVirt99 source acquisition — 2026-10-11
+
+Extracted three previously selected queue traces from the pinned hash-verified
+Open-SWE shard:cluster-api-provider-kubevirt99,hapi-pino103,aws-xray-sdk-node70.
+Exact trajectory selections bound; no evaluator patch columns accessed. These
+are screened source traces, not fresh executions or corpus additions.
+
+Next candidate KubeVirt99: acquired all117 pinned source files (1,106,666bytes),
+verified Git blobs/modes before materialization.189,668byte archive SHA256
+`ed1ff58f7ef5960cb1232bae8cc895624926abcc850b423b20491394be4cd500`.
+Observed nil DataSecretName guard patch applies. Source checks primarily grep
+text; masked build/vet pipelines show dependency downloads and cannot establish
+build success. Controller tests use fake clients and Ginkgo1.16.5 under one Go
+suite entrypoint; per-spec coverage and native runtime remain unqualified.
+Full tree shows actual suite path `controllers/kubevirtmachine_suite_test.go`;
+initial guessed suite path was absent and no contents were inferred.
+
+Go directive1.17; dependency graph includes Kubernetes/KubeVirt/controller-runtime.
+Next resolve and archive runtime dependencies, then use actual deletion-path
+behavior controls. No Kubernetes cluster need established, no GPU use, and no
+large dependency/image download performed in this screening turn. Hapi/AWS
+traces are retained for later review, not marked qualified. Archive23files
+648,581bytes R2 transfer in progress. Corpus050 unchanged.
+
+Screening/full-source archive R2publish and independent restore verified:23files648,581bytes. Saved both transfer receipts.
+
+
+### KubeVirt99 dependency acquisition and source-drift rejection — 2026-10-11
+
+Bounded hostGo1.24.3 dependency acquisition used pinned go.mod/go.sum and
+public Go proxy/checksum database, with300second/4GiBfree-space limits.
+The post-acquisition source-identity guard rejected270added go.sum checksum
+lines; go.mod unchanged. Preserved changed metadata and original verified
+bytes, checked no original checksum lines removed, restored exact pinned
+go.mod/go.sum. Acquisition wrapper did not complete its success receipt and
+is not reported as successful source-preserving execution.
+
+Parsed358complete Go JSON download records with no Error entries. Subsequent
+GOPROXY=off/GOSUMDB=off `go mod verify` passes with source metadata unchanged.
+Archived3580download-cache files as161,527,472bytecompressedtar; per-file
+hashes checked before and after packaging. Expanded module directories remain
+local working cache, not duplicated inside archive. Whole evidence bundle:
+16files162,604,352bytes, R2 transfer in progress.
+
+This is host cache verification only: Go1.17 directive does not establish
+compatibility with a newer Linux toolchain. Next qualify actual offline Linux
+compilation and deletion-path behavior using preserved original source. No
+controller execution or training admission claimed, Corpus050 unchanged,
+Runpod unused.
+
+Dependency archive R2publish and independent restore verified:16files162,604,352bytes. Both receipts saved.
+
+
+### KubeVirt99 offline Linux controller baseline — 2026-10-11
+
+Used retained Go1.23.2 linux/amd64 image with pinned source and verified module
+cache mounted explicitly read-only. Network disabled;2CPUs/2GiBmemory;270second
+and4GiBfree-space cutoffs. `go test -mod=readonly -p2 -count=1 -json ./controllers`
+completed exit0 in189.06seconds, no budget stop/OOM. Source go.mod/go.sum
+identities unchanged; disposable container removed successfully. Go JSON records
+one passing test function; its Ginkgo output reports29of29specs passed with
+0failed/pending/skipped. These are distinct granularities, not30tests. Per-spec
+machine-readable qualification remains pending.
+
+Prepared five independent standard Go subtests for nil names, named/empty
+present-name lookup and deletion identity, legacy lookup-error behavior, and
+wrapped delete-error propagation. The draft is formatted but not compiled or
+executed yet. Existing helper suppresses any Get error, not just missing-secret
+errors; tests preserve that existing behavior and do not claim it is a desired
+general reliability guarantee. Next compare unpatched and submitted patch
+behavior with these controls, then sanitize snapshot/replay.
+
+Baseline evidence plus labeled unexecuted draft:6files12,413bytes; R2 transfer
+in progress. This mounted baseline is not native replay qualification, data
+admission, or proof of full P1 readiness. Corpus050 unchanged; Runpod unused.
+
+Baseline archive R2publish and independent restore verified:6files12,413bytes. Both receipts saved.
+
+
+### KubeVirt99 independent behavioral comparison — 2026-10-11
+
+Five standard Go subtests compiled and executed against the actual package in
+an offline Linux container, using a private copy of read-only source inputs.
+Base:4pass/1fail; nil DataSecretName panics and the test records failure.
+Source-observed patch:5pass/0fail; nil input performs zero client operations,
+non-nil names use the correct namespace/name and delete the fetched object,
+lookup errors preserve existing behavior, deletion errors preserve their cause.
+Deliberately incorrect unconditional-return variant:1pass/4fail, demonstrating
+that nil safety alone cannot satisfy the checks. Parent Go test nodes are not
+counted as extra independent cases. Strict Go JSON parser validates all three
+runs (six nodes each including parent).
+
+Run completed194.19seconds, no budget stop/OOM; source metadata unchanged,
+evidence export and cleanup successful. All117hostsource Git blobs/modes
+verified during run and bytes checked again afterward. This is finite helper
+validation of the source-observed patch, not a fresh agent-submitted patch or
+whole-suite candidate qualification. Native replay and grading remain pending.
+Archive18files55,560bytes R2 transfer in progress. Corpus050 unchanged;
+Runpod unused.
+
+Paired-comparison archive R2publish and independent restore verified:18files55,560bytes. Both receipts saved.
+
+
+### KubeVirt99 parentless runtime qualification — 2026-10-11
+
+Shallow exact-base checkout matched117Git blobs/modes. Sanitized source tree
+`a1bd322f32fc2f3bb6a4acc74deadc8762e24243` preserved in parentless commit
+`5be712278e93f8d10da6178dc695e67a400ec2c3`; base/head/merge objects
+inaccessible, no remotes, exactly one reachable commit.
+
+Offline image built from pinned cached parent, verified Go1.23.2 archive and
+verified module archive. Compilation warmed under /workspace to match future
+replay location; warmup selects no tests and is not counted as test evidence.
+Actual image:
+`sha256:f972081966d7d8782e60694d990ffd31c388c335c356ca38cdd4fe4b8afb87fc`.
+Independent unmounted container verifies snapshot metadata,117tracked files,
+old-history and declared oracle-path absence. Original controller package
+reports29Ginkgo specs passed, no Go fail/skip events, tracked manifest unchanged
+after execution and no untracked nonignored files. Evidence export/cleanup
+succeed. Inherited Docker layers remain unaudited; publisher-image equivalence
+is not claimed. Next native source replay with explicit diagnostic amendments,
+then grading/history qualification. Corpus050 remains unchanged.
+
+Runtime recipe/inputs and verification archive:27files235,654,645bytes, R2
+transfer in progress. Parent image is referenced by digest, not exported in
+this archive. No Runpod use.
+
+Runtime archive R2publish and independent restore verified:27files235,654,645bytes. Both receipts saved.
+
+
+### KubeVirt99 native replay and broader runtime defect — 2026-10-11
+
+Fresh native replay001 completes30charged calls/31exchanges, native submit
+succeeds and cleanup confirms removal. Four diagnostic amendments expose
+build/vet exit status and replace final grep-based syntax claim with actual
+package vet, while preserving source repair commands. Submitted patch exactly
+matches the source-observed patch used in independent controls. Original
+pre-repair static-check failure retained. Independent pinned task extraction
+follows replay freeze;64message native history omits teacher prose. Token
+audit15,096input/4,519shifted supervised targets,23,288with8192reserve;
+no truncation needed.
+
+Publisher expectations use five Go suite entrypoints. Broader `go test ./...`
+grading fails before meaningful outcomes: unwarmed packages need restored
+module-cache lock files owned by host UID rather than container root. With all
+capabilities dropped, writes are denied. Base exit1 therefore is environmental,
+not a valid failing task result; reference failure correctly stops qualification.
+Controller-only baseline/replay success remains its limited scope. No data
+admission or patch-failure claim.
+
+Next fix cache ownership in a new image, verify whole-suite offline readiness,
+rerun snapshot verification and native replay with the new image identity, then
+grade again. Preserve previous evidence. Archive40files398,832bytes contains
+replay/history/tokens/evaluator-only inputs and failed grading; R2 transfer in
+progress. Corpus050 unchanged; Runpod unused.
+
+Replay/history and invalid-environment grading archive R2publish/restore verified:40files398,832bytes. Both receipts saved.
+
+
+### KubeVirt99 cache repair and publisher unit-test grading — 2026-10-11
+
+New image normalizes download-cache ownership and warms all repository
+compilation offline. Identity:
+`sha256:0f5006dae2380dd80806d91073facb444a8e7c2445e2e6a728ae4e91744a7533`.
+Restricted-container verification confirms root-owned cache paths and write
+access to a previously failing lock. Whole-repository execution additionally
+exposes three live-cluster e2e setup failures. Pinned Makefile's normal test
+target explicitly excludes e2e-tests; verification003 follows that documented
+scope, retains all five publisher-declared entrypoints, passes all unit suites
+and confirms unchanged117file snapshot, Git isolation and cleanup. Live-cluster
+validation remains unperformed; failed probe002 is preserved, not hidden.
+
+Fresh native replay002 on the repaired image succeeds,30charged calls/31exchanges,
+64message history. Token audit unchanged at15,096input/4,519supervised targets,
+23,288with8192reserve. Publisher grade002:base4pass/1fail,reference5pass,
+candidate5pass. These counts are Go suite entrypoints, not individual Ginkgo
+specs. Strict Go event parser validates identical coverage and transitions.
+Eight package-only skips are verified to be directories with Go source but no
+*_test.go files; no skipped test cases admitted. All grading containers clean
+up and tracked diffs remain unchanged by tests.
+
+Full history review and mechanical assessment remain before corpus integration;
+rights/splits/scale/training gates remain open. Corpus050 unchanged. Evidence
+archive68files471,417bytes R2 transfer in progress; includes failed e2e probe
+and explicit selection rationale. No Runpod use.
+
+Qualification archive R2publish and independent restore verified:68files471,417bytes. Both receipts saved.
+
+
+### KubeVirt99 full history review and mechanical assessment — 2026-10-11
+
+Reviewed all 64 messages in 13 nonoverlapping sections. Coverage identities
+were independently rechecked against the frozen history. Exact controller
+slices and displayed patch match pinned source and submitted bytes. The initial
+cat output contains only the first 5,000 characters, without a truncation marker;
+this limitation is retained. The failed pre-repair textual diagnostic is retained.
+Build/vet and grep checks inside the trajectory do not establish runtime
+behavior. Publisher and independent runtime tests are separate evaluator evidence.
+Missing final prose and limited instruction coverage remain documented.
+
+Mechanical assessment passes with no mechanical blockers: 15,096 input tokens,
+4,519 shifted supervised targets. Neither assessment nor complete message
+coverage establishes rights, frozen split isolation, live-cluster behavior,
+training readiness, or learned performance. Corpus050 remains unchanged;
+KubeVirt integration is still pending.
+
+The five-file review/assessment archive (35,093 bytes) is published to R2 and
+independently restored with hash verification. Evidence directories:
+`evidence/data/kubevirt99-full-history-review-001`,
+`evidence/data/kubevirt99-admission-001`,
+`evidence/data/kubevirt99-review-publish-001`, and
+`evidence/data/kubevirt99-review-restore-001`.
+No Runpod use. Local disk has approximately 5 GiB free; avoid large builds
+until obsolete artifacts can be removed under the approved preservation policy.
+
+
+### Corpus051 KubeVirt quarantine integration — 2026-10-11
+
+Added reviewed KubeVirt99 with all 34 previous records unchanged. Corpus contains
+35 tasks in 34 declared repository groups, 671,515 input tokens and 191,210
+shifted supervised targets. All admission gates remain null. R2 publication and
+independent restore verified all 71 files (7,438,027 bytes). Recount agrees;
+original/restored deterministic schedules match byte-for-byte, 31 updates with
+zero target overshoot. Training-purpose load rejects quarantine. Only Emcee295
+exceeds the input plus 8,192 output-reserve bound.
+
+Independent exact-set oracle checked all 595 lexical pairs. No new flags;
+existing PennyLane5716/5831 overlap remains unresolved. This is lexical screening,
+not semantic independence or frozen heldout qualification. Corpus051 repository
+network checks, credential screening and deployment revalidation remain pending.
+Integration evidence archive contains 14 files /178,704 bytes; R2 transfer is
+in progress. No Runpod use or production code changes.
+
+Corpus051 integration archive R2 publication and independent restore verified:14 files /178,704 bytes. Both receipts retained.
+
+
+### Corpus051 isolation, credential and deployment checks — 2026-10-11
+
+Fresh GitHub metadata identifies KubeVirt repository/network 410124106. Together
+with 37 inherited hash-bound observations it shows no known reserved-network
+overlap. All 34 previous task assignments remain unchanged. Split status stays
+draft: detached copies and semantic contamination are not excluded.
+
+The pinned-tokenizer credential screen covers all 35 decoded histories: zero
+flagged examples and zero indicators under its finite pattern set. This does not
+establish privacy approval. Staged deployment inspection passes and reproduces
+byte-identical schedules. Both inspector and worker reject quarantine; the worker
+is deliberately given a nonexistent model path to test rejection before model
+access. This does not exercise admitted-data training or full31B/CUDA execution.
+
+Evidence: corpus051-split-001, corpus051-credentials-001 and
+training-deployment-corpus051-validation-001. Qualification archive contains
+66 files /361,077 bytes; publication verified, independent restore in progress.
+No production source changes or Runpod use. P1 remains incomplete.
+
+Corpus051 qualification archive publication and independent restore both verified. All66 files /361,077 bytes checked; receipts saved.
+
+
+### Hapi-pino103 semantic screen — 2026-10-11
+
+Held trajectory 3da7fdb8-db35-48d4-959b-1100332fb387 outside corpus051.
+Source command review found copied-expression checks, Lab callbacks registered
+without request dispatch, npm test pipelines that may mask exit status, and a
+final script claiming null/undefined coverage while injecting only normal URLs.
+The pre-repair mock dereference times out after starting a server. These are
+validation defects, not evidence that the submitted guard is incorrect.
+No runtime was executed, no source claims silently repaired, no image downloaded.
+Reconsideration requires actual-plugin failing/passing controls and an explicitly
+attributed new or amended trajectory with honest observations.
+
+Three-file evidence archive (58,390 bytes), including unchanged original trace,
+manual findings and supporting assertion script, is R2 publish/restore verified.
+Evidence: hapipino103-semantic-screen-001 and matching publish/restore receipts.
+Corpus051 unchanged. Next queued candidate is aws/aws-xray-sdk-node70.
+P1 remains incomplete; Runpod unused.
+
+
+### AWS X-Ray70 pinned source and parser controls — 2026-10-11
+
+Acquired base2e4fcfa7d9a1e7d942b45d55a8f84481bee9fffc from the upstream
+GitHub archive. All134 files /603,641 blob bytes match the recursive Git tree;
+227,297-byte archive SHA256:
+0524471e33dfd6c6624b4135839686f583bf011cdb0b2fd67976e35f5fc397a2.
+
+Focused controls evaluate the actual local sampler parser and reservoir
+constructors. Logging is suppressed; file input and wildcard matching are
+explicitly trapped as outside this scope. Each version covers all720 permutations
+of six fields for three value sets:4,320 cases per variant. Candidate passes all;
+base fails all2,160 version1 cases and passes version2. Three mutants independently
+remove method/path mapping or break version2; all are rejected. Assertions cover
+exact field values, input immutability, default rule, and reservoir parameters.
+Candidate Git blob matches the source observation's abbreviated result identity.
+
+This finite check does not establish full dependency compatibility, sampling
+probabilities, native replay, publisher grading, trajectory honesty or training
+readiness. Original trace contains filtered test commands and diagnostic claims
+that still require review/amendment. Corpus051 unchanged. No Runpod or Docker
+image download. Evidence:awsxray70-parser-controls-001. Source/control archive
+16 files /316,295 bytes: R2 publication verified; independent restore pending.
+
+AWS X-Ray70 source/control archive publication and independent restore verified;16 files /316,295 bytes. Both receipts saved.
+
+
+### AWS X-Ray70 offline Node10 baseline — 2026-10-11
+
+Core dependencies acquired with npm10 under Node20 in isolated staging, lifecycle
+scripts disabled. Source package.json is unchanged; new lock SHA256
+9ae481876c2f9d514805588e24e7c265ffc421f659c93681119a51cdb3745ab8.
+This is a current range resolution, not an original publisher environment.
+Official Node10.24.1 Linux x64 archive matches published SHA256
+ a3b9b97c23bcdc64334be6b02422e9014f040d59dcf604563ffda48003419356;
+checksum-list signature was not verified.
+
+Offline restricted containers use real dependencies and a private copy of pinned
+source; host input mounts are read-only. Initial baseline001 fails archive owner
+restoration under cap-drop ALL. Baseline002 uses --no-same-owner and copy without
+ownership preservation; local-sampler suite16/16 passes. Baseline003 explicitly
+selects linux/amd64 and runs all core tests:320passes,0failures,0pending across
+121 suites. Containers removed. Base tests passing does not demonstrate the issue
+is fixed; independent paired controls and publisher grading remain necessary.
+
+Archive includes Node runtime, compressed installed dependencies, exact lock,
+acquisition records, failed probe and successful probes:27files /38,002,186bytes.
+R2 transfer in progress. No Runpod, no new Docker image download, corpus051
+unchanged. Next: actual-dependency paired sampling controls, sanitized native
+runtime/replay and full source-history review.
+
+AWS X-Ray70 runtime-input archive publication and independent restore verified:27files /38,002,186bytes. Both receipts saved.
+
+
+### AWS X-Ray70 paired actual-dependency sampling controls — 2026-10-11
+
+Offline Node10 controls use the real sampler, wildcard matcher and reservoir.
+192 cases cross two versions, eight host/method/path match combinations, three
+rates and four injected uniform draws, plus six ordering/fallback checks.
+Base191pass/7fail;candidate198pass;missing-method,missing-path and broken-version2
+mutants each191pass/7fail. Candidate additionally passes all320 upstream core
+tests, zero pending or failures. All134 host source blobs/modes unchanged;
+container cleanup succeeded and no OOM occurred.
+
+These are finite deterministic tests. Math.random is restored in finally after
+boundary injection; no claim of statistical distribution validation, complete
+input-domain proof, publisher qualification or native replay. Runtime containers
+use read-only inputs and private copies, with network disabled and capabilities
+dropped. Corpus051 unchanged. Evidence:awsxray70-behavior-001.
+Archive13files /335,804bytes published to R2; independent restore in progress.
+No Runpod use. Next: sanitized runtime/native replay and explicit diagnostic
+amendments where the original trace overstates its tests.
+
+AWS X-Ray70 behavior archive publication and independent restore verified:13files /335,804bytes; both receipts saved.
+
+
+### AWS X-Ray70 sanitized native runtime — 2026-10-11
+
+Shallow pinned checkout matches all134 upstream Git blobs and source tree
+ d6ab16c91fe52a50de0175bd67dedc85053696dc. Sanitization preserves the tree and
+creates parentless commit85da86908f0ed3b720f144906c1afbab908868b7, with one reachable
+commit, no remotes and inaccessible base/head/merge commits.
+
+Builds001/002 fail the untracked-file guard because macOS tar metadata produces
+AppleDouble sidecars on Linux. Snapshot002 is repacked using Python tarfile over
+regular files with relative paths and no extended-attribute metadata; archive
+members checked for ._* entries. Guard retained. Build003 image:
+sha256:5883f380dfd34fa4008828ddb0f3dc823f0009b29d33d76843bb26e49ffcbbff.
+
+Restricted offline image verification passes all320 core tests with unchanged
+134file tracked snapshot, no untracked files, inaccessible upstream commits,
+removed declared oracle paths and successful cleanup. This is runtime validation,
+not native trajectory replay or publisher grading. Image parent remains referenced
+by immutable registry digest rather than exported into R2.
+
+Runtime archive30files /38,129,229bytes includes snapshot, current build inputs,
+failed build logs and successful verification. R2 transfer in progress.
+Local free disk about2.9GiB: avoid additional image builds before safe cleanup.
+Corpus051 unchanged; no Runpod use. Diagnostic amendments/replay remain pending.
+
+AWS X-Ray70 native runtime inputs and evidence R2 publication/restore verified:30files /38,129,229bytes. Receipts saved.
+
+
+### AWS X-Ray70 native replay cleanup failures — 2026-10-11
+
+Prepared34 source commands with seven attributed diagnostic amendments: exact
+parser assertions and limited success wording in three scripts, direct exit
+propagation for four npm test pipelines. Repair commands unchanged. Replay001
+reaches intended patch but fails exact untracked scratch inventory. Offline
+reproduction of the original failed GNU patch confirms .orig and .rej artifacts;
+source cleanup removes .rej but leaves .orig. Profile002 declares that exact
+.orig path in addition to patch.txt. Replay002 still fails inventory; source
+listing shows an unexpected .config directory. Both containers removed with
+no cleanup errors; no native submission accepted.
+
+Npm configuration was suspected, but a separate minimal npm-run probe with
+HOME=/testbed produces no untracked files either with default configuration or
+XDG_CONFIG_HOME relocated. That probe does NOT establish the cause or a fix.
+Next inspect the full command sequence's generated paths without broad deletion
+or relaxing the guard. Source patch failure, empty grep errors and diff exit1
+remain retained observations. Corpus051 unchanged and training remains closed.
+
+Rejected replay archive38files /773,614bytes includes both inputs/attempts and
+patch scratch diagnostic. R2 publication verified; restore in progress.
+No Runpod use.
+
+Both rejected replay attempts and bound inputs are R2 publish/restore verified:38files /773,614bytes. Receipts saved.
+
+
+### AWS X-Ray70 configuration diagnosis and native replay — 2026-10-11
+
+Diagnostic replay003 lists .config/configstore/update-notifier-npm.json and the
+known .orig backup after source cleanup. Minimal npm-run/npm-test probes alone
+show no untracked files and do not explain the native-only trigger. Replay004
+explicitly prefixes npm commands with XDG_CONFIG_HOME=/tmp/zenithsync-npm-config.
+Eight diagnostic/configuration amendments are attributed; source repair commands
+unchanged. Exact scratch guard permits only patch.txt and the reproduced .orig.
+Fresh native run succeeds:34charged calls plus submit,35exchanges; cleanup removes
+container without errors. Status remains replayed_not_graded. Source failed patch,
+empty greps and diff exit1 remain visible. No publisher oracle patch read.
+
+Independently extracted pinned task yields72message reconstructed history.
+Tokenization:24,587input and8,286shifted supervised targets. Input alone fits,
+but24,587+8,192=32,779, exceeding the configured32,768reserve-aware bound by11.
+No truncation, reserve reduction or admission workaround applied. Full content
+review, publisher grading and reserve reconciliation remain pending. Corpus051
+unchanged; no learned performance or training approval claim.
+
+Archive40files /887,766bytes preserves diagnostic failure, current replay inputs,
+successful native history, task/token records and negative minimal probes.
+R2 transfer in progress. No Runpod use or image build.
+
+AWS X-Ray70 replay/history archive publication and independent restore verified:40files /887,766bytes; receipts retained.
+
+
+### AWS X-Ray70 publisher grading — 2026-10-11
+
+Publisher evaluator patches extracted only after replay004 and its history were
+frozen. Three fresh restricted offline runs apply the publisher test patch:
+base320pass/1fail;reference321pass;candidate321pass. No pending tests; identical
+321full-title coverage across runs, tracked diff unchanged by tests, cleanup
+successful. The one fail-to-pass title resolves uniquely. Publisher lists279
+pass-to-pass short titles;30 map to multiple full titles. Every matching full
+title is checked, and the union covers all321 tests. Ambiguity retained explicitly;
+this is not unique-title resolution or mechanical admission.
+
+The result supports the tested repair on the qualified alternate runtime, not
+publisher image equivalence or learned model gains. Full history/content review,
+mechanical admission and the11token context-reserve excess remain unresolved.
+Corpus051 unchanged. Archive29files /585,420bytes includes evaluator-only inputs,
+raw tests and all three run records; R2 publication/restore in progress.
+No Runpod use or production-code changes.
+
+AWS X-Ray70 publisher grading archive R2 publication and independent restore verified:29files /585,420bytes. Receipts retained.
+
+
+### Strict Mocha report controls — 2026-10-11
+
+Added zenithsync/mocha_controls.py with complete JSON parsing, duplicate field
+rejection, nonfinite-number rejection, full-title identity uniqueness, exact
+count/array agreement, pass/fail partition checks, record equality, error-object
+consistency and process-exit checks. Pending tests, retries and hook-only failures
+reject under this profile. Three-run comparison requires exhaustive explicit
+full identities and verifies every transition; publisher short names are never
+silently treated as unique. Execution provenance/test quality remain separate.
+
+Five adversarial unit tests cover malformed/count/coverage/outcome corruption.
+Real AWS X-Ray raw reports pass strict comparison:1fail-to-pass and320pass-to-pass.
+Full staged runtime010 CPU regression with ZENITHSYNC_TEST_TORCH=1:527tests,
+zero failures/errors/skips in22.223s. Initial discovery invocation using -t failed
+because the test directory is not a package; retained log015. Correct invocation
+from staged root uses unittest discover -s tests; passing log016.
+
+Implementation/evidence archive6files /17,997bytes R2 transfer in progress.
+This backend is not yet wired into corpus mechanical admission. AWS X-Ray history
+review and11token reserve excess remain open; corpus051 unchanged. No Runpod use.
+
+Mocha implementation archive R2 publication/restore verified:6files /17,997bytes. Both receipts saved.
+
+
+### Mocha mechanical admission integration — 2026-10-11
+
+Integrated mocha_json_v1 into mini replay admission. Recompute raw report
+transitions, exact tracked before/after identities, process exits and all matching
+publisher full titles. No resource/supplemental profiles supported under this
+native backend. Existing replay/task/history/token bindings and context guard
+remain mandatory. No invented pytest phases or arbitrary short-title selection.
+
+AWS X-Ray historical reports normalized into a separately attributed bundle,
+with original report/runtime/raw identities retained. Mechanical assessment
+checks pass except input_plus_output_reserve_exceeds_context:24,587+8,192=32,779.
+Training remains false; corpus051 unchanged. Full semantic review still pending.
+
+Full staged runtime011 regression:530tests, no failures/errors/skips, Torch opt-in,
+19.945s (log018). Earlier log017 retains one failing test fixture whose reserve
+configuration was invalid; corrected fixture tests an actual context overflow.
+Added coverage for ambiguous short names, raw report tampering and tracked source
+mutation. Production implementation and tests archived with normalized grading
+and assessment; R2 transfer in progress. No Runpod use.
+
+Mocha admission integration archive publication/restore verified:35files /718,115bytes. Receipts saved.
+
+
+### AWS X-Ray70 full history review — 2026-10-11
+
+Reviewed72messages in12 nonoverlapping sections, with per-message hashes and
+coverage audit. Verified exact base/modified parser slices, root package content,
+version1 fixture and submitted patch. Initial source read and three npm full-suite
+observations are silently capped at5000characters. They are not complete source
+or test inventories. Focused test observations report16passing; publisher JSON
+records are separate external evidence.
+
+Initial true sampling result is not a failure reproduction: the default reservoir
+can return true on base code. Missing fields are directly observed. Later exact
+parser assertions substantiate mapped values; unasserted stochastic decisions
+remain observations, not statistical validation. Root npm test returns0 while
+printing no test specified; not counted as executed tests. Failed hunk, two grep
+misses and diff exit1 retained. Final prose/get_status absent; nearby tests read
+after editing. These limitations are not erased by passing external tests.
+
+Status content_reviewed_context_blocked_training_not_approved. The11token reserve
+excess remains. Review archive3files /18,651bytes R2 transfer in progress.
+Next candidate improvement: rerun full tests with a compact native reporter that
+retains failure detail and actual totals inside the observation cap, with explicit
+amendment provenance; do not edit old observations or reduce context reserve.
+Corpus051 unchanged. No Runpod or production-code changes.
+
+AWS X-Ray70 full review archive R2 publication/restore verified:3files /18,651bytes. Receipts saved.
+
+
+### AWS X-Ray70 reporter qualification follow-up
+
+Fresh replay006 uses Mocha's minimal reporter for three full-core test commands.
+Each complete native observation reports 320 passing and exit 0; no output
+filtering or history truncation was introduced. The 744-byte submitted patch is
+byte-identical to replay004 and replay005. Reporter changes occurred after prior
+publisher evaluator exposure and are explicitly attributed diagnostic amendments;
+this is not a new independent blind repair attempt.
+
+The dot-reporter replay005 completed but increased tokenized input to 26,156.
+The minimal reporter reduces input to 20,390 with 8,298 supervised targets.
+20,390 + 8,192 = 28,582, leaving 4,186 tokens under the 32,768 context limit.
+The output reserve is unchanged. The failed dot alternative is retained as evidence.
+
+Fresh publisher grading003 executes 321 unique full-title tests per role:
+base 320 pass / 1 fail; reference and candidate 321 pass / 0 fail. Tracked diffs
+remain unchanged during testing and containers clean up successfully. Normalized
+Mocha admission002 has no mechanical blockers; training approval remains false.
+The exact 72-message history has a newly bound semantic review and coverage audit.
+The initial source-cat observation remains capped; relevant source slices were
+checked separately. Random sampling observations do not prove distributions.
+
+Corpus051 remains authoritative: this candidate is not yet integrated. Rights,
+frozen split qualification, data scale and full-model GPU qualification remain
+open. No Runpod use, new image build, or production-code modification occurred.
+Reporter comparison evidence: 139 files / 3,340,420 bytes, R2 published,
+hash-verified and independently restore-verified. Receipts are stored under
+`evidence/data/awsxray70-reporter-{publish,restore}-001/`.
+
+
+### Corpus052: reviewed AWS X-Ray integration and restored-data qualification
+
+Corpus052 supersedes corpus051 for quarantine inspection. It contains36examples,
+36tasks and35declared repository groups:691,905input tokens and199,508shifted
+supervised targets. All35prior records are unchanged. Manifest SHA256:
+`86f2ed84bdd41950830c466e0646d9fc4c757d142b07336a0e8c5a7d81409877`.
+Content SHA256:`c34b2d49713c16203657ca61f9c97f8a1f0e77897bd95276713dda8e9a4d4da8`.
+The73files /7,662,870bytes were R2 published and independently restore-verified.
+
+Independent token recount and original/restored schedule comparison agree exactly:
+seed7401, one epoch,9216supervised-target budget per update produces32updates,
+zero target overshoot. Staged deployment reproduces the same schedule. Inspection
+for training and the worker reject quarantine before model access/output creation.
+This does not qualify a positive training run or the full31B model. Emcee295 is
+still the inherited8192reserve exception; the new AWS example has4186tokens spare.
+
+All630lexical pairs were cross-checked against independent exact shingle sets.
+The inherited PennyLane5716/5831containment flag remains; no new pair flags.
+Fresh AWS repository/network metadata and inherited hash-bound metadata show no
+known reserved-network overlap; detached copies and semantic leakage remain open.
+All36split assignments remain provisional train,35unchanged. No frozen split is
+approved. Decoded-input credential screening returned0indicators under the finite
+rule set; privacy approval remains false. Repository rights remain unresolved.
+
+The full candidate history review and attribution include prior evaluator exposure
+before reporter-only amendments. This is a reviewed derived example, not an
+independent blind repair. Training gates remain null.50M/199,508 is approximately
+250.62corpus passes; repetition is not additional diversity or sufficient data.
+No GPU usage or production-code changes in this integration. Qualification evidence
+archive91files /598,746bytes is R2 published and independently restore-verified.
+Both receipts are saved under `evidence/data/corpus052-archive-{publish,restore}-001/`.
+
+
+### Next-source semantic preflight: Traitlets517, TSDB649, Restic4446
+
+Three source rows extracted from the existing hash-pinned OpenSWE shard without
+reading evaluator patches. Bounded findings bind exact converted message identities.
+Traitlets has an observed custom-parent logger mismatch before the change and match
+afterward, but its comprehensive diagnostic prints unconditional success without
+assertions. Prioritize a freshly executed, explicitly attributed assertion upgrade.
+TSDB's metric probe fails compilation, then reports the metric absent; no counter
+increment validation established. Restic uses a hard-coded snapshot ID, an echoed
+before-fix section, a timeout, and a Go command reporting no tests to run. Hold
+those two traces for diagnostic repair/runtime qualification. These findings do
+not prove the repairs incorrect and are not exhaustive semantic reviews.
+
+Three-trace source/review archive12files /303,662bytes is R2 published and independently
+restore-verified. Exact Traitlets base8b20889da69f5d22485d61609043f8e633dea144 source
+preflight verifies5files by Git blob hash (configurable.py, log.py, setup.py,
+setup.cfg, COPYING.md). Runtime dependencies include ipython_genutils; the pinned
+notice identifies Modified BSD and prior Enthought origin. Capturing the notice
+does not approve all observations or dependencies for training.
+
+No new examples admitted; corpus052 remains authoritative and quarantined.
+No Runpod usage or Docker downloads/builds. Next: qualify an existing local runtime
+against complete pinned Traitlets source and add assertions before fresh replay.
+
+Traitlets pinned-source preflight archive8files /44,563bytes also R2 published and independently restore-verified; receipts saved.
+
+
+### Traitlets517 complete-source and finite runtime controls
+
+All56tracked source files /464,971bytes match pinned Git tree blobs and modes.
+The109,180byte codeload archive SHA256 is
+`c1693c2f76c0543dfa12cd7e5c610dddd783e8e0f9b80fe568e351f3b020a8ee`.
+Existing local image03c834da87825b7b06ccba27c8c5a0dce07ed29a9d63e7adc50a8066d4e1ee50
+used offline with cap-drop and2GiB/2CPU limits. Its testbed interpreter is actually
+Python3.9.20 with pytest8.3.3, not the source trace's3.7.17/7.4.4. The image label
+is not interpreter evidence. A26KB ipython_genutils0.2.0wheel was installed offline;
+its digest matches PyPI version metadata. No new image build or GPU use.
+
+Source import path was asserted. Base upstream suite:406pass,2skip,0failure/error;
+all56source file bytes unchanged by tests. Candidate upstream suite has identical
+408test identities/outcomes. Candidate source is byte-exact to the trajectory's
+command30replacement; the later docstring edit is outside this behavior variant.
+
+Eight deterministic identity tests cover parent chains of depth1/2/8/32, orphan,
+nonlogging parent, explicit child override and independent families. Base3pass/5fail;
+candidate8pass; unguarded-parent mutant6pass/2fail; discarded-parent mutant3pass/5fail.
+All variants execute the same8identities without skips or collection errors.
+These are external finite controls, not fresh agent observations, a publisher grade,
+or exhaustive correctness proof. Native replay, amended diagnostic assertions,
+source-snapshot sanitization and publisher controls remain next. Corpus052 unchanged.
+Source/runtime/control archive99files /795,651bytes R2 published and independently restore-verified; receipts saved.
+
+
+### Traitlets517 replay preparation and sanitized source
+
+Prepared34source commands with exactly one attributed diagnostic amendment at
+source message40. All other commands, including both source repair edits, remain
+byte-identical to the source conversion. The diagnostic now asserts logger object
+identity across the three-level hierarchy and global fallbacks for orphan and
+nonlogging-parent cases before reporting finite-case success. The exact amended
+script was executed against base/candidate/two faulty variants: base and both
+mutants fail, candidate passes. Candidate upstream suite still passes with2skips.
+This is not a native replay receipt; original printed observations remain unchanged.
+
+The shallow pinned base checkout matches all56Git blobs and modes and the upstream
+tree d9320348d3a96244bcbf52aeaf1e3793c33ab0a8. Sanitization produces parentless
+commit b44865c576a8169eb5657db2b78acab64271fa37, exactly one reachable commit,
+no remotes, and inaccessible known base/head/merge commits. Archive construction
+uses Python tarfile to avoid macOS extended-attribute sidecars. PR metadata IDs
+were read; publisher test and solution patches were not inspected.
+
+Snapshot verification is local only; broader image/container qualification remains
+open. Replay-input profile exists but lacks a container-qualified snapshot and is
+not yet runnable/admitted. Source-preparation archive33files /476,006bytes R2 published and independently
+restore-verified; receipts saved. No production-code modifications, Docker build or Runpod usage.
+Corpus052 remains unchanged and quarantined.
+
+
+### Traitlets517 native replay completed; publisher grading pending
+
+Local derived image2c9cc4ab5c8263548daa632fcbd2ae30bafa8c12a576535dbb7968b9d9c5cfb3
+was built offline from the already installed digest-pinned parent, with a sub1MB
+context and a2GiBminimum free-space guard. Initial tag lookup incorrectly assumed
+latest and failed before build; actual isolated-001tag resolved to the expected ID.
+Container checks verify all56tracked files, one parentless commit, inaccessible
+known historical commits and declared oracle paths, and406passed/2skipped upstream
+tests. This checks the mounted filesystem, not inherited layer contents.
+
+Native replay001 completes34charged tool calls including adapter cleanup, then
+submission:35exchanges,72history messages. Submitted888byte patch changes only
+traitlets/config/configurable.py, including the original docstring edit. The
+asserted comprehensive diagnostic passes twice; focused configurable suite reports
+32passed twice. Filtered log tests select no tests (293deselected) and return5;
+retained as an error. Full-suite native stdout is capped at5000characters, so
+those observations cannot independently establish complete counts. External JUnit
+controls remain separate evidence; no false count inferred from capped output.
+
+Pinned token audit:22,782input tokens and5,935shifted supervised targets.
+22,782+8,192=30,974, leaving1,794tokens under32,768. No truncation or reserve change.
+Task-only issue extraction occurs after freezing the replay. Publisher patches
+remain unread. Full semantic history review, publisher grading and mechanical
+admission are still pending; corpus052 unchanged. R2 native archive52files /
+973,301bytes published and independently restore-verified; receipts saved. No Runpod usage.
+
+
+### Emergency local-storage recovery, 2026-10-12
+
+Disk availability fell below1GiB. Purged pip downloadable package cache
+(3089.1MB reported), removed reproducible .venv bytecode, and removed the broken
+partly offloaded .venv after recording173distribution directory names. Recovery
+Python/boto3 tools and protected credentials are outside iCloud under
+`/Users/jiangshengbo/.codex/zenithsync-storage-recovery/`.
+
+macOS FileManager eviction completed for repository artifacts and the separate
+model weight file: local downloads removed, iCloud items retained. Free space
+returned to approximately22GiB. .env and docs39/40 are readable again. No source
+code or unique experiment data was intentionally deleted. Do not Keep Downloaded
+the entire repository: its offloaded artifacts include tens of GB. Pin working
+code/docs selectively.
+
+The original model file matched its R2 manifest SHA256 before eviction. Full R2
+GET streaming verification is running before deletion of its local placeholder;
+do not call that verification complete until model-release-receipt.json confirms
+it. No Runpod use. Previous /tmp staging directories are no longer present;
+restore archived evidence from R2 and re-audit pending corpus053 work before
+resuming implementation.
+
+
+Storage recovery completed2026-10-12: full23,265,352,448byte R2 model GET
+matched SHA2561b9b1d622a93f02c0d33f98e502f233b5d707443af6ddc464ed0bf5498506c20
+and the original local model hash. The separate local model weight was deleted
+only after verification; tokenizer/config files retained. Repository artifacts
+were evicted locally through macOS while retaining iCloud copies. Free disk
+space approximately22GiB; .env and docs readable. Recovery receipts reside in
+/Users/jiangshengbo/.codex/zenithsync-storage-recovery. The broken .venv was removed
+with a173distribution inventory; recreate qualified runtime before implementation.
+Restore model weights from R2 to Runpod when needed, not to this low-space Mac.
+P1 remains incomplete. Do not pin the full repository/artifacts in iCloud.
+
+
+### 2026-10-12 — recovered corpus053 and verified R2 round trip
+
+Supersedes the earlier pending Traitlets grading/archive status. The grading and
+review archive was restored from R2 (44 files, 198,600 bytes); restored review,
+admission, history, patch and token-audit identities agree. Historical evaluator
+executions were not rerun during this recovery.
+
+Rebuilt corpus053 from restored corpus052 plus the reviewed Traitlets517 token
+candidate. All 36 predecessor records remain identical. The result contains
+37 examples, 714,687 input tokens and 205,443 shifted supervised targets. Its
+manifest SHA256 is 291d20d9125419ee36b02ce6c54229f73ca12e6da0ac60bd71ca32d656fec19d.
+All 75 files (7,913,673 bytes) were published to R2 quarantine and independently
+restored with the production transfer code. The restored corpus passes full
+corpus validation and independent token counting. Training access is rejected.
+
+Seed 7401, one epoch and a 9,216-target update budget produce 33 updates with
+zero target overshoot; original/restored schedule files are byte-identical.
+The inherited dfm__emcee-295 input-plus-8,192 reserve exception remains open.
+35 targeted corpus, batching, scheduling and object-store tests pass in the
+small recovered runtime. This is not the historical full regression suite or
+GPU qualification. Some iCloud file reads completed after a delay; that does
+not prove the general iCloud issue resolved.
+
+Evidence: evidence/data/corpus053-recovery-001. Working copies are outside
+iCloud under /Users/jiangshengbo/.codex/zenithsync-p1-recovered. No model weights
+were restored to the Mac and no Runpod was used. Rights, privacy, frozen split
+qualification, refreshed similarity checks, data scale and full runtime
+qualification remain open. P1 remains incomplete; corpus053 is quarantine only.
+
+Recovery validation evidence also published and independently restore-verified: 32 files, 166,092 bytes. Explicit archive excludes credentials. Removed redundant selection staging after matching each file to the restored corpus identities. Mac free space remains approximately21GiB.
+
+
+### 2026-10-12 — corpus053 qualification follow-up
+
+Recomputed all 666 within-corpus lexical issue pairs against independent exact
+shingle sets. Production inverted-index counts and rational overlaps agree. Only
+the inherited PennyLane5716/5831 containment pair is flagged at Jaccard1/10 or
+containment1/5; no new lexical flag. This does not establish semantic isolation.
+Fresh GitHub Traitlets repository metadata plus hash-bound inherited observations
+yield no known reserved repository-network overlap. All36 previous assignments
+are unchanged;37 assignments remain provisional train, not a frozen split.
+
+Complete decoded-input credential screening with the pinned tokenizer and
+tokenizers0.22.2 reports37 examples,0 indicators under four rule families.
+Privacy and training approval remain false. The recovered runtime initially
+lacked replay_source_teacher during test collection; restored its production
+dependency closure and reran:53 tests pass, no skips. Both logs are retained.
+This remains targeted CPU validation, not the full historical suite or GPU fit.
+Evidence: evidence/data/corpus053-checks-001. No Runpod used.
+
+The qualification bundle is now R2 published and independently restore-verified:46 files,366,005bytes. Receipts and content-addressed manifest are retained beside the checks. Mac free space remains approximately21GiB.
+
+
+### 2026-10-12 — Build290 source diagnostic review
+
+Selected pypa__build-290 from the existing15-candidate queue and extracted only
+repo/instance/trajectory/messages/tools from the hash-verified R2 shard. Reference
+patch metadata was not read. All assistant actions and the user issue were
+inspected, along with selected tool observations; this is not a complete semantic
+history review or native replay.
+
+The source imports /build/src while editing /testbed, then copies the candidate
+to /build. Its later git-stash baseline attempt reverts /testbed alone, without
+binding the imported module to pristine source. Pytest-to-tail also returns zero
+while printing failure. The filtered suite reports41 passing/1deselected, and a
+separate requested test node does not exist. Final submit has no recorded result.
+
+Eight synthetic executions of four extracted diagnostic bodies show the early
+execution diagnostic returns zero when the runner is not called; the later
+assertion correctly rejects that fixture. Both constructor diagnostics and the
+later assertion nevertheless accept deliberately wrong forwarded arguments.
+These are finite diagnostic counterexamples, not real-package failure evidence.
+The source patch may still be correct. Retain the original and hold for an
+explicitly attributed native replay with one import root, pristine baseline,
+forwarding/output/error controls, grading and full-history/token qualification.
+Corpus053 is unchanged. Evidence: evidence/data/build290-source-review-001.
+No Runpod used.
+
+Build290 review bundle (8 files,109,666bytes) published and independently restore-verified in R2. Released the98,620,316byte temporary source bundle after matching every local file to the verified R2 manifest. Selected evidence retained; no model weights downloaded.
+
+
+### 2026-10-12 — Build290 real-source controls
+
+Downloaded the exact base8d93fc48c68236b37621353a5800eeb7cd078f54 archive from
+GitHub. Initial strict export rejected docs/changelog.rst symlink; retained the
+original archive and explicitly omitted that documentation symlink from the
+49-regular-file control export. Root MIT notice and source SPDX header preserved.
+The source-observed patch applies cleanly and changes only src/build/__init__.py.
+Every base file still matches its recorded checksum after testing.
+
+Five focused controls run against base/candidate and one dropped-context mutant
+in separate read-only, offline containers with the import path asserted exactly.
+The already-installed image uses Python3.9.20, versus3.10.19 in the source trace;
+pep5170.10.0 and toml0.10.2 wheels were hash-verified against PyPI metadata and
+installed offline into temporary storage. No image pull or Runpod used.
+
+Base:5 API-related errors; candidate:5 passes; mutant:3 passes,1 assertion failure
+and1 backend error. Controls cover default runner identity, exact forwarding,
+instance isolation, runner exception propagation, and an actual PEP517 backend
+call capturing stdout and stderr separately. The mutant drops cwd/environment
+and is caught. This supports the candidate under these finite controls; it is
+not native replay, full upstream qualification, publisher grading or a correctness
+guarantee. Corpus053 remains unchanged and training admission remains closed.
+Evidence: evidence/data/build290-controls-001.
+
+Build290 control archive:164 files,405,739bytes, R2 published and independently restore-verified. Source, dependency wheels, notices, three variants and executable controls are included. Receipts saved with the focused evidence.
+
+
+### 2026-10-12 — Build290 upstream ProjectBuilder parity
+
+The complete42-case tests/test_projectbuilder.py runs on both immutable base and
+candidate exports in separate offline containers as UID65534. Initial attempts
+both reported41pass/1fail: a console-script lookup failed because Docker tmpfs
+defaulted to noexec. A separate live probe recorded os.access(X_OK)=false under
+noexec and true with explicit exec. Repeating with /tmp execution allowed inside
+the disposable container yields42pass/0fail/0skip on each variant. No tests or
+source inputs were modified. Base checksums still match.
+
+Initial reporting compared ordered case lists and stopped despite equal case
+sets; corrected comparison uses unique full identities. All42 case IDs and
+statuses agree. The original trace's permission test also passes as nonroot.
+This is the complete ProjectBuilder module, not the entire repository suite.
+The Python3.9.20 alternate-runtime limitation remains. Two additional dependency
+wheels (filelock3.13.1 and flit_core3.2.0) were verified against PyPI metadata.
+Evidence: evidence/data/build290-upstream-001. Native replay and publisher grading
+remain pending; corpus053 unchanged, no training approval and no Runpod usage.
+
+Build290 upstream evidence archive15files/130,918bytes is R2 published and independently restore-verified. Official SDK wheel metadata is readable again; native replay still requires restoring its qualified environment, without bulk hydration of the wheelhouse.
+
+
+### 2026-10-12 — official native SDK environment recovered
+
+Created a fresh Python3.13 environment outside iCloud under
+/Users/jiangshengbo/.codex/zenithsync-p1-recovered/native-runtime-recovery/venv.
+Four official SDK wheels match existing lock hashes. Resolved159 macOS-compatible
+wheels, pinned every artifact URL and SHA256, verified342,321,717download bytes
+and1,354,754,496expanded bytes, then installed offline with required hashes.
+This is a new resolved local environment, not byte-identical reconstruction of
+the deleted environment or qualification of Linux/GPU training. pip check passes.
+
+Imports verify swegemma0.2.10,adk-submission0.2.13,google-adk1.36.1,
+adk-eval-core0.1.0,Torch2.14.1,Torchvision0.29.1,Transformers5.13.1.
+Docker connectivity succeeds. A real official SDK smoke test uses an offline,
+unmounted disposable container: successful command returns exact marker; failing
+command preserves exit7; status charges exactly2calls; container absence verified
+after cleanup. No model loaded. All53 staged targeted tests pass.
+
+Evidence: evidence/p1/native-runtime-recovery-001. Replay source dependency closure
+and reserved-task metadata are staged outside iCloud. Build290 native replay is
+still pending. Mac free space approximately18GiB after installation; no Runpod used.
+
+All159 runtime wheels (342,321,717bytes) are R2 published with full remote hash verification. Removed the duplicate local wheel cache; installed environment retained. The14-file/2,202,390byte recovery evidence bundle is independently restore-verified. Wheel archive has not been independently restored as a whole in this step.
+
+
+### 2026-10-12 — Build290 exact-tree native replay
+
+Restored all archive file modes and the documentation symlink into a fresh
+parentless Git snapshot. Its tree7acd87ff28ad38ad32904ffe749f603f5151162b matches
+the GitHub base-commit metadata exactly. The original upstream commit is not
+present locally; one snapshot commit, no remotes, clean tracked tree verified.
+Built a small offline layer on the installed parent; image
+da88d35608545331c6805002f6e64170c7809198e6309fed667df869ffe6b0a8
+imports the base checkout and has no runner parameter before repair. /build
+is an explicit alias of the same checkout. Named inherited oracle paths absent;
+inherited layer bytes remain unaudited.
+
+Native replay completed40charged calls,41exchanges including submit, and verified
+container removal. Three explicit assistant amendments: source46 verifies import
+origin instead of copying to a second checkout; source50 runs the five finite
+runner controls; source58 preserves pytest exit status instead of tail masking.
+Original repair and remaining command order preserved. Submitted2041byte patch
+SHA256c7af65b21d0a13f0ccb589aaeb04a6cfc039e6d05fc2b70a6fe490c1db8bd68e
+is byte-identical to the source-observed patch. Allfive strengthened controls pass.
+
+Fresh replay retains errors at source52/58 (root permission check) and62
+(nonexistent test node); source64 reports41pass/1deselected. The separate nonroot
+42-case upstream comparison remains external evidence, not an agent observation.
+Initial preparation failures (raw history not converted; missing staged hashed
+module) occurred before command execution and were repaired through existing
+conversion and exact source copies. No source observations reused.
+
+Publisher grading, independent task-body binding, token/context audit and full
+semantic history review remain pending. Corpus053 unchanged. Evidence:
+evidence/data/build290-native-001. No Runpod or model execution.
+
+Build290 native archive43files/682,411bytes is R2 published and independently restore-verified. Includes exact source snapshot, offline image recipe, input bindings, attributed profile, replay events and source implementation.
+
+
+### 2026-10-12 — Build290 publisher grading and context audit
+
+Independent pinned SWE-rebench-V2 task/issue fields were extracted after replay
+was frozen; publisher patches were isolated to evaluator input. Reconstructed
+native history has84messages/41exchanges. Temporary428,839,266byte source shard
+was removed after extraction and checksum verification; original remains in R2.
+
+Initial grading stopped on missing snapshot audit fields. A live probe supplied
+old-commit absence and final container state; no earlier receipt was edited.
+Next grading attempt exposed retained Mac UID501 ownership: cap-dropped root
+could read but not apply the publisher patch. A separate git-apply probe reproduced
+Permission denied. Offline image rebuild normalizes ownership to root, preserving
+the exact Git tree. New image615e8aeb9a74826e1d658f5fa4efd272909708199afa6980ddcfa35c70c8784b
+passes exact-tree/import/baseline checks. Replay003 is the current graded attempt.
+
+Allthree attempts have identical amendment-profile and submitted-patch hashes.
+Repeats occurred after evaluator extraction for infrastructure corrections only;
+no repair or action plan changed. They are not independent model trials.
+
+Publisher controls:38log-derived keys expand to42unique full case identities.
+Three truncated-parameter collision groups are explicitly reconciled. Base41pass
+and1fail; reference42pass; candidate42pass; all expected transitions match and
+no candidate/reference disagreement. Publisher's newly passing case is
+test_runner_user_specified. Publisher scope excludes test_init; separate nonroot
+full-module42-case upstream validation remains distinct evidence.
+
+Replay003 token audit:24,401input/7,582shifted supervised targets.
+24,401+8,192=32,593, leaving175tokens under32,768. No truncation. Earlier
+attempts had24,400and24,402input tokens from fresh runtime observations.
+Full semantic history review and mechanical admission remain pending; corpus053
+unchanged and training approval false. Evidence:evidence/data/build290-grade-001.
+No Runpod or model execution.
+
+Build290 graded-history archive146files/1,936,093bytes is R2 published and independently restore-verified. Historical failed probes and alternate replay receipts are retained; latest admitted-to-review attempt is003, not a training admission.
+
+
+## 2026-10-12: verified local serving dependency release
+
+Released 9,097,474,048 allocated bytes (8.47 GiB) across 478 resident Linux serving wheel copies after matching the pinned R2 manifest, hashing each local file, and streaming each corresponding remote object through SHA-256. Independent receipt audit confirms every removed path is absent and has a matching pre-deletion verification record. Left 22 nonresident entries untouched. Disk available increased from approximately 18 GiB to 26 GiB; physical free-space change differs from per-file allocation totals. Active Mac runtime retained; no Runpod actions. Restore manifest and instructions: evidence/data/serving-local-release-001/RESTORE.md. This is storage recovery only; P1 and Build290 admission remain incomplete. No claim that all iCloud errors are resolved.
+
+Cleanup evidence archive: six files, 577,487 bytes, R2 published and independently restore-verified. Transfer and both receipts retained in evidence/data/serving-local-release-001.
+
+
+## 2026-10-12: Build290 mechanical pass, semantic quality hold
+
+Latest replay003 passes production mechanical admission: 24,401 input tokens, 7,582 shifted supervised tokens, 40 charged calls, no mechanical blockers. All 84 native history messages were inspected. Semantic review holds corpus integration: the supervised repair docstring incorrectly promises returned output, and diagnostic command print statements overclaim backward compatibility/output capture/full requirements relative to their assertions. These are quality defects even though external finite tests pass. Preserve original evidence; prepare explicitly attributed corrections, fresh replay, regrading and token audit before reconsidering admission. Repeats after evaluator exposure cannot be treated as independent agent trials. Corpus053 remains unchanged; training approval false. Evidence: evidence/data/build290-admission-review-001. No Runpod usage.
+
+Mechanical admission and full-history review archive: four files, 39,712 bytes; R2 publish and independent restore verified. Coverage contains every index 0–83 exactly once.
+
+
+## 2026-10-12: Build290 attributed quality correction004
+
+Prepared six explicit source-action amendments, retaining original evidence. New repair differs only in the corrected runner docstring; diagnostics now describe their finite assertions. Fresh native replay completed 40 charged calls plus submission, removed container, and produced patch SHA-256 57883f951188cec342af0177b4dc7bee1874aa144cb7ad6ce88bc2ce4c90e9c4 (2,026 bytes). Publisher base41/reference42/candidate42, all42 full case identities match reference. Mechanical admission passes. Fresh untruncated token audit:24,366 inputs,7,577 shifted targets; plus8,192 reserve leaves210 context tokens. Complete differential review covers18 changed messages and66 exact-byte matches to the previous84-message review; two semantic quality holds resolved. This is an assistant-corrected derivative after evaluator exposure, not an independent model attempt. Corpus053 unchanged pending quarantine integration and cross-corpus checks; training approval false. Evidence:evidence/data/build290-corrected-004. No Runpod usage.
+
+Corrected004 archive:48files/815,648bytes R2 published and independently restore-verified; both receipts retained.
+
+
+## 2026-10-12: corpus054 quarantine integration
+
+Added the explicitly assistant-corrected Build290 derivative; all37 predecessor records unchanged. Corpus now38examples/38tasks/37repositories,739,053input tokens and213,020shifted supervised targets. Manifest SHA-256 e6ea2242d9af271cac42c628c8a70b7aa24c763efd6b53ba0771675a31be10c0. All77files/8,182,579bytes R2 published and independently restore-verified. Training-purpose loader rejection verified. Original/restored schedules byte-identical:34updates,one epoch,seed7401,max9,216targets/update,zero overshoot. All703lexical pairs match independent exact-set oracle; inherited PennyLane5716/5831 containment flag remains, no new threshold flag. Inherited emcee295 context-reserve exception remains unresolved. Repository lineage/split and credential screening need extension to054; no frozen split or privacy clearance. Data remains far below a50M-token candidate and is not training-approved. Duplicate local assembly staging removed only after comparing every file to assembled corpus. No Runpod usage. Evidence:evidence/data/corpus054-integration-001.
+
+Integration evidence archive20files/245,304bytes also R2 published and independently restore-verified.
+
+
+## 2026-10-12: corpus054 provisional lineage and credential screens
+
+Fresh GitHub metadata identifies pypa/build repository/network root262827329. All38 provisional assignments validate with37 inherited assignments unchanged and no known reserved-name or fork-network overlap; older metadata observations remain historical. No evaluation issue bodies accessed. Complete decoded-input screening covers38unique examples/739,053input tokens with zero indicators under four credential-rule families. This excludes neither PII nor obfuscated secrets, detached repository copies, semantic contamination or pretraining overlap. Split remains draft, privacy approval false, training approval false. Evidence:evidence/data/corpus054-checks-001. No Runpod use.
+
+Corpus054 check evidence10files/43,196bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: context exception precisely diagnosed
+
+All38 teacher-forced sequences fit32,768tokens. This is distinct from reserving8,192tokens for generation. The emcee295 history alone violates the conservative full-history-plus-reserve condition. Exact local native generation-prompt rendering at assistant message indices78/80/82 produces24,754/25,387/27,364tokens, leaving8,014/7,381/5,404tokens respectively. Full history re-render exactly matches the stored27,404token array with hash-verified tokenizer assets. Initial probe errors from default tokenizer mapping return type were corrected by explicitly requesting return_dict=False; not a corpus drift. No truncation, reserve waiver, endpoint execution or GPU memory claim. Next: inspect actual inference budget enforcement and define a measured compatible policy before serving qualification. Training admission stays false. Evidence:evidence/data/corpus054-context-001.
+
+Context audit evidence6files/176,711bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: official adapter budget transport verified locally
+
+Current candidate sampling requests8,192output tokens and serving profile caps context32,768. Official ADK conversion and real ADK/LiteLLM HTTP transport to a loopback fixture preserve synthetic user text of1/100,000/200,000characters and send max_completion_tokens=8192 in all three requests, with no truncate_prompt_tokens parameter. These are character-length transport probes, not tokenizer or model tests. Responses are synthetic fixture content and no vLLM server/model executes. The checked client path provides no automatic reserve adjustment for these inputs; do not assume it resolves the emcee295 late-prompt mismatch. Exact deployed vLLM overflow behavior and permitted context-management policy remain to verify before serving qualification. No candidate policy changed, no training admission and no Runpod use. Evidence:evidence/p1/adapter-context-budget-001.
+
+Adapter budget evidence4files/7,734bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: pinned-version context validation source audit
+
+vLLM tag0.19.1 resolves to b1388b1fbf5aaef47937fabe98931211684666a6; three downloaded source files match Git blob identities. Exact upstream _validate_input method executed via AST extraction with explicit type/exception doubles passes27 boundary probes. Chat branch requires prompt<32,768 and prompt+requested_output<=32,768; it rejects the three emcee295 late prefixes with8,192 requested output rather than clamping or truncating.4,096 fits those lengths in this method but is diagnostic only, not an adopted or quality-tested policy. Source provenance is not yet pinned-wheel byte equivalence or running-server validation. No production configuration change and no Runpod use. Evidence:evidence/p1/vllm-context-source-001. Next: bind downloaded method to the pinned wheel and qualify permitted request-budget handling before declaring serving compatibility.
+
+Source audit evidence7files/1,436,403bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: vLLM validator bound to deployment wheel
+
+Streamed433,132,506bytes from R2 to a temporary file and verified SHA-2566b29fdc200966eda4d0cc4d10b8c338ec32620bb069ad3629d8a78e3b35fd3fa against serving-linux-py312-httpfix.lock.txt. Chat serving/protocol and engine serving source bytes exactly equal the audited tag source. Bound the27-case source-level validator report to these wheel bytes. Temporary wheel automatically closed and released; only bounded source/evidence retained. Thus the deployed artifact contains the audited overflow-rejection method; no live vLLM/CUDA/model execution is claimed. The fixed8192 client budget still conflicts with three emcee295 long prompts. Preserve this serving-policy incompatibility as an open gate; do not classify it as training-sequence overflow or alter data silently. Next CPU work can continue on data qualification while policy compatibility remains open. No Runpod use. Evidence:evidence/p1/vllm-wheel-source-001.
+
+Wheel/source binding evidence7files/159,732bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: OpenVPN519 source preflight hold
+
+Extracted the exact selected trajectory from SHA-verified98,551,191byte R2 shard using only repo/instance/trajectory/messages/tools columns; publisher patch column unread and temporary shard released. Selected source inspection finds masked build exit codes, a diagnostic that fails Go internal-import rules, and pending terminal with no observation. Later direct build success is preserved but does not prove behavior. Storage-interface appendix versus configuration-reload issue requires independent semantic reconciliation. Abstract Load(expired v1),Store(fresh v2),Delete(key),Get interleaving loses v2; this is a model-level counterexample under a stated replacement-preservation contract, not a real Go concurrency test. Expired never-read entries also remain after collector removal. Hold before replay; no corpus addition or training approval. Source and model evidence:evidence/data/openvpn519-source-preflight-001. No Runpod use.
+
+OpenVPN519 source preflight evidence8files/83,137bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: OpenVPN519 real Go lost-update control
+
+Pinned upstream go.mod/go.sum/errors/license verified against Git blob IDs at53dbe929c360a54a8f3b37b0bdd94d182b7bbf26. Source-observed candidate executes real sync.Map and zitadel AES with an explicitly injected scheduling hook after expiry check. One controlled expired-Get/concurrent-Set schedule fails100/100 candidate repetitions by deleting the fresh token. Separate pointer-entry plus CompareAndDelete derivative passes100repetitions. Both use Go1.24.3 darwin/arm64 and -race; no memory-data-race warning observed. These are deterministic repetitions, not independent statistical trials or a general proof. No whole-repository/publisher validation, issue-reload implementation or memory-retention fix claimed. Hold remains; corpus054 unchanged. Evidence:evidence/data/openvpn519-go-control-001. No Runpod use.
+
+Go control evidence28files/125,862bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: OpenVPN519 independent task mismatch confirmed
+
+Extracted only independent task metadata/problem_statement from the hash-verified428,839,266byte task shard; publisher repair/test fields unread and temporary shard released. Actual task asks bypass-name configuration reload without disconnecting clients. The token-storage constructor/Delete/lazy-expiration appendix exists only in teacher conditioning. Source patch modifies storage signatures/lifetime and two callers, with no reload behavior or client-continuity evidence. Exclude current trajectory from corpus expansion: a repaired storage race would still not demonstrate this task. Preserve all evidence and require a separate independently task-aligned attempt for reconsideration. Corpus054 remains38examples/213,020targets, quarantine only. Evidence:evidence/data/openvpn519-task-alignment-001. No Runpod use.
+
+Task-alignment evidence5files/9,804bytes R2 published and independently restore-verified.
+
+
+## 2026-10-12: selected queue independent-task prompt audit
+
+All 15 selected trajectories joined exactly once to independent task metadata using hash-verified source and task shards. Five teacher PR descriptions match after NFKC/whitespace normalization; ten append additional interface instructions. This classification is not semantic clearance or proof of leakage. Publisher repair/test columns remained unread. OpenVPN519 exclusion remains; GumTree163 is prioritized for full source review because its children-access topic aligns, while the unmodifiable-view contract is teacher-only. Peri93 requires menu/device-language behavior review beyond its storage appendix. Corpus054 remains unchanged and training approval false.
+
+Audit and triage archive: 18 files, 152,644 bytes; R2 quarantine publication and independent restoration both verified, followed by per-file original/restored SHA-256 comparison. Temporary source shards were released. Evidence: evidence/data/queue-task-alignment-001. No Runpod use.
+
+
+## 2026-10-12: GumTree163 source preflight
+
+Extracted the selected 73-message trajectory from a hash-verified temporary shard; publisher repair/test columns unread. Source patch adds CtVirtualElement.getChildren. Preflight identifies a masked javac failure, later explicit compile/classpath failures, weak printed membership checks, and an unanswered terminal submission. Source-observed Maven summary reports 140 tests with zero failures/errors and one skipped; this is not a fresh validation. Hold for hash-bound base preparation, native replay, direct Maven status/report accounting, and actual-dependency behavioral controls covering both constructors, membership, empty collections, live-view behavior and mutation rejection. Preserve teacher-only contract provenance. No corpus change or training approval.
+
+Six files / 88,750 bytes published to R2 quarantine and independently restored, with original/restored per-file hashes compared. Evidence: evidence/data/gumtree163-source-preflight-001. Temporary source shard released; no Runpod use.
+
+
+## 2026-10-12: GumTree163 local real-dependency controls
+
+Verified all 243 pinned upstream Git blobs (8,685,528 bytes), then ran baseline and source-patched Maven suites under local macOS arm64 Java21.0.5/Maven3.9.9. XML reconciliation confirms the same 140 unique case identities:139 pass,1 skipped,0 failures/errors in each run. All baseline blobs remain unchanged; only CtVirtualElement.java differs in candidate. Four constructor/input combinations exercise expected membership, backing updates and mutation rejection. Candidate passes; unchanged base and three explicit empty/mutable/snapshot mutants fail with their expected reasons. This is finite real-dependency validation, not native agent replay, publisher grading, universal correctness, or corpus admission. Teacher-only live/read-only contract remains separately attributed.
+
+Archive42files/61,652,387bytes R2 published and independently restored. Every original/restored file hash matched; restored dependency/source archive was opened and all243 upstream blobs rechecked. Two redundant local compressed archive copies removed; bounded working dependencies retained for next replay. Compact evidence:evidence/data/gumtree163-local-controls-001; transfer.json restores full bundle from quarantine/v1. Corpus054 unchanged; training approval false; no Runpod use.
+
+
+## 2026-10-12: GumTree163 native replay, token qualification, semantic hold
+
+Exact Linux snapshot tree71bafc4594da435bcfe1d4e620abee050c877718 verified offline with243tracked files and one parentless commit. Preparation caught and corrected Git CRLF normalization, unsupported local-image FROM syntax, raw history schema, and missing workspace cache; failed attempt evidence retained. Latest image sha256:8942734895a435029068820b145f9c85d7707bb63217d8eb5e51e4a42bfd8a68. Native replay002 completed36run_command calls plus submit_patch, removed its container, and submitted the exact976-byte source-observed patch. Reconstructed76-message history renders18,751input/6,832shifted supervised tokens without truncation; plus8,192reserve totals26,943.
+
+Semantic hold: source action62 full-suite call times out at30seconds, but source message64 claims all tests pass. This cannot enter training unchanged. Original masked compile failure and weak diagnostic assertions also remain. Separate local full-suite success does not make the native timed-out call a pass. No publisher grading, corpus integration, model execution or training approval. Next requires an explicitly attributed, observation-consistent derivative or separate trajectory, retaining failures.
+
+Native evidence51files/62,812,143bytes R2 quarantine published and independently restored; all original/restored file hashes matched. Removed redundant archive copies after verification; active build inputs retained. Compact evidence:evidence/data/gumtree163-native-evidence-001. Docker image remains local, not yet exported to R2; byte-identical Linux runtime recovery is not claimed. No Runpod use.
+
+
+## 2026-10-12: correction to GumTree163 narrative hold
+
+Direct audit of all37projected exchanges confirms empty assistant prose, no teacher reasoning, and exact native tool observations including the full-suite timeout. The previous section incorrectly treated source message64 success narrative as entering the projected training candidate; it does not. That rationale is superseded. Commands themselves remain supervised, so weak diagnostic-program contents still require review. No automatic corpus admission follows. Added a regression test injecting false teacher success claims around a native timeout; all32targeted amendment/history/admission tests pass. Audit6files/19,357bytes R2 published and independently restored with per-file hashes verified. Evidence:evidence/data/gumtree163-projection-audit-001. No Runpod use.
+
+
+## 2026-10-12: GumTree163 independent offline publisher-test controls
+
+Frozen replay/history identities checked before and after evaluator extraction from SHA-verified task shard; temporary428,839,266byte shard released. Publisher solution/test fields remain evaluator-only. Three disposable offline Linux containers evaluated base, reference and native-submitted candidate with direct Maven status. Base fails compilation at the publisher-added getChildren test, producing no runtime case results. Reference and candidate each have141unique XML case identities,140passed and1skipped, with identical outcomes. New testGettingChildrenOfCtVirtualElement passes. All three containers removed. These are finite patch controls, not a learned-model benchmark or replacement for the native timeout.
+
+Publisher FAIL_TO_PASS metadata contains class-level strings and an unnamed-test sentinel, with no PASS_TO_PASS entries. Exact case-level publisher-label reconciliation remains unresolved; no fabricated base per-test failures. Supervised diagnostic-program quality review and corpus admission remain pending. Any further edits now occur after evaluator exposure and must be attributed accordingly. Corpus054 unchanged; training approval false.
+
+Grading archive41files/194,050bytes R2 published and independently restored; all per-file hashes match. Evidence:evidence/data/gumtree163-grade-evidence-001. No Runpod use.
+
+
+## 2026-10-12: strict Surefire parser qualification002
+
+Added zenithsync/junit_controls.py and tests/test_junit_controls.py. Bounded UTF-8 single-suite XML parser verifies explicit test/failure/error/skip counts, unique classname/name pairs across reports, and normal Maven completion status. It rejects DTD/entities, unsupported encodings/roots, retries, ambiguous outcomes, hidden nested cases, unsupported testcase status attributes, abnormal exits, absent reports and duplicate identities. Explicit three-run comparison requires an exhaustive disjoint case partition and retains skips; compilation-only failures cannot be invented as per-case outcomes.
+
+All43targeted parser/history/amendment/admission tests pass. Actual GumTree reference and candidate XML each parse to141unique cases across4suites and match the independent earlier case audit exactly. Parser does not establish report authenticity or semantic test quality. Production mini admission intentionally still rejects unsupported Java evaluator kind: JVM grader provenance, compilation-phase evidence and that integration remain outstanding. Diagnostic amendments deferred until this grading foundation is integrated. No corpus change, training approval or Runpod use.
+
+Current qualification002 archive16files/131,177bytes and earlier001 archive16files/130,979bytes both R2 published and independently restored; every file hash checked. Current source/test files match002 archived bytes. Evidence:evidence/data/surefire-parser-qualification-002.
+
+
+## 2026-10-12: Maven compilation-phase controls
+
+Added zenithsync/maven_compile_controls.py and focused tests. An explicit bounded log profile verifies normal Maven testCompile exit1, absent XML reports, exact missing-symbol diagnostic records/counts, consistent repeated diagnostics, and absence of conflicting errors or test execution. Returned base runtime_case_outcomes is null, never fabricated case failures. Separate comparison requires exhaustive disjoint pass/skip case pairs and matching complete reference/candidate Surefire results. It reports compile-to-test phase change, explicitly not runtime fail-to-pass transitions.
+
+All49targeted compiler/Surefire/replay/amendment tests pass. Applied to GumTree frozen real controls: exact missing getChildren diagnostic at publisher test line206,column57; reference/candidate141cases,140pass/1skip. Profile is explicitly assistant-reviewed after evaluator exposure, not claimed original publisher case labels. Log consistency is not execution authenticity. Production admission integration still requires a fresh JVM grading receipt with exact replay/patch/profile bindings, report inventory, tracked-source before/after checks, and cleanup evidence. Existing one-off grader controls do not yet contain that complete receipt; unsupported Java admission remains rejected. No corpus change or training approval.
+
+Qualification23files/173,239bytes published to R2 quarantine and independently restored with every file hash compared. Evidence:evidence/data/maven-compile-controls-qualification-001. No Runpod use.
+
+
+## 2026-10-12: fresh Maven grading receipts with source provenance
+
+Added scripts/run_maven_grade_probe.py and scripts/qualify_maven_compile_replay.py. Fresh grade002 ran base/reference/candidate in separate offline image004 containers. Probe verifies pristine exact snapshot and absent build/report state, binds applied repair/test bytes, inventories243source entries and full diffs before/after Maven, and captures every XML/text report with hashes. Host verifies normal probe completion, no OOM, copied artifacts, exact report inventories, identical source states, and successful cleanup for all three containers. Input bindings include frozen replay receipt/patch, snapshot verification, evaluator task, explicit profile, and implementation sources.
+
+Recomputed comparison: base normal testCompile failure with no XML reports; reference/candidate4XML suites each,141cases with140pass/1skip and exact outcome agreement. Compilation-phase success is not a runtime per-case fail-to-pass claim. Independent audit rechecked every input/artifact hash, all243source records per role and the comparison. New grading receipt is ready for admission-validator integration; production mini admission still does not recognize Java until that adapter and mutation checks are implemented. Supervised diagnostic quality review, publisher-label interpretation, rights/split gates and training approval remain outstanding.
+
+Evidence65files/507,065bytes R2 quarantine published and independently restored, all files hash-compared. Evidence:evidence/data/gumtree163-bound-grade-evidence-001. No corpus change, model execution or Runpod use.
+
+
+## 2026-10-12: Maven admission reconstruction and mutation checks
+
+Production mini-replay admission now recognizes the source-bound Maven compilation-control receipt and requires an explicit grading profile. The adapter reconstructs patch identities, exact role inventories, source records and before/after diffs, report inventories, container completion/cleanup and the raw compilation/test comparison. Tracked-source records require canonical paths, regular Git modes, SHA-256 digests and nonnegative integer sizes; booleans are rejected as sizes. Synthetic mutation tests cover altered repair bytes, source changes, missing reports, OOM, changed profile/comparison, undeclared artifacts and cross-role paths. Fixed the fixture root to resolve macOS /var aliases so rejection tests exercise their intended condition.
+
+All72focused compiler/Surefire/bundle/admission/history/amendment tests pass. The real GumTree002 receipt passes evidence reconstruction but remains mechanically blocked solely by maven_publisher_case_label_review_required. Its18,751input/6,832supervised tokens remain outside the corpus. Compilation failure produces no fabricated runtime case failures. This is finite consistency validation, not general correctness or execution attestation; diagnostic quality, task/rights/split review and training gates remain.
+
+Evidence11files/82,272bytes published to R2 quarantine and independently restored, with every original/restored SHA-256 checked. Compact evidence:evidence/data/maven-admission-qualification-001. Corpus054 unchanged; training approval false; no Runpod use.
+
+
+## 2026-10-12: full local CPU regression qualification
+
+Ran the complete unittest discovery suite with ZENITHSYNC_TEST_TORCH=1. Initial556-test run exposed5errors caused by absent PEFT in the recovered Mac runtime; retained the failed log. Installed repository-pinned peft0.21.2 with --require-hashes --no-deps; pip check then reports no broken requirements. Repeated complete suite with Hugging Face/Transformers offline mode:556tests, all passed, no skips,22.130seconds. This includes reduced real Gemma token-weighted loss/gradient/update equivalence, adapter attachment and checkpoint restoration, optimizer/data cursor contracts, and the new Maven evidence checks. No downloaded full model, GPU execution or training approval.
+
+Bound311source/lock files before execution and verified unchanged afterward. Archived source bytes in a compressed bundle and checked every member against source identities. Six-file596,014byte evidence archive published to R2 quarantine and independently restored; all file hashes and restored source archive members verified. Evidence:evidence/p1/full-suite-qualification-001. These are finite CPU regressions, not full-size quantized model/GPU kernel/performance qualification. Corpus054 and outstanding admission/rights/split/context-budget gates unchanged. No Runpod use.
+
+
+## 2026-10-12: additional raw dataset storage release
+
+Removed13resident raw SWE-Hero parquet copies only after checking their local SHA-256, exact remote manifest bytes, and a fresh full streaming SHA-256/length of each R2 blob. Durable per-file verification precedes unlink; independent audit confirms all13paths absent with matching verification events. Released2,250,248,192allocated bytes (approximately2.10GiB); filesystem available space rose from approximately24GiB to26GiB. Physical storage changes can differ due to shared blocks/snapshots.
+
+The first cleanup runner terminated on shard000's differently named publish-receipt path after3other shard deletions had completed safely. A separate bounded runner handled004–013; shard000 remains untouched. No unmatched data, selected trajectories, active runtime, metadata or source manifests removed. No claim that iCloud errors are globally resolved. Restore instructions and per-shard manifests:evidence/data/swe-hero-release-audit-001. Audit20files/30,847bytes R2 published and independently restored, with all file hashes compared. No Runpod use; P1 remains incomplete.
+
+
+## 2026-10-12: corpus exposure capacity audit and scaling priority
+
+Revalidated corpus054 through the hash-bound inspection loader:38examples,213,020supervised tokens, still quarantined with zero training-admitted tokens. Enumerated a hypothetical50M-token schedule with seed7401 and9216maximum supervised tokens/update:7,884updates,50,004,719consumed tokens,4,719whole-example overshoot,234–235exposures per example. Independently reconciled per-example exposure counts to consumed tokens. This diagnostic schedule is not a training authorization and must not be deployed as a substitute for corpus growth.
+
+Exact corpus-size lower bounds for a50M-token candidate under1/2/3/5maximum passes are50M/25M/16,666,667/10M supervised positions respectively. The3-pass scenario therefore requires16,453,647additional positions beyond the current quarantine corpus, plus admission of all counted data. These are sensitivity scenarios, not approved epoch policies. Three candidates can reuse an admitted corpus:150M cumulative exposure does not mean150M distinct data. Inverse token concentration is reported per example/task/repository as descriptive balance only, never statistical effective sample size or independence.
+
+Next scaling work must prioritize batch qualification and rights/split coverage of acquired source pools, measuring yield in admitted tasks and supervised tokens; additional isolated replay examples alone cannot establish50M-scale readiness. Retain task fidelity, evaluator isolation, duplication controls and exact masks while expanding. No weakening of gates or speculative token counts. The first audit script hit a metadata-field mismatch before emitting a report;002 explicitly joins repository groups from the verified corpus manifest. Four-file41,807byte audit published to R2 and independently restored with all hashes matched. Evidence:evidence/data/corpus054-capacity-audit-002. No Runpod use or training approval.
+
+
+## 2026-10-12: SWE-Hero batch qualification queue
+
+Verified the full34,269-row census index against its stored manifest identity and current reserved-repository index. Deterministic seed7401 hash ranking chooses one task and one trajectory per repository across128repositories from1,668eligible repository names, excluding corpus054 repositories and exact reserved matches. Reversing input order reproduces identical selection. All source shard identities match their intake receipts; each queue entry carries the R2 blob key, exact size/hash and row locator.127entries originate from SWE-rebench and1from R2E-Gym. Publisher license labels comprise70MIT,27Apache-2.0,21BSD-3-Clause and10BSD-2-Clause; none is treated as rights clearance.
+
+This is a development coverage queue, not an unbiased benchmark or an admitted corpus. Body inspection, independent task alignment, source rights, fork/semantic isolation, native reconstruction, exact token masks/context, runtime patch controls and privacy review remain pending. No token yield is inferred from metadata. Next step: bounded one-shard-at-a-time extraction of selected source trajectories from R2, hash verification before parsing, evaluator repair/test fields excluded, temporary shards released after extraction. Two-file73,696byte queue/runner bundle published to R2 and independently restored with both hashes checked. Evidence:evidence/data/swe-hero-batch-qualification-001. Corpus054 unchanged; no Runpod use.
+
+
+## 2026-10-12: batch source extraction and structural preflight
+
+Extracted all128selected SWE-Hero histories from9R2 shards using bounded one-shard-at-a-time temporary storage. Verified each complete shard SHA-256/length before parsing and rechecked after parsing; all selected row identities match the census queue and every temporary directory was removed. Only repo/instance/trajectory identity, license, dataset and trajectory columns read; model_patch excluded. This column exclusion does not prove that source history text is free of answer conditioning.
+
+All128pass existing source serialization conversion and single-pending-call linkage checks; all terminal finish calls remain unanswered source calls, not execution evidence. Four-family recursive credential screen flags0records; this is not a privacy guarantee. Native tool semantics, independent task alignment, source rights, fork/split isolation, token masks/context and runtime controls remain unqualified. No corpus admission or supervised-token expansion claimed.
+
+132extracted files total29,465,082bytes. Compressed four-file archive4,633,092bytes published to R2 and independently restored. All outer file hashes and132inner archive member identities verified. Redundant compressed archive copies released afterward; selected working records retained outside iCloud. Compact receipts:evidence/data/swe-hero-batch-extraction-archive-001. Corpus054 unchanged; no Runpod use.
+
+
+## 2026-10-12: batch source context census
+
+All128source histories measured without truncation using hash-pinned Gemma tokenizer/template assets, Transformers5.13.1/tokenizers0.22.2 and the existing source pre-action text projection. Total6,642,586input tokens, median49,724, range27,150–114,032. Only6histories fit32,768;106fit65,536; all128fit131,072. None fits32,768with an8,192full-history reserve. These are source-format input counts, not supervised targets, native per-action serving requests or GPU capacity tests. Tool schemas are not included.
+
+Second measurement reproduces all full-history counts and hashes while measuring initial prefixes separately: median2,911,max6,056tokens. Even full-minus-prefix rendered differences exceed32,768for116histories and24,576for127. Differences are descriptive and cannot be substituted for native context counts. Thus prompt boilerplate alone does not explain the length bottleneck. No truncation, compression, model context extension or training approval adopted. Next requires native-context feasibility work and broader short-trajectory selection, retaining task fidelity; longer-context training would require separately measured GPU cost/quality and serving compatibility.
+
+Three-file80,886byte report/runner/prefix audit published to R2 and independently restored, all hashes verified. Evidence:evidence/data/swe-hero-batch-context-002. Corpus054 unchanged; no Runpod use.
+
+
+## 2026-10-12: source editor preflight and batch adapter feasibility
+
+Tightened source replay preflight to reject missing editor fields, nontext mutation payloads, empty replacement search strings, invalid/bool/reversed line ranges before container creation. Empty file creation and deletion via empty replacement remain supported byte-for-byte. All24focused editor/profile/search/subdirectory tests pass. This changes the adapter source identity; historical receipts must retain their original implementation binding.
+
+Static action audit of128histories finds a single repository-matching source-root candidate for every history; these inferred roots are not approved runtime profiles.88histories have all individual actions accepted by the current grammar. Across the remainder:121unreviewed shell calls,41additional root substitutions,17timeout mismatches,17outside-root paths,4unsafe paths,1directory edit and1missing mutation argument. Counts are calls, not histories, and may overlap per history. No commands executed. This identifies concrete adapter work without relaxing path or timeout rules; supported grammar does not prove runtime semantics, context fit, task correctness or admission.
+
+Five-file93,607byte implementation/test/audit bundle published to R2 and independently restored with all hashes checked. Evidence:evidence/data/swe-hero-batch-adapter-001. Corpus054 unchanged; no Runpod use.
+
+
+## 2026-10-12: bounded nested pytest path compatibility
+
+Extended only the standalone root-relative pytest grammar to nested Python files and canonical test directories, preserving optional-v. No traversal, wildcard, expansion, shell chaining or implicit persistent-directory support added. Real-shell fixture checks exact argv/cwd/stdout/stderr and nonzero status preservation; macOS temporary-root aliases resolved explicitly. All27focused adapter tests pass.
+
+Re-auditing128histories reduces unreviewed shell calls121to116; all-action-compatible history count remains88because affected histories retain other blockers. No inflated trajectory yield claimed.23rejected C-c controls reveal persistent shell semantics that cannot simply be mapped to independent run_command calls; they remain rejected. Native replay, task qualification and context constraints remain unresolved. Six-file96,117byte implementation/test/audit archive R2 published and independently restored with all hashes verified. Evidence:evidence/data/swe-hero-batch-adapter-002. No Runpod use or corpus admission.
+
+
+## 2026-10-12: independent issue-text reconciliation for batch
+
+Hash-verified both pinned SWE-rebench task shards before and after reading only repo,instance_id,base_commit,problem_statement. All127selected SWE-rebench entries join uniquely:99source issue-description blocks equal independent text exactly;28equal after NFKC/whitespace normalization. One R2E trajectory(tornadoweb/tornado,e704489dd1a897ca66c8a7becb963556929cfef6) requires a separate independent task-text join. Publisher repair/test columns unread. Selected independent problem statements retained with base identities and source hashes for semantic review.
+
+Text identity is not proof of semantic solution alignment, absence of extra teacher instructions outside the issue block, rights clearance or evaluator isolation beyond the recorded column boundary. All trajectories remain unapproved; corpus054 unchanged. Two-file278,634byte task-text report/runner bundle R2 published and independently restored with both hashes checked. Evidence:evidence/data/swe-hero-batch-task-alignment-001. No Runpod use.
+
+
+## 2026-10-12: complete independent text join and batch review ledger
+
+Verified all8pinned R2E shards and read only repo_name,commit_hash,problem_statement. The remaining selected Tornado trajectory joins uniquely by repository basename and commit; owner identity and unresolved base-parent ref remain separate gates. Independent issue text781characters versus teacher1,592characters: both concern TCPClient.connect source_ip/source_port, but teacher paraphrases and adds invalid-bind/socket-error expectations. Marked semantic review pending, not silently normalized or declared unrelated. Final batch text statuses:99exact,28normalized,1different. No evaluator solution/test fields read in this check.
+
+Unified all128queue/task/context/adapter identities and explicit remaining gates in a review ledger. Five histories intersect32,768source-token fit and all-action static grammar support; none passes the full-history8,192reserve proxy, and none is training-admitted. These are development feasibility metrics, not model performance or native context qualification. Four-file74,571byte ledger/task/scope/runner evidence published to R2 and independently restored with all hashes verified. Evidence:evidence/data/swe-hero-batch-review-ledger-001. No Runpod use; corpus054 unchanged.
+
+
+## 2026-10-12: CRC153 pinned source and digest invariants
+
+Selected Nicoretti/crc153 from the five source-context/static-action feasible histories. Verified56upstream blobs(209,852bytes) against exact base8d928145df5caf588d9ff5af83bd72feb241fd1e and its Git tree. Reconstructed the sole production-file replacement from the selected teacher trajectory; no publisher repair read. Source teacher diagnostics still require review: final_verification.py prints a fixed138and performs an additional update, so it is not an exact reproduction despite its label. Such output must not become accepted runtime evidence.
+
+Executed finite digest controls on real source modules:16exported configurations, both Register/TableBasedRegister, all256states for8-bit configurations and boundary/single-bit states for larger widths. Independent binary-string reversal oracle plus repeated digest/state-preservation checks:3,656cases per variant; base1,120failures,source candidate0failures,constant-output mutant3,624failures. This is not exhaustive larger-width coverage, continuation-after-digest testing, native replay, publisher grading or training admission. No learned-model claim.
+
+Three-file99,100byte archive published to R2 and independently restored; all outer hashes and68inner member hashes checked. Evidence:evidence/data/crc153-controls-archive-001. Native environment/replay remains next; corpus054 unchanged; no Runpod use.
+
+
+## 2026-10-12: CRC153 offline upstream regression controls
+
+Ran base and source-derived candidate in fresh Linux/amd64 containers using pinned local base image14d857d591be7d1a7efc83ff1dcc87f83c96c764895b0986a45db0d8af5a8a46, Python3.13/pytest9.1.1, network disabled,1GiB memory,2CPU,cap-dropALL. Read-only source mounts and PYTHONPATH=/testbed/src avoid packaging mutation. Both upstream suites pass47unique cases,0skips, with identical case identities. Complete source inventories are unchanged; normal exits and both container removals verified. This confirms finite regression compatibility under this runtime, not source-native replay or publisher fail-to-pass grading. Base passing proves the upstream tests do not detect the digest-state defect; separate state-invariant controls remain necessary.
+
+Native replay packaging remains unresolved: teacher invokes pip install-e., requiring an offline build backend and pristine source snapshot preparation. No need for Runpod at this stage. Three-file179,065byte control archive published to R2 and independently restored; all outer and inner member hashes verified. Evidence:evidence/data/crc153-upstream-archive-001. Corpus054 unchanged; training approval false.
+
+
+## 2026-10-12: CRC153 pristine offline replay image
+
+Prepared parentless snapshotf5264923d61414244fbe2563f5444bc3a6708931 with exact upstream treef24f4966cb9dd7d491032140a8a994512e8583c9, one reachable commit and no remotes. Downloaded poetry-core2.2.1 wheel, checked hash/size against PyPI release metadata, installed via hash-pinned offline lock. Docker build used networknone and the previously inspected local base tag. Image:c0a084e62b93109dc253bc8dd421f33175880daa232ff0204d0a2daedd3879a8.
+
+Fresh offline probe verifies snapshot identities, editable pip install, base digest sequence81/138/81,47upstream passing cases and unchanged tracked source. Only the explicit bootstrap install.sh remains untracked for the existing workspace-preparation cleanup contract. Initial probe001 incorrectly imported the newly editable-installed package within an already-running interpreter;002 uses a fresh interpreter, consistent with source shell calls. Both probe containers removed. Native trajectory replay still pending; no model execution or training approval.
+
+Sixteen-file518,031byte build-input/probe evidence R2 published and independently restored with all file hashes verified. Evidence:evidence/data/crc153-image-verification-002. Built Docker image itself remains local and is not exported to R2; byte-identical image recovery is not claimed. No Runpod use; corpus054 unchanged.
+
+
+## 2026-10-12: CRC153 native replay and token qualification
+
+Restored and full-hash-verified one temporary SWE-Hero shard, ran unchanged source actions through pinned native tools in the offline CRC image, then verified container removal and temporary shard release. Replay completed with36charged tool calls and37captured exchanges(including submission). Submitted patch4,415bytes SHA2562ff4673af41064f38344e2c704997e6551a4329378b5731571b5b0dceac3d186. Fresh failures at source16(import collection before install),42(base digest reproducer)and58(diagnostic enum attribute error)retained; no source observations reused.
+
+Reconstructed76-message action-only history using independent issue and native schema. Exact pinned-tokenizer audit:21,266input/3,839shifted supervised tokens,untruncated; plus8,192reserve=29,458within32,768. This demonstrates source-format length is not native-context length. History remains quarantined: submitted final_verification.py hardcodes printed138 and updates payload twice despite exact-reproduction label, requiring attributed correction and fresh replay; publisher grading, semantic review and rights/split gates remain. No model performance or training approval claimed.
+
+Seventeen-file445,013byte replay/history/token evidence R2 published and independently restored with every file hash matched. Evidence:evidence/data/crc153-native-evidence-001. No Runpod use; corpus054 unchanged.
+
+
+## 2026-10-12: CRC153 attributed diagnostic correction and fresh replay
+
+Amended only source70created final_verification.py and source76final shell diagnostic through hash-bound assistant amendment plan. Removed fabricated printed138 and duplicate update; new diagnostic computes independent binary-reversal oracle, checks repeated reads preserve state, and verifies continuation against untouched control. Final shell now asserts values/state instead of only printing consistency. Diagnostic passes candidate and fails base/constant-output mutant with nonzero exits. Original production repair, paths and action order preserved. No publisher repair inspected.
+
+Fresh native002replay completed; amendment binding verified during history reconstruction. Source errors remain captured, container removed, temporary shard deleted. Submitted patch applied independently to a fresh source copy: production bytes equal the previously tested candidate and final diagnostic bytes equal the amendment.76messages/37exchanges encode21,058input and3,727shifted supervised tokens without truncation; plus8,192reserve=29,250. Publisher grading, remaining diagnostic semantic review and rights/split admission pending. Corpus054 unchanged; no model or Runpod use.
+
+Twenty-seven-file474,199byte amendment/control/replay/history/token evidence R2 published and independently restored with every file hash compared. Evidence:evidence/data/crc153-native-evidence-002.
+
+
+## 2026-10-12: CRC153 publisher regression qualification
+
+Frozen native002 replay, patch, history and token identities before extracting publisher-only evaluator inputs; all frozen identities rechecked unchanged after grading. Fresh isolated offline base/reference/candidate containers use the same content-pinned CRC replay image. Strict full-node-ID comparison covers all17publisher cases: base11pass/6fail, reference17pass, candidate17pass. All six fail-to-pass and eleven pass-to-pass expectations match exactly; no case disagreements. Tracked changes remain unchanged by tests; no OOM and all three containers removed. Candidate receives its submitted patch and publisher tests, not the reference patch.
+
+This standalone qualification uses Python3.13 rather than publisher install metadata Python3.9. Existing production profile requires /opt interpreter paths, while this image uses /usr/local/bin/python; no validator bypass or false production-admission receipt adopted. Production grading/admission integration, remaining diagnostic review and rights/split gates remain unresolved. No training admission, model performance claim or Runpod use. Publisher input exposure is now recorded; subsequent changes must preserve that attribution.
+
+Forty-file93,555byte evidence bundle published to R2 and independently restored with every file hash matched. Compact receipts/report/manifest:evidence/data/crc153-publisher-evidence-001. Corpus054 remains unchanged.
+
+
+## 2026-10-12: refreshed complete local regression suite
+
+After editor/nested-pytest adapter changes, full unittest discovery passes562tests,0skips,in22.283seconds with explicit Torch tests enabled and model hubs offline. Source identities checked before/after execution. Includes existing reduced-model numerical/gradient/optimizer/checkpoint tests; this does not qualify full-size quantized Gemma, GPU kernels, serving capacity, training data admission or model performance. No Runpod use.
+
+Four-file586,790byte compressed evidence bundle published to R2, independently restored, and all316inner member hashes checked. Receipts/report/log/manifest:evidence/p1/full-suite-qualification-002. P1 remains incomplete; corpus054 remains quarantined and training unapproved.
+
+
+## 2026-10-12: production grading interpreter integration and CRC153
+
+Production profile now permits canonical /usr/local/bin/python,python3,python3.N alongside reviewed /opt paths, rejecting traversal, doubled separators, control characters and alternate executable names under /usr/local/bin. Both control and candidate probes use the explicitly bound interpreter as container entrypoint rather than assuming /usr/bin/python3. Image and source-origin bindings remain required. Added path/activation rejection coverage and control-entrypoint assertion.
+
+Fresh independent snapshot verification matches every tracked file to separately fetched upstream base bytes, confirms exact tree/parentless single commit/no remotes/no tracked modifications and inaccessible original base commit. Inherited Docker layer contents are not audited. Production controls and grade commands now succeed on unchanged native002 patch:17cases,6expected base failures,reference/candidate17pass,zero disagreements,cleanup verified. Initial integration attempt used an absolute import_root and was rejected before controls; corrected002 uses canonical relative src. Python3.13 versus publisher3.9 remains a documented runtime difference. All subsequent candidate edits would be post-evaluator exposure.
+
+Production evidence53files127,946bytes published to R2 and independently restored/hash-compared. Evidence:evidence/data/crc153-production-evidence-001. Full updated local regression:564tests,0skips,22.197seconds; source identities unchanged during run; explicit reduced Torch checks enabled, model hubs offline. Four-file587,546byte suite archive R2 published/restored,all316inner member hashes verified. Evidence:evidence/p1/full-suite-qualification-003.
+
+Remaining: semantic/diagnostic review, source rights/split and corpus admission; no training admission or full-size GPU/model qualification. Corpus054 unchanged. P1 incomplete; Runpod unused.
+
+
+## 2026-10-12: CRC153 diagnostic semantics and amended replay004
+
+Existing replay002 passes the production mechanical admission assessment, but manual diagnostic inspection identifies inaccurate explanatory text: MODBUS reverse_output is true, IBM_3740 false despite an all-reversing list description; the reproducer calls a first-observation consistency comparator an expected-value test. Four total source amendments now bind earlier70/76corrections plus40/56wording corrections. Production repair and action order unchanged. New amendments explicitly post-publisher-evaluator exposure; no attempt to present this as an untouched teacher trajectory.
+
+Initial amendment preparation rejected unsorted indices. A prematurely launched003wrapper then failed on missing plan before native execution; its logs retained and temporary shard removed. Sorted unique plan validated, fresh004wrapper/replay completed and cleaned up. Original fresh errors at16(before editable installation),42(base reproducer)and58(enum attribute)remain visible. History76messages/37exchanges,21,053input/3,731shifted supervised tokens,29,245with8,192reserve. Production candidate grade matches all17publisher cases; mechanical assessment passes with no blockers and training_approved false. No corpus admission yet; full source/semantic review, rights/attribution, frozen split/duplicate review and training runtime gates remain.
+
+Forty-file572,564byte replay/history/token/grade/admission/amendment evidence published to R2 and independently restored, every file hash checked. Evidence:evidence/data/crc153-native-evidence-004. Corpus054 unchanged. No Runpod use, no learned-model performance claim. P1 incomplete.
+
+
+## 2026-10-12: corpus055 quarantine integration and restoration
+
+CRC native004 reviewed for action/diagnostic scope and fresh-observation linkage with76per-message identity records; original teacher prose absent. Repository LICENSE.txt retained with attribution. Review002 supersedes erroneous review001 explanation about why comprehensive_test.py is absent from the submitted patch: upstream .gitignore does not support that explanation, so no such cause is claimed. Dataset/issue rights remain open. Explicitly post-evaluator-exposure derivative.
+
+Assembled corpus055 with39examples/39tasks/38repositories,760,106input and216,751shifted supervised tokens. All38predecessor records unchanged; counts independently recomputed from arrays and matched loader totals. Manifest SHA256d1de99344a91238b777a8ab1c79452046d8fd34a9ee7e69206ff107171aae74f; content SHA25651a3a2a7a8a8981e719e8bbcf07dcf5cfb0f9b2d999d6df416290b4b146e5341. All admission fields null; actual training-purpose load rejected. This adds3,731quarantined targets,not training-admitted data.
+
+All79corpus files8,415,451bytes published to R2,independently restored,hash-compared and loaded successfully. Redundant restoration copy then removed after another per-file comparison; authoritative local corpus retained. Integration evidence11files73,059bytes independently published/restored. Evidence:evidence/data/corpus055-integration.
+
+All741within-corpus issue pairs cross-checked against independent set intersections/rational similarity. Only inherited PennyLane5716/5831containment flag remains; no new flagged pair at existing thresholds. Lexical screen is not proof of semantic independence. All39decoded examples screened,zero credential indicators; privacy approval false. Five-file157,482byte check bundle independently R2published/restored. Evidence:evidence/data/corpus055-checks. Frozen split extension, context/runtime holds including inherited emcee serving overflow, rights and full-scale data sufficiency remain open. No Runpod use; P1 incomplete and zero training-admitted tokens.
+
+
+## 2026-10-12: corpus055 provisional split/context and next batch environments
+
+Fresh GitHub Nicoretti/crc metadata extends the hash-checked prior lineage:39provisional assignments,38unchanged,no known reserved repository-name or GitHub-network overlap. Draft remains unfrozen; detached copies/semantic contamination/pretraining overlap unexcluded. Exact token/label interval audit finds no teacher-forced sequence overflow; inherited dfm__emcee-295 remains the sole full-history and supervised-span8,192reserve exception. This does not resolve its previously measured native serving failure.
+
+Selected eight remaining statically supported, independent-text-matched tasks from the128batch, ranking source transport token length then trace hash. All eight Docker Hub Linux/amd64 image manifests/configs resolve to immutable digests:python-frontmatter31,pandera64,csv2md22,djangorestframework-api-key187,files-to-prompt36,pytypes37,marshmallow-dataframe19,structlog350. Source lengths are screening priorities,not native context bounds. Compressed layers per image1.23–1.54GB; no image layers downloaded. No runtime/source-snapshot/oracle isolation or evaluator qualification claimed.
+
+Forty-one-file332,899byte split/context/registry evidence published to R2 and independently restored with all hashes matched. Evidence:evidence/data/corpus055-batch-readiness. Next batch work must inspect or reconstruct bounded source environments, then replay and grade each with explicit admission gates. No Runpod use; P1 incomplete;216,751quarantined targets and zero training-admitted tokens.
+
+
+## 2026-10-12: eight pinned source snapshots and offline baseline screen
+
+Fetched all eight selected exact base commits through bounded GitHub commit/tree metadata and codeload archives. Every materialized regular file matches Git blob SHA1/size and mode; complete path inventories match untruncated tree responses. Trees with links/submodules would be rejected. Verified source bytes per candidate:frontmatter48,027;pandera102,820;csv2md17,487;django-api-key88,474;files-to-prompt34,338;pytypes1,029,921;marshmallow-dataframe39,737;structlog772,656. No benchmark solution/test columns read during this acquisition.
+
+Fresh sequential offline containers use pinned existing base14d857d591be7d1a7efc83ff1dcc87f83c96c764895b0986a45db0d8af5a8a46 with1GiB/2CPU/read-only source/PYTHONPATH/source byte checks/60second cap. All eight removed and source inventories unchanged. csv2md10upstream tests pass. frontmatter default pytest discovery finds no tests; requires explicit target. Pandera lacks numpy; Django key lacks dj_database_url; files-to-prompt lacks click; pytypes hits imp.PY_SOURCE runtime incompatibility; marshmallow-dataframe lacks pandas; structlog lacks test packages and asyncio marker. These are environment screens,not publisher-equivalent grading or evidence that the tasks fail in their intended runtime. No skips or exit5 counted as passes.
+
+Four-file1,195,177byte compressed source/runtime evidence published to R2 and independently restored; all356inner member hashes verified. Evidence:evidence/data/next-batch-source-runtime-evidence-001. Sources remain outside iCloud; no large image layers downloaded. Next: offline dependency locks/runtime selection, starting with csv2md's runnable baseline while preparing lightweight click/PyYAML environments. No Runpod use, corpus055 unchanged, P1 incomplete.
+
+
+## 2026-10-12: files-to-prompt36 offline dependency and baseline qualification
+
+Pinned Click8.1.8 universal wheel using official PyPI release metadata, verified98,188bytes and SHA25663c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2. Retained origin JSON and hash-required offline requirements lock. Linux Python3.13 requires neither conditional Windows colorama nor Python<3.8 importlib-metadata; no transitive downloads used. Reference:https://pypi.org/pypi/click/8.1.8/json.
+
+Fresh bounded offline container installed wheel with--no-index/--no-deps/--require-hashes into temporary dependency directory. Explicit import-origin probe confirms Click under/tmp/dependencies and files_to_prompt under read-only/testbed. Strict full-node-ID setup/call/teardown parser records12upstream cases,allpassed. Source inventory unchanged,noOOM,containerremoved. This qualifies one local baseline with Python3.13/pytest9.1.1,not publisher environment equivalence, candidate repair, native trajectory or training admission.
+
+Fourteen-file120,428byte wheel/lock/probe/results/source identities bundle R2published and independently restored,allhashesverified. Evidence:evidence/data/filesprompt36-baseline-evidence-001. No large image layers or Runpod used. Corpus055 unchanged; P1 incomplete. Next requires parentless exact source snapshot and native replay; source/evaluator separation remains mandatory.
+
+
+## 2026-10-12: files-to-prompt36 exact snapshot and native replay
+
+Built offline image0be4dbfb3020be65b18bf13f1bbaff5235359f4ea7821208735424ec536d1b9e from inspected existing base with hash-pinned Click wheel. Parentless snapshot preserves exact upstream Git tree atf9a4d8fa20aa978c3502c94de335b44e57ac0a61. Independent container verifies all tracked bytes against fetched source,one parentless commit,no remotes,no tracked modifications,and original base inaccessible. Image itself not exported to R2; build inputs retained.
+
+Unamended native source replay completes35chargedcalls/36exchanges,containerremoved,temporaryR2shardremoved. Submitted439byte patch SHA256448d04627cd7c4d0bf256b4007a4b197f2d3601ea56eb3281fc7312600296cf2 changes output open to explicit UTF-8. Independent issue/native schema projection produces74messages,21,141input/5,962shifted supervised tokens untruncated; plus8,192reserve=29,333. Source-format33,317token count was not a native-context blocker.
+
+Quarantine hold: source diagnostic labels Windows reproduction but does not force a legacy default encoding; direct open-copy test is not a regression oracle for patched CLI and Boolean failures do not consistently set nonzero process exit. Linux success must not be promoted to Windows regression evidence. Next requires an explicit legacy-codepage negative control through actual CLI,Unicode output oracle,base/reference/candidate publisher grading and attributed diagnostic correction if admitted. No publisher fields inspected during this replay stage,no model improvement claim.
+
+Thirty-three-file600,554byte build-input/snapshot/replay/history/token evidence R2published and independently restored,allfilehashesmatched. Evidence:evidence/data/filesprompt36-native-evidence-001. Corpus055 unchanged; Runpod unused; P1 incomplete.
+
+
+## 2026-10-12: files-to-prompt36 encoding controls and publisher-scope mismatch
+
+Controlled actual CLI output-file defaults across UTF-8,cp1252,ASCII;fivepayloadclasses(ASCII,accent,emoji,CJK,combining)andplain/XMLformat=30casesperrole. Stdout CLI output provides expected UTF-8bytes,output file is compared byte-for-byte. Base14pass/16fail;submittedUTF-8candidate30pass;explicitASCII mutant6pass/24fail. This is a Linux codepage simulation,not nativeWindows execution. Initial probe001 lacked explicit/testbed import path;002 fixes harness path,originalfailure retained. All containersremoved;noOOM.
+
+Frozen candidate/replay/history/tokens before publisher extraction. Publisher reference includes both UTF-8 fix and additional line-number feature;sole fail-to-pass is test_line_numbers,not the provided encoding issue. Freshproductionbase12/13,reference13/13,candidate12/13withline-number disagreement. Mechanicaladmission correctly blocks publisher_expectations_not_matched. Do not add unrelatedfeature or silently substitute tests to force acceptance. Excluded from publisher-qualified corpus; independentencoding evidence retained separately. Disposition002 explicitly clarifies referenceincludesUTF-8aswellasline-number additions;001retained.
+
+Evaluationbundle58files108,987bytes R2published/restored/hashverified;clarifieddisposition1007bytes separatelyR2published/restored. Evidence:evidence/data/filesprompt36-evaluation-evidence-001 and evidence/data/filesprompt36-disposition-evidence-002. Corpus055unchanged;noRunpod;P1incomplete. This case demonstrates that exact issue-text joins and green upstreamtests do not establish evaluator semantic alignment.
+
+
+## 2026-10-12: csv2md22 native replay and detected parsing regression
+
+Built offline image150757138b7572f27caa76c9db32a7035843c472e821f18efeb52614f8aef788 using existing pinned local base,without extra package downloads. Exact source-tree verification at2dd166be84bcbd86da199cb4186ab908ad9ab9c1 confirms parentless snapshot,tracked bytes,no remotes,original commit inaccessible. Native unamended replay completes38chargedcalls/39exchanges;container and temporarysource shardremoved. Failures including legacy nose calls remain in observations. Submitted945byte patch SHA25654abca1ad705db50029fd5d2f7b7eab46ca90ac6628e8377044ed3c7c2fe47ce.
+
+Independent task/schema history80messages,21,251input/5,160shiftedtargets,untruncated;29,443withoutputreserve. Frozen candidate artifacts before publisher extraction and rechecked unchanged afterward. Publisher controls align with pipe-escaping issue:base6/9pass,reference9/9pass,candidate5/9pass. Candidate fixes three rendering cases but regresses four parse_csv cases by escaping raw cells during construction. Mechanicaladmission blocks publisher_expectations_not_matched; no corpus addition. This is a real candidate regression,unlike files-to-prompt's extra-feature test mismatch.
+
+Correction invariant for future explicitly post-evaluator derivative: parsing preserves raw cell values; rendering computes escaped strings and display widths without mutating stored cells. Need fresh negative controls,repeat-render/state checks,complete publisher regression and attributed replay before reconsidering admission. Historical passing upstream tests without pipes did not detect the defect.
+
+Seventy-file554,286byte build-input/snapshot/replay/history/token/publisher/control/admission evidence R2published and independently restored,allhashesverified. Evidence:evidence/data/csv22-native-evidence-001. Built image itself remains local,not exported. Corpus055unchanged;Runpodunused;P1incomplete.
+
+
+## 2026-10-12: csv2md22 pure-render correction and attributed replay002
+
+Assistant derivative after publisher exposure restores original constructor/raw cells/stored widths,computing escaped cells and rendered widths locally in markdown(). For finite rectangular string cells,escaping inserts one backslash per pipe,so escaped codepoint length is len(s)+count_pipe(s);column rendering width is its rowwise maximum. This is codepoint padding,not a claim about terminal grapheme widths or all Markdown implementations. Stored parsing state is not assigned by rendering.
+
+Finite differential controls:85strings length0..3 over{a,pipe,backslash,é},threealignments,twoheadermodes=510cases perrole. CSVroundtrip/raw state/repeat-render/output oracle:base240pass270fail;originalteacherrepair240pass270fail;corrected510pass0fail. Initial harness001 incorrectly expected uppercase defaultheaders;repositoryutils useslowercase. Corrected002 preservesfailedrun and passes allcases. Publisher standalone corrected9/9; no skippedcases counted.
+
+Explicit completionplan appends two assistant commands to unchanged sourceactionprefix:hash-checked productioncorrection,then upstreamtests+rawparse/escape/repeat/stateassertions. No publishertests injected into agenthistory. Freshnative002completes40chargedcalls/41exchanges;84messages,23,373input/7,186shiftedtargets,31,565with8,192reserve. Submitted1,596bytepatch SHA256323997766f6a3e1c96842cdf119cae0d4fc800b0f5f7262e1749d35131398378 matches plan. Freshproductionpublishergrade9/9,mechanicaladmissionpasses,trainingfalse. Container/tempR2shardremoved. Semantic/source/rights/splitreview remains before integration.
+
+Sixty-nine-file1,048,925byte correction/control/completion/replay/history/token/grade/admission evidence R2published and independently restored,allhashesverified. Evidence:evidence/data/csv22-corrected-evidence-002. Corpus055unchanged;Runpodunused;P1incomplete. No newmodelperformance claim.
+
+
+## 2026-10-12: raw-outcome admission verification and storage release
+
+The SWE-rebench admission path now recomputes publisher base/reference transitions and candidate/reference agreement from four uniquely selected, hash-bound raw evidence files. It rejects missing or ambiguous bindings, altered outcomes, and a grading summary inconsistent with recomputation. It rechecks file identities before returning. This establishes evidence consistency, not authenticity of arbitrary receipts; the legacy R2E backend is unchanged.
+
+Fresh reassessments preserve expected decisions: CRC153 native004 and corrected csv2md22 native002 pass mechanical checks; original csv2md22 and files-to-prompt36 remain blocked by publisher expectations. All remain training-unapproved. The ten-file reassessment bundle (39,527 bytes) is R2-published and independently restored.
+
+Full local suite: 571 tests passed, zero skips, 21.081 seconds. Current hashes of all 315 bound source files match the tested snapshot. Independently rechecked all 318 archived inner files. Four-file archive (591,110 bytes) has verified R2 upload and restore receipts. Evidence: evidence/p1/full-suite-qualification-004 and evidence/data/raw-grade-admission-evidence-001. These checks do not qualify full-size model execution, GPU kernels or deployment performance.
+
+Released only the redundant shard001 restore-check parquet after local hash verification, fresh full R2 object read/hash verification, exact remote manifest comparison and an unchanged local file-identity check. Confirmed removal; released allocated bytes: 151,552,000 (about 144.5 MiB). Source metadata, manifests, selected trajectories and runtime retained. Evidence: evidence/data/swe-hero-restore-release-003. This does not establish that iCloud's general Download Now issue is fixed.
+
+P1 remains incomplete: corpus055 has 39 quarantined examples and 216,751 supervised tokens, with zero training-admitted tokens. Rights, source qualification, frozen split and duplicate review, substantial data scale-up, and training runtime/memory qualification remain open. Runpod unused. Next data step is semantic/rights/split review of corrected csv2md22 and qualification of remaining batch candidates; passing finite controls alone is insufficient for training admission.
+
+
+## 2026-10-12: frontmatter31 explicit baseline and native replay
+
+Default pytest discovery missed this repository's test.py. Explicit discovery exposed missing six; a bounded modern compatibility environment installs PyYAML6.0.3, six1.17.0 and toml0.10.2 from exact PyPI wheels verified against publisher SHA256 and size, with a hash-required offline lock. Explicit upstream run: 13 cases passed. Historical requirements pin PyYAML3.11/six1.10.0/toml0.9.1, so this is not historical dependency equivalence. Optional pyaml is absent and its conditional behavior remains unexercised.
+
+Offline image sha256:9902a8ce40835efd0e1a298efd13d49f88aa2dbc2792b09dd12ef1789de2762c uses a parentless snapshot of e017a210fc4c9725c36fb970df03a32cd655aa77. Independent container verifies all tracked bytes/tree, exactly one parentless commit, no remotes and inaccessible original commit. Inherited image layers are not audited for historical content.
+
+Native replay completes 38 charged calls, 39 exchanges and 80 messages. Actual tokenizer audit: 19,021 input tokens, 7,302 shifted supervised targets; input plus 8,192 output reserve is 27,213. Patch is 1,114 bytes, SHA256 99892f201185cf325b5657edc331a0ca28e130ccaf1d6b940dbf94aedf7d396a. It adds explicit encoding parameters to load/dump filename handling. No publisher grading or task-semantic approval is established; file-like and byte-input semantics require independent checks. Source observations are not reused. Container and temporary 200,489,804-byte source shard were removed after verification.
+
+Evidence bundle: evidence/data/frontmatter31-native-evidence-001. Corpus055 unchanged, training approval false, Runpod unused. Next: freeze these artifacts before inspecting publisher controls; evaluate base/reference/candidate and independently exercise encoding behavior. A source teacher replay is not evidence of improved Gemma performance.
+
+Archival confirmed: all 53 files (2,245,087 bytes) published to R2, independently restored and compared by per-file hash. Build inputs are archived; the Docker image itself is not exported.
+
+
+## 2026-10-12: frontmatter31 publisher grading and independent encoding failures
+
+Frozen native replay/history/token artifacts before extracting publisher-only patches from the identity-verified SWE-rebench shard; rechecked all frozen hashes after extraction. Fresh isolated publisher controls reproduce 11/13 base passes and 13/13 reference passes. Teacher candidate passes 12/13: test_with_crlf_string still fails because loads lacks the positional encoding argument. Raw-outcome recomputation blocks mechanical admission with publisher_expectations_not_matched. Corpus055 remains unchanged.
+
+Independent finite API/codec matrix evaluates six operations (load filename, load BytesIO, loads bytes, parse bytes, dump filename, dump BytesIO) across UTF-8, cp1252, UTF-16 and ASCII with representable payloads: 24 cases per variant. Loading checks exact content and metadata, detecting encoding accidentally captured as metadata defaults. Dumping compares actual bytes with dumps(post).encode(encoding), plus inverse decoding. Base passes2/fails22, teacher passes10/fails14, publisher reference passes20/fails4. Each container is removed; frozen repair patches remain unchanged.
+
+All four reference failures are filename dumping: reference encodes content to bytes, then passes bytes to codecs.open's text encoder, raising TypeError. Publisher tests do not exercise this path. Therefore publisher agreement alone cannot establish task-level correctness. The teacher's filename handling works but its byte-input and binary-output coverage is incomplete. These are finite contemporary-Python compatibility controls, not universal codec proofs or historical runtime claims; existing optional pyaml coverage remains absent.
+
+Evidence: evidence/data/frontmatter31-evaluation-evidence-001. Training approval remains false; Runpod unused. Any correction must be explicitly marked as a post-evaluator-exposure derivative, preserve the failed prefix and diagnostics, and independently validate filename/text-stream/binary-stream semantics before fresh replay and grading. Do not copy the reference's filename-dump defect merely to agree with its narrow tests.
+
+Archival verified: 56 files / 83,370 bytes uploaded to R2 and independently restored, with original/restored per-file hashes compared.
+
+
+## 2026-10-12: frontmatter31 explicit encoding correction and replay002
+
+Post-evaluator-exposure assistant derivative propagates encoding through parse/loads/load and keeps filename output as text through a codec writer, preventing double encoding. Standard binary IO and streams declaring binary mode receive encoded bytes. Other writers preserve the original text protocol. No write-and-retry dispatch is used, avoiding a second write after an ambiguous failure. Opaque custom binary sinks without type/mode declarations are not autodetected; this remains an explicit API limitation.
+
+For representable Unicode text and the tested codecs, the check uses decode(encode(text,e),e)=text, exact parsed metadata/content and exact output bytes from dumps(post).encode(e). Expanded finite matrix: four codecs and eight operations, including StringIO and a custom text writer, gives32cases pervariant. Base10pass/22fail; originalteacher18/14; publisherreference20/12; corrected32/0. This covers the observed defects, not all codecs, custom writers, platform encoders or historical dependency behavior.
+
+Fresh attributed completion appends repair plus upstream and encoding assertions to the unchanged source prefix. No publisher tests injected into history. Native002:40chargedcalls,41exchanges,84messages;23,562inputtokens/11,758shiftedsupervisedtargets;31,754with8,192reserve. Patch2,327bytes SHA25676a4e8b9bb524d827ef02885b7ba236e66ae7b9389f319370175965144bac05d. Publisher candidate13/13matchesreference; raw-outcome mechanical admission passes. Training approval remainsfalse and corpus055unchanged pendingsemantic/rights/splitreview. All disposable containers and temporary source shardremoved. Runpodunused.
+
+Evidence: evidence/data/frontmatter31-corrected-evidence-002. This is repaired supervision and finite functional validation, not new Gemma performance evidence. P1 remains incomplete and substantial dataset scale-up remains necessary.
+
+R2 archival confirmed:52files,583,219bytes,published and independently restored with all per-file hashes compared.
+
+
+## 2026-10-12: semantic integration holds and codec-stream regression
+
+Targeted history review blocks integration of csv22 native002 and frontmatter31 native002. This is not an exhaustive rights/privacy/history review. Hash-bound findings identify exact assistant messages. csv22's reproduction checks pipe membership in line.split('|')[1], which is identically false: splitting on a single-character delimiter leaves no delimiter in any component. A finite 1,093-string enumeration confirms the implementation property but the argument applies to all strings. Another diagnostic miscounts columns from raw delimiters, and a comprehensive helper prints Boolean failures without propagating a nonzero exit. Frontmatter helpers likewise catch/print failures, and one accepts arbitrary exceptions for an invalid-codec test. These observations are not fabrication, but they are unsuitable as unqualified successful-test supervision.
+
+Review also prompted a missing production edge-case check: codecs.open text wrappers can expose binary mode from their underlying stream. Native002's correction dispatches bytes based on that mode and fails all four added codec-stream cases, despite13/13publisher and32/32previous finite controls passing. Expanded36-case matrix:base14pass22fail,originalteacher22/14,publisherreference20/16,correction00132/4. Prior evidence remains historically accurate at its narrower scope but does not establish codec-stream correctness.
+
+Correction002 prioritizes codecs.StreamReaderWriter/StreamWriter text protocols before mode-based binary dispatch. Fresh five-variant36-case matrix reproduces predecessor failures and gives36pass0fail for correction002. This corrected patch is not yet replayed or publisher-graded; native002 remains blocked. Opaque custom binary sinks without a type/mode declaration remain outside automatic detection. Evidence: evidence/data/two-candidate-review-evidence-001. Corpus055 unchanged,zero admittedtokens,Runpodunused,P1incomplete. Next: attributable diagnostic amendments plus fresh completion/replay and grading, then source/rights/split review; do not infer corpus eligibility from mechanical passing alone.
+
+R2 publication and independent restoration confirmed:46files,93,111bytes,all original/restored file hashes matched.
+
+
+## 2026-10-12: frontmatter31 attributed diagnostic amendment and replay003
+
+Three created diagnostic files are amended under exact canonical source/derived action hashes. Selected broad handlers now re-raise failures; invalid-codec checks require LookupError and fail when no exception occurs. Compatibility claims are narrowed to exercised examples. No actions are removed/reordered and original histories remain preserved. The separately bound completion applies correction002, including codec text-wrapper handling, and exercises that path in fresh native observations.
+
+Independent mutation controls verify four role/fault combinations: an injected load RuntimeError and a silently accepted invalid codec are swallowed by the original helpers but propagate as RuntimeError/AssertionError in the amended helpers. Injected responses are restricted to evaluator controls and never enter the training history. This is targeted validation of the identified diagnostic defects, not an exhaustive semantic review.
+
+Native003 completes40chargedcalls/41exchanges/84messages. Exact token audit:23,679inputs,11,887shiftedsupervisedtargets;31,871with8,192reserve. Fresh production publisher grade13/13matchesreference and raw-outcome mechanical admission passes. Latest correction has36/36independent encoding cases from controls004. Temporarysource shard and containersremoved. Evidence: evidence/data/frontmatter31-amended-evidence-003.
+
+Training approval remainsfalse; corpus055unchanged. Full source/history/rights/splitreview still required, including the documented opaque custom-binary-stream limitation and optional pyaml coverage. csv22's diagnostic holds remain unresolved. P1 remainsincomplete;Runpodunused. Mechanical passing is not corpus eligibility or evidence of improved model performance.
+
+R2 publication and independent restoration confirmed:40files,712,115bytes,all per-file hashes matched.
+
+
+## 2026-10-12: csv22 attributed diagnostic amendment and replay003
+
+Three created helper files amended under canonical source/derived hashes. The impossible split-component predicate becomes a literal unescaped-source-sequence diagnostic; raw pipe count is explicitly not presented as parsed Markdown column count. CLI subprocess failures now propagate. The comprehensive helper returns process failure whenever either Boolean result fails. Existing historical width-error/fix sequence is preserved rather than retrospectively hiding failures. Original histories remain intact.
+
+Independent truth-table control extracts the actual original/amended main blocks, injects all four Boolean helper-result combinations and verifies eight subprocess outcomes. Original always exits0; amended exits0 exactly when both results aretrue. This is exit-status validation, not Markdown rendering proof. Injected results are evaluator-only.
+
+Fresh native003 uses amended source actions and the separately bound parsing-preserving completion. It completes40chargedcalls/41exchanges/84messages;24,112inputtokens/7,201shiftedsupervisedtargets;32,304with8,192reserve,within32,768. Fresh publisher grading9/9matchesreference; raw-outcome mechanical admission passes. Production patch remains the independently510-case-checked pure-render correction; no new patch performance claim. All temporary shard data and replay/grading containersremoved.
+
+Evidence:evidence/data/csv22-amended-evidence-003. Training approval remainsfalse,corpus055unchanged. Full history/source/rights/split review is still pending; repairing the identified diagnostics does not imply every statement or command is qualified. P1 remainsincomplete and Runpodunused.
+
+R2 archival confirmed:36files,620,356bytes,published and independently restored with all hashes compared.
+
+
+## 2026-10-12: two-candidate repository and lexical isolation checks
+
+Fresh GitHub metadata for lzakharov/csv2md and eyeseast/python-frontmatter checked for exact canonical repository identity and network-root IDs. Neither overlaps reserved names or known network roots from the hash-verified historical registry, nor existing corpus repository networks. Existing registry metadata is historical; detached copies and unrecorded relationships remain unexcluded. Reserved evaluation issue bodies were not read.
+
+Retained byte-identical MIT notices from both pinned source checkouts with copyright attribution. This records source notices only; rights to complete trajectories and downstream training remain unapproved. Added the independently reconstructed issue texts to a review inventory with the39existing corpus issues; neither new task triggers Jaccard>=1/10 or containment>=1/5 lexical screening. The inherited PennyLane overlap remains. All820pair intersection/union/containment counts independently crosschecked by set operations and exact Fraction arithmetic. This does not establish semantic independence.
+
+Both native003 history trees pass the narrow source credential-indicator gate, with before/after identity checks; privacy approval remainsfalse. Evidence:evidence/data/two-candidate-isolation-evidence-001. Corpus055unchanged; no frozen split or training approval inferred. Remaining work includes complete history/source review, trajectory-rights qualification and substantial data expansion. Runpodunused;P1incomplete.
+
+R2 publication and independent restoration confirmed:10files,171,480bytes,all per-file hashes matched.
+
+
+## 2026-10-12: corpus056 quarantine integration and capacity assessment
+
+Versioned csv22 native003 and frontmatter31 native003 as explicitly post-evaluator, assistant-amended inspection candidates. This is quarantine storage, not a completed review or training admission. Verification records retain full-history, rights, privacy and frozen-split holds. All39predecessorrecords preserved exactly;41examples/41tasks/40repositorygroups. Independent totals807,897inputs and235,839shiftedsupervisedtargets agree with production loader. ManifestSHA25689913c88a792b88a1c9305e04a82d046a9d8e42fa0eace6c73ee5ff380d56908. Every admissiongate remainsnull and an actual training-purpose load rejects the corpus.
+
+R2 corpus83files/8,950,093bytes uploaded/restored/allhashescompared; production loader revalidated restored bytes. Integration evidence18files/227,819bytes likewise R2verified. Redundant staging and independently restored corpus copy removed after fresh comparisons; authoritative corpus retained. Evidence:evidence/data/corpus056-integration.
+
+Exact capacity arithmetic:50Mtokens per candidate would consume212complete passes plus2,132tokens from pass213, even if all current targets were admitted. They are not: admittedtokens remainzero. A hypothetical maximumthreepasses would require16,666,667unique supervisedtokens,shortfall16,430,828; this is an illustration,not an approved repetition policy. Repetition does not add tasks or repositories. Evidence:evidence/data/corpus056-scale-evidence-001. Substantial source expansion and qualification remain essential; no industrial quality or model-performance claim follows from this corpus. P1incomplete,Runpodunused.
+
+
+## 2026-10-12: structlog350 bounded dependency/runtime qualification
+
+Pinned ten dependencies from PyPI release metadata with exact wheel sizes/SHA256:freezegun1.5.1,pretend1.0.9,python-dateutil2.9.0.post0,six1.17.0,pytest8.3.5,pytest-asyncio0.25.3,iniconfig2.1.0,packaging24.2,pluggy1.5.0,simplejson3.20.1. Offline install uses hash-required lock and no dependency resolution. Import origin verifies the independently fetched source under/testbed/src/structlog. Original pinned source remains unchanged; containers removed.
+
+First explicit upstream run:440passed,12failed,16skipped. Eleven failures stem from async fixtures being treated as plain fixtures under strict asyncio mode. A second fresh run with explicitly configured --asyncio-mode=auto yields451passed,1failed,16skipped. No test expectations or repository code changed. Remaining failure:test_threadlocal.TestThreadLocalDict.test_delattr_missing expects a bare missing-attribute name while Python3.13 returns a descriptive AttributeError message. This modern environment is not fully qualified or equivalent to historical supported Python versions. Skips include Windows,better-exceptions,greenlet and parameterized optional coverage; they are not counted as success.
+
+Source issue concerns bytearray acceptance by the final logging processor. No publisher solution/test fields inspected and no training example created. Evidence:evidence/data/structlog350-runtime-evidence-001. Next requires an explicit supported runtime decision or bounded task-specific controls with the full-suite limitation retained, followed by native replay and publisher comparison. Corpus056unchanged,Runpodunused,P1incomplete.
+
+R2 archival confirmed:54files,2,407,066bytes,published and independently restored with all per-file hashes compared.
+
+
+## 2026-10-12: structlog350 source snapshot and no-op edit replay blocker
+
+Built pinned offline image32b6af744f665141b4b86476c44c1e0f08d2231fcb3412dd288512ff451c2117 with the reviewed dependency lock and explicit asyncio auto mode. Parentless snapshot preserves upstream tree at6bd5b32ea58a9f9a8edfd846284f918b78fe3468. Independent container verifies all tracked bytes/tree,one parentless commit,no remotes and inaccessible original base commit. Native import root is explicitly/workspace/src. Known broader runtime limit remains451pass/1fail/16skips; not historical environment equivalence.
+
+Fresh replay captures33source events before stopping at sourceindex66. Native edit_file rejects a str_replace whose old_string and new_string are byte-identical. The replay's general mutation-error rule aborts. This is a concrete no-op compatibility restriction,not proof that the bytearray repair itself is incorrect. No submitted patch or complete history is claimed. Receipt status=incomplete;trainingfalse. Container and temporary200,489,804bytesource shard removed. Original observed error retained; no publisher patches/tests inspected.
+
+Evidence:evidence/data/structlog350-replay-evidence-001. Next:qualify explicit no-op behavior with unchanged-state verification and negative controls,without suppressing genuine failed edits or fabricating success. Corpus056unchanged,Runpodunused,P1incomplete.
+
+R2 archival confirmed:34files,1,935,098bytes,published and independently restored with all file hashes matched.
+
+
+## 2026-10-12: verified rejected-no-op replay support
+
+Added zenithsync/replay_noop.py and narrow native replay integration. Only nonempty identical replacement strings with exactly one occurrence in a bounded regular UTF-8 file qualify. Before/after snapshots checkSHA256,size,device,inode,mode,mtime,ctime; symlink paths and unstable reads reject. Native result must exactly match the known FileEditError for identical old/new strings. The error remains in observations; a separate event annotation records unchanged target evidence. Genuine mutation/submission errors retain the stop rule. Snapshot reads are adapter verification,not charged agent tool calls; module identity is recorded in replay receipts. Scope is the target file,not a claim that every container byte is unchanged.
+
+Seven targeted tests cover valid no-op preservation,changedstate,missing/repeatedmatches,invalidUTF8,symlinks,noncanonicalpaths,unexpectederrors and malformed snapshots. Full local suite578tests passed,zero skips,23.623seconds,source identities bound. Reduced-model CPU tests included; no full-size/GPU runtime qualification. Full-suite archive4files/594,645bytes R2verified with320innerfilehashes checked. Evidence:evidence/p1/full-suite-qualification-005.
+
+Structlog350 native002 now completes53chargedcalls,54exchanges,110messages with one verified rejected identical edit. Submittedpatch1,258bytesSHA2569d4ce0bfbed00ca147f4da738d10eeebb107af46c38f618903282cb031d28125. Actual tokens23,859inputs/7,489shiftedtargets;32,051with8,192reserve. Contextfits but53calls exceeds40-callpolicy. Remains outside corpus; do not increase policy or truncate history merely to force acceptance. Publisher grading remains undone. Container and temporarysource shard removed. Evidence:evidence/data/structlog350-noop-replay-evidence-002. Corpus056unchanged,Runpodunused,P1incomplete.
+
+Replay archive21files/562,587bytes R2published and independently restored,all per-file hashes compared.
+
+
+## 2026-10-12: native-call-aware batch expansion
+
+Reparsed128hash-verified cached histories with current source converter and native adapter.88passstaticpreflight;19fit40chargedcalls and12fit38,leaving room for two completioncalls. One native charge per shell/view/create/replace action is independently crosschecked against source tool calls and four completed native receipts(csv22,frontmatter31,filesprompt36,structlog350);predictedcounts match. Source-format token lengths remain no guarantee of native context fit. This is deterministic development triage,not a statistical performance estimate.
+
+Eightnewprioritytasks remain after excluding corpus056 and completedattempts:nbgrader1410,pypinfo137,pandas_market_calendars11,djangorestframework-api-key187,pytypes37,kombu1754,pubmed_parser89,tianshou67. The38-call preference does not declare39/40-call histories invalid; those remain in the full screening record. Two source trees were already acquired. Of six new fetches,fourpassfulltree/blob verification:pypinfo51,602bytes,pandas_market_calendars188,106,kombu1,697,303,tianshou1,267,965. nbgrader and pubmed_parser exceed10MBmaterializationlimit;no archive payload downloaded for them. Do not relax the storage bound silently.
+
+Combined archive3files/1,591,096bytes R2published/restored;all511innerfilehashesverified. Removed redundant staging and independent restore copy after comparison; original working sources retained. Evidence:evidence/data/budget-batch-source-evidence-001. These sources have no runtime or training qualification yet. Corpus056unchanged,Runpodunused,P1incomplete. Next:bounded runtime qualification for the new candidates; source-scale expansion remains far short of the50M-per-candidate plan.
+
+
+## 2026-10-12: new batch baseline and kombu1754 JSON environment
+
+Four independently verified new repositories ran in fresh offline containers with read-only sources and unchanged-source checks. Baseline collection blockers:pypinfo requires freezegun/platformdirs;pandas_market_calendars requires pandas;kombu requires amqp;tianshou requires torch/numpy. Allcontainersremoved. These failures are dependency evidence,not task-solving outcomes.
+
+Kombu's source issue concerns UUID JSON round trips beyond historical versions1-5. A bounded offline environment pins13PyPIwheels by SHA256/size,including amqp5.3.1,vine5.1.0,hypothesis6.131.9,attrs25.3.0,sortedcontainers2.4.0,pytest7.3.1,pytest-freezer0.4.9,freezegun1.5.1,python-dateutil2.9.0.post0,six1.17.0,iniconfig2.1.0,packaging24.2,pluggy1.5.0. JSONmodule tests11/11pass underPython3.13. This includes the existing Hypothesis tests but is not an exhaustive UUID proof or full-suite/historical-runtime qualification. Source import path is verified; no live services or credentials used.
+
+Built image99a2b84bb377612fd0f18da23df0ea38e164172c7698a30ddc950bc4997bc22c from the pinned base with offline hash-required installation. Parentlesssnapshot independently verified against all fetched upstreamtrackedbytes/tree;onecommit,noremotes,originalbaseinaccessible. Hypothesis scratchstorage routes to/tmp. Dockerimage remains local; buildinputs are archived. No publisher test/solution fields inspected, no native replay or training approval yet.
+
+Evidence:evidence/data/kombu1754-runtime-evidence-001. Corpus056unchanged,Runpodunused,P1incomplete. Next:native replay followed by independent UUID identity/round-trip controls and publisher grading with frozen artifacts.
+
+R2 archival confirmed:80files,4,156,376bytes,published and independently restored with all per-file hashes compared.
+
+
+## 2026-10-12: kombu1754 native replay and context exclusion
+
+Native replay completed 36 charged calls, 37 exchanges and 76 messages in the pinned offline image. Submitted one-line UUID decoder change uses UUID(hex=o["hex"]) instead of reapplying version metadata. Patch SHA256 e3998a6f1e0dda3f7bcf46e09e2267d8fb622ed52b38c5c1313425387809e55f. Container removed and the temporary 245,825,405-byte source shard deleted after full hash verification.
+
+Independent finite controls cover 16 version nibbles x 8 variant prefixes x 8 deterministic payloads x 4 input representations, with integer and byte preservation checked against the original 128-bit value. Base: 3,392 passed / 704 failed. Candidate: 4,096 passed / 0 failed. Forced-version-4 mutant: 64 passed / 4,032 failed. This is finite repair evidence, not exhaustive 128-bit coverage, historical runtime qualification or full-history approval.
+
+Native token export correctly rejected the history as out of bounds. A separate non-exporting diagnostic records 32,917 input tokens and 7,748 shifted supervised targets without truncation. With the fixed 8,192 output reserve, total demand is 41,109 versus the 32,768 budget. Candidate is excluded from corpus056; no policy relaxation, shortened history or training token export. Publisher grading is deferred and publisher oracle fields remain unread. Static source call-budget screening alone does not predict native context fit.
+
+Evidence: evidence/data/kombu1754-replay-evidence-001. Corpus056 unchanged, admitted tokens remain zero, Runpod unused and P1 incomplete. Next: continue source qualification with context-aware triage while preserving complete observations; sufficient diverse qualified data remains a major unmet requirement.
+
+R2 archival confirmed: 32 files, 1,623,262 bytes, independently restored and all file hashes compared. Redundant publication staging and restore copies removed after comparison with retained repository evidence.
+
+
+## 2026-10-12: verified SWE-rebench-V2 raw-shard release
+
+Published/verified the complete four-file SWE-rebench-V2 source artifact, then independently restored all 428,868,318 bytes and compared every file against the original manifest. Removed only the original raw Parquet payload after a final local identity/residency check and durable pre-unlink record. Removed the temporary restored directory. Released 428,843,008 allocated bytes (about 409 MiB); original source metadata, manifest, intake receipts and selected task extracts retained. This is not a claim that macOS has immediately reduced its physical-volume usage by exactly that amount.
+
+Evidence and restoration instructions: evidence/data/rebench-v2-local-release-001. Older extractors expecting artifacts/data/quarantine/swe-rebench-v2-shard-001/data/train-00000-of-00001.parquet now require a verified R2 restore first. No training admission or dataset-rights change. Runpod unused; corpus056 unchanged and P1 incomplete.
+
+Next runtime candidate pypinfo137 was inspected before provisioning: source-format history is 43,468 tokens and core imports Google BigQuery. This source-format measurement is neither a native-context acceptance nor a rejection. No additional dependency environment built in this cycle; storage release took priority. Native-context and complete dependency qualification remain necessary.
+
+Release evidence also R2-published and independently restored: 7 files, 8,235 bytes; all hashes matched.
+
+
+## 2026-10-12: current training-worker R2 recovery qualification
+
+Staged the current explicit 42-file / 226,786-byte training worker bundle; all eight CLI help/import checks passed in isolation. Published and independently restored the bundle with manifest SHA256 5328ce1d319ead0386ecb5924d3d55443707e6b5e0214fa036caf09755c25c9b. Independently restored corpus056 (83 files / 8,950,093 bytes). The restored worker inspected the complete corpus successfully and rejected purpose=training with Quarantine corpus cannot train.
+
+Focused tests exercised object transport, corpus validation, token scheduling/weighted optimization, optimizer state, checkpoint storage, adapter recovery and training sessions against restored production modules. First harness attempt: 54 tests, one failure and one error caused by an incorrect optimizer test-module name and a missing package path in a fresh subprocess. Those logs remain unchanged. Corrected only the harness: selected test_optimizer_checkpoint_torch and linked the restored package into the owned test overlay. Second attempt: 58 tests passed, zero skips; production import origins checked, all restored source and corpus bytes reverified. The temporary package link was removed after testing.
+
+Evidence: evidence/p1/training-deployment-recovery-evidence-001. This is current local CPU source/data recovery evidence, not Linux/CUDA equivalence, full-checkpoint optimization, long-run training or model improvement. P1 remains incomplete; corpus056 remains quarantine-only with zero admitted tokens. Runpod unused. No production code changes in this cycle.
+
+Recovery evidence archived to R2 and independently restored: 4 outer files / 281,179 bytes; all 249 inner member hashes verified. Removed the redundant restored corpus copy after fresh comparison; original corpus retained.
+
+
+## 2026-10-12: Django API-key187 supported-version offline baseline
+
+Pinned 22 PyPI wheels for Python3.9/Django3.2.25/DRF3.12.4/pytest6.2.5, including pytest-django, coverage and all tested password hashers. Each wheel matches official metadata size/SHA256; aggregate wheel cap16,000,000bytes. x86-64 selection11,495,747bytes; ARM64 selection11,482,653bytes. Common wheel bytes reused locally for the second selection.
+
+Initial container creation rejected linux/amd64 because the available pinned Python3.9 image cf0704507972b63c9b20382dd6f05248572d6b25961410305f96479bf2e8a23c is ARM64. No tests ran in that first attempt. A second fresh offline ARM64 container used matching wheels, source read-only, explicit src import origin and temporary coverage/dependency paths. All62upstream tests passed with pytest exit0; repository coverage threshold80% met (reported96.55%). All recorded phases pass, no skips; four warnings retained in log. Source inventory unchanged and container removed.
+
+This qualifies the tested Python3.9/Django3.2 SQLite configuration locally, not PostgreSQL, x86-64 replay, publisher controls or training readiness. No publisher oracle fields inspected. Native replay remains pending; source-format history30,964tokens is not a native-context fit decision. Evidence:evidence/data/djangoapikey187-runtime-evidence-001. Corpus056 unchanged, zero admitted tokens, Runpod unused, P1 incomplete.
+
+Runtime archive R2-published and independently restored:4outerfiles/21,944,171bytes;all111innerfilehashesverified. Redundant archive staging, local archive bundle and restore copy removed after verification; original dependency/runtime evidence retained.
+
+
+## 2026-10-12: Django API-key187 offline snapshot and native replay
+
+Fetched Git/system packages in a disposable credential-free ARM64 container using APT signature/hash checks and an explicit50MB package-download cap; archived downloads and plan bind exact packages. First offline image build failed with APT's relative-path internal error for perl-base. Preserved its log. Second build used the same downloaded packages through dpkg -i and required an empty dpkg --audit result. No network used during image construction. Image57762e8cd04b8b803ae9cd35f11f7b0928a0f7280ed540b70ad96976e7afc08d.
+
+Independent container checks all tracked source bytes/tree against pinned upstream dd806cf8b9879ae37e3b0c0a57f9209dab61c25b,one parentless commit,no remotes and inaccessible original commit. Native ARM64 replay completed33chargedcalls,34exchanges,70messages. Full pinned-tokenizer rendering:22,412inputs/3,749shiftedtargets;30,604including8,192reserve fits32,768. Patch2,299bytesSHA256eca2cd63c94056610148f8eb6d799b4736c70cd2842dfcd727bf0971bbd1c912. Replay container and temporary source shard removed.
+
+No training admission: submitted patch includes reproduce_warning.py beyond the intended package source; warning reproduction redirects stderr without explicitly enabling deprecation warnings, so absence-of-warning claims need a negative control. Publisher grading and complete semantic,rights,privacy,split review remain pending. Publisher oracle fields unread. Native history is preserved without shortening. Evidence:evidence/data/djangoapikey187-replay-evidence-001. Corpus056unchanged,Runpodunused,P1incomplete. Next: independent warning controls and explicit source-only completion if justified, then freeze and publisher grading.
+
+Replay/build evidence R2-published and independently restored:4outerfiles/35,561,368bytes;all96innerfilehashesverified. Redundant staging/archive/restore copies removed after fresh validation; original working evidence retained.
+
+
+## 2026-10-12: Django API-key187 warning negative controls and corrected replay
+
+Fresh-process ARM64 Django3.2.25 controls prove both source warning diagnostics falsely report absence on unchanged code. Initial script captures warnings after django.setup; warning is emitted outside the capture. Replacement redirects stderr but leaves deprecation warnings filtered. Independent explicit always-filter capture surrounding setup detects exactly1targetwarning on base and0on candidate, and verifies application config loads. This is version-specific evidence, not historical-version equivalence.
+
+Before any publisher oracle exposure, appended two explicitly assistant-authored completion commands: remove only the SHA256-bound reproduction script, then run the correct fresh-process warning capture plus upstream tests with failures propagated. Original prefix and erroneous observations are preserved; completion explicitly explains those false negatives. New replay002 completes35chargedcalls,36exchanges,74messages; actual tokens23,494inputs/4,317shiftedtargets and31,686including8,192reserve. All62upstream tests pass in the appended command; four unrelated warnings retained. Appended pytest overrides addopts to avoid repeated coverage output; earlier baseline independently met the repository coverage threshold.
+
+Final patch is source-only:708bytes,SHA2568333802709173030023b01a7a68d60920b5f3830301d9b2157b195b75691103c. No new-model evaluation. Complete history still requires semantic review (including earlier faulty diagnostics and the source grep pipeline); publisher grading,rights,privacy,split qualification pending. No corpus integration or training admission. Replay container and temporary source shard removed. Evidence:evidence/data/djangoapikey187-corrected-replay-evidence-002. Corpus056unchanged,Runpodunused,P1incomplete. Next: freeze this corrected attempt before publisher extraction and qualify grading on the explicit ARM64 environment.
+
+Corrected replay/control evidence R2-published and independently restored:33files/532,032bytes,allhashesmatched. Redundant publication staging and restore copies removed after comparison with retained evidence.
+
+
+## 2026-10-12: explicit evaluator architecture and Django publisher comparison
+
+Added optional validated platform to the execution profile: linux/amd64 or linux/arm64 only; omitted platform preserves existing amd64 behavior. Both base/reference and candidate runners forward it explicitly to Docker. Rejected unsupported/ambiguous profile values in tests. Full local CPU suite579tests passed,zero skips,20.923seconds; source-bound evidence R2archived/restored4files595,070bytes with320innerhashesverified. Evidence:evidence/p1/full-suite-qualification-006. This is not full-model/GPU qualification.
+
+Froze corrected Django replay002,history and tokens before extracting publisher oracle fields; frozen files rechecked unchanged after evaluation. All publisher runs use the same pinned ARM64 image, Python3.9/Django3.2.25, src import root and full tests directory. Base:62passed/1failed/1skipped. Reference:63passed/1skipped. Candidate raw diagnostic:63passed/1skipped. Exact64collectednodeidentities match across roles. Candidate source-only patch remains unchanged by tests.
+
+Strict compare_controls rejects the skipped outcome. The publisher adds mutually exclusive version-conditioned tests: test_app_config_not_defined runs on Django>=3.2; test_app_config_defined skips there and applies below3.2. We retain the skip and do not mark it passed or issue mechanical admission. The raw candidate diagnostic is explicitly non-admitted; older-version branch remains unexecuted. No publisher tests inserted into replay history and no source/history revision after oracle exposure.
+
+Evidence:evidence/data/djangoapikey187-publisher-evidence-001. Corpus056unchanged,zero admittedtokens,Runpodunused,P1incomplete. Next: qualify a supported older-Django environment and define explicit version-matrix evidence without weakening skipped-test checks or hiding unexecuted branches. Full-history,rights,privacy,split review remains necessary even if version coverage is resolved.
+
+Publisher diagnostic evidence R2-published/restored:41files/199,804bytes,allhashesmatched. Redundant staging/restore copies removed after comparison.
+
+
+## 2026-10-12: Django API-key187 two-version execution coverage
+
+Downloaded the official Django 3.1.14 wheel within a 9 MB bound and verified its PyPI size/SHA256. Built an offline ARM64 environment atop the verified Python 3.9 replay image, replacing only Django; pip check passed. Image e77233cf27c4e60857abe458a8242f74bce57c79e3fbc4bb54499aec9040805c. Independent snapshot verification preserved all upstream tracked bytes, the exact tree and parentless history.
+
+Full publisher suite on Django 3.1.14: base, reference and candidate each 63 passed / 1 skipped. The skipped test is test_app_config_not_defined, which applies to Django >=3.2. The older-version test_app_config_defined executes and passes for all three roles. Django 3.2.25 results remain base 62 passed / 1 failed / 1 skipped, reference and candidate 63 passed / 1 skipped.
+
+Exact two-version reconciliation checks all 64 node identities, unique phase identities, setup/teardown outcomes, applicable call outcomes, the two explicit skipped branches and exit codes. Every node executes in at least one applicable version for each role. No skipped execution is counted as passed. This closes the previously unexecuted older-Django branch for these two tested versions, not every supported version or PostgreSQL/x86-64 compatibility.
+
+Evidence: evidence/data/djangoapikey187-matrix-evidence-001. No source or replay history changes after publisher exposure. The existing strict single-environment grader still rejects skips; a tested, explicit matrix admission contract remains unimplemented. History, rights, privacy and split review remain open. Corpus056 unchanged, zero admitted tokens, Runpod unused and P1 incomplete.
+
+Matrix evidence archived to R2 and independently restored: 4 outer files / 7,456,223 bytes; all 48 inner file hashes verified. Redundant archive staging and restore copies removed after validation.
+
+
+## 2026-10-12: reusable explicit pytest matrix outcome contract
+
+Implemented zenithsync/pytest_matrix.py. Caller must supply exact applicable node lists for each named environment; applicability is not inferred from observed skips. All base/reference/candidate documents must collect the same full unique node set. Inactive nodes require skipped setup, passed teardown and no call. Active nodes retain original collection errors and exit status and pass through the existing strict phase verifier. Every node must execute somewhere; every active reference/candidate obligation must pass, with at least one base failure demonstrating a repair transition. Unexpected skips, missing/duplicate phases, inconsistent collection, inactive calls and uncovered nodes reject. No skip is relabeled passed. Inputs remain unchanged.
+
+Six tests cover the complete matrix and negative cases. Full local CPU suite: 585 tests passed, zero skips, 20.282 seconds. Applied the contract to all six recorded Django role/version executions: 64 exact nodes covered; one repair transition, test_app_config_not_defined on Django 3.2.25. Application binds raw outcomes and runtime receipts, publisher test-patch identity and explicit reviewed applicability declarations. The verifier checks declared obligations, not the truth of arbitrary caller declarations; runtime/version/provenance authentication remains a caller responsibility.
+
+Evidence: evidence/data/djangoapikey187-matrix-contract-evidence-001 and evidence/p1/full-suite-qualification-007. This is an outcome contract, not an integrated mechanical-admission or corpus-approval path. Existing strict single-environment grading is unchanged. Need to bind matrix evidence into admission without accepting unreviewed applicability, then complete full-history/rights/privacy/split review. Corpus056 unchanged, zero admitted tokens, Runpod unused and P1 incomplete.
+
+R2 publication and independent restoration confirmed: matrix contract 24 files / 282,161 bytes; full-suite archive 4 files / 599,000 bytes with all 322 inner hashes verified. Redundant matrix staging/restore copies removed after comparisons.
+
+
+## 2026-10-12: source-derived version applicability
+
+Added zenithsync/pytest_applicability.py, a non-executing AST interpreter for a deliberately restricted test-module language: direct imports, plain top-level tests and direct pytest.mark.skipif comparisons between django.VERSION and literal integer tuples. Unsupported expressions, aliases, rebinding, executable defaults/annotations, multiple decorators, duplicate tests and mismatched module collection reject. Callers bind source bytes and actual runtime identity; other modules' conditions remain outside this parser's scope.
+
+Full five-component Django VERSION is required. This preserves Python tuple comparison semantics at equality boundaries; reducing VERSION to a three-component tuple would change comparisons against an equal three-component constant. Tests independently check six comparison operators across boundary versions, false/malformed version inputs and unsupported syntax. No arbitrary Python source execution is used for predicate interpretation.
+
+Fresh offline probes in both exact grading images applied the hash-bound publisher test patch, exported byte-identical tests/test_compatibility.py and read the actual five-component Django versions. All six earlier role runtime receipts match the corresponding probe image identity. Derived applicable node lists feed the matrix contract, reproducing complete 64-node execution coverage and the one expected modern-version repair transition. Evidence:evidence/data/djangoapikey187-predicate-evidence-001. Evidence is not generic applicability approval for other test modules or full training admission.
+
+Full local CPU suite:591tests passed,zero skips,21.764seconds; evidence/p1/full-suite-qualification-008. Matrix-grade binding into replay admission remains unfinished, as do complete history,rights,privacy and split review. Corpus056unchanged,zero admittedtokens,Runpodunused,P1incomplete.
+
+R2 verification complete: predicate evidence15files/78,416bytes; full-suite archive4files/603,350bytes with all324innerhashesverified. Independently restored both; removed redundant predicate staging/restore copies after comparisons.
+
+
+## 2026-10-12: publisher-complete matrix obligations
+
+Admission integration review found the generic matrix contract proved an observed repair but did not bind it to publisher transition expectations. Added compare_publisher_matrix in zenithsync/pytest_matrix.py. Requires exact expectation categories, unique publisher keys and explicit supplemental pass-to-pass identities. Full whitespace-containing pytest node IDs remain grouped without collapsing members; each member must match the publisher transition in every applicable environment. Exact union coverage is mandatory. Extra baseline failures cannot be relabeled as useful repair transitions. Candidate/reference failures remain rejected by the underlying strict matrix contract.
+
+Declared all63non-publisher collected identities as regression obligations without filtering on observed success. Applied source-derived applicability from the exact grading images: one publisher FAIL_TO_PASS key plus63supplementalnodes cover all64nodes and pass the two-version outcome contract. No skip is counted passed, and no full-history or training approval follows. Producer binds original raw outcomes, image receipts, actual Django VERSION and test-source identities. Mechanical-admission integration remains explicitly false; patch/runtime/probe binding still needs to be verified in that path.
+
+Four new negative/positive test methods cover publisher category disagreement, omitted/duplicate obligations, extra baseline failure and whitespace-group member disagreement. Full local CPU suite595tests passed,zero skips,21.475seconds. Evidence:evidence/data/djangoapikey187-publisher-matrix-evidence-001 and evidence/p1/full-suite-qualification-009. Corpus056unchanged,zero admittedtokens,Runpodunused,P1incomplete.
+
+R2 publication/independent restoration verified: publisher-matrix5files/83,733bytes; regression archive4files/604,894bytes with all324innerhashesmatched. Redundant matrix staging and restore copies removed after validation.
+
+
+## 2026-10-12: exact matrix probe and runtime bindings
+
+Added zenithsync/probe_receipt.py to reject probe-byte mismatch, wrong image/platform/interpreter, mismatched execution scope, failed export/cleanup, ambiguous Boolean exit codes, OOM and nonterminal container state. This is consistency verification of retained local evidence, not attestation of arbitrary untrusted receipts. Three tests include positive identity preservation and negative program/runtime/status cases.
+
+Reconstructed all six Django base/reference/candidate probe programs using the exact candidate/reference/publisher-test bytes, parentless snapshot commit and source tree, source import path, full tests target, role and known PLUGIN/PROBE implementation. The regenerated source hash equals the executed probe_source identity in every container receipt. Older-version probes include the recorded Django3.1.14 assertion. Runtime role/import/pytest status also matches raw outcomes; primary grading image equals the native replay image. Publisher input identities and native patch/task/base identities match. All source evidence remained unchanged during verification.
+
+Evidence:evidence/data/djangoapikey187-probe-binding-evidence-001. Full CPU suite598tests passed,zero skips,20.618seconds; evidence/p1/full-suite-qualification-010. These stronger probe bindings remain a prerequisite report: the generic replay-admission function has not yet been extended to consume the matrix backend. No mechanical/training approval is claimed. Full-history,rights,privacy,split review remains pending. Corpus056unchanged,Runpodunused,P1incomplete.
+
+R2 publish/independent restore verified: probe evidence9files/64,009bytes; full-suite archive4files/607,256bytes with326innerhasheschecked. Redundant probe staging/restore copies removed after validation.
+
+
+## 2026-10-12: bounded raw-data release and file-residency audit
+
+Completed archival verification of the three R2E raw-shard release records (005–007): 18 evidence files / 17,097 bytes published to R2 and independently restored with matching file hashes. The released raw Parquet files occupied 568,532,992 allocated bytes; selected examples, metadata and reconstruction manifests remain. Combined with the separately verified SWE-rebench-v2 raw release, recorded released allocation is 997,376,000 bytes (about 951 MiB). This is file allocation, not a guarantee of an equal immediate increase in APFS free space. Restoration instructions and per-shard publication/restore receipts are retained in evidence/data/r2e-raw-release-005-007.
+
+The repository metadata census examined 40,252 files: 598 UF_DATALESS entries, zero metadata-access errors and zero .icloud filename placeholders. UF_DATALESS means nonresident content; it is not evidence of corruption. The Finder Download Now/Keep Downloaded error remains unresolved. Do not remove nonresident files merely because they are flagged. A trusted artifact manifest plus independent R2 recovery is required before replacement/removal. Audit paths and assessment were published/restored with matching hashes (2 files / 61,700 bytes), under evidence/data/repository-residency-audit-001. No bulk hydration or global Docker pruning was performed.
+
+P1 remains incomplete. Matrix admission integration, full-history/rights/privacy/split reviews and sufficient approved training data remain pending. No training approval changed; Runpod was unused.
+
+
+## 2026-10-12: recomputed matrix evidence contract
+
+Implemented zenithsync/matrix_grade_evidence.py. Explicit hash-bound references supply publisher metadata, declared regression obligations, predicate source, exported five-component Django versions, predicate/role image receipts and all base/reference/candidate outcomes. The verifier re-derives applicability from source, requires identical predicate sources and distinct runtime versions, checks role/predicate image agreement, recomputes publisher transitions and exact node coverage, compares the entire claimed outcome summary, and rechecks all input hashes before return. No directory-search fallback, saved active-node list or passing summary flag substitutes for recomputation.
+
+Four synthetic-fixture tests cover unchanged inputs, lack of training approval, tampered bytes/results, version/source/image substitutions, omitted roles and missing obligations. Full local CPU suite: 602 tests passed, zero skips, 21.492 seconds. Real Django matrix reproduced all 64 test identities from 20 bound input files. Result and descriptor published to R2 and independently restored: four files / 135,148 bytes with matching hashes. Evidence: evidence/data/djangoapikey187-matrix-recomputed-001.
+
+This verifier is deliberately evidence-consistency-only: its image equality checks do not independently authenticate receipts or reconstruct executed probes. The separate exact-probe/snapshot/patch bindings must still be consumed alongside it by replay admission. Full-history, rights, privacy and frozen-split reviews remain open. Corpus056 unchanged, zero admitted training tokens, Runpod unused, P1 incomplete.
+
+Full-suite evidence R2-published and independently restored: four outer files / 611,136 bytes; all 328 inner member hashes verified. Redundant archive staging and restore copies removed after fresh hash comparisons.
+
+
+## 2026-10-12: semantic binding of matrix probe programs
+
+Added zenithsync/matrix_probe_contract.py. It parses the saved probe's settings with AST literal evaluation, without executing the program. It requires the exact known evaluator body and pytest plugin, rejects executable/duplicate settings, binds role, snapshot/tree, import location, interpreter, test targets and allowed patch paths to explicit caller inputs, and checks base64 payloads against exact candidate/reference/test patch bytes. A bounded optional Django version assertion must match the recorded literal assertion. Receipt verification then binds those exact program bytes to the declared image/platform/interpreter and successful execution/export/cleanup state.
+
+Negative tests recompute receipt hashes for deliberately altered programs, so detection cannot rely merely on a stale hash. They reject narrowed tests, wrong roles/snapshots, changed plugin/body, injected statements, missing/substituted patches and missing version assertions. All six recorded Django role/version probes pass this reusable contract. Evidence: evidence/data/djangoapikey187-probe-contract-001; three files / 10,625 bytes published to R2 and independently restored with matching hashes.
+
+Full CPU suite: 606 tests passed, zero skips, 20.299 seconds. The generic replay-admission backend has not yet been extended: it must combine outcome recomputation, these probe checks, independently bound publisher/task/snapshot provenance and predicate-export provenance before emitting matrix mechanical admission. No claim that caller-supplied image/snapshot assertions authenticate themselves. Corpus056 unchanged; zero admitted training tokens; full-history/rights/privacy/split review pending; Runpod unused and P1 incomplete.
+
+Full-suite R2 publication and independent restoration verified: four outer files / 614,935 bytes and all 330 inner hashes. Redundant archive staging and temporary restore copies removed after fresh comparison; original working evidence retained.
+
+
+## 2026-10-12: integrated version-matrix mechanical admission
+
+Added the swe_rebench_version_matrix backend to assess_replay_bundle. It recomputes publisher outcomes and source-derived applicability, reconstructs the exact predicate/version exporter, verifies every role probe against known evaluator code and exact patches, and binds task/repository/base, publisher metadata, source snapshot evidence, primary native-replay image, per-version images, import observations and pytest exits. Source trees must agree across environments; snapshot verification inputs remain hash-bound. Existing native-history reconstruction, completion provenance, exact patch/attempt identities, tool counting and context/reserve gates still apply. Stored passing flags alone do not establish admission.
+
+The full Django native002 assessment passed mechanical checks with no blockers: 35 tool calls (limit40), 23,494 input tokens plus8,192 reserve =31,686 (limit32,768), 4,317 supervised targets. All64publisher/regression test identities are covered across two versions without counting skipped execution as passed. Evidence:evidence/data/djangoapikey187-matrix-admission-002. Its three-file result/descriptor/runner bundle (85,799bytes) was published to R2 and independently restored with matching hashes.
+
+Four synthetic end-to-end tests include context-overflow preservation and denial of altered task/primary image/summary, rehashed publisher patch substitution, false snapshot verification, missing verification inputs, changed version-export probe and failed runtime observations. Full local CPU suite:610tests passed,zero skips,21.247seconds. Protocol receipt checks now explicitly distinguish grading execution from the non-grading predicate-export probe.
+
+Mechanical admission is not training approval or independent attestation of arbitrary receipts. Complete history review, rights, privacy, frozen splits and GPU qualification remain required. Django is not yet added to Corpus056, and zero tokens are admitted to training. Runpod unused; P1 incomplete. This entry supersedes prior statements that matrix admission integration was unimplemented.
+
+Full-suite R2 publication and independent restoration verified: four outer files / 620,648 bytes and all332inner hashes. Redundant archive staging and temporary restore copies removed after fresh comparisons. The integrated assessment binds49evidence files.
+
+
+## 2026-10-12: complete Django history review and fresh attributed amendment
+
+Reviewed all74native002 messages in12nonoverlapping sections, with per-message hashes and structural coverage verification. The review rejected history quality despite mechanical success: a pytest|grep||echo command could hide pytest failure, and an import/setup check printed an overbroad integration-test claim. Earlier warning-capture false negatives were already explicitly corrected by completion and remain honestly recorded; targeted coverage failures remain CommandError observations rather than being relabeled passes. Public source author contact and synthetic test secrets were noted without granting privacy approval.
+
+Created an explicitly post-evaluator-exposure assistant amendment replacing only shell actions31and32: scope the import/setup message correctly and execute targeted pytest directly, disabling global coverage addopts only for that targeted invocation. The later unmodified full suite still enforces80percent coverage. Actions, paths and order are preserved; observations were generated in a fresh offline local container, not edited. The temporary source shard was hash-verified and removed after replay.
+
+Native003:35chargedcalls,36exchanges,74messages,23,863inputtokens and4,305supervisedtargets. With8,192reserved output tokens, total32,055fits32,768. Full test command reports62passed,4warnings and96.20percent coverage; corrected targeted command reports1passed,2warnings with actual exit0. Explicit warning-capture completion reports0targetwarnings and loaded application on Django3.2.25. The original earlier false-negative diagnostic results remain followed by an explicit correction.
+
+Complete native003 content review used exact comparisons for already inspected unchanged messages plus inspection of every changed field; per-message hashes and full section coverage bind the new history. History quality approved only as an attributed corrected trajectory; training remains false. Patch remains exactly708bytes with the same identity, image and replay profile as native002. The matrix assessment explicitly reuses already executed grading observations for that identical patch, rather than claiming a new publisher execution; all49bound provenance files are rechecked by the integrated backend. Native003mechanicalassessment passes without blockers.
+
+Evidence:evidence/data/djangoapikey187-history-review-002 (rejected predecessor), djangoapikey187-history-review-003, djangoapikey187-matrix-admission-003 and djangoapikey187-amended-replay-evidence-003. Corpus056 unchanged; no token admission. Rights, privacy, split review and corpus integration remain pending. Runpod unused; no production code changed, so the610test full-suite result remains the latest code regression. P1 incomplete.
+
+R2 publication and independent restoration verified:33files/677,686bytes, all hashes matched. Redundant staging and restore copies removed after fresh comparison against retained repository evidence. Earlier rejection/review evidence also published/restored:5files/23,505bytes.
+
+
+## 2026-10-12: Corpus057 quarantine integration
+
+Added Django native003 as the42ndinspection example, preserving all41Corpus056records. Exact independent totals:831,760inputtokens,240,144shiftedtargets,41repositorygroups. Manifest a9eab707f6b2cfc4e9a3e216a06d65d927b3ada2da42ae57076f25e2f568330b; content a716962b927e2f314559aebf96a963bd03f3480b5072983e4cd50aced16e5e5e. Loader rejects training purpose because admission remains null/quarantine. R2 publication and independent restore verified85files/9,214,081bytes; integration evidence14files/226,533bytes likewise verified.
+
+Fresh Django repository metadata compared to retained known canonical/fork IDs: no overlap. All861lexical pairs over42issues independently checked with exact set counts/Fractions; no new Django flags, inherited flags retained. Full decoded corpus credential-pattern screen:42examples,zeroindicators; privacy approval remains false. Exact source MIT notice fetched from the task base commit matches the retained upstream notice. The pinned NVIDIA dataset card was fetched under a256KiBcap. Notices do not automatically clear all dependency excerpts, original service terms or privacy. Separate data-review evidence binds the new history review and source identities.
+
+At240,144targets,50M requires208fullpasses plus50,048targets. A hypothetical three-pass cap would require16,666,667unique targets, leaving16,426,523additionaltargets; this is scale arithmetic, not an adopted repetition policy. Data volume/diversity is not sufficient for the planned training campaign. Corpus057 is the current inspection corpus, not a training-approved dataset. No production code change, latest suite610passed/zero skips. Runpod unused; P1 incomplete.
+
+Data-review evidence R2-published/restored:4files/17,385bytes. Redundant corpus and integration-evidence restore/staging copies were removed after fresh hash comparisons; Corpus057working original and repository receipts remain.
+
+
+## 2026-10-12: current corpus ingestion and schedule recovery
+
+Verified the42-file R2-restored training source bundle against its manifest and current repository: no drift, so prior CPU runtime tests remain applicable without rerunning an unchanged suite. Independently restored Corpus057 from R2 (85files/9,214,081bytes) and inspected it through that restored package in isolated Python. Original/restored one-pass schedules and update streams are byte-identical:9planned updates,42examples each exactly once,831,760inputs and240,144supervisedtargets,zeroovershoot.
+
+Every one of10schedule boundaries (including initial and terminal) reproduced the exact remaining suffix;10deliberately corrupted consumed-token cursors rejected. These are schedule recovery checks, not optimizer or GPU recovery. The actual restored run_corpus_training_worker.py rejected quarantine before touching deliberately absent model/model-manifest paths and created no worker output directory. Valid schedule/config hashes were supplied so rejection exercised the corpus gate rather than an earlier malformed-argument failure.
+
+Evidence:evidence/p1/corpus057-ingestion-001. Sixteenfiles/42,169bytes R2-published and independently restored with matching hashes. Temporary corpus/evidence restore copies removed after fresh comparisons. No optimizer steps, full-model load or Runpod execution. No production code changed; latest full suite remains610passed,zero skips. Training admission, sufficient diverse data, pending reviews and GPU qualification remain unmet; P1 incomplete.
+
+
+## 2026-10-12: all R2E raw shards released locally after R2 recovery checks
+
+Five remaining resident R2E raw shards000–004 were individually published/remote-verified, restored into separate fresh directories under a150,000,000byte cap per shard, and compared against their immutable manifest hashes. Before unlinking, source file type/residency, inode/stat stability and manifest identity were rechecked and a before-unlink record was fsynced. Only original raw Parquet files and verified temporary restores were deleted; metadata, selected examples and evidence remain.
+
+Released file allocation this operation:375,410,688bytes (358.02MiB). Combined with005–007, all8R2Eraw shards have verified R2publication/restoration records and their original local raw paths are absent:943,943,680allocatedbytes released across the two operations. These are allocation figures, not exact APFS free-space gains. Older extractors expecting those raw paths must restore from the retained manifest to a fresh location, verify it, then supply the restored Parquet. No training/admission state changed.
+
+Evidence:evidence/data/r2e-raw-release-000-004, including per-shard manifests, receipts and RESTORE.md. This does not resolve the separate598nonresident-file/Finder synchronization issue. No production code changed; Runpod unused and P1 incomplete.
+
+Release evidence itself was R2-published and independently restored:28files/25,308bytes. All hashes matched; temporary evidence restore removed after comparison.
+
+
+## 2026-10-12: pypinfo137 bounded runtime and candidate counterexample
+
+Selected cached ofek/pypinfo source (baseafaa4265a6baced61a3cea9845e0a5ab4cbb6c06) after inspecting dependency/test requirements. Pytypes37advertises older Python3.3–3.6 compatibility and was not assumed compatible with cached3.9. Pypinfo supports3.9. Downloaded36pinned official PyPI distributions (35wheels and one tinyrecord source archive),8,188,202payloadbytes under50MBcap; all metadata sizes/SHA256verified. Tinyrecord built offline from its hash-pinned source with a hash-pinned wheel bootstrap. Initial fetch invocation failed before acquisition because the storage utility interpreter lacked packaging; the existing native runtime succeeded without additional local installs.
+
+Fresh credential-free, network-disabled Python3.9ARM64 container: all dependencies install, pip check passes, source import resolves to the mounted checkout,28upstream tests pass, source unchanged, container removed. Built immutable replay image8722ee30571e1aa82d8248266ba748a54f6b85a30cee96a74779c4a0218ce24c with cached verified Git packages. Independent snapshot verification confirms all23tracked source files, exact tree, single parentless commit and inaccessible original commit. No publisher oracle read.
+
+Fresh native replay completes32chargedcalls/33exchanges/68messages and produces a1063byte patch (SHA2561f73240724250b56f19f76796181552ecb8142c7fd7e18c90662f2348f31d1f9). Actual token audit:27,317inputs,5,930targets. Input plus8,192reserve=35,509 exceeds32,768by2,741. No silent truncation or reserve reduction. Temporary208,247,441byte source shard was hash-verified and removed after replay.
+
+Independent finite Boolean composition check exercises512synthetic row predicates for time/project/pip/custom-filter combinations using the actual generated WHERE clause in SQLite, controlled field aliases and a timestamp identity function. Baseline81disagreements; candidate46. Ungrouped custom OR can bypass required project/time predicates. This is a concrete counterexample for the generated Boolean subset, not a BigQuery service/dialect validation. Candidate excluded pending a fresh qualified derivative that resolves both context and predicate issues. Corpus057unchanged, no token admission. No production code changed; Runpod unused and P1 incomplete.
+
+Evidence:evidence/data/pypinfo137-candidate-evidence-001. Runtime/dependency/replay/test inputs and negative controls retained together for recovery.
+
+
+## 2026-10-12: verified archive release and proposed predicate correction
+
+Rechecked the pypinfo137 R2 publish/restore receipts, all four outer archive files and all 205 inner members. Removed only three matching redundant staging/archive/restore trees: 124,706,816 allocated bytes (118.93 MiB). Working inputs remain available. File allocation released is not a claim of identical APFS free-space gain.
+
+An assistant-authored experimental patch groups the custom WHERE expression with parentheses. Fresh network-disabled containers checked the same 512 finite row predicates: baseline 81 disagreements; corrected proposal zero. All 28 upstream tests pass, zero skips; the patch stays unchanged during testing and the import resolves to the task checkout. This is not a native-agent replay, publisher grade, BigQuery service test or universal correctness proof. Original failed candidate and corpus057 remain unchanged. Fresh replay, context fitting and remaining admission gates are pending; Runpod unused. Evidence: evidence/data/pypinfo137-proposed-correction-001.
+
+Experimental evidence: 22 files / 41,291 bytes published and independently restored with matching hashes. The original scope metadata incorrectly used “Human-authored”; an explicit versioned correction identifies the coordinating assistant as author, preserves the old receipt, and does not claim a native replay. See evidence/data/pypinfo137-proposal-attribution-002.
+
+
+## 2026-10-12: pypinfo137 quiet native replay002
+
+Fresh replay changes four pytest commands from verbose to quiet through an explicit hash-bound assistant amendment plan. No tests removed, observation truncation, exit masking, output-reserve reduction or publisher-oracle exposure. All other source actions are retained. Temporary source shard independently hash-verified and removed. Replay completes 32 charged calls, 33 exchanges and 68 messages. Token audit: 24,755 inputs and 5,930 supervised targets; inputs plus 8,192 reserve = 32,947, exceeding 32,768 by 179. This saves 2,562 input tokens over native001 but does not qualify the candidate. Known ungrouped OR defect remains in this intermediate replay.
+
+Review of created diagnostic scripts identifies additional quality blockers: action21 claims all edge cases despite mostly substring checks and a permissive no-project branch; action25 returns failure booleans without a nonzero exit; action27 also prints failure without failing the process and claims preservation of all existing functionality beyond its checks. These findings require an explicitly attributed derivative and fresh execution, not silent history edits. Corpus057 unchanged. Evidence: evidence/data/pypinfo137-quiet-replay-002. Runpod unused; P1 incomplete.
+
+
+## 2026-10-12: pypinfo137 corrected native003 fits context
+
+Seven hash-bound assistant amendments preserve action order: four pytest verbosity changes plus replacement of three diagnostic scripts. Replacements preserve the original issue/ORDER scenarios, expand component combinations to 18, assert negative project/pip cases, make failures nonzero and remove unsupported all-domain success claims. The original failed search observation remains. One separately attributed completion verifies the pre-edit source hash, groups the custom WHERE expression and runs the upstream suite; final patch SHA256 is 2a4b5170a2e28f914acd32484841dda11942f4667586a5b0ee5a5b21225d877e (1,070 bytes), matching the predeclared identity.
+
+Fresh replay: 33 charged calls, 34 exchanges, 70 messages; 19,601 inputs, 2,966 shifted targets. Including 8,192 reserve gives 27,793, leaving 4,975 under 32,768. Final suite: 28 passed, zero skips. Independent actual-final-patch WHERE controls: base 81 disagreements of 512; candidate zero. Finite SQLite predicate-subset evidence is not BigQuery service or universal correctness. No publisher oracle read. Temporary source shard verified and removed; containers removed.
+
+Publisher grading, full-history quality review and rights/privacy/split gates remain. Corpus057 unchanged; zero training-admitted tokens. No production code changed, no model inference, no GPU used. Evidence: evidence/data/pypinfo137-corrected-replay-003.
+
+
+## 2026-10-12: pypinfo137 publisher evaluation reveals semantic conflict
+
+Froze native003 replay/history/token artifacts before first publisher oracle extraction from the hash-verified task shard. Base/reference tests execute offline in the source-verified ARM64 image. Strict default control comparison rejects expectation coverage because five collected test_db functions are absent from publisher labels. A separate diagnostic comparison explicitly declares those five supplemental pass-to-pass tests; all publisher transitions match and none are dropped.
+
+Candidate passes 29/30 collected tests; reference passes 30/30. JUnit failure in test_build_query_where is the extra parentheses around the custom LIKE expression, not a missing project/pip predicate. Running the publisher reference patch against the same independent finite SQLite WHERE-subset control gives 46 disagreements in 512 row evaluations, whereas native003 has zero. This demonstrates a limited evaluator/semantic conflict, not universal SQL correctness. Do not remove grouping merely to match the string oracle or weaken publisher checks silently. Candidate held; no admission or corpus change. Full-history review remains pending.
+
+Evidence: evidence/data/pypinfo137-publisher-evidence-001. Runpod unused, no production code changed, P1 incomplete.
+
+
+## 2026-10-12: live File Provider and residency investigation
+
+Metadata-only census: 41,024 files, 598 nonresident, 24,850,330,811 logical bytes, zero allocated bytes, zero stat errors. Old restored-model-p1-001/model.safetensors contributes 23,265,352,448 bytes. File Provider reports that model uploaded/nonresident/no download requested/no conflict; repository uploading/not fully uploaded/not recursively downloaded, no folder-level conflict. A live authenticated R2 HEAD confirms the model object remains present at its prior verified size; no new full remote read or restore is claimed. Bulk Keep Downloaded could request nearly 25 GB and is not appropriate near current free-space limits. These placeholders are not evidence of the disk allocation increase.
+
+Scoped fileproviderctl check ran 80 seconds with zero output, then received SIGTERM (exit143). This read-only diagnostic is inconclusive, not a passed invariant audit. No repair, cloud-account change, hydration or placeholder deletion performed. The Finder error remains unresolved; evidence does not establish its cause. Initial R2 HEAD snippet had a Python syntax error before network access; corrected invocation succeeded. Evidence: evidence/data/repository-residency-audit-002. P1 remains incomplete, Runpod unused.
+
+
+## 2026-10-12: market calendar candidate bounded baseline
+
+Inspected cached rsheftel/pandas_market_calendars task11 source at base72223f2615375c1ec321eb22abdaf9fda5bea1e5. Project declares Python2.7/3.3–3.6 and pandas>=0.18; this is not proof of compatibility with newer pandas. Selected Python3.9 ARM64 with pandas1.3.5/numpy1.21.6 for an explicitly provisional compatibility probe, preserving deprecated pandas.util.testing imports. Acquired 13 official PyPI wheels, 25,249,760 bytes under50MB cap, verifying metadata size/SHA256 and hash-locking installation. No full publisher image pulled.
+
+Fresh network-disabled container, read-only source and wheel mounts: offline install, pip check and exact checkout import pass. Baseline 41 tests: 37passed,4failed,0skips,23warnings. Two schedule tests disagree on datetime64[ns, UTC] versus object dtype; two open_at_time tests return false when true is expected. These results do not establish the cause or justify weakening tests. Container removed and all42 source files remain unchanged. No publisher oracle accessed, replay image built, model evaluated or tokens admitted.
+
+Disposition: runtime baseline not qualified; historical dependency/issue investigation required before replay. Evidence: evidence/data/marketcal11-baseline-evidence-001. Corpus057 unchanged, P1 incomplete, Runpod unused.
+
+
+## 2026-10-12: market calendar baseline diagnosis separates target issue
+
+Read the original task message from cached trajectory b4927f27-48ac-4d48-b6a5-69c72c267e88 without publisher-oracle access. The issue concerns merge_schedules with more than two calendars and mutation of the input list. Fresh offline diagnostics on unmodified source reproduce both: CME/NYSE/ICE schedules for20170103–20170104 raise ValueError (identically-labelled Series comparison), and input list length changes3to2.
+
+For the separate open_at_time baseline failure, date membership is false, normalized Timestamp membership is true, and direct comparison against the actual market-open/close interval is true while the source method returns false. The row dtype is datetime64[ns, UTC], whereas the historical test explicitly expects object. This narrows the observed mechanisms but does not prove compatibility with any older dependency version. Environment remains unqualified; do not silently mask these four baseline failures or attribute them to a model.
+
+The first diagnostic wrapper failed on nested Python string quoting before the probe ran; the corrected, fresh wrapper encoded its script and succeeded. Both containers removed, source unchanged; no test modifications, agent replay, publisher oracle or training admission. Evidence: evidence/data/marketcal11-diagnostic-evidence-001. Corpus057 unchanged and Runpod unused.
+
+
+## 2026-10-12: market calendar historical baseline passes
+
+Inspected official Docker Python3.6-slim-buster amd64 manifest before pulling; manifest digest verified, compressed layers42,111,125bytes under150MBcap, expanded image170,010,447bytes. ImageID d59ee182c4629dd33b240b9bac1a6ff44276e79e66117eba17aed4016845d3b2. This old image is solely an offline historical compatibility probe, not serving infrastructure. Acquired18official PyPI wheels,43,268,547bytes under50MBcap, all sizes/SHA256verified. Stack Python3.6, pandas0.20.3, numpy1.16.6; fully hash-pinned offline install and pip check pass. Adapted subprocess capture syntax to Python3.6 without changing task source or tests.
+
+Fresh unchanged upstream suite:41passed,0failed,0skips. Same diagnostic now shows date and Timestamp membership both true, interval check and open_at_time both true, row dtypeobject as expected. The target three-schedule merge still raises the original ValueError and mutates input list length3to2. Thus a usable baseline retains the actual issue; it does not mask failures or pre-solve it. Architecture and multiple dependency versions changed, so no one-variable causal attribution is claimed. Source remained unchanged and both containers removed.
+
+Native replay and evaluator qualification remain pending; no publisher oracle, model inference or admission. Evidence: evidence/data/marketcal11-legacy-evidence-001. Corpus057 unchanged, P1 incomplete, Runpod unused.
+
+
+## 2026-10-15: recover completed calendar replay after interruption
+
+The previous exec handle was absent. Inspected terminal wrapper/replay receipts: replay completed successfully before interruption, temporary shard removed and container removed with no cleanup errors. No replay restarted. Historical replay image19019fee7c91967e8a71f25551a3af277d5d009afcad7bf0bb91423fd05be324 built offline with exact source tree and one parentless commit; independent42-file snapshot verification passed. Git acquisition used authenticated historical Debian archive metadata with release expiry checking disabled; bounded packages total16.4MB.
+
+Fresh history/token audit:32chargedcalls,33exchanges,68messages,30,010inputs,6,363shiftedtargets. Input+8192reserve=38,202, exceeding32,768by5,434. Patch9,104bytes, SHA256c0256142f2f05b9fd79f5b2d6bb4d4d01c453dc8f2584912390bc022c4224c4b, contains repair plus temporary diagnostic files. Excluded pending context and patch-scope review. No publisher oracle read.
+
+Prepared an independent finite merge oracle covering one-to-three schedules over two dates, absent-date combinations, input preservation and single-schedule column projection. It has not executed: Docker create failed before container creation because the daemon socket was absent. Launched Docker app; backend processes appeared but API remained unavailable, and CUA inspection timed out. Requested the visible startup error from the user. No check results inferred. P1 and data admission remain incomplete; Runpod unused. Evidence: evidence/data/marketcal11-replay-evidence-001.
+
+R2 publication and independent restore completed:3outer files/75,384,791bytes and106inner files verified. Fresh hash comparison permitted release of three redundant archive trees, 246,030,336 allocated bytes (234.63 MiB). Working inputs retained; no exact APFS free-space gain claimed.
+
+
+## 2026-10-15: Docker authentication diagnosis and calendar static review
+
+Rechecked missing Docker API socket and desktop status (status returned unavailable). Startup log records failed vmnetd ping, helper/socket configuration invocation and installRootPasswordNeeded; macOS SecurityAgent process is running. This identifies an administrator-authentication dependency, not a task-container failure. User instructed to complete Docker/macOS prompt directly, never send a password. No privileged configuration or credentials entered by the assistant.
+
+Independent partial source/action review finds three added debug files remain, a single-schedule projection/aliasing regression, and a print-only final success claim. Candidate moved projection inside the loop and returns result, so a one-element input bypasses projection and aliases its frame. This finding follows static control flow; the prepared runtime counterexample is still unexecuted. Prepared and validated six explicit pytest verbosity amendments against exact source/derived action hashes; tests, non-command fields and order preserved. This does not prove context fit or history quality.
+
+Evidence: evidence/data/marketcal11-static-review-001. Corpus057 unchanged, zero admitted targets, no production code change, no model inference or Runpod use. Docker blocks runtime continuation; other review and evidence work made progress. P1 remains incomplete.
+
+
+## 2026-10-15: Docker recovered; independent calendar controls executed
+
+User reports no visible startup prompt. Earlier logs did not establish that a
+prompt was currently visible; the prior authentication diagnosis was too strong.
+Live Docker API now returns server 29.8.2. Executed the previously unrun 002
+controls in fresh offline base/candidate containers; both execution, copy and
+cleanup receipts returned zero. Exact candidate patch identity remained unchanged.
+
+Of 78 finite cases, baseline has 60 value failures, 56 column failures and 78
+input-mutation failures. Candidate has 34 value failures, 20 column failures and
+zero input-mutation failures. The separate singleton extra-column projection
+check passes baseline and fails candidate. Preserve the candidate as failed
+qualification evidence; do not admit it or describe input preservation as overall
+correctness. No publisher oracle read, model inference, Runpod use or production
+code change. Corpus057 unchanged. Evidence copied to
+evidence/data/marketcal11-merge-controls-002; this new evidence has not yet been
+R2-published or restore-verified. Existing archives remain unaffected.
+
+
+## 2026-10-15: independent calendar correction and expanded controls
+
+Preserved original native failures in marketcal11-merge-controls-002, published
+11 files / 102,508 bytes to R2, independently restored and compared every hash.
+Investigation separates absent-date NaT propagation, empty-inner-join exceptions,
+and singleton projection regression. No publisher oracle consulted.
+
+Assistant-authored proposal001 fixes the finite value cases but forces object
+dtype and fails one of 41 unchanged upstream tests; expanded assertions stop before
+running. Preserved that failure. Proposal002 retains inferred nonempty dtype and
+empty joined-column dtype. All 41 upstream tests pass, zero skips, one existing
+unknown-mark warning. Fresh original 78 controls and singleton projection pass.
+Expanded dictionary/set oracle checks 3,072 cases (8^3 date-presence masks, two
+modes, three permutations), including empty frames, with exact endpoints, columns
+and unchanged frame contents. Empty-list and invalid-mode rejection also pass.
+All temporary containers were removed successfully; no model or Runpod use.
+
+Recorded an induction argument for per-date endpoint reductions and explicit
+limits: valid comparable endpoints, unique indexes, one interval per date,
+outer-envelope rather than disjoint intraday union. Finite test agreement is not
+universal correctness or training readiness. Proposal evidence preserves both
+attempts, scripts and logs. Fresh attributed replay, context budget, publisher
+qualification, full-history review and admission gates remain pending. Corpus057
+unchanged; zero training-admitted targets. No production code changed.
+
+Proposal archive completed: evidence/data/marketcal11-proposal-evidence-001,
+45 files / 259,668 bytes, R2 publication and independent restore hash comparison
+passed. Redundant temporary restore removed only after comparison. Disk reports
+33 GiB available; no large downloads, Docker pruning or File Provider hydration.
+
+
+## 2026-10-15: calendar native003, qualified publisher grading and probe compatibility
+
+Native002 adds ten attributed amendments and a content-bound completion, removes
+six diagnostic files only after hash checks, and produces the intended one-file
+patch. It exceeds context with reserve: 27,044 + 8,192 = 35,236. Preserved it.
+Native003 adds two concise diagnostic rewrites, retaining the projected versus
+unprojected merge reproduction and fresh failures. No observations reused.
+33 charged calls, 34 exchanges, 70 messages; 22,940 input / 5,000 shifted targets.
+With reserve, 31,132 fits with 1,636 headroom. Final patch is 2,493 bytes,
+SHA256 45566932ef2cadb3877d3a097e81c7376d082996d50921986a90cd1d19d90810.
+Fresh completion suite passes 41 upstream tests. Containers and temporary raw
+source shards removed successfully. No Runpod or model inference.
+
+Froze replay/history/tokens before first publisher access. Publisher provides
+five labels in tests/test_utils.py. First paired-control run failed before tests:
+Python3.6 subprocess.run rejects capture_output and text. Changed the shared
+probe to stdout/stderr PIPE and universal_newlines, preserving existing behavior,
+checks and timeouts. Fresh controls match every label: baseline 4/5, reference
+5/5; candidate 5/5, zero disagreements and zero skips. Mechanical admission
+passes; full-history quality review and all training approval gates remain open.
+Corpus057 is unchanged; candidate not integrated. Previously bound probe evidence
+is historical and must not be silently treated as matching current source.
+
+Full local regression after the production fix: 610 tests pass, zero skips,
+21.421 seconds, explicit Torch tests, model hubs offline. Archived and independently
+restored 332 inner files through 4 outer files / 620,613 bytes in
+full-suite-qualification-014. Reduced-model CPU checks do not prove full-size GPU
+correctness. The bounded mathematical proposal scope remains unchanged.
+
+Qualified replay archive: evidence/data/marketcal11-qualified-replay-003,
+99 files / 1,262,632 bytes, published, remotely hash-verified, independently
+restored and locally compared. Temporary restore removed after all matches.
+
+
+## 2026-10-15: complete calendar history review and Corpus058 quarantine integration
+
+Reviewed all70native003messages, including full decoded tool outputs, initial
+failure reproduction, truncated source-read declaration, attributed diagnostics,
+content-bound completion and successful one-file submission. Complete per-message
+hashes and nonoverlapping review sections verify coverage. History quality approved
+only as explicitly amended replay with externally designed completion. No training,
+rights/privacy or independent-model competence approval.
+
+Live repository metadata shows no overlap with retained known/reserved network IDs.
+Independent set/Fraction oracle checks all903pairs across43issues, no new calendar
+lexical flags. Retained inherited flags; no reserved issue bodies read. Exact LICENSE
+and NOTICE preserved; this does not grant dataset/teacher/service rights. Complete
+43-example decoded credential screen finds zero indicators, not privacy approval.
+
+Assembled Corpus058:43examples/43tasks/42repositories,854700inputtokens and245144
+shifted targets; all42predecessor records unchanged. Manifest SHA256
+a15f8294e74fc51929ae2cf3c411c27174a6d1b0c828eb032ff7848cf2841372.
+87files/9473324bytes R2-published and independently restored with matching hashes.
+Integration/history/isolation archive18files/263915bytes also restore-verified.
+Corpus remains quarantine and actual loader rejects training.
+
+Restored worker source42files matches current repository. Original/restored corpus
+produce identical nine-update one-pass schedules with zero target overshoot.
+All10resume boundaries match exact remaining updates and10corrupted cursors reject.
+Actual worker rejects quarantine before absent model access and creates no training
+output. These are scheduling/ingestion checks, not optimizer or GPU qualification.
+No production code changed; full610-test qualification014 remains latest regression.
+A50Mtarget run would require203fullpasses plus235768targets; diversity still inadequate.
+
+Ingestion/credential evidence18files/53463bytes R2-published and independently
+restore-verified. Fresh manifest and retained-copy hash comparisons allowed removal
+of three redundant new corpus/evidence trees,10280960allocated bytes (9.80MiB).
+Working corpus and repository evidence retained. Finder issue remains unresolved.
+
+
+## 2026-10-15: pytypes37 historical runtime and native replay qualification
+
+Cached task Stewori__pytypes-37 at5736ecd2878aca5c78df44aeeaef13303cbfa5f2.
+Read original issue before publisher assets: resolve_fw_decl on an unparameterized
+typing.Generic class iterates None. Python3.6.15 unmodified baseline, declared
+`python tests/test_typechecker.py`:103pass. Exact issue reproduction raises
+TypeError with args_present=true,args_is_none=true. Source import confirmed from
+checkout; source unchanged and isolated offline containers removed.
+
+Built parentless historical snapshot with existing11hash-locked pytest dependency
+wheels and authenticated cached git Debian packages, no new downloads. Broad
+pytest collects163nodes:103class tests pass every phase, extra60module helpers
+produce13passes/39failures/8setup errors. Source AST class/method identities exactly
+match the103passing class nodes. Preserve broad-run failure; never silently exclude
+publisher labels. No publisher oracle read.
+
+Initial image had host-owned archived files and no installer leftover expected
+by native workspace preparation. Candidate semantic probe fails permission before
+patching; first native replay fails preparation before any teacher action. Both
+containers cleaned up. Corrected image78b8b8d9711990041fb269329deab18aeba201729d84ec6d1a830242afd5beac
+sets root ownership under cap-dropALL and leaves reviewed pip-check installer;
+independent tracked-byte, tree, parentless history and no-remotes checks pass.
+No task source/test modification in image repair.
+
+Finite19type/forward-reference controls: baseline fails Foo/Pair without parameters,
+recorded null-guard repair passes19. Identity, resolution flag and actual fresh
+ForwardRef targets checked; local control-flow argument and limits documented.
+Not arbitrary typing-version/cache-state correctness.
+
+Native002 completes33chargedcalls/34exchanges/70messages with20,019inputs and5,537
+shifted targets. Input+8192reserve=28,211; headroom4,557. Patch3366bytes, SHA256
+99102af9fee9ef8df4447f02af656986d99ac8215285dffd7fc437a19d9b7d11,
+changes type_util.py and leaves reproduce_issue.py. Held pending content-bound
+cleanup and explicit strengthening of print/catch diagnostics, full-history review
+and publisher grading. Temporary raw shard removed, replay container removed.
+Corpus058 unchanged, zero admitted targets, no production source change or Runpod.
+
+Baseline/runtime archive3outer files/18,558,764bytes and117inner files independently
+restore-verified. Redundant staging/bundle/restore released56,868,864allocated bytes;
+working inputs retained. Disk still reports33GiB available, Finder issue unresolved.
+
+Replay/setup-failure/semantic evidence59files/503360bytes published and independently
+restore-verified: evidence/data/pytypes37-replay-evidence-002. Redundant small
+restore removed only after hash comparison. No publisher access or admission.
+
+
+## 2026-10-15: pytypes37 native004 publisher comparison and archive
+
+Strengthened eight diagnostic actions with explicit identity, resolution-flag,
+ForwardRef-target, type-hint and exact InputTypeError assertions. Preserved original
+action order, core repair and failed broad pytest attempts. Native003 completion
+failed because the unittest subprocess lacked checkout PYTHONPATH; retained that
+failure. Native004 verifies import origin and supplies PYTHONPATH=/workspace.
+The declared 103-test unittest suite passes. Content-bound completion removes all
+three diagnostic scripts; final patch is 578 bytes, core source only, SHA256
+79b47b6e8ca62402b90e892a0e63a84bba8473ce497ab9d474ad6a8011c3e9f8.
+
+Native004:34chargedcalls/35exchanges/72messages,17018inputs/3036shiftedtargets;
+8192reserve yields25210total and7558headroom. Containers and temporary raw shard
+removed. Full-history content review has not yet been approved.
+
+Froze replay/history/token artifacts before first publisher asset access. Publisher
+labels include1FAIL_TO_PASS,116PASS_TO_PASS,39FAIL_TO_FAIL. Full pytest controls
+collect164nodes; selected comparison covers exactly all156published nodes.
+Independent audit confirms identical phase results for each labelled node in both
+baseline/reference full-versus-selected runs. Eight unlabelled setup errors remain
+explicitly recorded. Baseline116pass/40fail; reference and candidate117pass/39fail.
+All156candidate outcomes match reference; mechanical admission passes. This is a
+successful publisher comparison, not full pytest success or training admission.
+
+Evidence archive pytypes37-qualified-replay-004:103files/1321378bytes published to
+R2 and independently restored with all hashes matching. Failed003, completed004,
+freeze, publisher inputs, both scopes, scope audit, grading and producers retained.
+Corpus058 unchanged; zero training-admitted tokens. No production code changed;
+610-test qualification014 remains the latest regression. No Runpod compute used.
+
+
+## 2026-10-15: pytypes complete review, Corpus059 and restored ingestion
+
+Read all72native004messages in three complete chunks. Recorded14nonoverlapping
+hash-bound review sections, including clipped outputs, invalid pytest node attempts,
+secondary excepthook error, actual assertion scope, and absence of final narrative.
+Approved only explicitly amended pre-publisher tool-action replay with external
+completion. No independent-model, universal-correctness or training approval.
+History review4files/19221bytes independently restored from R2 with matching hashes.
+
+Fresh pytypes GitHub repository/network metadata does not overlap retained known
+or reserved networks. Exact independent set/Fraction oracle checks946pairs across
+44issue texts with no new pytypes flags; inherited flags remain. No reserved issue
+bodies read. Source LICENSE/NOTICE preserved; rights/privacy/splits remain open.
+
+Corpus059 retains all43Corpus058records unchanged and adds pytypes:44examples,
+44tasks,43repositorygroups,871718inputs,248180shiftedtargets. Manifest SHA256
+0f9c547ffb0a3262062732bbe51fd47c74eba7165c7af4d93336e153b51c33ac.
+89files/9661243bytes plus22integrationfiles/274775bytes R2-published and independently
+restore-verified. Training-purpose loader rejects quarantine. No admitted targets.
+
+First ingestion attempt rejected four generated pyc extras in restored worker;
+all42manifest-listed files unchanged, no missing files. Recorded failure and exact
+extra-file hashes; removed only these generated extras. Rerun002 with bytecode
+writing disabled passes. Restored/current worker files match, original/restored
+schedules identical:9updates,44examples exactly once,zero overshoot. Ten resume
+boundaries produce exact suffixes; ten corrupted cursors reject. Actual worker
+rejects quarantine before absent model access and creates no training output.
+No optimizer, GPU or full-model qualification implied. No production code change;
+610-test qualification014 remains latest regression, no Runpod used.
+
+Fresh manifest/retained-copy comparisons allowed removal of three redundant new
+corpus/evidence trees,10518528allocated bytes. Working corpus and repository evidence
+retained. File allocation is not exact APFS free-space gain. Finder issue unresolved.
+
+Ingestion evidence19files/49580bytes and release evidence3files/5733bytes both
+R2-published and independently restore-verified. No live transfer remains pending.
+
+
+## 2026-10-15: Tianshou67 serialization baseline diagnostic
+
+Inspected cached exact task source and original issue, without publisher assets.
+Prior generic Python3.13 runtime screen failed collection for missing torch/numpy/gym;
+that was an environment failure, not a source test verdict. Cached image
+5269b39ab665401139db6d6953893c831f1f5ae1cae7eecce6366472e8b71051 provides
+Python3.10.19,torch2.3.0+cpu,numpy1.26.4,tensorboard2.16.2,pytest9.0.2, but no
+gym/tqdm. No new image or dependency downloads made.
+
+Fresh offline2GiB/2CPU container mounts unchanged source read-only and imports only
+its Batch module with an explicit module identity. Pickle dumps/loads for each
+protocol0through5 independently raises RecursionError. Source inventory remains
+unchanged and container cleanup succeeds. Attribute fallback reads self._meta while
+that attribute can be absent during object restoration, recursively invoking the
+same fallback. This is a standalone-module diagnostic, not full-package, Pipe,
+upstream-suite or evaluator qualification; no repair accepted or corpus addition.
+Full runtime and candidate controls remain the next step. No Runpod used.
+
+Diagnostic archive6files/21012bytes R2-published and independently restored with
+matching hashes; temporary restore removed after comparison. Disk33GiB available.
+
+
+## 2026-10-15: Tianshou67 full-package runtime and bounded baseline
+
+Fetched4PyPI artifacts with bounded sizes and exact metadata SHA256 comparisons:
+Gym0.23.1,cloudpickle2.2.1,gym-notices0.0.8,tqdm4.67.1,total733640bytes.
+Initial FROM sha256:image-ID was interpreted as a registry reference and failed;
+retained failure. Retry uses existing base tag with pre/post immutable ID checks,
+network-disabled package installation and successful pip check. New image
+b957a1389672a1a49ae4834557a8e848fc166339017a2a02ab52e1b721848ca5.
+Python3.10 runtime is diagnostic, not original CI Python3.6-3.8 equivalence.
+
+Full package import is asserted from checkout, unchanged source mounted read-only.
+All6pickleprotocols reproduce RecursionError. Unchanged Batch tests3pass; broader
+base suite6pass3fail. Two failures are np.int removal with NumPy1.26.4; one is
+TensorFlow log creation under read-only cwd. No source fix or test edits performed.
+All named containers cleaned and source inventory unchanged. Next runtime work
+must use writable scratch cwd and compatible dependencies, not patch tests or
+silence these failures. Pipe/candidate/native/publisher checks remain unperformed.
+
+Cached-layer unpacking reduced df free33GiBto27GiB. Small download size must not
+be confused with disk footprint. No global Docker prune, no Runpod, no corpus change.
+
+Runtime/build-failure/full-package baseline archive30files/1594912bytes uploaded
+and independently restored from R2 with matching hashes. Temporary restore removed.
+
+
+## 2026-10-15: Tianshou67 compatible base suite and paired serialization controls
+
+Fetched NumPy1.23.5 cp310/manylinux wheel17059657bytes, verified against PyPI SHA256
+5e05b1c973a9f858c74367553e236f287e749465f773328c8ef31abe18f691e1.
+Installed offline into temporary container target; PYTHONPATH resolves exact overlay
+NumPy and unchanged checkout package, writable/tmpcwd for logs. No new image build.
+Baseline002 now passes9unchanged base tests and still fails6pickleprotocols plus
+same-process Pipe with RecursionError. Prior runtime/harness failures retained.
+
+Extracted exactly one cached teacher core edit, before publisher access, into a
+separate source copy; only tianshou/data/batch.py differs. Added explicit state
+get/set methods. Paired baseline/candidate001 both pass9base tests. Baseline0/60,
+candidate60/60 finite state/alias/cycle checks across6protocols and10fixtures.
+Direct pickle/Pipe baseline0/7,candidate7/7. Assertions compare exact types, dictionary
+keys, array shape/dtype/values, tensor dtype/shape/values, alias identity and self-cycle.
+All67baseline errors are RecursionError; no other error accepted as equivalent.
+These finite dependent cases do not justify a binomial confidence interval or proof
+for arbitrary subclasses/custom reducers/slots/cross-version serialization.
+
+All test containers removed and each source inventory unchanged. Source repair is
+not yet native-replayed or publisher-graded. Corpus059 unchanged, zero training
+admission, no Runpod. Disk remains27GiB free; no large build or global prune.
+
+Controls/dependency evidence33files/17232705bytes R2-published and independently
+restored with matching hashes. Temporary restore removed after comparison.
+
+
+## 2026-10-15: Tianshou67 parentless runtime preparation
+
+Initial snapshot tree check failed before Docker build: ordinary git add omitted
+four upstream-tracked tianshou/env files due to ignore patterns. Retained failed001;
+new002 explicitly stages all source files and exactly matches upstream Git tree.
+Parentless scratch commit has one reachable commit and no remotes. Tar ownership
+normalized to root, preserving source modes. No repository commit created.
+
+Replay image405f9b6b5bb056406a5c65426fdd00d5be856b662d3f162078d6335d612a1bd6
+uses retained additive runtime and hash-verified NumPy1.23.5 installed globally;
+pip check passes. Replaces inherited visible /testbed and /workspace with verified
+snapshot, leaves native install.sh contract. Independent container audit confirms
+all tracked source hashes/path inventory/tree, parentless history, no remotes and
+original upstream commit inaccessible. Inherited Docker layers are not audited.
+No publisher assets accessed. Native replay001 initiated with fresh observations;
+final context and history qualification must be recorded separately.
+
+Native001 completed37chargedcalls/38exchanges/78messages with fresh observations,
+no teacher observation reuse. Submitted552-byte one-file patch SHA256
+e7069df8c976929e449efa4d325069ebc49280cfbaffc78a911e9d56b6fbaa4f.
+Temporary168067123-byte raw shard removed after verified replay; container removed
+without cleanup errors. Native-token audit25900inputs/6381shiftedtargets. Adding
+8192outputreserve yields34092,1324over32768. Input-only fit is not admission:
+context gate fails. Hold native001, no truncation/output-reserve reduction. Full
+history review/publisher grading remain pending; no oracle exposure or corpus change.
+Latest disk26GiB free. Future derivative must use explicit amendments and fresh
+execution with unchanged correctness gates, not edited/fabricated observations.
+
+Snapshot/build-failure/native/token evidence37files/19506256bytes R2-published
+and independently restored with matching hashes. Temporary restore removed.
+
+
+## 2026-10-15: Tianshou67 explicit diagnostic derivative002
+
+Created eight hash-bound action amendments before publisher access. All action
+positions, paths, source repair, original comprehensive/pytest assertions and cleanup
+remain. Exact issue checks assert Batch identity and payload, close Pipe endpoints,
+use context-managed files and propagate baseline RecursionError. Bounded tracing
+records actual lookup keys without itself accessing missing self._meta; this removes
+the instrumentation-induced recursion risk. Toy reproduction is explicitly labelled.
+Removed head pipeline so diagnostic failure cannot be hidden by pipeline exit0.
+Replaced broad print-only success claims for append/indexing/state with assertions.
+Derivative is attributed to assistant, not original teacher reasoning or model output.
+No old observations edited/reused. Fresh native replay002 initiated; context reserve
+remains8192 and complete token audit is required before any context-fit claim.
+
+Derivative002 completes with unchanged552-byte source patch,25387inputs/5662targets;
+8192reserve total33579,811overflow. Diagnostic ordinal17 exits124 during dependency
+startup before result under inherited5second timeout; removed head pipeline correctly
+exposes failure. Other strengthened diagnostic statuses pass. Both context and
+diagnostic gates fail; no admission. Evidence23files/599340bytes R2-published and
+independently restore-verified. No old observation replaced.
+
+Derivative003 changes only this diagnostic deadline to20seconds, within native
+30second command bound, with original002failure preserved. Fresh replay running;
+bounded original-fallback trace has now returned success. Full token audit pending.
+Prepared004 additionally compacts assistant-created diagnostic scripts at21/27,
+removing print statements, prose/docstrings and comments. Independent AST comparison
+confirms identical remaining executable AST with17and19assertions preserved; the
+subsequent original expected-value correction still has its exact context. No
+upstream tests or source repair changed. Fresh004execution remains pending.
+
+Derivative003 completes with all strengthened diagnostic statuses passing and
+unchanged patch.25141inputs/5663targets+8192reserve=33333,565overflow. Held for
+context.23files/594893bytes R2-published and independently restore-verified.
+Derivative004 fresh execution started with10amendments and AST audit; outcome pending.
+
+Derivative004 completes37chargedcalls/38exchanges/78messages.22969inputs and4868
+shifted targets;8192reserve totals31161,1607headroom. All13selected diagnostic and
+verification command statuses pass, including compacted tests after original expected
+value correction. Exact552-byte source patch matches001. Context/diagnostic checks
+pass; full78message review and publisher grading remain pending. No training/corpus
+admission, no model-performance claim. Containers and temporary raw shard removed.
+
+Native004evidence24files/596585bytes R2-published and independently restored
+with matching hashes. Temporary restore removed. All current replay/transfer sessions finished.
+
+
+## 2026-10-15: Tianshou67 frozen candidate publisher grading
+
+Froze every native004replay/history/token file before first publisher asset access.
+Extracted exact identity-verified task only; reference3444bytes and test patch816bytes.
+Publisher labels comprise1FAIL_TO_PASS and3PASS_TO_PASS. Reference also changes
+vector-env behavior; candidate remains its frozen single-file Batch repair.
+
+Identical evaluator profile runs all4publisher labels with checkout origin verified:
+baseline3pass/1fail,reference4pass,candidate4pass. No disagreements. Source/tree and
+exact candidate allowlist/patch identity bound by grading. Linked mechanical admission
+passes with no blockers and training_approved=false. Frozen files rehashed after
+grading and remain unchanged. Native004 remains pre-publisher derivative; any future
+source-informed revision must disclose evaluator exposure. Python3.10 diagnostic
+runtime does not prove publisher Python3.7 equivalence. No hidden-grader/model-gain
+claim. Full78message review, rights/privacy/final splits remain pending; Corpus059
+unchanged. No Runpod or new image build used.
+
+Grading archive44files/52340bytes R2-published and independently restored with
+matching hashes. Temporary restore removed; all grading/transfer processes finished.
+
+
+## 2026-10-15: Tianshou complete content review and Corpus060 integration
+
+Read all78native004messages in three complete chunks. Bound16review sections to
+all message hashes with full nonoverlapping coverage. Retained actual baseline
+RecursionErrors, toy-vs-project distinction, TensorFlow warnings, clipped README/source
+views and failed erroneous expected-value assertion. Its correction matches fixture
+input and edits only assistant-created diagnostics, not upstream tests. Empty-case
+limits and same-process Pipe scope explicit. Approved only pre-publisher attributed
+tool-action replay; no final narrative response/model-gain or training claim.
+Review4files/20620bytes independently R2 restore-verified.
+
+Fresh repository metadata finds no known/reserved network overlap. Independent
+set/Fraction oracle checks all990pairs over45issues; no new Tianshou flags. Inherited
+flags remain. Source LICENSE retained, history credential-pattern screen passes;
+rights/privacy/semantic isolation and frozen splits remain unapproved.
+
+Corpus060 retains all44predecessor records unchanged:45tasks/44repositorygroups,
+894687inputs/253048shiftedtargets. Manifest SHA256
+cb8fc8a8dadda2250e18bb350e7f0121c8e98fb27bce2f7015e9d81c7bca9f13.
+91files/9917604bytes and21integrationfiles/274167bytes independently restored from
+R2 with matching hashes. Zero admitted tokens. This is nearly10MBinspectionbound;
+next expansion requires explicit bounded growth/sharding, not a sufficiency claim.
+
+Restored42-file worker matches repository. Original/restored schedules identical:
+9updates,45examples once,zero overshoot. All10resume boundaries reproduce exact
+suffixes;10corrupted cursors reject. Actual worker refuses quarantine before model
+access with no output. No optimizer/GPU qualification, no new production code or
+Runpod. Latest610-test regression014 unchanged. A50Mtarget would require197full
+passes plus149544targets, insufficient diversity for planned training.
+
+Fresh manifests and retained-copy hashes allow removal of three redundant new
+corpus/evidence trees,10776576allocatedbytes. Working corpus retained. Finder issue
+still unresolved; file allocation is not exact APFS disk-space gain.
+
+Ingestion17files/45070bytes and release3files/5734bytes both R2-published and
+independently restore-verified. All current transfer/check processes completed.
+
+
+## October 15 — bounded corpus assembly and capacity audit
+
+Changed assembly validation to the existing indexed reader, preserving full token,
+audit, split and hash validation without retaining corpus-wide arrays. Added explicit
+per-file byte budget validation before copying. Five regression cases cover summary
+equality, quarantine rejection, invalid audits, aggregate/per-file overflow and
+nonpositive budgets. Initial fixture run failed because macOS temporary paths resolve
+through /private; canonicalizing the test workspace fixed the fixture. No production
+boundary was weakened. Focused 20 tests and full 615 tests pass, zero skips.
+
+Actual unchanged Corpus060 reference bytes are 9,888,249, separate from its
+29,355-byte manifest. Exact budget passes and one-byte-under budget rejects.
+Traced Python peak allocations: indexed 5,440,623 bytes, materialized 64,348,796;
+retained allocations: 90,692 versus 62,533,162. These measurements cover this
+45-example corpus only. Neither model gains nor large-scale throughput are proven.
+No Runpod compute, model downloads, new training admissions or global cache deletion.
+Capacity and full-suite evidence are versioned as corpus-capacity-001 and
+full-suite-qualification-015.
+
+Both evidence bundles were uploaded to R2 and independently restored. Capacity:
+3 files / 5,070 bytes. Full suite: 4 archive files / 622,959 bytes; all333 inner
+file hashes verified. Corpus060 itself remains unchanged.
+
+
+## October 15 — restore-tested historical corpus deduplication
+
+The previous goal turn made implementation and validation progress. This cycle
+addressed storage pressure without deleting unique data. Inventory showed all token
+and audit identities in ten historical corpus directories are present in Corpus060.
+Archived exact manifests and reconstruction mappings, uploaded them to R2, then
+independently restored and hash-verified them (13 files / 552,244 bytes). Freshly
+restored all91 Corpus060 files (9,917,604 bytes) from R2. Reconstructed every old
+corpus in temporary hardlinked directories and ran IndexedCorpus validation with
+its original manifest hash before deleting any historical directory.
+
+Removed Corpus052–059 and Corpus053-restored/Corpus054-restored only after all ten
+checks passed. Historical allocated bytes released: 87,298,048 (83.3 MiB), not an
+exact APFS free-space claim. Current Corpus060 remains unchanged; temporary restore
+was also removed. Cleanup record uploaded and independently restored (4 files /
+12,048 bytes). Old scripts referencing removed paths require restoration first;
+original manifests and evidence remain available. Finder residency remains unresolved.
+No model downloads, Runpod compute, global Docker prune or training admission.
+
+
+## October 15 — recover two source-budget-held candidates
+
+Previous goal turn made restore-verified storage progress. Revisited the two
+source-only acquisition holds instead of silently dropping their tasks. Exact
+GitHub tree metadata shows nbgrader1410 is19,343,321 bytes/519 files and
+pubmed_parser89 is17,505,238 bytes/43 files. Documentation images and a compressed
+fixture account for much of the size. Acquired both with25 MB per-tree and
+compressed-download caps; verified every file against Git blob SHA and complete
+membership. No publisher repair or test patches were accessed.
+
+Archived570 source/metadata files into3 objects totaling30,332,298 bytes, uploaded
+and independently restored from R2, verified every inner hash. Removed the verified
+redundant restore archive after comparing retained-copy hashes. Metadata capacity
+audit also archived and restored (7 files/181,092 bytes).
+
+For nbgrader's zero partial-credit issue, isolated exact source-function AST checks
+cover100 positive maxima times101 credit fractions times2 input forms =20,200
+finite cases per role. Baseline fails200 zero cases, candidate fails0. Candidate
+also accepts three zero text representations without warnings. A conditional
+branch argument covers finite converted grades with nonnegative finite maxima;
+this does not prove invalid-input behavior or integration correctness.5 files /
+59,714 bytes archived and restored. Package imports/tests, native replay, publisher
+grading, review and admission remain undone. Current Corpus060 remains unchanged,
+Runpod unused and P1 incomplete.
+
+
+## October 15 — nbgrader1410 full-import diagnostic controls
+
+Previous cycle acquired and verified pinned sources. Cached scientific runtime
+lacked required notebook dependencies. Built a separate cached Python3.9 ARM64
+runtime using64 wheel artifacts, an explicit100 MB export cap,512 MiB temporary
+download storage and offline installation. Source-pinned nbconvert5.6.1 and
+traitlets4.3.3 retained; pip check passes. Installed freeze and all wheel bytes
+are archived. Image: dc3a9a70e81cff8d6a0b9ad5654a44270dd6faef8e049a96c1d0d44496495481.
+
+Baseline001:27 passes/1 environment failure, USER missing. Baseline/candidate002
+use USER=root matching the actual container user, and each pass28 unchanged utility
+tests with105 warnings. Exact full package-import finite controls: baseline200
+failures/20,200 cases, candidate0. Notebook-cell integration grades a zero result
+10/10 before versus0/10 after. Only utils.py differs, package trees unchanged
+within runs, network disabled and disposable containers removed. This is not a
+full suite, original publisher runtime, native replay or model-gain result.
+
+Runtime/control evidence archive3files/23,955,236 bytes was uploaded and independently
+restored from R2; all82 inner files verified. Removed redundant restore copy after
+fresh retained-copy hashes. Original runtime inputs and diagnostic failures remain.
+No Runpod use or training admission. Next action is a parentless source snapshot
+and fresh replay, followed by context checks and complete content review.
+
+
+## October 15 — nbgrader1410 original native replay
+
+Previous cycle qualified full package-import controls. Added Git from32 Debian
+packages (24.5 MB download, copied under40 MB cap), installed offline. Built and
+independently verified parentless exact-source snapshot: every tracked byte/tree,
+one reachable commit, no remotes, original upstream commit inaccessible. Image
+7ce46c4457602c8b7c6d7251e7064c1210204d1b7388e748742b55f815e3f938.
+
+Fresh offline native replay completed27 charged calls/28 exchanges/58 messages.
+All15 command statuses are0; this does not prove diagnostic assertions.480-byte
+patch is the expected > to >= change. Tokenization:23,464 inputs/4,768 shifted
+targets; reserve8,192 gives31,656 total and1,112 headroom. No truncation of input
+history was used to fit context. Native warning output clips some test summaries.
+
+Quality holds: generated reproduce/comprehensive/final scripts have zero asserts
+and mostly print outcomes; final diagnostics overstate unchanged functionality.
+The additional zero-credit script has4 assert nodes. Preserve original evidence,
+strengthen diagnostics as explicitly attributed amendments, then replay anew before
+full review. No publisher assets accessed, no model inference/training admission.
+Temporary raw shard and replay container removed. Archive3 files/61,111,594 bytes,
+all65 inner files independently R2 restore-verified. Removed redundant restored
+archive only after matching retained bytes. P1 remains incomplete.
+
+
+## October 15 — nbgrader1410 strengthened diagnostic replay
+
+Previous cycle made native replay and context-validation progress. Authored nine
+explicit pre-publisher amendments: four created diagnostic scripts enforce finite
+checks/narrow conclusions; five pytest commands omit warning summaries while
+preserving tests and exit behavior. No source repair, original tests, action order
+or observation values edited. Original native001 retained.
+
+Fresh native002 baseline reproduction fails with AssertionError on all three zero
+cases, preserving positive results. After the source repair the same reproduction
+passes. Comprehensive checks now assert outcomes and rethrow unexpected exceptions;
+missing ValueError fails. Final integration checks assert the notebook tuple and
+four direct zero forms. Original upstream28 tests pass with105 warnings reported
+as counts; warning-heavy original output remains in native001. Eight selected
+post-fix commands pass.27 charged calls/58 messages,15,991 inputs/3,428 targets;
+8,192 output reserve leaves8,585 headroom. Source patch remains480 bytes and exact
+same SHA256. No full-history approval or publisher asset access yet.
+
+Evidence stored in nbgrader1410-native-evidence-002. Replay container and temporary
+raw source shard removed. P1 remains incomplete; no Runpod compute/training admission.
+
+Native002 evidence:22 files/441,154 bytes uploaded to R2 and independently
+restored with every hash matching; redundant restore removed by publisher runner.
+
+
+## October 15 — full nbgrader review and publisher compatibility hold
+
+Previous cycle made strengthened-replay progress. Read all58message contents in
+three complete chunks. Recorded12 nonoverlapping sections and canonical per-message
+hashes; coverage audit passes. Scoped tool-action quality approved, excluding final
+response quality, universal correctness, privacy, rights, split and training approval.
+Notes preserve bounded test-file reads, repeated dependent tests, no logger-emission
+checks, stale upstream comment and clipped SQLAlchemy warning stderr.
+
+Froze replay/history/token files before first publisher asset access; all hashes
+unchanged afterward. Publisher tests add the expected zero-credit assertion.
+Actual paired controls: baseline27/28passes and reference28/28passes. Exact transition
+comparison rejects one mismatch: test_get_username is declared FAIL_TO_FAIL but
+passes both roles. USER=root was introduced before publisher access to match actual
+container user; baseline001 had reproduced missing-USER failure. No label edits,
+test changes or artificial environment failure made to satisfy the comparator.
+Candidate publisher grade remains unexecuted behind strict control gate.
+
+Evidence: nbgrader1410-history-review-002 and nbgrader1410-publisher-controls-001.
+Frozen candidate remains pre-publisher; future derivatives must disclose exposure.
+This is a candidate compatibility hold, not a whole-goal impasse. P1 incomplete,
+Corpus060 unchanged and no Runpod use.
+
+Review archive4files/16,260bytes and publisher-control archive31files/78,603bytes
+were uploaded to R2 and independently restored with matching hashes.
+
+
+## October 15 — PubMed Parser89 package and finite XML controls
+
+Previous turn completed nbgrader review and exposed a publisher environment hold.
+Advanced the other acquired candidate. Added three pinned wheel dependencies to
+cached Python3.9 ARM64 runtime: NumPy1.26.4,lxml5.3.0,Unidecode1.3.8. Download
+used256 MiB temporary storage and50 MB export cap; installation offline, pip check
+passed. Captured installed freeze and dependency bytes. Image:
+22a6c7b28646fb187bb6da4ecf5567ba9d21948453b87cd4fa2eaf11e9281d6a.
+
+Teacher source repair changes one malformed XPath only. Both roles pass all6
+existing tests,7 warnings, including the30,000-record MEDLINE fixture. Independent
+XML construction covers3 category counts x4 wrapper depths x4 subject counts x2
+inline-text modes x2 namespace modes=192 cases. Baseline96failures,candidate0.
+Expected subject strings are accumulated during fixture construction, not computed
+with production XPath. PMID and fixture-byte preservation checked. Full non-subject
+output equivalence and arbitrary XML semantics remain unproven. Source unchanged
+within roles, tests unedited, disposable containers removed. No publisher access.
+
+Runtime/control archive3files/19,050,793bytes independently R2 restore-verified,
+all18 inner hashes match. Removed redundant restored archive after retained-copy
+comparison. Native replay and downstream review remain; no training admission,
+Corpus060 change or Runpod use. Disk approximately24GiB free.
+
+
+## October 15 — PubMed Parser89 native replay and quality holds
+
+Previous cycle established full-package paired controls. Reused retained Debian
+packages only after comparing all package hashes to nbgrader build inputs. Built
+exact pinned source snapshot and independently verified all tracked bytes/tree,
+one parentless commit,no remotes,original upstream commit inaccessible. Image:
+3df1667fc6ac8165474b474cb0372f4a03b5cc8084f5641c01fc3da894193ba4.
+
+Fresh offline replay completed36 charged calls/37 exchanges/76 messages. Upstream
+suite6/6 passes and generated subjects suite3/3 passes. Original historical
+commit lookup fails; preserve as actual failure, do not invent original history.
+Source patch645 bytes, SHA b20a2b1bebd4ab77ba5f9f18d1f4d173fa9d4c5a320b8f0a2fa9c4d3afaf3205.
+Tokenization23,958 inputs/5,064 shifted targets; reserve8,192 leaves618 headroom.
+No history truncation used to fit budget. Three generated diagnostics have zero
+assert nodes; one has13. Print-heavy checks and broad claims require explicit
+amendments and complete review. This is not model-inference or training evidence.
+
+Native001 held; no publisher assets accessed. Temporary source shard and disposable
+container removed. Snapshot/native archive is versioned under pubmed89-native-001.
+P1 and all training admission gates remain incomplete; Corpus060 unchanged.
+
+Archive3files/58,433,088bytes R2-published and independently restored; all64
+inner files hash-verified. Redundant restore removed after retained-copy checks.
+
+
+## October 15 — PubMed Parser89 exact diagnostic derivative
+
+Previous cycle completed original native replay and identified quality holds.
+Authored five pre-publisher amendments. Reproduction and comprehensive diagnostics
+compute expected subjects via ElementTree ancestor traversal (subject immediately
+under subgroup, within category ancestry), preserving document order and the
+existing text-normalization convention. Both reproduction fixtures must contain
+subjects, mismatches accumulate and assertion fails. Comprehensive checks compare
+all8local XML subject strings, named subjects and listed key-presence checks.
+Additional generated tests preserve original assertions except replacing tautological
+length>=0 with exact fixture equality. Final check enforces all three named subjects,
+required fields and known PMC; conclusion explicitly scoped.
+
+Original upstream commit lookup replaced with HEAD in verified parentless snapshot,
+explicitly attributed as environment adaptation. Source repair, action order and
+upstream tests remain unchanged. Fresh baseline reproduction fails on bothfixtures;
+post-fix reproduction and8fixture comparison pass. Nine selected commands succeed;
+upstream6/6 and generated3/3 pass. Native002:36calls/76messages,21,137input tokens,
+2,879shifted targets;8,192reserve leaves3,439headroom. Original patch645bytes unchanged.
+No model inference, publisher access, full-history approval or training admission.
+Temporary source shard/container removed. Evidence pubmed89-native-evidence-002.
+
+Native002 archive22files/543,076bytes R2-published and independently restored
+with all hashes matching. Redundant restore copy removed by publisher runner.

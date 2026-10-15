@@ -31,7 +31,29 @@ WORKER_SOURCES = [
         'zenithsync/training_state.py','zenithsync/corpus_run.py',
         'zenithsync/artifacts.py','zenithsync/contracts.py','zenithsync/splits.py',
         'zenithsync/quantized_layout.py','zenithsync/gpu_memory.py',
+        'scripts/verify_architecture_layout.py','zenithsync/architecture_layout.py',
+        'zenithsync/model_intake.py',
         'scripts/run_p1_training_worker.py']
+
+def require_architecture_layout(model, manifest, manifest_sha256, output):
+    """Require the CPU meta-model descriptor check before allocating GPU weights."""
+    command = [sys.executable, '-I', '-B', str(ROOT/'scripts/verify_architecture_layout.py'),
+               '--model-dir', str(model), '--manifest', str(manifest),
+               '--manifest-sha256', manifest_sha256, '--output', str(output)]
+    subprocess.run(command, check=True, timeout=120,
+                   env={**os.environ, 'CUDA_VISIBLE_DEVICES': ''})
+    report_path = output/'report.json'
+    report = load_json(report_path)
+    expected = {'quantized_projections': 410, 'unquantized_tensors': 779,
+                'checkpoint_tensors': 2009, 'logical_model_tensors': 1189}
+    if (report.get('status') != 'complete_tensor_layout_passed'
+            or report.get('gpu_used') is not False
+            or report.get('model_manifest') != file_record(manifest)
+            or report['model_manifest']['sha256'] != manifest_sha256
+            or any(type(report.get(key)) is not int or report[key] != value
+                   for key, value in expected.items())):
+        raise ValueError('Full checkpoint architecture qualification differs')
+    return file_record(report_path)
 
 def parser():
     result = argparse.ArgumentParser(description=__doc__)
@@ -87,6 +109,8 @@ def main():
     execution_sha256 = hashlib.sha256(canonical_json(execution_config)).hexdigest()
     args.output.mkdir(parents=True, exist_ok=False)
     try:
+        architecture = require_architecture_layout(
+            args.model, args.manifest, args.manifest_sha256, args.output/'architecture')
         os.environ.update(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1',
                           CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='4', MKL_NUM_THREADS='4')
         import numpy as np
@@ -140,6 +164,7 @@ def main():
             'schema_version':1,'status':'corpus_session_returned','session':session,
             'versions':versions,'mounts':mounts,'bindings':bindings,
             'execution_config':execution_config,
+            'architecture_report':architecture,
             'initial_free_bytes':free,'device_total_bytes':total,
             'peak_allocated_bytes':torch.cuda.max_memory_allocated(),
             'peak_reserved_bytes':torch.cuda.max_memory_reserved(),'device_memory':monitor.summary(),

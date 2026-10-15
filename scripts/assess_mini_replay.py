@@ -16,6 +16,8 @@ def main():
     parser.add_argument('--historical-source-map', type=Path,
                         help='Explicit original-code to archived-code mapping; exact hashes required')
     parser.add_argument('--session-resources', type=Path)
+    parser.add_argument('--grading-profile', type=Path,
+                        help='Explicit source-bound Maven compilation-control profile')
     args = vars(parser.parse_args())
     output = args.pop('output')
     historical_map = args.pop('historical_source_map')
@@ -24,8 +26,12 @@ def main():
         args['historical_sources'] = load_json(historical_map)
     sources = {name: file_record(ROOT / name) for name in (
         'scripts/assess_mini_replay.py', 'zenithsync/mini_replay_admission.py', 'zenithsync/replay_correction.py',
-        'zenithsync/replay_history.py', 'zenithsync/training_batch.py',
+        'zenithsync/replay_history.py', 'zenithsync/mini_replay_amendment.py',
+        'zenithsync/replay_amendment.py', 'zenithsync/training_batch.py',
         'zenithsync/pytest_controls.py', 'zenithsync/submission_reconciliation.py')}
+    for name in ('zenithsync/maven_grade_bundle.py', 'zenithsync/maven_compile_controls.py',
+                 'zenithsync/junit_controls.py'):
+        sources[name] = file_record(ROOT / name)
     for name in ('zenithsync/resource_replay_binding.py', 'zenithsync/session_resource_bundle.py',
                  'zenithsync/session_resource_replay.py'):
         sources[name] = file_record(ROOT / name)

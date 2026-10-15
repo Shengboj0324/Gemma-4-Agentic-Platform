@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.container_cleanup import cleanup_owned_container
 from zenithsync.source_workspace import prepare_source_workspace
-from zenithsync.conversation import normalize_history
+from zenithsync.mini_replay_amendment import mini_commands
 from zenithsync.submission_reconciliation import scratch_cleanup_command
 from zenithsync.replay_correction import validate_correction_plan, verify_correction_result
 from zenithsync.session_resource_bundle import (
@@ -35,6 +35,10 @@ def main():
     correction = validate_correction_plan(profile['correction']) if 'correction' in profile else None
     if correction is not None:
         expected_profile.add('correction')
+    if 'amendment' in profile:
+        expected_profile.add('amendment')
+        if not isinstance(profile['amendment'], dict):
+            raise ValueError('Explicit amendment plan required')
     if set(profile) != expected_profile:
         raise ValueError('Exact reviewed source replay profile required')
     resource_bindings = None
@@ -53,14 +57,9 @@ def main():
     official = load_json(ROOT / 'evidence/p1/task-index-001/receipt.json')
     if task['repo'].casefold() in {name.casefold() for name in official['repo_counts']}:
         raise ValueError('Reserved repository excluded')
-    messages = normalize_history(candidate['messages'], allowed_tools={'bash'}, allow_pending=True)
-    commands = []
-    for index, message in enumerate(messages):
-        for call in message.get('tool_calls', []):
-            arguments = call['function']['arguments']
-            if set(arguments) != {'command'} or not isinstance(arguments['command'], str):
-                raise ValueError('Unreviewed source call arguments')
-            commands.append({'source_index': index, 'command': arguments['command']})
+    command_rows, amendments = mini_commands(candidate['messages'], profile.get('amendment'))
+    commands = [{'source_index': index, 'command': arguments['command']}
+                for index, arguments in command_rows]
     if not commands or commands[-1]['command'] != profile['terminal_command']:
         raise ValueError('Source terminal differs from reviewed profile')
     if profile['terminal_command'] not in (
@@ -99,7 +98,8 @@ def main():
                                                environment=environment))
     sources = {name: file_record(ROOT / name) for name in (
         'scripts/replay_mini_source.py', 'zenithsync/source_workspace.py',
-        'zenithsync/replay_correction.py',
+        'zenithsync/replay_correction.py', 'zenithsync/mini_replay_amendment.py',
+        'zenithsync/replay_amendment.py',
         'zenithsync/session_resource_bundle.py', 'zenithsync/session_resource_replay.py',
         'zenithsync/submission_reconciliation.py', 'zenithsync/artifacts.py', 'zenithsync/contracts.py')}
     args.output.mkdir(parents=True, exist_ok=False)
@@ -110,6 +110,9 @@ def main():
         'standalone_cleanup': True, 'injected_support_modules': False,
         'adaptation': 'Source terminal replaced by adapter-authored cleanup and native submit_patch; source commands otherwise unchanged',
         'environment': environment}
+    if 'amendment' in profile:
+        receipt['amendment'] = profile['amendment']
+        receipt['adaptation'] = 'Explicit assistant-authored command amendments; fresh observations and native cleanup/submission'
     cid = None
     events = []
     try:
@@ -142,8 +145,9 @@ def main():
             print({'event': len(events), 'tool': name, 'status': result['status']}, flush=True)
             return result
 
-        for row in commands[:-1]:
-            invoke('run_command', {'command': row['command']}, source_index=row['source_index'])
+        for ordinal, row in enumerate(commands[:-1]):
+            invoke('run_command', {'command': row['command']}, source_index=row['source_index'],
+                   adapter_authored=ordinal in amendments)
         if correction is not None:
             source_export = manager.exec(cid, 'cat /workspace/patch.txt', timeout=10)
             if source_export.exit_code or not source_export.stdout:
@@ -153,7 +157,7 @@ def main():
                 raise ValueError('Source patch differs from correction plan')
             receipt['correction'] = correction
             receipt['source_intended_patch'] = correction['source_patch']
-            receipt['adaptation'] = 'Original nonterminal commands followed by explicit assistant-authored correction commands, cleanup and submission; fresh observations throughout'
+            receipt['adaptation'] += '; explicit assistant-authored correction commands precede cleanup and submission'
             for row in correction['commands']:
                 result = invoke('run_command', {'command': row['command']}, adapter_authored=True)
                 verify_correction_result(result, row['expected_exit_code'])

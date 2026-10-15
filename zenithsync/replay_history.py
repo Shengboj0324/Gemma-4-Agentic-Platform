@@ -1,28 +1,18 @@
 """Project captured native exchanges without inventing reasoning or observations."""
 from .artifacts import canonical_json
 from .conversation import normalize_history
+from .mini_replay_amendment import mini_commands
 from .replay_correction import validate_correction_plan, verify_correction_result
 
 
-def mini_replay_history(events, *, source_messages, system, problem, allowed_tools, correction_plan=None):
+def mini_replay_history(events, *, source_messages, system, problem, allowed_tools, correction_plan=None, amendment_plan=None):
     """Project exact source commands followed by explicitly authored native actions.
 
     The source terminal only exports a patch. Its replacement cleanup and native
     submission remain attributed to the adapter in the separate message mapping.
     No source responses, reasoning, or success narratives enter this projection.
     """
-    source = normalize_history(source_messages, allowed_tools={'bash'}, allow_pending=True)
-    commands = []
-    for index, message in enumerate(source):
-        for call in message.get('tool_calls', []):
-            arguments = call['function']['arguments']
-            if set(arguments) != {'command'} or not isinstance(arguments['command'], str):
-                raise ValueError('Exact source bash command required')
-            commands.append((index, arguments))
-    terminals = {'echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && cat patch.txt',
-                 'echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && cat /testbed/patch.txt'}
-    if not commands or commands[-1][1]['command'] not in terminals:
-        raise ValueError('Reviewed source terminal required')
+    commands, amendments = mini_commands(source_messages, amendment_plan)
     corrections = [] if correction_plan is None else validate_correction_plan(correction_plan)['commands']
     if not isinstance(events, list) or len(events) != len(commands) + len(corrections) + 1:
         raise ValueError('Every nonterminal source command and both adapter actions required')
@@ -35,7 +25,7 @@ def mini_replay_history(events, *, source_messages, system, problem, allowed_too
             raise ValueError('Exact native event with explicit authorship required')
         if ordinal < len(commands) - 1:
             index, arguments = commands[ordinal]
-            if (event['adapter_authored'] or type(event['source_index']) is not int
+            if (event['adapter_authored'] != (ordinal in amendments) or type(event['source_index']) is not int
                     or event['source_index'] != index or event['name'] != 'run_command'
                     or event['arguments'] != arguments):
                 raise ValueError('Native source command differs from recorded source')
@@ -61,9 +51,13 @@ def mini_replay_history(events, *, source_messages, system, problem, allowed_too
     for ordinal, mapping in enumerate(result['mapping']):
         mapping.update(event_index=ordinal, source_index=events[ordinal]['source_index'],
                        adapter_authored=events[ordinal]['adapter_authored'])
+        if ordinal in amendments:
+            mapping.update(amendment=amendments[ordinal], author='assistant')
         if len(commands) - 1 <= ordinal < len(commands) - 1 + len(corrections):
             mapping.update(correction_index=ordinal - len(commands) + 1, author='assistant')
     result['scope'] += '; cleanup and submission are adapter-authored, explicitly mapped'
+    if amendments:
+        result['scope'] += '; explicit command amendments are assistant-authored and separately mapped'
     if corrections:
         result['scope'] += '; explicit assistant-authored corrections are separately mapped'
     return result

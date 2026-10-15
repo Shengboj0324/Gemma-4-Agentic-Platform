@@ -4,18 +4,22 @@ from pathlib import Path
 
 from .artifacts import canonical_json, file_record, load_json
 from .pytest_controls import compare_candidate, compare_controls
+from .go_test_controls import compare_go_runs
+from .mocha_controls import compare_mocha_publisher
+from .maven_grade_bundle import verify_maven_grade_bundle
 from .replay_history import mini_replay_history
 from .submission_reconciliation import scratch_cleanup_command
 from .training_batch import collate_training_examples
 from .resource_replay_binding import verify_resource_replay_binding
 from .replay_correction import verify_correction_binding
+from .mini_replay_amendment import verify_mini_amendment_binding
 from .session_resource_bundle import session_resource_payload
 
 
 def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidate,
                              profile, task, max_input_tokens=32768,
                              output_reserve=8192, max_tool_calls=40,
-                             historical_sources=None, session_resources=None):
+                             historical_sources=None, session_resources=None, grading_profile=None):
     """Recompute history, test comparisons, target counts, and budget decisions.
 
     Hashes detect drift in supplied evidence, not fabricated evidence. The caller
@@ -78,7 +82,12 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
     attempt, history, grade, tokens = map(Path, (attempt, history, grade, tokens))
     replay = read(attempt / 'receipt.json')
     history_receipt = read(history / 'receipt.json')
-    grading = read(grade / 'report.json')
+    if (root / grade / 'report.json').exists():
+        grading = read(grade / 'report.json')
+    else:
+        grading = read(grade / 'receipt.json')
+        if grading.get('evaluator_kind') != 'maven_compile_barrier_v1':
+            raise ValueError('Only Maven phase grading uses a receipt-only bundle')
     audit = read(tokens / 'report.json')
     for document, key in ((history_receipt, 'input_bindings'), (grading, 'inputs'),
                            (audit, 'input_bindings')):
@@ -115,6 +124,7 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
             or grading['sanitized_snapshot'] is not True):
         raise ValueError('Completed portable replay and sanitized evaluation required')
     source, task_data, reviewed = read(candidate), read(task), read(profile)
+    amendment = verify_mini_amendment_binding(reviewed, replay, history_receipt)
     correction = verify_correction_binding(reviewed, replay)
     if correction is not None:
         verify(attempt / 'source-intended.patch', correction['source_patch'])
@@ -159,7 +169,7 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
         raise ValueError('Nine native tool schemas required')
     reconstructed = mini_replay_history(events, source_messages=source['messages'],
         system=messages[0]['content'], problem=task_data['problem_statement'], allowed_tools=allowed,
-        correction_plan=correction)
+        correction_plan=correction, amendment_plan=amendment)
     if reconstructed['messages'] != messages or reconstructed['mapping'] != mapping:
         raise ValueError('History differs from fresh native exchanges')
     expected_command = scratch_cleanup_command(python=reviewed['python'],
@@ -171,8 +181,21 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
             or type(history_receipt['exchanges']) is not int
             or history_receipt['exchanges'] != len(events)):
         raise ValueError('Native exchange count mismatch')
+    evaluator_kind = grading.get('evaluator_kind', 'pytest')
+    is_maven = evaluator_kind == 'maven_compile_barrier_v1'
+    if evaluator_kind not in ('pytest', 'go_test_json_v1', 'mocha_json_v1', 'maven_compile_barrier_v1'):
+        raise ValueError('Unsupported evaluator kind')
+    if grading_profile is not None and not is_maven:
+        raise ValueError('Grading profile is only supported for Maven phase controls')
+    if evaluator_kind != 'pytest' and (
+            resource_proof is not None or 'supplemental_profile' in grading):
+        raise ValueError('Native evaluator does not support resource or supplemental profiles')
     outcomes = {}
-    for role in ('base', 'reference', 'candidate'):
+    if is_maven:
+        comparison = verify_maven_grade_bundle(grade=grade, grading=grading,
+            grading_profile=grading_profile, replay=replay, task=task_data,
+            attempt=attempt, read=read, verify=verify, record=record, path=path)
+    for role in (() if is_maven else ('base', 'reference', 'candidate')):
         execution = read(grade / role / 'receipt.json')
         runtime = read(grade / role / 'runtime.json')
         if (execution != grading['controls'][role] or execution['image_id'] != replay['image']
@@ -180,7 +203,22 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
                 or execution['state']['OOMKilled'] or 'error' in runtime
                 or runtime.get('tracked_diff_unchanged_by_tests') is not True):
             raise ValueError('Invalid evaluator execution')
-        outcomes[role] = read(grade / role / 'outcomes.json')
+        if evaluator_kind != 'pytest':
+            is_go = evaluator_kind == 'go_test_json_v1'
+            log_path = grade / role / ('tests.jsonl' if is_go else 'tests.json')
+            record(log_path)
+            before = grade / role / 'tracked-before.patch'
+            after = grade / role / 'tracked-after.patch'
+            verify(before, runtime['tracked_before'])
+            verify(after, runtime['tracked_after'])
+            if record(before) != record(after):
+                raise ValueError('Native tests changed tracked source')
+            if runtime.get('tests_started') is not True:
+                raise ValueError('Native tests did not start')
+            outcomes[role] = {'stdout' if is_go else 'text': path(log_path).read_text(),
+                              'exit_code': runtime['go_exit' if is_go else 'mocha_exit']}
+        else:
+            outcomes[role] = read(grade / role / 'outcomes.json')
         if resource_proof is not None:
             payload_path = grade / role / 'session_resources.json'
             record(payload_path)
@@ -197,7 +235,7 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
                         or event.get('method') != 'GET' or event.get('url') not in resources
                         or event.get('reason') is not None):
                     raise ValueError('Unsupported or failed grader resource event')
-        if (runtime.get('tests_started') is not True
+        if evaluator_kind == 'pytest' and (runtime.get('tests_started') is not True
                 or runtime.get('pytest_exit') != outcomes[role]['exitstatus']):
             raise ValueError('Runtime test status contradicts outcomes')
     expectations = {'FAIL_TO_PASS': task_data['FAIL_TO_PASS'],
@@ -210,11 +248,24 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
         supplemental = read(supplemental_path)['supplemental_pass_to_pass']
         if not supplemental:
             raise ValueError('Supplemental profile must declare additional tests')
-    controls = compare_controls(outcomes['base'], outcomes['reference'], expectations,
-                                supplemental_pass_to_pass=supplemental)
-    comparison = compare_candidate(outcomes['reference'], outcomes['candidate'])
-    if controls != grading['comparison'] or comparison != grading['candidate_comparison']:
-        raise ValueError('Grading summary contradicts complete test outcomes')
+    if is_maven:
+        pass  # The source-bound phase comparison was reconstructed above.
+    elif evaluator_kind == 'go_test_json_v1':
+        comparison = compare_go_runs(outcomes['base'], outcomes['reference'],
+            outcomes['candidate'], expectations, no_test_packages=grading['no_test_packages'])
+        if comparison != grading['go_comparison']:
+            raise ValueError('Grading summary contradicts native Go events')
+    elif evaluator_kind == 'mocha_json_v1':
+        comparison = compare_mocha_publisher(outcomes,
+            fail_to_pass=expectations['FAIL_TO_PASS'], pass_to_pass=expectations['PASS_TO_PASS'])
+        if comparison != grading['mocha_comparison']:
+            raise ValueError('Grading summary contradicts native Mocha reports')
+    else:
+        controls = compare_controls(outcomes['base'], outcomes['reference'], expectations,
+                                    supplemental_pass_to_pass=supplemental)
+        comparison = compare_candidate(outcomes['reference'], outcomes['candidate'])
+        if controls != grading['comparison'] or comparison != grading['candidate_comparison']:
+            raise ValueError('Grading summary contradicts complete test outcomes')
     verify(tokens / 'tokens.json', audit['token_candidate'])
     encoded = read(tokens / 'tokens.json')
     for name in ('history', 'tools'):
@@ -232,6 +283,8 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
             or audit['truncated'] is not False):
         raise ValueError('Token counts or truncation contradict arrays')
     blockers = []
+    if is_maven:
+        blockers.append('maven_publisher_case_label_review_required')
     if not comparison['all_cases_match_reference']:
         blockers.append('candidate_does_not_match_reference')
     if calls > max_tool_calls:
@@ -243,7 +296,10 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
     result = {'schema_version': 1, 'instance_id': task_data['instance_id'],
         'historical_sources': used_archives,
         'trajectory_id': source['source_metadata']['trajectory_id'], 'identities': identities,
-        'grading_backend': 'swe_rebench_v2_full_nodeid_reference',
+        'grading_backend': ('swe_rebench_v2_maven_compile_barrier' if is_maven
+                            else 'swe_rebench_v2_go_test_json_reference' if evaluator_kind == 'go_test_json_v1'
+                            else 'swe_rebench_v2_mocha_json_reference' if evaluator_kind == 'mocha_json_v1'
+                            else 'swe_rebench_v2_full_nodeid_reference'),
         'input_tokens': count, 'supervised_tokens': batch['supervised_tokens'],
         'native_tool_calls': calls, 'mechanical_blockers': blockers,
         'mechanical_checks_passed': not blockers, 'training_approved': False,
@@ -255,6 +311,12 @@ def assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidat
                        'Tokenization is hash-bound to a prior audit, not rerun here.',
                        'Reconstructed conditioning and adapter-authored suffix require review.',
                        'This result is not learned model improvement or training approval.']}
+    if is_maven:
+        result['phase_comparison'] = comparison['phase_comparison']
+        result['limitations'].append('Compilation-barrier evidence does not establish per-case runtime failures on the base.')
+    if amendment is not None:
+        result['amendment'] = amendment
+        result['limitations'].append('Command amendments are explicitly assistant-authored; original source observations are not reused.')
     if resource_proof is not None:
         result['resource_environment'] = resource_proof
         result['remaining_gates'].append('captured_response_rights_and_supervision_review')

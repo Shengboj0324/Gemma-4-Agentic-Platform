@@ -7,7 +7,10 @@ from pathlib import Path
 
 from .artifacts import file_record, load_json
 from .replay_history import native_replay_history
+from .replay_amendment import amended_replay_history
 from .replay_completion import completed_replay_history, validate_completion_plan
+from .rebench_grade_evidence import verify_rebench_outcomes
+from .matrix_admission_evidence import verify_matrix_grade
 
 
 def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
@@ -31,11 +34,13 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
     replay, receipt = data['attempt'], data['history_receipt']
     grading, token_report = data['grade'], data['tokens']
     backend = grading.get('backend', 'r2e_publisher_groups')
-    if backend not in ('r2e_publisher_groups', 'swe_rebench_full_nodeid_reference'):
+    if backend not in ('r2e_publisher_groups', 'swe_rebench_full_nodeid_reference',
+                       'swe_rebench_version_matrix'):
         raise ValueError('Unknown grading backend')
-    if backend == 'swe_rebench_full_nodeid_reference' and grading['task'] != replay['instance_id']:
+    rebench = backend in ('swe_rebench_full_nodeid_reference', 'swe_rebench_version_matrix')
+    if rebench and grading['task'] != replay['instance_id']:
         raise ValueError('Graded task differs from replay')
-    graded_patch = grading['inputs']['patch'] if backend == 'swe_rebench_full_nodeid_reference' else grading['patch']
+    graded_patch = grading['inputs']['patch'] if rebench else grading['patch']
     for label, declared, actual in [
         ('replay patch', replay['patch'], identities['patch']),
         ('graded patch', graded_patch, identities['patch']),
@@ -49,6 +54,10 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
     ]:
         if declared != actual:
             raise ValueError(label + ' identity mismatch')
+    outcome_evidence = (verify_rebench_outcomes(grading, grade)
+                        if backend == 'swe_rebench_full_nodeid_reference' else {})
+    if backend == 'swe_rebench_version_matrix':
+        outcome_evidence = verify_matrix_grade(grading, replay, paths['patch'])
     if replay['status'] != 'replayed_not_graded' or replay['cleanup']['removed'] is not True:
         raise ValueError('Completed replay and verified cleanup required')
     messages = data['history']
@@ -61,6 +70,7 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
     projection = dict(system=messages[0]['content'], problem=messages[1]['content'],
                       allowed_tools=allowed)
     completion_count = 0
+    plan = None
     if 'completion_plan' in replay:
         plan = validate_completion_plan(replay['completion_plan'])
         paths['source_actions'] = attempt / 'actions.json'
@@ -72,14 +82,39 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
                 or identities['completion_implementation'] != replay.get('completion_module')
                 or receipt.get('completion_plan') != plan):
             raise ValueError('Completion provenance mismatch')
-        reconstructed = completed_replay_history(data['events'], plan=plan, **projection)
         completion_count = len(plan['commands'])
     else:
         if ('completion_plan' in receipt or any(
                 event.get('kind') == 'completion' or 'adapter_authored' in event
                 for event in data['events'])):
             raise ValueError('Completion events require a bound plan')
-        reconstructed = native_replay_history(data['events'], **projection)
+    if 'amendment_plan' in replay:
+        amendment = replay['amendment_plan']
+        if not isinstance(amendment, dict):
+            raise ValueError('Invalid amendment plan')
+        paths.update(original_actions=attempt / 'original-actions.json',
+                     derived_actions=attempt / 'actions.json',
+                     amendment_implementation=Path(__file__).with_name('replay_amendment.py'))
+        for name in ('original_actions', 'derived_actions', 'amendment_implementation'):
+            identities[name] = file_record(paths[name])
+        if (identities['original_actions'] != replay.get('original_actions')
+                or identities['derived_actions'] != replay.get('derived_actions')
+                or identities['amendment_implementation'] != replay.get('amendment_module')
+                or identities['original_actions'] != amendment.get('source_actions')
+                or identities['derived_actions'] != amendment.get('derived_actions')
+                or receipt.get('amendment_plan') != amendment):
+            raise ValueError('Amendment provenance mismatch')
+        reconstructed = amended_replay_history(
+            data['events'], actions=load_json(paths['original_actions']),
+            plan=amendment, completion_plan=plan, **projection)
+    else:
+        if ('amendment_plan' in receipt
+                or any(key in replay for key in ('original_actions', 'derived_actions',
+                                                'amendment_module', 'amendment_plan_file'))
+                or (attempt / 'original-actions.json').exists()):
+            raise ValueError('Amended artifacts require a bound amendment plan')
+        reconstructed = (native_replay_history(data['events'], **projection) if plan is None
+                         else completed_replay_history(data['events'], plan=plan, **projection))
     if reconstructed['messages'] != messages or reconstructed['mapping'] != data['mapping']:
         raise ValueError('History differs from captured native exchanges')
     if type(receipt['exchanges']) is not int or receipt['exchanges'] != len(data['mapping']):
@@ -96,12 +131,12 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
     if token_report['truncated'] is not False:
         raise ValueError('Truncated or unspecified tokenization rejected')
     result = grading['grading']
-    match_key = ('all_cases_match_reference' if backend == 'swe_rebench_full_nodeid_reference'
+    match_key = ('all_cases_match_reference' if rebench
                  else 'all_cases_match_publisher_expectations')
     matches = result[match_key]
     if type(matches) is not bool or type(result['case_count']) is not int or result['case_count'] <= 0:
         raise ValueError('Invalid grading result')
-    consistency_keys = (('disagreements',) if backend == 'swe_rebench_full_nodeid_reference'
+    consistency_keys = (('disagreements',) if rebench
                         else ('disagreements', 'missing_groups', 'unexpected_groups'))
     inconsistencies = any(result[key] for key in consistency_keys)
     if matches and inconsistencies:
@@ -115,10 +150,13 @@ def assess_replay_bundle(*, attempt: Path, history: Path, grade: Path,
         blockers.append('input_plus_output_reserve_exceeds_context')
     if any(file_record(paths[name]) != identity for name, identity in identities.items()):
         raise ValueError('Evidence changed during assessment')
+    if any(file_record(Path(path)) != identity for path, identity in outcome_evidence.items()):
+        raise ValueError('Publisher outcomes changed during assessment')
     return {
         'schema_version': 1, 'instance_id': replay['instance_id'],
         'trajectory_id': replay['trajectory_id'], 'identities': identities,
         'grading_backend': backend,
+        'recomputed_outcome_evidence': outcome_evidence,
         'policy': {'max_input_tokens': max_input_tokens, 'output_reserve': output_reserve,
                    'max_tool_calls': max_tool_calls},
         'input_tokens': input_count, 'supervised_tokens': supervised,

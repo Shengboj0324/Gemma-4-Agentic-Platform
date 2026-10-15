@@ -5,10 +5,12 @@ Remote bytes are streamed and hashed; ETags are never treated as SHA-256.
 Local destination parents must be owned and free of concurrent writers.
 """
 
+import errno
 import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import tempfile
 
 from .artifacts import canonical_json, relative_path, validate_manifest, verify
@@ -123,6 +125,11 @@ class ArtifactStore:
         parent = destination.parent.resolve(strict=True)
         # Bind relative destinations once, before any transport callbacks run.
         destination = parent / destination.name
+        # Reject an already-impossible transfer before spending network bandwidth.
+        # Available space can change concurrently; write/fsync failures below
+        # still abort staging without exposing an incomplete destination.
+        if shutil.disk_usage(parent).free < total:
+            raise OSError(errno.ENOSPC, "insufficient free space for artifact restore", str(parent))
         with tempfile.TemporaryDirectory(prefix=".restore-", dir=parent) as temporary:
             staging = Path(temporary) / "bundle"
             staging.mkdir(mode=0o700)

@@ -15,13 +15,24 @@ from scripts.qualify_swe_rebench_evaluator import PLUGIN, PROBE
 
 def validate_profile(profile):
     required = {'instance_id', 'python', 'module', 'expected_origin', 'test_targets'}
-    if not isinstance(profile, dict) or set(profile) not in (required, required | {'import_root'}):
+    if (not isinstance(profile, dict) or not required <= set(profile)
+            or set(profile) - required - {'import_root', 'python_on_path', 'platform'}):
         raise ValueError('Exact execution profile fields required')
     if (not isinstance(profile['instance_id'], str) or not profile['instance_id']
             or not isinstance(profile['module'], str)
             or re.fullmatch(r'[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*', profile['module']) is None):
         raise ValueError('Invalid task or import module')
-    for key, prefix in [('python', '/opt/'), ('expected_origin', '/testbed/')]:
+    executable = profile['python']
+    # Container images place their reviewed interpreter under either /opt or
+    # /usr/local/bin. A location alone does not qualify an interpreter: callers
+    # still bind the exact image and verify imports from the task checkout.
+    if (not isinstance(executable, str)
+            or re.fullmatch(r'/[A-Za-z0-9_./-]+', executable) is None
+            or any(part in ('', '.', '..') for part in executable.split('/')[1:])
+            or not (executable.startswith('/opt/')
+                    or re.fullmatch(r'/usr/local/bin/python(?:3(?:\.[0-9]+)?)?', executable))):
+        raise ValueError('Invalid reviewed interpreter path')
+    for key, prefix in [('expected_origin', '/testbed/')]:
         value = profile[key]
         if (not isinstance(value, str) or not value.startswith(prefix)
                 or '..' in Path(value).parts or '\x00' in value):
@@ -33,9 +44,25 @@ def validate_profile(profile):
         raise ValueError('Nonempty relative test targets required')
     if len(targets) != len(set(targets)):
         raise ValueError('Duplicate test target')
+    if 'python_on_path' in profile:
+        if type(profile['python_on_path']) is not bool:
+            raise ValueError('python_on_path must be Boolean')
+        if any(c == ':' or ord(c) < 32 for c in profile['python']):
+            raise ValueError('Interpreter path cannot contain PATH separators or control characters')
+    if 'platform' in profile and profile['platform'] not in ('linux/amd64', 'linux/arm64'):
+        raise ValueError('Explicit supported Linux platform required')
     if 'import_root' in profile:
         source_pythonpath(profile['import_root'], '/testbed')
     return profile
+
+
+def control_environment_prefix(profile):
+    """Explicitly align subprocess PATH with the reviewed Python environment."""
+    validate_profile(profile)
+    if not profile.get('python_on_path', False):
+        return ''
+    directory = str(Path(profile['python']).parent)
+    return "import os\nos.environ['PATH']=" + repr(directory + ':') + " + os.environ.get('PATH', '')\n"
 
 
 def main():
@@ -63,7 +90,6 @@ def main():
         bound[str(args.inputs / name)] = identity
     patches = {role: base64.b64encode((args.inputs / name).read_bytes()).decode()
                for role, name in [('reference', 'reference.patch'), ('tests', 'tests.patch')]}
-    image = resolution['registry']['pinned_image']
     base, tree = inputs['task']['base_commit'], ''
     if args.snapshot:
         for name in ['snapshot.json', 'verification.json', 'receipt.json', 'input-bindings.json']:
@@ -79,6 +105,8 @@ def main():
                 or container['returncode'] != 0 or container['cleanup_returncode'] != 0):
             raise ValueError('Snapshot provenance or runtime verification failed')
         image, base, tree = container['image_id'], snapshot['snapshot_commit'], snapshot['source_tree']
+    else:
+        image = resolution['registry']['pinned_image']
     args.output.mkdir(parents=True, exist_ok=False)
     controls = {}
     for role in ('base', 'reference'):
@@ -89,9 +117,11 @@ def main():
                     'SOURCE_PYTHONPATH': source_pythonpath(profile['import_root'], '/testbed') if 'import_root' in profile else '',
                     'TEST_TARGETS': profile['test_targets'], 'PATCHES': payload,
                     'PLUGIN': PLUGIN, 'RESOURCE_PAYLOAD': '', 'RESOURCE_ADAPTER': ''}
-        probe = ''.join(f'{key}={value!r}\n' for key, value in settings.items()) + PROBE
+        probe = (control_environment_prefix(profile)
+                 + ''.join(f'{key}={value!r}\n' for key, value in settings.items()) + PROBE)
         result = run_image(image, args.output / role,
-                           probe=probe, generated_grading_tests=True)
+                           probe=probe, generated_grading_tests=True,
+                           entrypoint=profile['python'], platform=profile.get('platform', 'linux/amd64'))
         controls[role] = {'container': result, 'runtime': load_json(args.output / role / 'runtime.json')}
         print({'role': role, 'runtime': controls[role]['runtime']}, flush=True)
     if any(file_record(Path(path)) != identity for path, identity in bound.items()):

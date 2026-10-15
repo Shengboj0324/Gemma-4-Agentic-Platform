@@ -88,11 +88,26 @@ class ReplayAdmissionTests(unittest.TestCase):
             self.assess()
 
     def test_full_nodeid_grading_requires_task_and_attempt_binding(self):
+        def outcomes(passed):
+            return {'collected': ['test.py::test_case'], 'collection_errors': [],
+                    'exitstatus': 0 if passed else 1,
+                    'reports': [{'nodeid': 'test.py::test_case', 'when': phase,
+                                 'outcome': 'failed' if phase == 'call' and not passed else 'passed'}
+                                for phase in ('setup', 'call', 'teardown')]}
+        for role in ('base', 'reference', 'candidate'):
+            (self.root / 'grade' / role).mkdir()
+            self.write('grade/' + role + '/outcomes.json', outcomes(role != 'base'))
+        self.write('grade/metadata.json', {'FAIL_TO_PASS': ['test.py::test_case'],
+                   'PASS_TO_PASS': [], 'FAIL_TO_FAIL': [], 'PASS_TO_FAIL': []})
         report = {'backend': 'swe_rebench_full_nodeid_reference', 'task': 'fixture',
                   'attempt': self.record('attempt/receipt.json'),
-                  'inputs': {'patch': self.record('attempt/submitted.patch')},
+                  'inputs': {'patch': self.record('attempt/submitted.patch'),
+                             'bindings': {str(self.root / name): self.record(name) for name in
+                                          ('grade/metadata.json', 'grade/base/outcomes.json',
+                                           'grade/reference/outcomes.json')}},
+                  'outcomes': self.record('grade/candidate/outcomes.json'),
                   'grading': {'all_cases_match_reference': True, 'case_count': 1,
-                              'disagreements': []}}
+                              'disagreements': [], 'training_approved': False}}
         self.write('grade/report.json', report)
         self.assertTrue(self.assess()['mechanical_checks_passed'])
         report['task'] = 'different'

@@ -19,6 +19,9 @@ from zenithsync.artifacts import canonical_json, file_record, inventory, verify
 FILES = [
     'scripts/run_p1_training.py', 'scripts/run_p1_training_worker.py',
     'zenithsync/__init__.py', 'zenithsync/artifacts.py', 'zenithsync/contracts.py',
+    'scripts/transfer_artifact.py', 'zenithsync/object_store.py',
+    'scripts/verify_architecture_layout.py', 'zenithsync/architecture_layout.py',
+    'zenithsync/model_intake.py',
     'zenithsync/conversation.py', 'zenithsync/process_supervisor.py',
     'zenithsync/quantized_layout.py', 'zenithsync/training_batch.py',
     'zenithsync/training_fixture.py', 'zenithsync/training_masks.py',
@@ -64,6 +67,8 @@ def main():
     checks = []
     with tempfile.TemporaryDirectory() as isolated:
         for script in ['run_p1_training.py', 'run_p1_training_worker.py',
+                       'transfer_artifact.py',
+                       'verify_architecture_layout.py',
                        'inspect_training_corpus.py', 'plan_corpus_updates.py',
                        'run_corpus_training.py', 'run_corpus_training_worker.py']:
             command = [sys.executable, '-I', '-B',

@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from zenithsync.artifacts import canonical_json,file_record,load_json
 from zenithsync.replay_amendment import amend_actions
+from zenithsync.replay_noop import identical_edit, snapshot_file, verify_rejected_noop
 from zenithsync.container_cleanup import cleanup_owned_container
 from zenithsync.source_workspace import prepare_source_workspace
 from zenithsync.trajectory_import import convert_swe_hero_history
@@ -105,9 +106,12 @@ def adapt_source_local_command(command):
     working-directory changes. Execution remains in the disposable offline container.
     """
     filename = r'[A-Za-z_][A-Za-z_0-9]*\.py'
+    component = r'[A-Za-z_][A-Za-z_0-9-]*'
+    test_path = r'(?:' + component + r'/)*' + filename
+    test_directory = component + r'(?:/' + component + r')*/'
     patterns = (
         r'python ' + filename,
-        r'python -m pytest ' + filename + r'(?: -v)?',
+        r'python -m pytest (?:' + test_path + '|' + test_directory + r')(?: -v)?',
         r'python -m unittest ' + filename,
         r'rm ' + filename + r'(?: ' + filename + r')*',
         r'git status',
@@ -184,12 +188,29 @@ def preflight(messages, prefix=PREFIX):
                     raise ValueError('Additional source-root substitution requires review')
                 actions.append({'index':index,'kind':'shell','command':command, **shell_metadata})
             elif name=='str_replace_editor':
-                action=args['command'];path=source_path(args['path'],prefix)
+                if not isinstance(args, dict) or not {'command', 'path'} <= set(args):
+                    raise ValueError('Incomplete editor invocation')
+                action=args['command']
                 allowed={'view':{'command','path','view_range'},
                          'create':{'command','path','file_text'},
                          'str_replace':{'command','path','old_str','new_str'}}
-                if action not in allowed or set(args)-allowed[action]:
+                if not isinstance(action, str) or action not in allowed or set(args)-allowed[action]:
                     raise ValueError('Unsupported editor profile')
+                path=source_path(args['path'],prefix)
+                if action != 'view' and set(args) != allowed[action]:
+                    raise ValueError('Missing editor mutation arguments')
+                if action == 'create' and not isinstance(args['file_text'], str):
+                    raise ValueError('Editor content must be text')
+                if action == 'str_replace' and (
+                        not isinstance(args['old_str'], str) or not args['old_str']
+                        or not isinstance(args['new_str'], str)):
+                    raise ValueError('Replacement requires nonempty old text and text replacement')
+                if action == 'view' and 'view_range' in args:
+                    bounds=args['view_range']
+                    if (not isinstance(bounds, list) or len(bounds) != 2
+                            or any(type(value) is not int for value in bounds)
+                            or bounds[0] < 1 or (bounds[1] != -1 and bounds[1] < bounds[0])):
+                        raise ValueError('Invalid editor line range')
                 if action!='view' and path=='.':
                     raise ValueError('Cannot edit repository directory')
                 actions.append({'index':index,'kind':action,'path':path,
@@ -317,6 +338,7 @@ def main():
         raise ValueError('Completion plan source action identity mismatch')
     receipt={'source':identity,'trajectory_id':trace,'instance_id':instance,
         'credential_screen_source':file_record(ROOT/'zenithsync/source_credentials.py'),
+        'noop_verifier':file_record(ROOT/'zenithsync/replay_noop.py'),
         'source_imports':file_record(ROOT/'zenithsync/source_imports.py'),
         'profile':profile,'image':image,'script':file_record(Path(__file__)),
         'action_counts':dict(Counter(a['kind'] for a in actions)),
@@ -372,6 +394,7 @@ def main():
         for action in actions:
             kind=action['kind'];a=action.get('arguments',{});path=action.get('path')
             native_start=len(native_calls)
+            noop_evidence=None
             if kind=='think':
                 result={'status':'not_executed','reason':'teacher reasoning is not a native tool'}
             elif kind=='finish':
@@ -404,11 +427,17 @@ def main():
                 if exists.exit_code==0: raise ValueError('Source create would overwrite existing path')
                 result=tools['write_file'](filepath=path,content=a['file_text'])
             elif kind=='str_replace':
+                before=snapshot_file(manager,cid,path,a['old_str']) if identical_edit(a) else None
                 result=tools['edit_file'](filepath=path,old_string=a['old_str'],new_string=a['new_str'])
+                if before is not None:
+                    after=snapshot_file(manager,cid,path,a['old_str'])
+                    noop_evidence=verify_rejected_noop(a,result,before,after)
             events.append({'source_index':action['index'],'kind':kind,'result':result,
                            'native_calls':native_calls[native_start:]})
+            if noop_evidence is not None:
+                events[-1]['noop_verification']=noop_evidence
             (args.output/'events.json').write_bytes(canonical_json(events))
-            if kind in ('create','str_replace','finish') and result['status']!='ok':
+            if kind in ('create','str_replace','finish') and result['status']!='ok' and noop_evidence is None:
                 raise RuntimeError('Mutation or submission failed; replay stopped')
             print({'source_index':action['index'],'kind':kind,'status':result['status']},flush=True)
         if not ctx.submitted_patch: raise ValueError('No submitted patch')

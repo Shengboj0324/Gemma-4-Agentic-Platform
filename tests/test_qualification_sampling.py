@@ -34,3 +34,25 @@ class QualificationSamplingTests(unittest.TestCase):
         rows[0]['serialized_source_tokens']=True
         with self.assertRaises(ValueError):
             stratified_repository_batch(rows,excluded_repositories=[],seed=1)
+
+    def test_explicit_call_cost_preserves_its_units_and_default_output(self):
+        rows = self.records()
+        calls = [{**row, 'source_call_proxy': 41-row['serialized_source_tokens']}
+                 for row in rows]
+        options = {'excluded_repositories': [], 'seed': 19, 'per_stratum': 2}
+        selected = stratified_repository_batch(
+            calls, **options, cost_field='source_call_proxy')
+        self.assertEqual(selected, stratified_repository_batch(
+            calls[::-1], **options, cost_field='source_call_proxy'))
+        for row in selected:
+            self.assertEqual(row['source_call_proxy'] + row['serialized_source_tokens'], 41)
+            if row['stratum'] == 0:
+                self.assertLessEqual(row['source_call_proxy'], 10)
+        self.assertEqual(
+            stratified_repository_batch(rows, **options),
+            stratified_repository_batch(rows, **options, cost_field='serialized_source_tokens'))
+        with self.assertRaises(ValueError):
+            stratified_repository_batch(calls, **options, cost_field='resolved')
+        calls[0]['source_call_proxy'] = True
+        with self.assertRaises(ValueError):
+            stratified_repository_batch(calls, **options, cost_field='source_call_proxy')
