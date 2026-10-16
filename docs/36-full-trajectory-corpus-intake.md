@@ -140,3 +140,18 @@ Full-corpus action-budget evidence is now R2-published and remotely hash-verifie
 58 files, 13,957,006 bytes. Receipt:
 `evidence/data/corpus-action-budget-publish-001/receipt.json`.
 This verifies storage of the static audit, not replay success or training admission.
+
+
+### Explicit source-edit derivatives
+
+Replay amendment schema version 1 continues to accept shell-command and created-file
+text changes only. Version 2 additionally accepts `field: new_str` on an existing
+`str_replace` action. Paths, preimages, action kinds, indices and ordering cannot
+be amended. Both complete action lists and each changed text are hash-bound;
+source edits are marked as assistant-authored in the projected mapping. The
+captured native `edit_file` call must exactly match the amended path/preimage/new
+text and result. This checks provenance consistency, not independent execution
+attestation or patch correctness. Execute every derivative afresh, retain the
+original trajectory, and repeat history, grading, isolation and admission checks.
+Version 2 does not approve data for training or permit evaluator-exposed changes
+to be represented as unexposed candidates.

@@ -65,6 +65,47 @@ class AssemblyTests(unittest.TestCase):
             self.run_assembly()
         self.assertFalse((self.root / 'output/receipt.json').exists())
 
+    def test_explicit_external_root_keeps_quarantine(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            external = Path(temporary).resolve()
+            self.source.rename(external / 'candidate')
+            self.run_assembly('--candidate-root', str(external))
+            receipt = load_json(self.root / 'output/receipt.json')
+            self.assertEqual(receipt['candidate_root'], str(external))
+            self.assertFalse(receipt['training_approved'])
+            self.assertEqual(load_json(self.root / 'corpus/corpus.json')['status'], 'quarantine')
+
+    def test_default_root_rejects_external_absolute_directory(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            external = Path(temporary).resolve()
+            self.source.rename(external / 'candidate')
+            path = self.root / 'selection.json'
+            rows = load_json(path)
+            rows[0]['candidate_directory'] = str(external / 'candidate')
+            path.write_bytes(canonical_json(rows))
+            with self.assertRaisesRegex(ValueError, 'directory outside allowed root'):
+                self.run_assembly()
+            self.assertFalse((self.root / 'output/receipt.json').exists())
+
+    def test_directory_symlink_cannot_escape_explicit_root(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            external = Path(temporary).resolve()
+            self.source.rename(external / 'candidate')
+            self.source.symlink_to(external / 'candidate', target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, 'directory outside allowed root'):
+                self.run_assembly('--candidate-root', str(self.root))
+            self.assertFalse((self.root / 'output/receipt.json').exists())
+
+    def test_file_symlink_cannot_escape_explicit_root(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            external = Path(temporary).resolve() / 'tokens.json'
+            source = self.source / 'tokens.json'
+            source.rename(external)
+            source.symlink_to(external)
+            with self.assertRaisesRegex(ValueError, 'file outside allowed root'):
+                self.run_assembly('--candidate-root', str(self.root))
+            self.assertFalse((self.root / 'output/receipt.json').exists())
+
     def test_per_file_limit_rejects_before_copy(self):
         with self.assertRaisesRegex(ValueError, 'Example file'):
             self.run_assembly('--max-example-bytes', '1')

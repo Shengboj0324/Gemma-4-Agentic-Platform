@@ -2,6 +2,858 @@
 
 Updated October 15, 2026. **P1 is incomplete. Keep Runpod stopped.**
 
+A current-content attribution inventory now covers all 50 Corpus065 rows and
+binds each to its history/token audit. Exact metadata joins resolve 36 SWE-Hero
+examples and six Open-SWE-Traces mini examples. Eight rows require their separate
+retained source indexes; they are neither rejected nor assigned guessed provenance.
+The two NVIDIA cards were freshly fetched at their recorded immutable revisions
+and match retained bytes. Their declared fine-tuning/distillation use and CC BY 4.0
+terms support source-level intake; they do not replace per-file notices or privacy
+review. Unknown historical teacher-service details are recorded limitations, not
+an automatic universal training prohibition absent evidence of a restriction.
+
+The executable next work is documented in
+`evidence/data/corpus065-attribution-index-001/decision.md`: resolve the eight joins,
+bind observed source/dependency notices to current histories, address embedded
+license exceptions and the recorded ptvsd notice gap, then issue only reviews with
+complete current-content coverage. All admission fields remain unchanged. The
+8-file inventory (136,245 bytes) was published and independently restored from R2.
+This advances provenance coverage, not training approval or sufficient scale.
+Runpod remains unused and P1 incomplete.
+
+Corpus065 integrates the reviewed Project_runpy17 native001 replay as quarantine
+only. All 49 predecessor records remain unchanged. The corpus contains 50 tasks,
+987,871 input tokens and 267,137 shifted supervised targets; zero tokens have
+training approval. Manifest SHA256:
+`cad06995e2a87e90417476c103f8204d61a487d0599231a29f1d8941ab66f579`.
+All 101 corpus files (10,944,063 bytes) and 23 integration-evidence files
+(322,498 bytes) were independently restored from R2 and verified. Transfer
+metadata explicitly names revision065. Evidence: `evidence/data/corpus065-integration`.
+
+The R2-restored 42-file training deployment bundle still matches current repository
+bytes. Local and restored schedules match exactly: 10 planned updates, 50 examples
+once, no target overshoot. All 11 resume boundaries reproduce the exact suffix;
+11 deliberately corrupted token counters are rejected. The real worker rejects
+quarantine before touching deliberately absent model inputs. This tests ingestion
+and schedule logic, not optimizer recovery or GPU/model execution. Evidence:
+`evidence/p1/corpus065-ingestion-001` (17 files, 48,410 bytes, R2 restore verified).
+
+After verifying both retained and temporary copies against successful restore
+receipts, 124 temporary files were deleted, releasing 11,534,336 allocated bytes.
+Primary corpus and integration evidence remain available. Finder repair is not
+claimed. No production code changed in this integration; the previously qualified
+625-test result is not a new test run. Runpod was unused. Training-rights/privacy,
+final split and full training/runtime gates remain unresolved; this small corpus
+is not sufficient evidence for the planned three 50M-token campaigns.
+
+Project_runpy17 native001 now has a complete, hash-bound review of all 80
+messages in 10 nonoverlapping sections. Frozen candidate files remain unchanged.
+The review approves only tool-action supervision: redundant calls, the rejected
+identical edit and the truncated original test-source read remain explicit; no
+final conversational answer is present. Rights, privacy and training approval
+remain false. Evidence: `evidence/data/runpy17-history-review-001` (4 files,
+18,588 bytes independently restored from R2).
+
+The candidate repository has no overlap with the retained known repository/network
+identities. Exact five-token lexical comparison over 50 issue texts checks all
+1,225 pairs against an independent brute-force oracle, with no new candidate
+flags. Prior flags remain in the report. These checks do not establish semantic
+independence or cover unknown detached forks/reserved issue bodies. The root
+Apache license and embedded Vinay Sajip new BSD notice are preserved separately;
+no blanket rights clearance is inferred. Evidence:
+`evidence/data/runpy17-isolation-001`. Corpus064 remains unchanged; corpus
+integration and remaining admission gates are still pending. Runpod remains unused.
+
+Project_runpy17 native001 passes strict publisher comparison:25declared tests,
+baseline24/25, reference25/25 and candidate25/25, zero outcome disagreements.
+Candidate replay/history/token bytes were frozen before publisher extraction and
+remain unchanged. Integrated replay admission also passes without mechanical
+blockers, reconstructing version2source-edit attribution, actual rejected-noop
+evidence, source/history/grade bindings and tool/context limits. Training remains
+unapproved; this verifier establishes evidence consistency, not independent attestation.
+
+The reference adds not sql and reorders unrelated Makefile release comments.
+Candidate changes only the source guard to sql is None. Their tested outcomes
+match, but falsy-value semantics and patch bytes differ. Diagnostic Python3.9 ARM64
+also differs from publisher Python3.7 metadata; historical runtime parity is not
+claimed. Full80-message history, rights/privacy and isolation checks remain open.
+
+Evidence: `evidence/data/runpy17-grade-001`, including mechanical admission.
+An initial collector used a nonexistent002runner filename; the failure was retained
+and the collector corrected to the actual001runner. Grading was not rerun or altered.
+Corpus064 unchanged, zero new training-approved tokens, Runpod unused, P1 incomplete.
+
+Project_runpy17 native001 exercises schema_version2 in a fresh offline container.
+Six attributed amendments retain the teacher intermediate None-only repair, tighten
+three diagnostic scripts and compare against the independently verified parentless
+base snapshot. The second source edit becomes identical text: native edit_file
+rejects it as FileEditError and the existing no-op verifier records unchanged file
+state. The error remains in history; it is not relabeled as successful editing.
+
+Replay completes38charged calls,39exchanges,80messages,17,681input tokens and2,335
+shifted supervised targets. With8,192reserve,6,895tokens remain under32,768.
+Missing issue.md and empty grep observations are retained. Baseline None diagnostic
+fails; after repair finite diagnostics pass, combined pytest reports27passes and
+final original unittest suite reports24passes. All source bytes produced by
+independently applying the submitted patch to the pinned base match the previously
+paired-tested candidate002, not the held final teacher patch.
+Patch644bytes SHA25673b0fab2eff2859f93dc4adcf2819bd698efdf1d143efd56e4419a15233d3b4f.
+
+Evidence: `evidence/data/runpy17-native-001`. Compact build context references
+already archived exact Debian dependencies rather than duplicating them; it is
+not a standalone image export or inherited-layer audit. Temporary source shard,
+patch-check copy and replay container removed. Full80-message review, publisher
+controls and remaining admission gates are still required. Corpus064 unchanged,
+zero new training-approved tokens, Runpod unused, P1 incomplete.
+
+Replay amendment now supports explicit schema_version2 source replacement-text
+derivatives. Version1 remains shell/create-only. Version2 can change new_str of
+an existing str_replace action while retaining its exact path, old_str, event
+index, kind and ordering. Whole source/derived action-list hashes remain mandatory.
+Projection compares the captured edit_file path, old/new text and returned result
+with the declared derivative, and records source-edit authorship and field in the
+message mapping. No observed execution is fabricated or treated as authenticated
+merely because a caller supplies a receipt; actual fresh replay is still required.
+
+Six new regression tests cover source attribution/preimage preservation, version
+separation, forbidden fields, rehashed destination tampering, stale/mismatched
+captured edits and invalid source preimages. All14amendment tests pass. Full CPU
+suite:625tests, zero skips,21.086seconds, including enabled Torch reduced-model
+checks. Evidence: `evidence/p1/full-suite-qualification-017`; source snapshot and
+logs are archived with per-member restore verification. This is not full-model,
+GPU or long-run training qualification.
+
+The earlier statement that the backend cannot represent source-edit variants is
+superseded by this implementation. Project_runpy17 still needs its actual fresh
+version2 replay and downstream checks; the unit fixtures are not that evidence.
+Corpus064 unchanged, zero new approved training tokens, Runpod unused, P1 incomplete.
+
+Project_runpy17 independent candidate002 retains the teacher intermediate None-only
+guard, explicitly attributed to assistant selection before publisher exposure.
+The final teacher patch and its type-policy hold remain unchanged in controls001.
+Paired runtime results:2,673string cases pass in both versions;54None cases fail
+in baseline and pass in candidate;24upstream tests pass in each. All five observed
+non-None type outcomes match baseline, including preserved UserString shortening
+and original errors for bytes/int/dict inputs. This is not blanket input support.
+
+Structural verification parses both complete modules. The only AST difference is
+an added leading sql is None operand in the existing guard. Removing exactly that
+operand restores the entire baseline AST. Under standard Python semantics, this
+identity comparison is false for non-None sql and leaves the original predicate and
+subsequent statements unchanged. This establishes conditional path preservation,
+not correctness of the baseline parser or all execution environments.
+
+Evidence: `evidence/data/runpy17-controls-002`. A fresh source-changing trajectory
+with explicit attribution is still needed. Existing replay_amendment supports only
+shell/create text derivatives; do not disguise source edits as diagnostic-only
+amendments or reuse final-teacher observations. Corpus064 unchanged, no publisher
+assets accessed, no training approval, no Runpod use, P1 incomplete.
+
+Project_runpy17 paired controls reconstruct both teacher source edits from the
+hash-bound trajectory. The final patch guards None and all non-str values. In a
+fresh offline Python3.9 ARM64 container, independent generated expected results
+cover2,673string cases:33SELECT-prefix positions,3column widths,3FROM-tail forms,
+3filter names and3record names. Both baseline and candidate have zero failures,
+including the28-character detection boundary and exact message/argument mutation.
+All54None combinations fail on baseline and pass on candidate; filter outcomes and
+unchanged record arguments are checked. All24upstream tests pass in each version.
+
+Five separate type-policy probes expose a compatibility difference: baseline
+shortens collections.UserString('SELECT a FROM t') to SELECT...FROM t, while the
+teacher final patch bypasses it. Bytes/int/dict errors also become pass-through;
+empty-list behavior remains unchanged. This does not prove UserString is a promised
+public input, but it contradicts an unconditional preservation claim. Hold teacher
+final before publisher access. Review the contract and teacher's intermediate
+None-only guard as a separately attributed candidate; do not silently replace the
+final trajectory. Read-only source inventories remained identical; no GPU used.
+
+Evidence: `evidence/data/runpy17-controls-001`, including exact teacher identity,
+patch, independent probe, source manifests, logs and hold decision. Corpus064
+unchanged. No publisher assets accessed, no training approval, P1 incomplete.
+
+Acquired and Git-blob-verified four further pinned source trees (408,547bytes):
+Dorthu/openapi3-83, scitokens/scitokens-193, crccheck/project_runpy-17 and
+python/mypy_extensions-47. Selection continues the retained context-ranked batch2
+queue without reselecting earlier tasks or reading publisher repair/test assets.
+All eight offline screen containers were removed; read-only source inventories
+were unchanged. No additional dependencies or GPU compute were used.
+
+Minimal Python3.13 AMD64 screen: openapi lacks yaml; scitokens lacks jwt with eight
+collection errors; project_runpy passes24tests; mypy_extensions has no pytest tests.
+The pinned tox.ini for mypy_extensions specifies python -m unittest discover tests.
+On retained Python3.9 ARM64, that exact discovery method passes10tests, and
+project_runpy again passes24tests. The two dependency blockers remain. These are
+baseline results, not teacher-patch validation or historical-runtime equivalence.
+Prioritize paired controls for the two runnable candidates, preserving unrelated
+baseline behavior; no corpus or training-admission counts change.
+
+Evidence: `evidence/data/swe-hero-batch2-source-runtime-003`. The compact archive
+contains source, tree/commit records, selections, commands and logs; independent
+restoration verifies every archive member as well as outer files. Corpus064 remains
+quarantine-only and inadequate evidence for the planned training scale. Runpod
+unused; P1 incomplete.
+
+Corpus064 adds the mechanically qualified Zahlwort6 trajectory to quarantined
+inspection storage:49tasks,970,190input tokens,264,802shifted supervised targets.
+All48predecessor records remain unchanged. The retained traceback-boilerplate
+similarity flag and published-author-contact privacy finding are carried forward;
+rights/privacy/split gates remain unapproved. The real training loader rejects it.
+
+All99corpus files were R2published and independently restored. The current-source
+worker produces identical original/restored9-update schedules, every example once,
+zero token overshoot, exact resumed suffixes at all10boundaries and rejection of
+all10corrupted token counters. Worker quarantine refusal precedes model access.
+This is CPU ingestion/schedule evidence, not optimizer recovery or training gains.
+Evidence: `evidence/data/corpus064-integration` and `evidence/p1/corpus064-ingestion-001`.
+
+Initial transfer manifest accidentally retained revision063 while naming corpus064;
+all content identities were correct. The original receipt is preserved. Correction
+workflow publishes `corpus064-transfer-corrected.json` with revision064 and exactly
+the same99file records, with separate recovery evidence under
+`evidence/data/corpus064-metadata-correction-001`. Use that corrected transfer
+manifest for new deployment handoffs; corpus.json identity is unchanged:
+222c39ab5f1a50d852a274b6e0c0556355c9205a4a1f9cbbbefdfc8d90ec6cb6.
+
+Removed123verified redundant corpus/integration restore files, releasing11,325,440
+allocated bytes; primary copies retained. Cleanup evidence:
+`evidence/data/corpus064-storage-release-001`. Finder issue unresolved. Runpod
+unused, no training started, zero training-approved tokens, P1 incomplete.
+
+Zahlwort6 native002 full-history review covers all70messages in9hash-bound
+sections, with frozen pre-evaluator artifacts unchanged. Tool-action history quality
+approved only: complete137-line source and77-line README, but test read truncated
+150of179lines; repeated listings/tests are retained and not independent samples.
+Original CLI, missing-file and empty-search failures remain visible. Four attributed
+pre-publisher diagnostic changes propagate failures and constrain success claims.
+No final conversational response is present, and no model capability is established.
+
+Isolation checks49issue texts and all1,176pairs using an independent exact-rational
+five-gram oracle. Known repository networks do not overlap. One new flag is retained:
+Pytypes37/Zahlwort6 share19five-grams, Jaccard19/318 and containment1/5 exactly at
+the threshold. Every shared five-gram is Python interactive traceback scaffolding;
+the actual defects and repository networks differ. Manual explanation does not
+relax thresholds, certify semantic uniqueness or freeze evaluation splits.
+
+Pinned LICENSE carries MIT text with copyright2019The Python Packaging Authority;
+notice copied verbatim. History setup metadata contains the published author email.
+Rights and privacy remain unapproved. Evidence: `evidence/data/zahlwort6-history-review-002`
+and `evidence/data/zahlwort6-isolation-001`. Corpus063 unchanged; mechanical corpus
+integration remains next. P1 incomplete, zero new training-approved tokens, Runpod unused.
+
+Zahlwort6 native002 passes strict independent publisher grading: all8declared
+conversion-test identities are present; baseline6/8, reference8/8 and candidate8/8,
+zero outcome disagreements. Candidate replay/history/token files were frozen
+before evaluator extraction and remain unchanged. The333-byte submitted patch
+is byte-identical to the publisher reference, SHA256
+48fc092b213925375025d47d9b6a4cc980c2484bd99e88d1232e49c3d0c5afd1.
+
+The publisher test patch adds zwo, zwohundertzwoundzwanzig and zwotausend checks.
+Strict grading targets the declared conversion module; it does not count the
+separate CLI test as passed or resolved. Its ambient-argv failure remains visible
+in native replay. Python3.9 matches publisher minor metadata, but ARM64/direct
+source imports are a reconstructed environment, not exact historical installation.
+Finite test agreement and patch equality do not prove general numeral correctness
+or Gemma capability. Full70-message content review, rights/privacy and isolation
+remain pending before integration. Corpus063 unchanged; zero new admitted tokens.
+Evidence: `evidence/data/zahlwort6-grade-002`. Runpod unused; P1 incomplete.
+
+Zahlwort6 native002 replays four attributed pre-publisher diagnostic amendments.
+Reproduction failures now propagate to a nonzero exit, and summaries limit claims
+to checked assertions, explicitly retaining the separate CLI argv failure. The
+source patch remains byte-identical to native001. There are 33 tool calls,
+70 messages, 21,752 input tokens and 2,110 shifted supervised targets, with 2,824
+tokens remaining after the required 8,192 reserve.
+
+Observed errors are individually accounted for: full-suite CLI failures at actions
+7 and27, direct/reproduction baseline KeyErrors at9 and17, empty grep at12, and
+read of absent issue.md at13. Eight conversion tests and the repaired diagnostics
+pass. The first collection attempt omitted action13 from its expected error list;
+its failed collector and explanation are preserved, and the corrected collector
+checks the exact missing-file error rather than suppressing it. Replay data were
+not modified. Temporary source shard and replay container were removed.
+
+Evidence: `evidence/data/zahlwort6-native-002`. Full content review of all70messages,
+publisher controls and rights/privacy/isolation remain pending. No evaluator
+assets accessed, no corpus changes, no training approval and no Runpod use.
+P1 remains incomplete.
+
+Zahlwort6 native001 completed offline: 33 charged tool calls, 34 exchanges,
+70 messages, 20,504 input tokens and 2,098 supervised shifted targets. It fits the
+32,768 context cap with the 8,192 reserve and 4,072 tokens remaining. Exact source
+bytes/tree and parentless Git history were independently checked; inherited Docker
+layers were not audited. The 333-byte patch has SHA256
+48fc092b213925375025d47d9b6a4cc980c2484bd99e88d1232e49c3d0c5afd1.
+
+Replay preserves the baseline and patched CLI test failure caused by ambient argv;
+eight converter tests pass. Direct zwo conversion changes from KeyError to2.
+The original reproduction catches exceptions and returns False without a nonzero
+process exit. Later assertion probes are stronger, but final all-tests-passed
+wording is too broad. Full 70-message content review and attributed diagnostic
+correction remain pending before grading/admission; no publisher assets accessed.
+Temporary 163,740,812-byte source shard and replay container were removed.
+Evidence: `evidence/data/zahlwort6-native-001`. Corpus063 unchanged, zero newly
+admitted training tokens, Runpod unused. P1 remains incomplete. The acceptance
+checklist now explicitly reflects Corpus063 and separates schedule resume checks
+from optimizer recovery and adequate approved training data.
+
+Storage cleanup removed 118 duplicate Corpus063 restore files after both copies
+were checked against manifests bound to successful R2 restore receipts. Released
+11,063,296 allocated bytes; primary copies retained. Cleanup evidence is R2
+restore-verified at `evidence/data/corpus063-storage-release-001`. Disk reports
+approximately 23 GiB available; this is a snapshot, not an attribution of all free
+space to this cleanup. Finder's out-of-date issue remains unresolved.
+
+Next candidate, Wortmeister-HQ/zahlwort2num issue6, has paired offline controls.
+The teacher adds only the numeric lexicon entry zwo=2. Independent cardinal-word
+construction covers 0..999 plus 999 selected thousands/remainder pairs, both signs
+and lowercase/padded-uppercase forms: 7,996 canonical and 7,996 alternative checks.
+Baseline has zero canonical failures and 2,068 alternative failures; candidate has
+zero in either group. Counts include unchanged alternative cases and normalized
+variants; they are not independent statistical samples or a general error bound.
+All nine upstream tests pass in both versions with explicit valid CLI argv. The
+console test depends on ambient argv; this fixture does not fix its unconfigured
+runner behavior. Python3.9 ARM64 is reconstructed, network disabled, source mounted
+read-only. No publisher evaluator was accessed, no native history admitted, and
+Corpus063 remains unchanged. Evidence: `evidence/data/zahlwort6-controls-001`.
+Native replay, full history review, publisher controls and admission gates remain.
+
+Corpus063 supersedes Corpus062 for quarantined inspection: 48 examples/tasks,
+948,438 input tokens and 262,692 shifted supervised targets. All 47 predecessor
+records are unchanged; HyP3 SDK53 is the addition. All 97 corpus files were
+published to R2 and independently restored with matching hashes. The 21-file
+integration evidence archive was likewise restore-verified.
+
+The restored deployment source matches the current repository. Original/restored
+schedules are identical: 9 updates, zero target overshoot, every example exactly
+once. All 10 resume boundaries reproduce the exact suffix and reject a corrupted
+token counter. The real worker rejects quarantine before model access; no optimizer
+steps, training, or Runpod usage occurred. Ingestion evidence (17 files) is R2
+restore-verified at `evidence/p1/corpus063-ingestion-001`.
+
+Isolation examined 48 issue texts (1,128 pairs) and known repository networks,
+with no newly flagged overlap under the recorded lexical thresholds. This is not
+semantic uniqueness or a frozen split. BSD notice preservation and a corrected
+email-pattern scan are recorded separately: scanning Python repr produced a false
+email indicator from an escaped newline before @responses.activate; scanning
+decoded strings finds zero. Original evidence remains intact. Rights/privacy and
+other training admission gates remain unapproved; zero training-approved tokens.
+See `evidence/data/corpus063-integration` and
+`evidence/data/hyp3sdk53-source-notices-002`. P1 remains incomplete.
+
+HyP3 SDK53 native002 now passes strict publisher controls:10declared tests,
+baseline9/10, reference10/10, candidate10/10, zero outcome disagreements. Candidate
+replay/history/token files were frozen before evaluator access and remain unchanged.
+Reference additionally removes the empty-batch warning and uses Optional[List[Job]];
+candidate preserves the warning and retains List[Job]=None. Issue text asks for
+default empty construction, not warning removal. Tests do not establish complete
+semantic equivalence, static typing correctness or warning-as-error compatibility.
+Python3.9 matches publisher minor-version metadata, but dependencies/platform remain
+a diagnostic reconstruction with explicit package version0.0.0+snapshot.
+
+All68history messages read in full and covered by10hash-bound review sections.
+Source read covers150/218lines and test read150/250lines, explicitly truncated.
+Original reproduction remains a weak oracle: it prints length rather than asserting
+it, and after repair initially reports its obsolete expected-failure condition.
+Subsequent original diagnostic edits and four attributed amendments are preserved;
+stronger assertions separately establish tested empty state, warning semantics and
+finite list independence. README credentials are generic examples; mock IDs/URLs
+are upstream fixtures, not production observations. Approval is limited to this
+attributed tool-action history; no final conversational answer or model capability
+claim. No source changes after evaluator exposure.
+
+Evidence `evidence/data/hyp3sdk53-grade-002` and
+`evidence/data/hyp3sdk53-history-review-002` preserve controls, frozen identities,
+review coverage and limitations. Rights/privacy/isolation remain pending, Corpus062
+unchanged and zero new training-approved tokens. Keep Runpod stopped. P1 incomplete.
+
+HyP3 SDK53 native002 adds four explicit pre-publisher diagnostic amendments.
+Comprehensive script retains the original mock job fixture and assertions, adds
+empty-list identity checks, and narrows broad compatibility claims. Two inline
+commands now assert exact warning count/category/message and zero length. Final
+script asserts three distinct empty lists and verifies mutating one leaves the
+other two empty. Original reproduction creation/edit sequence is preserved,
+including the post-source-fix run that prints its obsolete expected-failure warning;
+full history review must assess that context rather than conceal the observation.
+
+Fresh native replay:32charged calls,33exchanges,68messages. Expected baseline
+reproduction is the only command error; all later commands and22upstream tests
+pass. Source patch unchanged:431bytes, SHA256
+8ad7a2e6afbba51535871167b1487b4675d05333ca8df8498ba2ea9fee8cd5ac.
+16,226input tokens,4,007shifted targets,8,192reserve and8,350headroom. No truncation,
+model inference or Runpod usage. Temporary source shard and replay container removed.
+Evidence: `evidence/data/hyp3sdk53-native-002`. Full content review, publisher
+controls, rights/privacy and isolation remain pending; Corpus062 unchanged.
+
+HyP3 SDK53 native001 completes offline in replay image
+18ba35c25c88521aaae4ed53cf006353705a8478cccc474524e3b150a3f7fa50.
+Parentless snapshot verifies all tracked bytes/tree, one reachable commit, no
+remotes and inaccessible original base56cfb700341a0de44ee0f2f3548d5ed6c534d659.
+Installed wheel metadata uses explicit fixture0.0.0+snapshot; import origin checked
+against source checkout. Reused hash-verified dependencies; inherited image layers
+remain unaudited. No new base-image download or Runpod use.
+
+Replay:32charged calls,33exchanges,68messages;16,940input tokens and4,476shifted
+targets. With8,192reserve, headroom is7,636; no truncation or model inference.
+Submitted one-file431-byte patch SHA256
+8ad7a2e6afbba51535871167b1487b4675d05333ca8df8498ba2ea9fee8cd5ac.
+All22upstream tests pass. Baseline reproduction exits1; post-fix run exits0 while
+still printing its prior expected-failure warning, then teacher edits update that
+diagnostic. Comprehensive script has14assert nodes but broad final claims; final
+script has1assert and inline equivalence scripts print rather than assert results.
+Full content review and explicit diagnostic amendments remain before approval.
+No publisher assets accessed, no corpus inclusion or training admission.
+
+Evidence `evidence/data/hyp3sdk53-native-001` includes compact build context with
+shared dependency references. Rebuilding requires recovering exact referenced
+Debian/wheel artifacts and verifying build-input hashes; it is not an image export.
+Temporary source shard and replay container removed. Corpus062 unchanged.
+
+HyP3 SDK53 source candidate now passes paired local controls. The bound teacher
+edit adds jobs=None and allocates a fresh list only when jobs is None. Existing
+warning, explicit-list aliasing and addition behavior are preserved in the finite
+probe. Candidate creates192simultaneously live distinct lists across64omitted,
+64None and64explicit-empty constructions; each group passes empty-state properties,
+exact warning category/message, and one-list mutation isolation. Baseline supports
+only the64explicit-empty cases and raisesTypeError for omitted/None arguments.
+This is not a universal aliasing proof or an agent performance measurement.
+
+Initial controls001:11upstream failures and11passes in both versions, all failures
+from missing installed package-version metadata. These failures are preserved.
+Controls002 uses real offline wheel build/install with pinned setuptools-scm8.1.0
+and responses0.13.4; PyPI wheel sizes/SHA256 verified. Explicit fixture version
+0.0.0+snapshot is diagnostic, not a claimed historical release. Every invocation
+asserts import origin /testbed/hyp3_sdk/__init__.py and installed metadata equality.
+Both baseline and candidate now pass all22unchanged upstream tests. Containers
+run network-disabled with read-only source mounts; no source drift or Runpod use.
+
+No publisher assets accessed and no corpus integration/training approval. Next:
+parentless snapshot/native runtime, fresh tool-action replay and full diagnostic
+history review; original teacher edits include reproduction-script changes that
+must not be conflated with the one source repair. Corpus062 unchanged.
+
+Pyflipdot5 protocol follow-up confirms a concrete disagreement with its cited
+node-flipdot implementation, pinned atc744c1360b5a0fec97a1899affd55c1aded1b45d.
+The cited constructor masks the byte count with&0xFF and inserts exactly two
+ASCII hex characters. The teacher candidate instead expands to variable-width
+integer hex. Eight packet probes (counts0,1,255,256,512,513,65535,65536) match a
+translated cited-header/checksum formula only for the three counts<=255; all five
+larger counts disagree. For512image bytes, candidate emits0200versus cited00,
+shifting the pixel payload by two characters. Actual candidate packet lengths and
+SHA256identities are recorded, with exact full-byte comparison to the formula.
+
+This is not hardware or JavaScript-runtime validation. Empty image is only a
+boundary probe, and the cited implementation is not a manufacturer specification
+for every display variant. Candidate stays held before publisher access; no source
+revision, corpus integration or training approval. Primary URL:
+https://github.com/tuna-f1sh/node-flipdot/blob/c744c1360b5a0fec97a1899affd55c1aded1b45d/flipdot.js
+Evidence: `evidence/data/pyflipdot5-protocol-001`, including pinned source/license,
+probe, actual observations and explicit limits. Keep Runpod stopped.
+
+Pyflipdot5 preliminary independent controls identify a candidate hold before
+publisher access. One bound teacher edit widens integer-to-hex conversion and caps
+integer storage at4bytes. For all65,536integers0..65,535, candidate matches an
+independent even-length uppercase hexadecimal oracle; baseline fails65,280values.
+A scalar column-first low-bit image-packing oracle matches all28images in both
+versions. Packet formatting matches an explicitly hypothetical variable-width
+length field for28candidate versus12baseline cases, including32x128and128x32.
+This does not prove physical display acceptance or arbitrary dimensions.
+
+Both versions pass4existing data tests. Baseline also accepts all12tested bytes,
+bytearray and memoryview cases; candidate raisesTypeError for all8non-bytes buffer
+cases. The helper annotates bytes, so this is observed compatibility loss, not a
+proved public-contract violation. Serial integration and full suite remain untested.
+The repository-cited author blog describes two resolution character positions on a
+small display; large-display field-width semantics remain unresolved. Source:
+https://engineer.john-whittington.co.uk/2017/11/adventures-flippy-flip-dot-display/
+Candidate remains held for protocol and compatibility review; no publisher assets
+accessed, no native replay, no corpus inclusion or training approval. Reused offline
+Python3.9/NumPy Docker image; no new base image or Runpod use.
+
+Corpus062 ingestion is now independently qualified against a fresh R2 restore.
+All42restored worker-code files still match current repository bytes. Original and
+restored corpus produce identical schedule.json and updates.jsonl:9updates,
+47examples exactly once,932,212input and258,685supervised tokens, zero overshoot.
+Every one of10resume boundaries reproduces the exact remaining suffix; all10
+one-token-corrupted exposure counters are rejected. Real worker exits1 on the
+quarantine gate before deliberately absent model inputs are accessed and creates
+no training output. No optimizer step or GPU recovery was exercised.
+
+Evidence `evidence/p1/corpus062-ingestion-001`:17files/46,131bytes, R2-published
+and independently restore-verified. After rechecking every retained/restored file
+identity, removed95temporary corpus files (10,534,912allocated bytes).
+`evidence/data/corpus062-storage-release-002` records the removal. Current corpus
+remains quarantined with zero training-approved tokens. This supersedes the pending
+ingestion statement below, but not rights/privacy, frozen-split, data-volume or
+full-model/GPU gates. Keep Runpod stopped; P1 remains incomplete.
+
+Corpus062 is now the current inspection-only quarantine:47examples/tasks,
+46repository groups,932,212input tokens and258,685shifted supervised targets.
+Manifest SHA256:7104b8ab35aec870c82a811679377fe1b1ea9609950bcf855f030d1da1f14456.
+Content SHA256:2a61e8ca7026eb2465034447132edd5fef732b062611a2530e84a526aff91be5.
+All46predecessor records are unchanged. The added Prices26 candidate passed
+mechanical admission; complete history review and publisher controls were recorded
+previously. Isolation covers47issues/1,081exact-rational pair comparisons, no new
+lexical flags and no known repository-network overlap. These checks do not prove
+semantic or detached-fork independence. Source BSD-style notice preserved; narrow
+history email-pattern scan found zero matches. Rights/privacy/split approval remain
+false; zero training-approved tokens, and training load rejects the corpus.
+
+Corpus062:95files/10,330,683bytes R2-published and independently restored;
+integration evidence21files/282,921bytes likewise verified. Source notice and
+mechanical-admission evidence4files/6,887bytes also verified. Corpus062 ingestion
+and resume qualification remain pending; Corpus061's previous qualification is not
+a substitute for the new manifest.
+
+Assembly exposed macOS metadata drift while reading repository staging
+(st_ctime changed; flags0to64); failed attempt preserved. External staging was
+initially rejected by the existing repository-only input guard. The assembler now
+accepts an explicit --candidate-root, defaults to repository confinement, validates
+resolved directory/file containment, and records the root in its receipt. Source
+hash checks and quarantine gates remain intact. Successful assembly used the narrow
+external corpus062-inputs root. Four added tests cover explicit external-root
+success and absolute-path/directory-symlink/file-symlink escape rejection. Full
+local CPU suite:619tests, zero skips,21.672seconds; 333bound source/evidence files
+archived and independently R2 restore-verified under full-suite-qualification-016.
+This is not full-size model, GPU, deployment or performance qualification.
+
+After R2 verification,399matching temporary/staging/restore files were removed,
+releasing42,409,984allocated bytes. Failed-attempt diagnostic metadata remains.
+Finder's out-of-date issue is not resolved; external staging avoids this observed
+failure without claiming to repair File Provider. Keep Runpod stopped. P1 incomplete.
+
+Prices26 native002 now has complete74-message content review across10
+hash-bound sections, approved only for attributed tool-action quality. The
+review explicitly records the erroneous unverified README tax example, redundant
+reads/helpers, absent final conversational answer, and constructor-only currency
+invariant. Review occurred after publisher access; the candidate itself was frozen
+before access and remains hash-identical. No post-exposure derivative was made.
+
+Strict publisher controls cover exactly12declared identities: baseline11/12,
+reference12/12 and candidate12/12, zero disagreements. Full control runs separately
+cover41tests: baseline40/41, reference41/41. Initial attempt to compare the full
+suite against12publisher keys failed exact coverage validation; preserved full runs
+and a separate focused test profile resolve scope without changing expectations.
+Python3.9 ARM64 remains a diagnostic runtime versus publisher metadata3.6.
+Reference also bumps the package version; candidate's source-only constructor fix
+satisfies the declared tests without that unrelated release change.
+
+Evidence `evidence/data/prices26-grade-002` (63files/100,775bytes) and
+`evidence/data/prices26-history-review-002` (4files/16,907bytes) are R2-published
+and independently restore-verified. Redundant verified restores removed. Rights,
+privacy and dataset isolation remain pending; Corpus061 unchanged, no training
+approval and no Runpod use. P1 remains incomplete.
+
+Prices26 native002 replaces five diagnostics through a hash-bound pre-publisher
+amendment plan. The source repair is byte-identical to native001 (606 bytes,
+SHA256 989c2fd0508f9026582b11d1744437b4a83fff628206d7017ede958a751e637c).
+Diagnostics now assert exact Decimal values/tax, input references, currency
+rejection, type errors and the original arithmetic/precision cases. Baseline
+reproduction exits1 with the expected missing-ValueError assertion; every later
+diagnostic exits0, and all40upstream tests pass. This is finite-case evidence,
+not a guarantee for arbitrary subclasses, mutable inputs or Decimal contexts.
+
+Replay uses35charged calls,74messages,16,388input tokens and2,758shifted targets.
+With8,192reserve, context headroom is8,188; no truncation or model inference.
+Evidence `evidence/data/prices26-native-002`:23files/444,539bytes independently
+R2-published and restore-verified. Temporary source shard, replay container and
+redundant verified restore were removed. No publisher assets accessed; full
+history content review, publisher controls and rights/privacy/isolation remain
+pending. Corpus061 unchanged; zero newly training-approved tokens. No Runpod
+usage. Local disk has approximately21GiB available; Finder residency issue is
+still unresolved. P1 remains incomplete.
+
+Prices26 native001 now completes offline in image
+736a4a6bbdb10de44a0b4ab5748a5b1dbb0f185836d0a2d6d365b03ed3871296.
+Snapshot verification confirms exact tracked tree/bytes, one parentless commit,
+no remotes and inaccessible original basee56c162aa254f17ab3fa50b718d74e491a90b913.
+Inherited Docker layers remain unaudited. Build reused hash-verified Debian
+artifacts and Babel2.17.0, without network access during build.
+
+Replay:35charged calls/36exchanges/74messages;18,391input tokens and3,985shifted
+targets, with8,192reserve leaving6,185headroom. No truncation or model inference.
+All40upstream tests pass after the606-byte patch, SHA256
+989c2fd0508f9026582b11d1744437b4a83fff628206d7017ede958a751e637c.
+Four created diagnostic scripts have zero assert nodes, and baseline reproduction
+prints the defect but exits0. Their complete failure semantics and printed claims
+require review and explicit amendments before approval. No publisher assets
+accessed, no corpus integration or training admission. Temporary source shard
+and replay container removed.
+
+Evidence: `evidence/data/prices26-native-001`,38files/469,608bytes, R2-published
+and independently restore-verified. Its compact build-context evidence
+references the already restore-verified nbgrader1410 Debian dependency archive and
+prices26 Babel archive instead of duplicating those binary dependencies. Rebuilding
+requires recovering shared dependencies and checking all build-manifest hashes;
+this is not a standalone image export. Keep Runpod stopped.
+
+Prices26 paired diagnostic controls now pass after adding pinned Babel2.17.0
+offline to the existing Python3.9 ARM64 runtime. Wheel bytes were checked against
+PyPI size/SHA256; no new base image or GPU was used. Exactly one bound teacher edit
+adds net/gross currency inequality rejection in Price.__init__. Baseline and
+candidate each pass all40unchanged upstream tests.
+
+Independent Cartesian matrix uses4currencies and6exact Decimal input values for
+both net and gross:4*4*6*6=576cases.432mixed-currency pairs must raise ValueError;
+144matching pairs preserve input object references, currency and exact gross-minus-
+net tax arithmetic. Teninvalid-type cases retain TypeError. Input values/currencies
+remain unchanged. Baseline fails432currency-rejection cases; candidate has zero
+matrix/type failures. These dependent finite cases do not estimate repair rate or
+prove arbitrary subclass/mutation behavior. Native replay, full content review,
+publisher controls and rights/privacy/isolation remain pending. No candidate
+training admission or publisher access occurred.
+Evidence: `evidence/data/prices26-controls-001` and its archive
+`evidence/data/prices26-controls-archive-001`:3files/10,082,577bytes; all14inner
+files independently R2 restore-verified. Redundant restore removed. All disposable containers removed;
+source inventories unchanged. Corpus061 remains current. Keep Runpod stopped.
+
+Batch2 source/runtime screen002 covers the next four entries in the existing
+context-ranked queue: prices26, pyflipdot5, hyp3-sdk53 and zahlwort2num6. All four
+complete pinned Git trees/blob hashes verify, totaling189,889source bytes. Runtime
+screening reuses the existing offline Python3.13 image with read-only sources;
+all containers were removed and source inventories stayed unchanged.
+
+None passes the complete suite in that minimal image: prices has7collection errors
+for missing babel; pyflipdot has2for missing numpy; hyp3-sdk conftest cannot import
+requests. Zahlwort2num has8passes and1failure: its console test directly calls main()
+with pytest's process arguments, and conversion of '-q' raises KeyError. Preserve
+that invocation-sensitive failure; do not call the whole suite passing or a teacher
+repair incorrect based on this screen. An existing Python3.9 image already provides
+numpy and requests but lacks babel,serial,responses, which guides bounded runtime
+work without new bulk image pulls. No candidate source changes or publisher access.
+Evidence: `evidence/data/swe-hero-batch2-source-runtime-002`,3archivefiles/108,643bytes;
+all128innerfiles independently R2 restore-verified. Redundant restore removed. Corpus061 unchanged;
+P1 data sufficiency and training admission remain unfulfilled. Keep Runpod stopped.
+
+Dkey18 native002 is held after publisher grading. Replay/history/token artifacts
+were frozen before first evaluator access and all frozen hashes remain unchanged.
+Strict paired controls match all28publisher-labelled transitions: baseline27/28,
+reference28/28. Candidate27/28 has one disagreement: publisher test requires both
+__version__ and version_info; candidate implements only __version__. Mechanical
+admission rejects with publisher_expectations_not_matched. No corpus inclusion or
+training approval; full66-message content review has not been completed.
+
+Reference source uses pbr.version.VersionInfo('mgen'), not the dkey distribution
+name. A separate fresh snapshot probe reports reference __version__0.0.0 and
+version_info[0,0,0,'final',0], while installed dkey metadata is0.0.0+snapshot. This
+establishes an exact metadata mismatch in this fixture; release-string normalization
+and fallback behavior mean it is not proof of failure in every historical runtime.
+The publisher test checks attribute presence, not exact metadata fidelity. Preserve
+both limitations; do not silently modify tests/reference or relabel post-evaluator
+candidate edits as pre-exposure data. Evidence: `evidence/data/dkey18-grade-002`,
+49files/88,879bytes, R2-published and independently restore-verified.
+Next data work can proceed through the remaining batch2 queue; this candidate hold
+does not block the entire P1 goal. Keep Runpod stopped.
+
+Dkey18 native002 now supersedes native001 for prospective full history review.
+Six attributed pre-publisher diagnostic amendments enforce exact installed-metadata
+equality, PEP440 parsing, a genuinely blocked pkg_resources import, an asserted
+controlled lookup exception, import-style equality and scoped final claims.
+The source repair and upstream tests are unchanged. Baseline reproduction raises
+Missing public version attribute; after the repair ten selected commands pass,
+including27upstream tests with1visible deprecation warning. Missing source-tree
+egg-info read and empty grep exit remain preserved errors, not hidden successes.
+
+Native002:31charged calls/32exchanges/66messages,9,783input tokens and1,787shifted
+targets;8,192reserve leaves14,793headroom. No truncation, model inference, publisher
+access or corpus inclusion. Dependency absence and broad exception swallowing are
+explicitly described as limitations. Full content review, publisher grading and
+rights/privacy/isolation remain pending. Evidence:
+`evidence/data/dkey18-native-evidence-002` (22files/265,606bytes), R2-published
+and independently restore-verified.
+
+Dkey18 native001 replay now completes in verified parentless source image
+8113c5bc8c4ba892da9f3842c0a5d61813cf893ffb4b1b088963789c384c7346.
+All tracked bytes/tree match pinned base098cecbe1c1ed8cca92029dbd90f77cc6c0d7673;
+one reachable commit, no remotes, original commit inaccessible. Inherited image
+layers are not audited. Reused Debian artifacts and pinned pbr wheel match retained
+hashes. Baseline wheel installation uses explicit diagnostic version0.0.0+snapshot;
+this is not the original teacher release or evaluator evidence.
+
+Replay uses31charged calls/32exchanges/66messages. Native tokenizer/mask audit gives
+11,215inputs and2,681shifted targets;8,192reserve leaves13,361headroom, without
+truncation or model execution. A read of dkey.egg-info/PKG-INFO fails because the
+runtime installs a wheel rather than leaving source-tree egg metadata. The teacher's
+comprehensive version regex rejects the valid local suffix+snapshot. Preserve these
+observations; do not change fixture version solely to hide that diagnostic defect.
+Baseline reproduction also correctly fails before the source repair. Complete
+history review, explicit diagnostic amendments and publisher controls remain pending.
+No publisher assets accessed, no corpus inclusion. Temporary raw shard and replay
+container removed. Evidence: `evidence/data/dkey18-native-001`,3archivefiles/
+25,054,734bytes; all65innerfiles independently R2 restore-verified. Redundant
+restored archive removed after hash verification.
+
+Dkey18 actual wheel build/install qualification now passes in the existing
+Python3.9 ARM64 diagnostic image. Pinned pbr6.1.0 wheel bytes were downloaded from
+PyPI and checked against published size/SHA256; builds and installation then ran
+with network disabled. Unchanged teacher candidate sources produced real wheels
+at controlled fixture versions0.2.0 and1.4.0rc1 using PBR_VERSION. Fresh processes
+imported each installed site directory outside the checkout, and __version__
+matched installed distribution metadata exactly. These are test version overrides,
+not claimed original release tags. Source inventory was unchanged; disposable
+container removed. Current disk observation22GiB free; no GPU/model use.
+
+This closes the actual-wheel gap for that older runtime only. The modern-runtime
+pkg_resources absence remains an observed limitation, and broad exception behavior,
+native replay, publisher controls, rights/privacy/splits and training admission
+remain open. Evidence: `evidence/data/dkey18-wheel-001`,12files/155,307bytes,
+R2-published and independently restore-verified. Corpus061 unchanged.
+
+Dkey18 version lookup now has a two-runtime compatibility diagnosis. Baseline
+and teacher candidate each pass27upstream tests in both existing diagnostic images.
+Fresh-interpreter metadata fixtures cover absent metadata plus0.2.0,1.4.0rc1 and
+2.0.0+local. With Python3.9/setuptools68.2.2 and pkg_resources present, all3valid
+versions match and absent metadata returns unknown. With Python3.13/setuptools84.0.0
+and pkg_resources absent, all3discoverable versions incorrectly return unknown.
+This is a conditional compatibility result, not a general solution rejection or
+training approval. Actual wheel installation, broad-exception semantics, native
+replay and publisher qualification remain unresolved. No publisher assets accessed.
+
+Canonical fresh-process probes are version005and006. Version002 reused a process
+and was confounded by pkg_resources metadata caching;003and004 failed because of
+quoting in the diagnostic child script. Those diagnostic failures are preserved
+and must not be attributed to the candidate. Version001's modern-runtime result
+is independently confirmed by006. All sources remained unchanged during execution;
+all disposable containers removed. Consolidated evidence:
+`evidence/data/dkey18-compatibility-001` (66files/52,949bytes), R2-published
+and independently restore-verified. No corpus changes or Runpod execution.
+
+Ordered-hash-set5 teacher source candidate is held before native replay or
+publisher access. Exactly three bound teacher source edits were applied to a copy
+of the pinned tree; both baseline and candidate pass17upstream tests. An independent
+list-based specification enumerates all6^5=7,776length-five operation sequences
+(add/remove over three string keys), totaling38,880operation steps per role.
+Baseline has24,096wrong return values; candidate has zero return, exception or state
+mismatches on that finite domain. These dependent cases are not population samples.
+
+A separate same-object NaN probe exposes a regression: baseline add/add/remove
+succeeds with sizes1,1,0; candidate raises KeyError on all three operations and
+retains size1. Its helper uses equality-only traversal, whereas dictionary lookup
+accepts identical key objects; NaN is nonreflexive. The first add mutates state
+before raising. Do not admit this candidate based on the finite string-domain or
+upstream passes. Existing falsy-key/sentinel defects and general hashable-key
+correctness remain outside the established pass. No publisher patches/tests were
+accessed and no corpus changed. All disposable containers removed and source
+inventories unchanged. Evidence: `evidence/data/orderedset5-model-001`,14files/
+15,107bytes, R2-published and independently restore-verified.
+
+Next candidate inspection: dkey18 adds package version lookup via pkg_resources
+with broad exception fallback to unknown. Installation-metadata behavior must be
+checked; merely exposing a string is insufficient. Keep Runpod stopped.
+
+Batch2 independent text reconciliation completes for253SWE-rebench histories:
+188exact matches and65matches after NFKC/whitespace normalization. The remaining
+3histories from other datasets retain an explicit unresolved text gate. Only
+selected task bodies were converted to Python records; publisher patch/test columns
+were excluded. All256histories were measured using pinned local tokenizer assets,
+without truncation or model-weight loading:13,334,634total source-format input
+tokens, median48,638, maximum156,578.21fit32,768source tokens;2fit with8,192reserve.
+These are input lengths, not supervised targets or native replay lengths.
+
+All29short-action candidates also match independent task text.13ofthese fit the
+source context limit;2fit with reserve. Source lengths rank development work only;
+native serving/mask fit still requires replay. Evidence:
+`evidence/data/swe-hero-batch2-readiness-001`,7files/654,109bytes, R2-published and
+independently restore-verified. No training corpus was changed.
+
+The four shortest aligned candidate sources were acquired at pinned commits and
+verified against complete Git tree/blob identities: dkey335,724bytes,
+microdf832,737bytes, Whoogle931,121bytes, ordered-hash-set33,734bytes. Offline,
+read-only source baselines using the existing diagnostic image pass27tests for
+dkey and17for ordered-hash-set. Microdf has8collection errors for missing pandas/
+numpy; Whoogle cannot load conftest because cssutils is missing. All four disposable
+containers were removed and source inventories remained unchanged. These are
+runtime screens, not repair grades or publisher environment equivalence.
+Evidence: `evidence/data/swe-hero-batch2-source-runtime-001`,3archivefiles/
+1,388,899bytes with248innerfiles independently R2 restore-verified. Redundant
+restored archive removed. Next qualification can reuse the two working baselines;
+dkey requests package version metadata, while ordered-hash-set requests stable
+indices returned from add/remove. No Runpod or model inference.
+
+A second SWE-Hero development batch now contains256new repositories, selected
+by deterministic hash ranking from1,540eligible repositories after exact-name
+exclusion of reserved/current repositories and the prior128-repository batch.
+Selection is invariant to census row order. This is coverage-oriented development
+triage, not a population repair benchmark. Publisher dataset labels are253
+SWE-rebench,2SWE-Gym and1R2E; these labels do not establish task alignment or rights.
+Evidence: `evidence/data/swe-hero-batch-qualification-002` (3files/143,381bytes),
+R2-published and independently restore-verified.
+
+All256selected histories were extracted from10hash-verified R2 shards without
+reading the model_patch column. Temporary shards were removed after each verified
+scan; maximum single shard245,825,405bytes. The260-file source bundle is archived
+as3files/9,252,033bytes; independent R2 restore verified every inner member and
+removed its redundant restored archive. Selected histories remain available for
+qualification; unselected trajectories were not converted to Python records.
+Evidence: `evidence/data/swe-hero-batch2-source-001`.
+
+All256histories pass source serialization;4have credential indicators requiring
+review.201pass individual-action static grammar under inferred roots. Full-history
+preflight independently recounts charged calls and identifies45within40calls and
+29within38calls with one terminal finish and no credential flags. The29-candidate
+queue leaves two calls for potential completion work; task alignment, context,
+source rights, runtime correctness and isolation remain open. No source bodies
+were executed and no candidate was training-admitted. Preserve rejected rows and
+longer histories; short-call screening is a feasibility constraint, not a quality
+judgment. Evidence: `evidence/data/swe-hero-batch2-screen-001` (5files/302,123bytes),
+R2-published and independently restore-verified.
+
+Corpus061 remains unchanged at255,927supervised tokens. A50M-token run would
+consume195complete passes plus94,235tokens: repeated exposure is not new diversity.
+Next: independent task-text reconciliation and native context measurement for the
+new batch before source builds. No Runpod or model execution is justified yet.
+
+Corpus061 is the current quarantine corpus:46examples/tasks across45repository
+groups,915,824input tokens and255,927shifted supervised targets. Corpus060's45
+records are unchanged. Manifest SHA256:
+`25fe73253ed5fd3347bf87d76b9d87cc9bca0478aa9ea3d87fd7d25912882d48`.
+The93-file/10,149,990-byte corpus and21-file/279,229-byte integration evidence were
+R2-published and independently restored with all hashes checked. Explicit12MB
+inspection/assembly budget accommodates the new corpus; training remains rejected.
+Evidence: `evidence/data/corpus061-integration`.
+
+Pubmed89 identity checks find no known repository-network overlap; independent
+exact-rational five-token-shingle comparison of all1,035pairs across46issues finds
+no new lexical flag. This does not establish semantic independence or detached-fork
+absence, and reserved issue bodies were not accessed. All76messages have complete
+review coverage. Article permissions were extracted from7of8XML fixtures; one
+history message contains published email indicators. Source MIT notice alone is
+not article attribution clearance. Rights/privacy/split freeze remain open.
+Evidence: `evidence/data/pubmed89-source-notices-001` (3files/9,014bytes), R2
+restore-verified; isolation evidence is included in corpus061 integration.
+
+Restored deployment source matches the corresponding current repository files.
+Original/restored schedules and update rows match exactly:46examples once,
+9scheduled updates, zero token overshoot. All10resume boundaries reproduce their
+exact remaining suffix; all10corrupted counters are rejected. The actual worker
+rejects quarantine before accessing the intentionally absent model. These are
+finite scheduling/ingestion checks, not GPU training or optimizer-resume validation.
+Evidence: `evidence/p1/corpus061-ingestion-001` (17files/45,595bytes),
+R2-published and independently restore-verified.
+Redundant corpus/integration restore copies were removed only after matching all
+retained file hashes, releasing10,682,368allocated bytes; no APFS free-space claim.
+Evidence: `evidence/data/corpus061-storage-release-001` (2files/2,262bytes),
+R2-published and independently restore-verified. Keep Runpod stopped.
+
+Pubmed_parser89 native002 now passes strict publisher grading: candidate4/4,
+zero disagreements with reference; baseline3/4. The full six-test controls give
+baseline5/6 and reference6/6. All setup/call/teardown outcomes for the four shared
+nodes agree between full and selected runs; both extra MEDLINE tests pass in both
+roles. Frozen pre-publisher replay/history/token hashes remain unchanged. Mechanical
+admission passes with no mechanical blockers, but training remains unapproved.
+Python3.9 ARM64 is a diagnostic runtime, not equivalence to publisher Python3.7.
+Evidence: `evidence/data/pubmed89-grade-002`,65 files/76,249 bytes, R2-published
+and independently restore-verified. Redundant restore removed after hash checks.
+
+Complete native002 content review covers all76messages in12 nonoverlapping,
+hash-bound sections. Approval is only for the attributed five-amendment tool-action
+derivative; no final conversational response exists. The issue itself supplies the
+fix. XML views contain published author contacts and article text, so privacy and
+file-level attribution remain pending. Clipped XML views and finite field checks
+are explicitly recorded; no universal parser correctness or model gain is claimed.
+Review evidence: `evidence/data/pubmed89-history-review-002`,4 files/17,931 bytes,
+R2-published and independently restore-verified. Corpus060 remains
+unchanged; candidate isolation and Corpus061 integration are now recorded above.
+
 Pubmed_parser89 native002 supersedes native001 for prospective content review.
 Five explicitly attributed pre-publisher amendments strengthen four created
 scripts and redirect the unavailable upstream-commit lookup to verified HEAD.
@@ -12,8 +864,9 @@ Original upstream tests6/6 and generated tests3/3 pass;9 selected post-fix/nativ
 inspection commands succeed. Warning output remains visible. The source patch is
 unchanged at645bytes/SHA b20a2b1bebd4ab77ba5f9f18d1f4d173fa9d4c5a320b8f0a2fa9c4d3afaf3205.
 Native002 contains36charged calls/76messages,21,137inputs/2,879shifted targets;
-plus8,192reserve leaves3,439headroom. Full history review, publisher grading,
-rights/privacy/splits and training admission remain pending. No model inference.
+plus8,192reserve leaves3,439headroom. Publisher grading and complete history
+review now pass as recorded above; rights/privacy/splits and training admission
+remain pending. No model inference.
 Evidence: `evidence/data/pubmed89-native-evidence-002` (22 files/543,076 bytes),
 R2-published and independently restore-verified.
 

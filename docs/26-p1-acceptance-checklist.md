@@ -1,6 +1,6 @@
 # P1 acceptance checklist
 
-Checkpoint: October 11, 2026; historical rows retain their original evidence scope. **P1 is not accepted.** This checklist separates evidence by scope; a passing receipt is not a substitute for reviewing what its verifier actually measured. Operational handoff: [document 25](25-p1-deployment-handoff.md). Detailed history: [document 24](24-p1-implementation-status.md).
+Checkpoint: October 15, 2026; historical rows retain their original evidence scope. **P1 is not accepted.** This checklist separates evidence by scope; a passing receipt is not a substitute for reviewing what its verifier actually measured. Operational handoff: [document 25](25-p1-deployment-handoff.md). Detailed history: [document 24](24-p1-implementation-status.md).
 
 | Requirement | Current evidence and scope | Decision |
 |---|---|---|
@@ -48,3 +48,30 @@ cover all10boundaries and10corrupted cursors. These checks do not qualify optimi
 recovery or full-model training. The initial bytecode-extra inventory failure is
 retained alongside the successful rerun. Data sufficiency, rights, privacy, final
 splits and remaining runtime/evaluator gates are not waived. P1 remains unaccepted.
+
+
+October 15 latest corpus checkpoint: [Corpus063 integration](../evidence/data/corpus063-integration/restoration.json)
+supersedes the Corpus059 counts above: 48 tasks, 948,438 input tokens and 262,692
+shifted supervised targets, all quarantined. Its 97 files were independently
+restored from R2 and hash-verified. [Current ingestion](../evidence/p1/corpus063-ingestion-001/report.json)
+checks current worker-source identity, identical schedules and quarantine refusal
+before model access; [resume evidence](../evidence/p1/corpus063-ingestion-001/resume-verification.json)
+checks all ten finite schedule boundaries. These are scheduling checks, not
+optimizer-state recovery. Zero training-admitted tokens remain; adequate approved
+data for the planned three 50M-token candidates is not established. Numerical
+controls on additional source tasks do not establish Gemma performance gains.
+See [current readiness](39-p1-current-readiness.md) for ongoing qualification.
+
+
+October 15 successor: [Corpus064](../evidence/data/corpus064-integration/restoration.json)
+contains49quarantined tasks and264,802supervised targets. Its
+[ingestion report](../evidence/p1/corpus064-ingestion-001/report.json) and
+[resume checks](../evidence/p1/corpus064-ingestion-001/resume-verification.json)
+cover the same bounded CPU invariants for this new corpus. The
+[transfer metadata correction](../evidence/data/corpus064-metadata-correction-001/report.json)
+changes only revision063to064, preserving all99file identities; corrected manifest
+is authoritative for future transfers. No rights/privacy/split or training gates
+are approved, and planned training-data sufficiency remains unestablished.
+
+
+October 15 successor: [Corpus065](../evidence/data/corpus065-integration/restoration.json) contains 50 quarantined tasks and 267,137 shifted supervised targets. [Restored ingestion](../evidence/p1/corpus065-ingestion-001/report.json) and [resume checks](../evidence/p1/corpus065-ingestion-001/resume-verification.json) pass for the finite one-pass schedule. Training remains disallowed; no GPU execution or full-model readiness is established.

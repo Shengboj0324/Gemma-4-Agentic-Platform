@@ -16,11 +16,16 @@ def main():
     p.add_argument('--directory',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--max-bytes',type=int,required=True)
+    p.add_argument('--candidate-root',type=Path,default=ROOT,
+                   help='Explicit allowed root for candidate inputs (default: repository).')
     p.add_argument('--max-example-bytes',type=int,default=16*1024**2,
                    help='Maximum bytes for each token or audit file (default: 16 MiB).')
     args=p.parse_args()
     if args.max_bytes <= 0 or args.max_example_bytes <= 0:
         p.error('Byte budgets must be positive integers')
+    candidate_root=args.candidate_root.resolve(strict=True)
+    if not candidate_root.is_dir():
+        raise ValueError('Candidate root must be a directory')
     selection_identity=file_record(args.selection)
     rows=load_json(args.selection)
     if not isinstance(rows,list) or not rows:raise ValueError('Nonempty explicit selection required')
@@ -30,14 +35,18 @@ def main():
     for row in rows:
         keys={'example_id','task_id','repository_group','leakage_group','split','candidate_directory'}
         if not isinstance(row,dict) or set(row)!=keys:raise ValueError('Invalid selection row')
-        directory=(ROOT/row['candidate_directory']).resolve(strict=True)
-        if not directory.is_relative_to(ROOT):raise ValueError('Candidate directory outside workspace')
+        directory=(candidate_root/row['candidate_directory']).resolve(strict=True)
+        if not directory.is_relative_to(candidate_root):
+            raise ValueError('Candidate directory outside allowed root')
         key=hashlib.sha256(row['example_id'].encode()).hexdigest()
         destination=args.directory/'examples'/key
         destination.mkdir(parents=True,exist_ok=False)
         refs={}
         for label,name in [('tokens','tokens.json'),('audit','report.json')]:
-            source=directory/name;identity=file_record(source);total+=identity['size_bytes']
+            source=directory/name
+            if not source.resolve(strict=True).is_relative_to(candidate_root):
+                raise ValueError('Candidate file outside allowed root')
+            identity=file_record(source);total+=identity['size_bytes']
             if total>args.max_bytes:raise ValueError('Explicit corpus byte budget exceeded')
             if identity['size_bytes']>args.max_example_bytes:
                 raise ValueError('Example file exceeds explicit byte budget')
@@ -59,7 +68,8 @@ def main():
     if file_record(args.selection)!=selection_identity or any(file_record(Path(p))!=v for p,v in bound.items()):
         raise ValueError('Source inputs changed during assembly')
     receipt={'summary':validated.summary,'manifest':identity,'selection':selection_identity,
-             'sources':bound,'script':file_record(Path(__file__)),'training_approved':False}
+             'sources':bound,'candidate_root':str(candidate_root),
+             'script':file_record(Path(__file__)),'training_approved':False}
     (args.output/'receipt.json').write_bytes(canonical_json(receipt))
     print(validated.summary)
 

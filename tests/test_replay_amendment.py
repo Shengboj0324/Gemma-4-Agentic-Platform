@@ -160,3 +160,97 @@ class ActionAmendmentTests(unittest.TestCase):
                                'before': actions[1]['command'], 'after': after,
                                'reason': 'Disable bytecode writes'}]
         self.assertEqual(amend_actions(actions, plan)['actions'], derived)
+
+
+class SourceEditAmendmentTests(unittest.TestCase):
+    def fixture(self):
+        actions = [
+            {'index': 4, 'kind': 'str_replace', 'path': 'module.py',
+             'arguments': {'old_str': 'if sql is None:',
+                           'new_str': 'if not isinstance(sql, str):'}},
+            {'index': 8, 'kind': 'finish'},
+        ]
+        derived = copy.deepcopy(actions)
+        derived[0]['arguments']['new_str'] = 'if sql is None:  # preserve other inputs'
+        plan = {'schema_version': 2, 'author': 'assistant',
+                'reason': 'Preserve non-None behavior in an attributed source derivative',
+                'source_actions': identity(actions), 'derived_actions': identity(derived),
+                'amendments': [{'action_index': 0, 'field': 'new_str',
+                    'before': actions[0]['arguments']['new_str'],
+                    'after': derived[0]['arguments']['new_str'],
+                    'reason': 'Replace only the existing edit replacement text'}]}
+        result = {'status': 'ok', 'occurrences': 1}
+        events = [
+            {'source_index': 4, 'kind': 'str_replace', 'result': result,
+             'native_calls': [{'name': 'edit_file', 'arguments': {
+                 'filepath': 'module.py', 'old_string': 'if sql is None:',
+                 'new_string': derived[0]['arguments']['new_str']}, 'result': result}]},
+            {'source_index': 8, 'kind': 'finish', 'result': {'status': 'ok'},
+             'native_calls': [{'name': 'submit_patch', 'arguments': {},
+                              'result': {'status': 'ok'}}]},
+        ]
+        return actions, plan, events
+
+    def project(self, actions, plan, events):
+        return amended_replay_history(events, actions=actions, plan=plan,
+            system='Repair the issue.', problem='Handle None.',
+            allowed_tools={'edit_file', 'submit_patch'})
+
+    def test_source_derivative_has_explicit_authorship_and_preserves_preimage(self):
+        actions, plan, events = self.fixture()
+        original = copy.deepcopy(actions)
+        derivative = amend_actions(actions, plan)
+        self.assertEqual(actions, original)
+        self.assertEqual(derivative['actions'][0]['path'], 'module.py')
+        self.assertEqual(derivative['actions'][0]['arguments']['old_str'], 'if sql is None:')
+        self.assertEqual(derivative['attribution'][0]['field'], 'new_str')
+        projected = self.project(actions, plan, events)
+        self.assertEqual(projected['mapping'][0]['author'], 'assistant')
+        self.assertEqual(projected['mapping'][0]['amendment']['kind'], 'str_replace')
+        self.assertFalse(projected['training_approved'])
+        self.assertTrue(derivative['fresh_replay_required'])
+
+    def test_old_or_invalid_versions_cannot_enable_source_edits(self):
+        for version in (1, True, 2.0, 3, '2'):
+            actions, plan, _ = self.fixture()
+            plan['schema_version'] = version
+            with self.subTest(version=version), self.assertRaises(ValueError):
+                amend_actions(actions, plan)
+
+    def test_source_preimage_path_and_action_kind_cannot_be_amended(self):
+        for field in ('old_str', 'path', 'kind', 'index'):
+            actions, plan, _ = self.fixture()
+            plan['amendments'][0]['field'] = field
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                amend_actions(actions, plan)
+
+    def test_rehashed_destination_cannot_sneak_in_unlisted_source_changes(self):
+        for field in ('old_str', 'path'):
+            actions, plan, _ = self.fixture()
+            derived = amend_actions(actions, plan)['actions']
+            if field == 'path':
+                derived[0]['path'] = 'other.py'
+            else:
+                derived[0]['arguments']['old_str'] = 'different preimage'
+            plan['derived_actions'] = identity(derived)
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                amend_actions(actions, plan)
+
+    def test_projection_rejects_old_replacement_changed_preimage_path_or_result(self):
+        for field in ('new_string', 'old_string', 'filepath', 'result'):
+            actions, plan, events = self.fixture()
+            call = events[0]['native_calls'][0]
+            if field == 'result':
+                call['result'] = {'status': 'error'}
+            else:
+                call['arguments'][field] = 'different'
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.project(actions, plan, events)
+
+    def test_invalid_preimage_rejected_even_when_source_hash_matches(self):
+        for value in ('', None, 123, 'x\0y'):
+            actions, plan, _ = self.fixture()
+            actions[0]['arguments']['old_str'] = value
+            plan['source_actions'] = identity(actions)
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                amend_actions(actions, plan)

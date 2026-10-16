@@ -29,7 +29,9 @@ def _check_identity(value):
 def amend_actions(actions, plan):
     """Return a detached derivative and attribution after checking both identities.
 
-    Amendments replace whole text fields in normalized shell/create actions only.
+    Version 1 replaces text in normalized shell/create actions. Version 2 also
+    permits the replacement text of an existing str_replace action; its source
+    preimage and path remain fixed. This does not establish patch correctness.
     No action may be inserted, removed, reordered, or assigned a different path.
     ``action_index`` is the list ordinal, not the original teacher event index.
     Expected identities refer to canonical JSON, including its trailing newline.
@@ -37,7 +39,7 @@ def amend_actions(actions, plan):
     required = {'schema_version', 'author', 'reason', 'source_actions',
                 'derived_actions', 'amendments'}
     if (not isinstance(plan, dict) or set(plan) != required
-            or type(plan['schema_version']) is not int or plan['schema_version'] != 1
+            or type(plan['schema_version']) is not int or plan['schema_version'] not in (1, 2)
             or plan['author'] != 'assistant'
             or not isinstance(plan['reason'], str) or not plan['reason'].strip()):
         raise ValueError('Explicit assistant action-amendment plan required')
@@ -76,8 +78,15 @@ def amend_actions(actions, plan):
             target, key = action, 'command'
         elif action.get('kind') == 'create' and change['field'] == 'file_text':
             target, key = action.get('arguments'), 'file_text'
+        elif (plan['schema_version'] == 2 and action.get('kind') == 'str_replace'
+              and change['field'] == 'new_str'):
+            target, key = action.get('arguments'), 'new_str'
+            if (not isinstance(target, dict)
+                    or not isinstance(target.get('old_str'), str)
+                    or not target['old_str'] or '\0' in target['old_str']):
+                raise ValueError('Source edit requires its unchanged nonempty preimage')
         else:
-            raise ValueError('Only shell command or created-file text may be amended')
+            raise ValueError('Amendment field is not permitted by this plan version')
         if not isinstance(target, dict) or target.get(key) != change['before']:
             raise ValueError('Amendment text does not match original action')
         target[key] = change['after']
@@ -85,6 +94,8 @@ def amend_actions(actions, plan):
                             'author': 'assistant', 'reason': change['reason'],
                             'before': _identity(change['before'].encode('utf-8')),
                             'after': _identity(change['after'].encode('utf-8'))})
+        if plan['schema_version'] == 2:
+            attribution[-1].update(plan_version=2, field=change['field'], kind=action['kind'])
     encoded = canonical_json(derived)
     if len(encoded) > MAX_ACTION_BYTES or _identity(encoded) != plan['derived_actions']:
         raise ValueError('Derived actions differ from amendment plan')
@@ -114,6 +125,10 @@ def amended_replay_history(events, *, actions, plan, system, problem,
         if ordinal in changed:
             if action['kind'] == 'shell':
                 name, arguments = 'run_command', {'command': action['command']}
+            elif action['kind'] == 'str_replace':
+                name, arguments = 'edit_file', {'filepath': action['path'],
+                    'old_string': action['arguments']['old_str'],
+                    'new_string': action['arguments']['new_str']}
             else:
                 name, arguments = 'write_file', {'filepath': action['path'],
                                                 'content': action['arguments']['file_text']}
