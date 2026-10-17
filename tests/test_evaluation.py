@@ -52,6 +52,34 @@ class EvaluationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Unpaired'):
             compare_junit(before, after)
 
+    def test_rejects_contradictory_outcome_counts(self):
+        for attribute, outcome in [('failures', 'failure'), ('errors', 'error'),
+                                   ('skipped', 'skipped')]:
+            for declared, body in [('1', ''), ('0', '<' + outcome + '/>')]:
+                with self.subTest(attribute=attribute, declared=declared):
+                    contents = (f'<testsuite tests="1" {attribute}="{declared}">'
+                                f'<testcase classname="C" name="a">{body}</testcase></testsuite>')
+                    with self.assertRaisesRegex(ValueError, 'Declared ' + attribute):
+                        junit_outcomes(self.report('conflict.xml', contents))
+
+    def test_checks_aggregate_and_nested_suite_counts(self):
+        suite = ('<testsuite tests="1" failures="1" errors="0" skipped="0">'
+                 '<testcase classname="C" name="a"><failure/></testcase></testsuite>')
+        valid = f'<testsuites tests="1" failures="1">{suite}</testsuites>'
+        self.assertEqual(junit_outcomes(self.report('valid.xml', valid)), {'C::a': 'failed'})
+        for contents in [f'<testsuites tests="2">{suite}</testsuites>',
+                         f'<testsuites failures="0">{suite}</testsuites>',
+                         f'<testsuite tests="1" failures="0">{suite}</testsuite>']:
+            with self.subTest(contents=contents), self.assertRaises(ValueError):
+                junit_outcomes(self.report('aggregate.xml', contents))
+
+    def test_rejects_noncanonical_summary_numbers(self):
+        for declared in ['-1', '+0', '0.0', ' 0', '\u0660']:
+            contents = (f'<testsuite tests="1" failures="{declared}">'
+                        '<testcase classname="C" name="a"/></testsuite>')
+            with self.subTest(declared=declared), self.assertRaises(ValueError):
+                junit_outcomes(self.report('number.xml', contents))
+
 
 if __name__ == '__main__':
     unittest.main()

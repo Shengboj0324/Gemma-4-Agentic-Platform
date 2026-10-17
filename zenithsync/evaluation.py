@@ -30,11 +30,23 @@ def junit_outcomes(path: Path) -> dict[str, str]:
                            'skipped': 'skipped'}.get(states[0], 'passed') if states else 'passed'
     if not cases:
         raise ValueError('Empty JUnit report')
-    for suite in root.iter('testsuite'):
+    for suite in root.iter():
+        if suite.tag not in {'testsuite', 'testsuites'}:
+            continue
         children = list(suite.iter('testcase'))
-        declared = suite.get('tests')
-        if declared is None or not declared.isdecimal() or int(declared) != len(children):
-            raise ValueError('Declared test count disagrees with recorded cases')
+        counts = Counter(cases[case.get('classname') + '::' + case.get('name')]
+                         for case in children)
+        expected = {'tests': len(children), 'failures': counts['failed'],
+                    'errors': counts['error'], 'skipped': counts['skipped']}
+        for attribute, observed in expected.items():
+            declared = suite.get(attribute)
+            # Some producers omit outcome summaries or the aggregate root count.
+            # Every supplied count must agree; individual suites require tests.
+            if declared is None and (attribute != 'tests' or suite.tag == 'testsuites'):
+                continue
+            if (declared is None or not declared.isascii() or not declared.isdecimal()
+                    or int(declared) != observed):
+                raise ValueError('Declared ' + attribute + ' count disagrees with recorded cases')
     return cases
 
 

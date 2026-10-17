@@ -6,6 +6,7 @@ Use only with curated development inputs: bodies may contain repository contents
 """
 
 from contextlib import contextmanager
+from http.client import HTTPException
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import itertools
 import json
@@ -67,11 +68,27 @@ def capture_inference(output: Path, upstream_port: int):
                     response = error
                 with response:
                     status = response.code
+                    lengths = response.headers.get_all('Content-Length', [])
+                    encodings = response.headers.get_all('Transfer-Encoding', [])
+                    if len(lengths) > 1 or len(encodings) > 1 or (lengths and encodings):
+                        raise ValueError('Ambiguous response framing')
+                    if encodings and encodings[0].strip().lower() != 'chunked':
+                        raise ValueError('Unsupported response transfer encoding')
+                    expected = None
+                    if lengths:
+                        raw_length = lengths[0].strip()
+                        if not raw_length or not raw_length.isascii() or not raw_length.isdecimal():
+                            raise ValueError('Invalid response content length')
+                        expected = int(raw_length)
+                        if expected > CAP:
+                            raise ValueError('Response exceeds capture limit')
                     body = response.read(CAP + 1)
                     content_type = response.headers.get('Content-Type', 'application/json')
+                    if expected is not None and len(body) != expected:
+                        raise ValueError('Incomplete response body')
                 if len(body) > CAP:
                     raise ValueError('Response exceeds capture limit')
-            except (OSError, ValueError) as error:
+            except (OSError, ValueError, HTTPException) as error:
                 (record / 'transport-error.txt').write_text(type(error).__name__ + '\n')
                 self.send_error(502)
                 return

@@ -1,6 +1,8 @@
 import json
 import unittest
 from zenithsync.source_credentials import scan_text
+from zenithsync.source_credentials import require_no_credential_indicators
+from unittest.mock import patch
 from scripts.replay_source_teacher import preflight
 
 
@@ -55,6 +57,48 @@ class SourceCredentialTests(unittest.TestCase):
         messages = [{'tool_calls': [{'function': {'name': 'execute_bash',
                      'arguments': {'command': 'python --version'}}}]}]
         self.assertEqual(preflight(messages)[0]['command'], 'python --version')
+
+    def test_encoded_authorization_and_duplicate_members_are_not_hidden(self):
+        token = 'fakeCredentialValueForTesting12345'
+        encoded = '{"Author\\u0069zation":"' + token + '","Authorization":"EMPTY"}'
+        for payload in (encoded, json.dumps({'stdout': encoded}),
+                        json.dumps(json.dumps({'stdout': encoded}))):
+            with self.subTest(layers=payload.count('stdout')):
+                messages = [{'role': 'tool', 'content': payload}]
+                before = json.dumps(messages)
+                with self.assertRaisesRegex(ValueError, 'indicator requires review') as caught:
+                    require_no_credential_indicators(messages)
+                self.assertNotIn(token, str(caught.exception))
+                self.assertEqual(json.dumps(messages), before)
+
+    def test_json_unicode_escaped_private_key_header_is_rejected(self):
+        payload = json.dumps({'stdout': '-----BEGIN OPENSSH PRIVATE KEY-----'})
+        payload = payload.replace('PRIVATE', '\\u0050RIVATE')
+        with self.assertRaisesRegex(ValueError, 'indicator requires review'):
+            require_no_credential_indicators({'content': payload})
+
+    def test_clean_nested_json_malformed_text_and_cycles(self):
+        clean = {'content': json.dumps({'stdout': json.dumps({'Authorization': 'EMPTY'})})}
+        require_no_credential_indicators(clean)
+        require_no_credential_indicators('{not valid JSON')
+        cyclic = [clean]
+        cyclic.append(cyclic)
+        require_no_credential_indicators(cyclic)
+
+    def test_json_work_limits_fail_closed_without_payloads(self):
+        payload = json.dumps(json.dumps({'safe': 'text'}))
+        with patch('zenithsync.source_credentials._MAX_JSON_LAYERS', 1):
+            with self.assertRaisesRegex(ValueError, 'JSON limit exceeded'):
+                require_no_credential_indicators(payload)
+        with patch('zenithsync.source_credentials._MAX_JSON_CHARACTERS', 5):
+            with self.assertRaisesRegex(ValueError, 'JSON limit exceeded'):
+                require_no_credential_indicators('{"safe":"text"}')
+
+    def test_separate_decoded_branches_are_all_scanned(self):
+        branches = [json.dumps({'safe': str(i)}) for i in range(100)]
+        branches.insert(0, '{"Author\\u0069zation":"fakeCredentialValueForTesting12345"}')
+        with self.assertRaisesRegex(ValueError, 'indicator requires review'):
+            require_no_credential_indicators(branches)
 
 
 if __name__ == '__main__':

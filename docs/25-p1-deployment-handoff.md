@@ -1,5 +1,7 @@
 # P1 deployment handoff
 
+**October 16 status:** The session details below are historical. Use [current P1 readiness](39-p1-current-readiness.md) and the [acceptance checklist](26-p1-acceptance-checklist.md) for the latest H100, corpus and admission evidence. No new Pod restart or paid session is authorized by this document.
+
 Latest local handoff: the user subsequently stopped the Pod; the latest live read reported `EXITED`. The native write-call diagnostic supplement is ready in R2, with a verified local restore at `artifacts/official/restored-write-diagnostic-001`. Use its `experiment/` directory and `experiment-manifest.json` with `scripts/run_write_diagnostic.py`; preflight is the default, while live requests require `--execute` and a fresh approved session file. Retain the separate serving supervisor's session deadline. Local preflight and all six supplement tests passed. See [the implementation record](24-p1-implementation-status.md#prepared-native-tool-call-diagnostic-and-gpu-boundary). Await the user's restart; do not reuse the first session's approval.
 
 Updated October 8, 2026. The first authorized GPU validation session has completed its remote work. The model server is stopped; the Pod itself was **not** stopped by this agent. Stop the Pod in Runpod to end compute billing. This document does not authorize a restart or claim full P1 acceptance. See the [session report](27-p1-gpu-validation-report.md) and [acceptance checklist](26-p1-acceptance-checklist.md).
