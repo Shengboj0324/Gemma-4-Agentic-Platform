@@ -1,0 +1,2263 @@
+[
+  {
+    "description": "",
+    "file": "zenithsync/__main__.py",
+    "kind": "FunctionDef",
+    "line": 15,
+    "symbol": "main()"
+  },
+  {
+    "description": "Select one action with its entire preceding history, never its outcome.\n\nThe source must be a complete, valid history. A partial example is explicit:\nit ends with a pending tool call, not a fabricated completion or response.",
+    "file": "zenithsync/action_training.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "action_prefix(messages, *, target_index, allowed_tools)"
+  },
+  {
+    "description": "Preserve native prefix tokens and mask every earlier assistant action.\n\nRefuse a tokenizer/template whose context tokenization changes when the\naction is appended. This explicit boundary check prevents labels from\naccidentally crossing into prior observations or prior assistant messages.",
+    "file": "zenithsync/action_training.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "action_training_tokens(tokenizer, messages, *, target_index, template_sha256, allowed_tools, tools)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 18,
+    "symbol": "validate_checkpoint_bindings(bindings, schedule)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "_cursor(schedule, cursor)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "_parameters(model)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 49,
+    "symbol": "frozen_state(model)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 53,
+    "symbol": "_cpu_copy(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 66,
+    "symbol": "capture_adapter_checkpoint(model, optimizer, *, bindings, schedule, cursor, expected_frozen)"
+  },
+  {
+    "description": "Reject incompatible checkpoints before mutation; discard state on apply failure.\n\nThe caller must independently verify base/corpus/config artifacts and load a\nhash-bound payload. Hash strings alone do not authenticate those artifacts.",
+    "file": "zenithsync/adapter_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 83,
+    "symbol": "restore_adapter_checkpoint(model, optimizer, payload, *, bindings, schedule, expected_frozen)"
+  },
+  {
+    "description": "Compare all descriptors to a pinned meta-model and independent W4 rules.\n\nUnquantized tensors are BF16 for this specific package. This does not\ninspect their values or establish model numerical equivalence.",
+    "file": "zenithsync/architecture_layout.py",
+    "kind": "FunctionDef",
+    "line": 5,
+    "symbol": "validate_architecture(header, expected_shapes, projections, original_shapes)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/archive.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "inspect_zip(path: Path, *, max_bytes: int, max_entries: int)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "relative_path(value: str)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 24,
+    "symbol": "_pairs(pairs: list[tuple[str, object]])"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 33,
+    "symbol": "load_json(path: Path)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 40,
+    "symbol": "canonical_json(value: object)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 45,
+    "symbol": "file_record(path: Path)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 75,
+    "symbol": "inventory(root: Path, *, kind: str, source: str, revision: str)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 98,
+    "symbol": "validate_manifest(value: object)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 125,
+    "symbol": "verify(root: Path, manifest: object)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/artifacts.py",
+    "kind": "FunctionDef",
+    "line": 34,
+    "symbol": "invalid_constant(value: str)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "_budget(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "_directory(path)"
+  },
+  {
+    "description": "Publish a complete file atomically; an existing checkpoint is never replaced.\n\nFsync errors after publication are reported as failures, but may leave a\ncomplete destination file. Inspect its identity instead of blindly retrying.\nFilesystem/hardware durability guarantees must still be qualified on the Pod.",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 26,
+    "symbol": "save_checkpoint(path: Path, payload, *, max_bytes)"
+  },
+  {
+    "description": "Hash and deserialize through the same descriptor; load tensors onto CPU.\n\nSerialized bytes are bounded, not tensor allocations for hostile files.\nweights_only reduces deserialization exposure; it is not a resource sandbox.",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 72,
+    "symbol": "load_checkpoint(path: Path, *, expected_identity, max_bytes)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "ClassDef",
+    "line": 42,
+    "symbol": "BoundedWriter"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 43,
+    "symbol": "write(self, data)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 48,
+    "symbol": "flush(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/checkpoint_storage.py",
+    "kind": "FunctionDef",
+    "line": 51,
+    "symbol": "tell(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/container_cleanup.py",
+    "kind": "FunctionDef",
+    "line": 4,
+    "symbol": "cleanup_owned_container(manager, container_id)"
+  },
+  {
+    "description": "Reject bools and coercions: accounting is in exact nonnegative integers.",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 7,
+    "symbol": "natural(value: int, name: str)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "digest(value: str)"
+  },
+  {
+    "description": "Charged durations supplied by the runner; not a wall-clock watchdog.\n\nOverruns remain visible as debt. Admission is a deterministic constraint,\nnot a prediction that an action will finish within its requested duration.",
+    "file": "zenithsync/contracts.py",
+    "kind": "ClassDef",
+    "line": 23,
+    "symbol": "Budget"
+  },
+  {
+    "description": "Counts must come from the pinned tokenizer, never a character heuristic.",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 57,
+    "symbol": "context_fits(*, input_tokens: int, output_tokens: int, protocol_tokens: int, limit_tokens: int)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "ClassDef",
+    "line": 66,
+    "symbol": "Phase"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "ClassDef",
+    "line": 73,
+    "symbol": "Kind"
+  },
+  {
+    "description": "A versioned event references retained bytes by hash, not mutable paths.\n\nCandidate hashes identify the complete test input bundle (tree, test suite,\nand environment specification), not merely the textual patch. A receipt\nhash identifies the runner's observed check output; it is not an oracle.",
+    "file": "zenithsync/contracts.py",
+    "kind": "ClassDef",
+    "line": 84,
+    "symbol": "Event"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "ClassDef",
+    "line": 127,
+    "symbol": "TaskState"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 187,
+    "symbol": "replay(events: list[Event])"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 34,
+    "symbol": "__post_init__(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 41,
+    "symbol": "available_ns(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 45,
+    "symbol": "overrun_ns(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 48,
+    "symbol": "admits(self, requested_ns: int)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 52,
+    "symbol": "charge(self, elapsed_ns: int)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 99,
+    "symbol": "__post_init__(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 134,
+    "symbol": "__post_init__(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/contracts.py",
+    "kind": "FunctionDef",
+    "line": 155,
+    "symbol": "apply(self, event: Event)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/conversation.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "_reject_constant(value: str)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/conversation.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "normalize_arguments(value: object, *, max_bytes: int=1024 * 1024)"
+  },
+  {
+    "description": "Bind every tool response exactly once; reject interrupted exchanges.\n\nPending calls are accepted only at the end and only when explicitly requested\nfor tool dispatch. Generation should use the default complete-history mode.",
+    "file": "zenithsync/conversation.py",
+    "kind": "FunctionDef",
+    "line": 48,
+    "symbol": "normalize_history(messages: object, *, allowed_tools: set[str], allow_pending: bool=False)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/conversation.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "check_keys(item)"
+  },
+  {
+    "description": "Screen an inspected IndexedCorpus with a caller-bound tokenizer decoder.\n\nThe decoder must retain special tokens. Its asset identity and version must\nbe recorded by the caller. Each example is fetched through the corpus's\nintegrity checks. Decoded text is discarded after each example.",
+    "file": "zenithsync/corpus_credentials.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "screen_corpus(corpus, decode, *, max_decoded_characters=4 * 1024 * 1024)"
+  },
+  {
+    "description": "Reject unknown IDs instead of letting the backend silently omit them.",
+    "file": "zenithsync/corpus_credentials.py",
+    "kind": "FunctionDef",
+    "line": 46,
+    "symbol": "decode_checked(tokenizer, identifiers)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/corpus_optimization.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "_target_count(batch, device)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/corpus_optimization.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "token_weighted_step(model, optimizer, microbatches)"
+  },
+  {
+    "description": "Accumulate one microbatch at a time; step only after exact count agreement.\n\nOn any failure discard mutable model/RNG state and restore a checkpoint.\nNo optimizer step occurs for invalid data, but forwards can mutate buffers.",
+    "file": "zenithsync/corpus_optimization.py",
+    "kind": "FunctionDef",
+    "line": 47,
+    "symbol": "streamed_token_weighted_step(model, optimizer, microbatches, *, expected_supervised_tokens)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/corpus_run.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "preflight_corpus_run(*, corpus_root: Path, corpus_sha256, schedule_path: Path, schedule_sha256, config_path: Path, config_sha256)"
+  },
+  {
+    "description": "Execute one scheduled update without retaining all example tensors.\n\nThe caller owns schedule/cursor validation, checkpoint publication and RNG\nrecovery. This function never advances a durable cursor on its own.",
+    "file": "zenithsync/corpus_training.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "train_corpus_update(model, optimizer, corpus, update, *, max_sequence_tokens)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/corpus_training.py",
+    "kind": "FunctionDef",
+    "line": 53,
+    "symbol": "batches()"
+  },
+  {
+    "description": "The diagnostic's wall-clock allowance expired.",
+    "file": "zenithsync/deadline.py",
+    "kind": "ClassDef",
+    "line": 13,
+    "symbol": "DeadlineExpired"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/deadline.py",
+    "kind": "FunctionDef",
+    "line": 18,
+    "symbol": "wall_deadline(seconds)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/deadline.py",
+    "kind": "FunctionDef",
+    "line": 29,
+    "symbol": "expired(signum, frame)"
+  },
+  {
+    "description": "Read pytest case identities; reject ambiguous or incomplete reports.",
+    "file": "zenithsync/evaluation.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "junit_outcomes(path: Path)"
+  },
+  {
+    "description": "Require identical case coverage and preserve every observed transition.",
+    "file": "zenithsync/evaluation.py",
+    "kind": "FunctionDef",
+    "line": 53,
+    "symbol": "compare_junit(baseline: Path, candidate: Path)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gemma_training.py",
+    "kind": "FunctionDef",
+    "line": 5,
+    "symbol": "attach_training_adapter(base, target_shapes)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gemma_trajectory.py",
+    "kind": "FunctionDef",
+    "line": 15,
+    "symbol": "project_pre_action_text(messages)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/go_test_controls.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "_unique_object(pairs)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/go_test_controls.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "_identity(value)"
+  },
+  {
+    "description": "Require complete per-package and per-test lifecycles and exact exits.",
+    "file": "zenithsync/go_test_controls.py",
+    "kind": "FunctionDef",
+    "line": 27,
+    "symbol": "go_outcomes(text, *, exit_code, no_test_packages)"
+  },
+  {
+    "description": "Reparse all three raw runs; require exact publisher and package coverage.\n\nEach run contains ``stdout`` and ``exit_code``. Publisher names must resolve\nuniquely across packages; no suffix matching or last-write-wins collapse.",
+    "file": "zenithsync/go_test_controls.py",
+    "kind": "FunctionDef",
+    "line": 113,
+    "symbol": "compare_go_runs(base, reference, candidate, expectations, *, no_test_packages)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "parse_memory_csv(text)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 32,
+    "symbol": "read_device_memory()"
+  },
+  {
+    "description": "Sample all GPUs reported by nvidia-smi every second after each read.\n\nSampled maxima are lower bounds on actual peaks. They include other GPU\nclients and driver allocations and are not attributed to the worker alone.\nA read failure prevents successful monitor completion, but does not replace\nan exception already raised by the training worker. Partial JSONL persists.",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "ClassDef",
+    "line": 39,
+    "symbol": "DeviceMemoryMonitor"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 48,
+    "symbol": "__init__(self, path)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 59,
+    "symbol": "_sample(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 72,
+    "symbol": "_run(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 80,
+    "symbol": "__enter__(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 94,
+    "symbol": "__exit__(self, exc_type, exc_value, traceback)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/gpu_memory.py",
+    "kind": "FunctionDef",
+    "line": 113,
+    "symbol": "summary(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/harness_context.py",
+    "kind": "FunctionDef",
+    "line": 11,
+    "symbol": "competition_context_configs()"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_capture.py",
+    "kind": "FunctionDef",
+    "line": 22,
+    "symbol": "capture_inference(output: Path, upstream_port: int)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_capture.py",
+    "kind": "ClassDef",
+    "line": 28,
+    "symbol": "Handler"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_capture.py",
+    "kind": "FunctionDef",
+    "line": 29,
+    "symbol": "log_message(self, *_)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_capture.py",
+    "kind": "FunctionDef",
+    "line": 32,
+    "symbol": "setup(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_capture.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "do_POST(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_probe.py",
+    "kind": "FunctionDef",
+    "line": 6,
+    "symbol": "extract_read_call(response: object)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/inference_probe.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "extract_final_text(response: object)"
+  },
+  {
+    "description": "Return pairs meeting either exact rational threshold, or fail atomically.\n\nEach row contains exactly task_id and issue. Candidate pairs are those with\nat least one common shingle. Limits bound indexed documents, tokenization\noutput and distinct candidate pairs; callers must separately bound input\nbytes before parsing. Pair visits also bound repeated work from boilerplate.\nThis routine does not read any evaluation data.",
+    "file": "zenithsync/issue_similarity.py",
+    "kind": "FunctionDef",
+    "line": 15,
+    "symbol": "audit_issue_similarity(rows, *, shingle_width=5, jaccard_threshold=Fraction(1, 2), containment_threshold=Fraction(4, 5), max_documents=50000, max_total_tokens=5000000, max_candidate_pairs=1000000, max_pair_visits=50000000)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/junit_controls.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "_name(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/junit_controls.py",
+    "kind": "FunctionDef",
+    "line": 22,
+    "symbol": "_count(suite, key)"
+  },
+  {
+    "description": "Validate bounded raw reports, exact count accounting, and Maven exit status.\n\nCase identity is the pair (classname, name), never a concatenated short name.\nXML stdout, properties and durations are not evidence of passing assertions.",
+    "file": "zenithsync/junit_controls.py",
+    "kind": "FunctionDef",
+    "line": 31,
+    "symbol": "surefire_outcomes(reports, *, exit_code)"
+  },
+  {
+    "description": "Require exhaustive case-level expectations and exact observed transitions.\n\nCompilation failures and class-level publisher labels must be handled as\nseparate evidence; this function cannot promote them into runtime outcomes.",
+    "file": "zenithsync/junit_controls.py",
+    "kind": "FunctionDef",
+    "line": 111,
+    "symbol": "compare_surefire_runs(runs, *, fail_to_pass, pass_to_pass, skipped)"
+  },
+  {
+    "description": "Reconstruct the version/source exporter used by matrix protocol v1.",
+    "file": "zenithsync/matrix_admission_evidence.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "predicate_probe(patch, module_path)"
+  },
+  {
+    "description": "Return all checked file identities; never approve training.\n\nReceipts are retained local execution evidence, not external attestation.\nFull source qualification, history review, rights and splits remain gates.",
+    "file": "zenithsync/matrix_admission_evidence.py",
+    "kind": "FunctionDef",
+    "line": 30,
+    "symbol": "verify_matrix_grade(grading, replay, patch_path)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/matrix_admission_evidence.py",
+    "kind": "FunctionDef",
+    "line": 40,
+    "symbol": "read(ref, *, binary=False, text=False)"
+  },
+  {
+    "description": "Derive applicability again; never trust stored active-node lists.\n\nEach file reference is exactly {path, identity}. Environment records bind\na version export, predicate source, predicate receipt and all three role\nreceipts/outcomes. Sources must be identical across environments and every\nrole must use the corresponding predicate probe's image. These checks do\nnot prove that an arbitrary producer executed the asserted probe.",
+    "file": "zenithsync/matrix_grade_evidence.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "verify_matrix_outcomes(bundle)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/matrix_grade_evidence.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "read(ref, *, source=False)"
+  },
+  {
+    "description": "Reject altered evaluator bodies, executable settings and wrong patches.",
+    "file": "zenithsync/matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "verify_matrix_probe(probe, receipt, *, image, snapshot, role, patches, profile, allowed_paths, version_assertion=None)"
+  },
+  {
+    "description": "Require the declared missing-symbol diagnostics and no test reports.\n\n``expected`` contains exact file/line/column/symbol/location records from an\nindependently reviewed evaluator profile. No class-level failure labels are\ntransformed into testcase failures by this function.",
+    "file": "zenithsync/maven_compile_controls.py",
+    "kind": "FunctionDef",
+    "line": 15,
+    "symbol": "missing_symbol_test_compile(stdout, *, exit_code, reports, expected)"
+  },
+  {
+    "description": "Compare a declared compile barrier with two complete passing test runs.\n\nThis verifies a phase change, not per-test base failures. Case expectations\nmust be explicitly reviewed and hash-bound by the grading-bundle validator.",
+    "file": "zenithsync/maven_compile_controls.py",
+    "kind": "FunctionDef",
+    "line": 114,
+    "symbol": "compare_compile_barrier_runs(runs, *, expected_diagnostics, passing_cases, skipped_cases)"
+  },
+  {
+    "description": "Use the admission caller's confined, drift-checking filesystem accessors.",
+    "file": "zenithsync/maven_grade_bundle.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "verify_maven_grade_bundle(*, grade, grading, grading_profile, replay, task, attempt, read, verify, record, path)"
+  },
+  {
+    "description": "Recompute history, test comparisons, target counts, and budget decisions.\n\nHashes detect drift in supplied evidence, not fabricated evidence. The caller\nmust separately qualify the executor, rights, splits and task semantics.",
+    "file": "zenithsync/mini_replay_admission.py",
+    "kind": "FunctionDef",
+    "line": 19,
+    "symbol": "assess_mini_replay_bundle(*, root, attempt, history, grade, tokens, candidate, profile, task, max_input_tokens=32768, output_reserve=8192, max_tool_calls=40, historical_sources=None, session_resources=None, grading_profile=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mini_replay_admission.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "path(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mini_replay_admission.py",
+    "kind": "FunctionDef",
+    "line": 42,
+    "symbol": "record(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mini_replay_admission.py",
+    "kind": "FunctionDef",
+    "line": 50,
+    "symbol": "read(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mini_replay_admission.py",
+    "kind": "FunctionDef",
+    "line": 54,
+    "symbol": "verify(value, expected)"
+  },
+  {
+    "description": "Normalize source calls into indexed shell actions, including the terminal.",
+    "file": "zenithsync/mini_replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "mini_command_actions(messages)"
+  },
+  {
+    "description": "Preserve action order and source indices; never permit terminal amendments.",
+    "file": "zenithsync/mini_replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 29,
+    "symbol": "mini_commands(messages, plan=None)"
+  },
+  {
+    "description": "Reject missing, orphaned or inconsistent amendment provenance claims.",
+    "file": "zenithsync/mini_replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 43,
+    "symbol": "verify_mini_amendment_binding(profile, replay, history=None)"
+  },
+  {
+    "description": "Infer only single-pending response links; preserve text and reasoning.\n\nThe last bash call remains unanswered. No output, completion, successful\nexecution or patch correctness is inferred from its command text.",
+    "file": "zenithsync/mini_source_history.py",
+    "kind": "FunctionDef",
+    "line": 7,
+    "symbol": "convert_mini_history(history)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "_object(pairs)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "_invalid_constant(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 25,
+    "symbol": "_name(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 30,
+    "symbol": "_rows(value)"
+  },
+  {
+    "description": "Require a complete, internally consistent report and matching exit code.",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 57,
+    "symbol": "mocha_outcomes(text, *, exit_code)"
+  },
+  {
+    "description": "Compare three raw reports against exhaustive, explicit full test names.",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 97,
+    "symbol": "compare_mocha_runs(runs, *, fail_to_pass, pass_to_pass)"
+  },
+  {
+    "description": "Resolve publisher short titles to all matches, never an arbitrary match.",
+    "file": "zenithsync/mocha_controls.py",
+    "kind": "FunctionDef",
+    "line": 126,
+    "symbol": "compare_mocha_publisher(runs, *, fail_to_pass, pass_to_pass)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/model_intake.py",
+    "kind": "FunctionDef",
+    "line": 26,
+    "symbol": "_integer(value: object)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/model_intake.py",
+    "kind": "FunctionDef",
+    "line": 30,
+    "symbol": "_invalid_constant(value: str)"
+  },
+  {
+    "description": "Validate complete interval coverage and exact tensor byte counts.\n\nEach tensor has length itemsize * product(shape). Sorting its half-open\ninterval and requiring start == previous end proves no gaps or overlap.\nZero-length intervals are permitted only at tensor boundaries.",
+    "file": "zenithsync/model_intake.py",
+    "kind": "FunctionDef",
+    "line": 34,
+    "symbol": "inspect_safetensors(path: Path)"
+  },
+  {
+    "description": "Install exact-URL GET replay in the current disposable test process.\n\n``resources`` maps URL to (bytes, expected SHA-256). Validate the entire\nmapping before replacing either function. Return a restoration callback.",
+    "file": "zenithsync/offline_resources.py",
+    "kind": "FunctionDef",
+    "line": 15,
+    "symbol": "install_resource_replay(resources, events)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/offline_resources.py",
+    "kind": "FunctionDef",
+    "line": 37,
+    "symbol": "lookup(url, client)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/offline_resources.py",
+    "kind": "FunctionDef",
+    "line": 44,
+    "symbol": "urlopen(url, data=None, timeout=None, **kwargs)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/offline_resources.py",
+    "kind": "FunctionDef",
+    "line": 67,
+    "symbol": "get(url, **kwargs)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/offline_resources.py",
+    "kind": "FunctionDef",
+    "line": 82,
+    "symbol": "restore()"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/optimizer_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "_metadata(named_parameters)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/optimizer_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "validate_adamw_checkpoint(payload, named_parameters)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/optimizer_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 60,
+    "symbol": "capture_adamw_checkpoint(optimizer, named_parameters, *, completed_steps)"
+  },
+  {
+    "description": "Reject identity or hyperparameter drift before mutating the optimizer.",
+    "file": "zenithsync/optimizer_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 76,
+    "symbol": "validate_adamw_restore(optimizer, named_parameters, payload)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/optimizer_checkpoint.py",
+    "kind": "FunctionDef",
+    "line": 93,
+    "symbol": "restore_adamw_checkpoint(optimizer, named_parameters, payload)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/probe_receipt.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "verify_probe_receipt(receipt, probe, *, image, platform, python, grading_tests=True)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/process_supervisor.py",
+    "kind": "FunctionDef",
+    "line": 19,
+    "symbol": "_termination_handler()"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/process_supervisor.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "_group_exists(group)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/process_supervisor.py",
+    "kind": "FunctionDef",
+    "line": 47,
+    "symbol": "_signal_group(group, sig)"
+  },
+  {
+    "description": "Launch once, enforce wall/monotonic bounds and retain honest exit status.\n\nExit zero means only process success; acceptance requires the worker's verified\nartifacts separately. A timeout or descendant leak cannot become a success.",
+    "file": "zenithsync/process_supervisor.py",
+    "kind": "FunctionDef",
+    "line": 58,
+    "symbol": "run_bounded(argv, *, log_path: Path, deadline: datetime, maximum_seconds: float, grace_seconds: float=5.0, env=None, stop_path: Path | None=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/process_supervisor.py",
+    "kind": "FunctionDef",
+    "line": 24,
+    "symbol": "interrupted(signum, frame)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/pytest_applicability.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "_version(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/pytest_applicability.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "_name(node)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/pytest_applicability.py",
+    "kind": "FunctionDef",
+    "line": 25,
+    "symbol": "_condition(node, version)"
+  },
+  {
+    "description": "Return active nodes after interpreting every decorator in one test module.\n\nReject aliases, assignments and extra top-level statements so source cannot\nsilently redefine pytest or django.VERSION. Only direct imports and plain\ntest functions are accepted. Test bodies are never executed by this parser;\nruntime phase verification must still reject dynamic skips or setup errors.\nOther modules' applicability is outside this function's scope.",
+    "file": "zenithsync/pytest_applicability.py",
+    "kind": "FunctionDef",
+    "line": 42,
+    "symbol": "applicable_nodes(source, *, module_path, collected, version)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/pytest_controls.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "call_outcomes(document)"
+  },
+  {
+    "description": "Require individually declared full test identities, never inferred coverage.",
+    "file": "zenithsync/pytest_controls.py",
+    "kind": "FunctionDef",
+    "line": 40,
+    "symbol": "validate_supplemental_passes(nodes)"
+  },
+  {
+    "description": "Require exact coverage and each publisher group's complete transition.",
+    "file": "zenithsync/pytest_controls.py",
+    "kind": "FunctionDef",
+    "line": 50,
+    "symbol": "compare_controls(base, reference, expectations, *, supplemental_pass_to_pass=None)"
+  },
+  {
+    "description": "Compare complete valid call outcomes; infrastructure errors are not scores.",
+    "file": "zenithsync/pytest_controls.py",
+    "kind": "FunctionDef",
+    "line": 96,
+    "symbol": "compare_candidate(reference, candidate)"
+  },
+  {
+    "description": "Validate full base/reference/candidate documents for each environment.\n\n``applicability`` maps each environment to its explicit active node list.\nAll three roles must collect the same complete node set in every environment.\nAn inactive node must have exactly skipped setup and passed teardown, with\nno call. Every node must be active somewhere. Active phases are validated by\nthe existing strict single-environment verifier.",
+    "file": "zenithsync/pytest_matrix.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "compare_matrix(environments, applicability)"
+  },
+  {
+    "description": "Require each publisher transition in every applicable environment.\n\nPublisher whitespace-collapsed groups retain all complete node identities.\nExtra regression tests require individually declared pass-to-pass nodes;\nneither expected groups nor supplemental coverage is inferred from success.",
+    "file": "zenithsync/pytest_matrix.py",
+    "kind": "FunctionDef",
+    "line": 98,
+    "symbol": "compare_publisher_matrix(environments, applicability, expectations, *, supplemental_pass_to_pass)"
+  },
+  {
+    "description": "Choose shortest-proxy trace per repo, then sample four cost strata.\n\nEqual-sized rank strata use deterministic identity tie breaks. Selection is\ndeterministic hash ranking within each stratum, with no replacement. Proxy\nlengths must never be interpreted as native lengths or supervised tokens.\nThe default keeps historical source-token rankings unchanged; source call\ncounts must be explicitly selected and are never relabelled as tokens.",
+    "file": "zenithsync/qualification_sampling.py",
+    "kind": "FunctionDef",
+    "line": 6,
+    "symbol": "stratified_repository_batch(records, *, excluded_repositories, seed, per_stratum=8, cost_field='serialized_source_tokens')"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/qualification_sampling.py",
+    "kind": "FunctionDef",
+    "line": 45,
+    "symbol": "priority(row)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/quantized_layout.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "expected_projections(config: dict)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/quantized_layout.py",
+    "kind": "FunctionDef",
+    "line": 65,
+    "symbol": "validate_projection(name, original_shape, packed, scale, expected)"
+  },
+  {
+    "description": "Check evidence consistency, without claiming receipt authenticity.\n\nPaths come from the producer's existing bindings. Ambiguous role matches\nfail closed; no directory search or fallback to a passing report is used.\nReturned identities let the caller recheck for changes before returning.",
+    "file": "zenithsync/rebench_grade_evidence.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "verify_rebench_outcomes(grading, grade_directory)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/rebench_grade_evidence.py",
+    "kind": "FunctionDef",
+    "line": 20,
+    "symbol": "read(path, expected)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/rebench_grade_evidence.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "select(name, parent=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_admission.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "assess_replay_bundle(*, attempt: Path, history: Path, grade: Path, tokens: Path, max_input_tokens: int, output_reserve: int, max_tool_calls: int)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "_identity(data)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 20,
+    "symbol": "_check_identity(value)"
+  },
+  {
+    "description": "Return a detached derivative and attribution after checking both identities.\n\nVersion 1 replaces text in normalized shell/create actions. Version 2 also\npermits the replacement text of an existing str_replace action; its source\npreimage and path remain fixed. This does not establish patch correctness.\nNo action may be inserted, removed, reordered, or assigned a different path.\n``action_index`` is the list ordinal, not the original teacher event index.\nExpected identities refer to canonical JSON, including its trailing newline.",
+    "file": "zenithsync/replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 29,
+    "symbol": "amend_actions(actions, plan)"
+  },
+  {
+    "description": "Bind changed native calls to the derivative before projecting observations.",
+    "file": "zenithsync/replay_amendment.py",
+    "kind": "FunctionDef",
+    "line": 107,
+    "symbol": "amended_replay_history(events, *, actions, plan, system, problem, allowed_tools, completion_plan=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_completion.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "validate_completion_plan(plan)"
+  },
+  {
+    "description": "Verify the declared suffix and preserve source versus added authorship.",
+    "file": "zenithsync/replay_completion.py",
+    "kind": "FunctionDef",
+    "line": 38,
+    "symbol": "completed_replay_history(events, *, plan, system, problem, allowed_tools)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_correction.py",
+    "kind": "FunctionDef",
+    "line": 5,
+    "symbol": "validate_correction_plan(plan)"
+  },
+  {
+    "description": "Accept native process results only, including an explicitly expected failure.",
+    "file": "zenithsync/replay_correction.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "verify_correction_result(result, expected_exit_code)"
+  },
+  {
+    "description": "Check provenance claims; callers must separately verify all patch bytes.",
+    "file": "zenithsync/replay_correction.py",
+    "kind": "FunctionDef",
+    "line": 53,
+    "symbol": "verify_correction_binding(profile, replay)"
+  },
+  {
+    "description": "Project exact source commands followed by explicitly authored native actions.\n\nThe source terminal only exports a patch. Its replacement cleanup and native\nsubmission remain attributed to the adapter in the separate message mapping.\nNo source responses, reasoning, or success narratives enter this projection.",
+    "file": "zenithsync/replay_history.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "mini_replay_history(events, *, source_messages, system, problem, allowed_tools, correction_plan=None, amendment_plan=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_history.py",
+    "kind": "FunctionDef",
+    "line": 66,
+    "symbol": "native_replay_history(events, *, system, problem, allowed_tools)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_noop.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "identical_edit(arguments)"
+  },
+  {
+    "description": "Read a bounded regular UTF-8 source file inside the owned container.",
+    "file": "zenithsync/replay_noop.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "snapshot_file(manager, container_id, path, text)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_noop.py",
+    "kind": "FunctionDef",
+    "line": 50,
+    "symbol": "verify_rejected_noop(arguments, result, before, after)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/replay_observations.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "audit_observations(events)"
+  },
+  {
+    "description": "Verify bytes, then copy only response bodies and transport code; no tests.",
+    "file": "zenithsync/replay_resources.py",
+    "kind": "FunctionDef",
+    "line": 26,
+    "symbol": "stage_resources(manager, container_id, bundle, adapter)"
+  },
+  {
+    "description": "Return an explicit environment proof and the files the caller must bind.",
+    "file": "zenithsync/resource_replay_binding.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "verify_resource_replay_binding(attempt, profile, bundle=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/serving.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "validate_profile(profile: object)"
+  },
+  {
+    "description": "Return official VllmConfig arguments; never import or start a GPU runtime.",
+    "file": "zenithsync/serving.py",
+    "kind": "FunctionDef",
+    "line": 41,
+    "symbol": "sdk_config_arguments(profile: object, model_dir: Path)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/session_report.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "validate_session_report(report, *, schedule, start_cursor, bindings, checkpoint_root, max_updates, max_seconds, max_checkpoint_bytes, max_session_checkpoint_bytes, load_payload)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/session_resource_bundle.py",
+    "kind": "FunctionDef",
+    "line": 15,
+    "symbol": "_filename(value)"
+  },
+  {
+    "description": "Return base64 records and bindings after a complete capture/body check.",
+    "file": "zenithsync/session_resource_bundle.py",
+    "kind": "FunctionDef",
+    "line": 23,
+    "symbol": "load_session_resource_bundle(directory: Path, *, max_bytes: int)"
+  },
+  {
+    "description": "Encode the validated bundle deterministically for sandbox staging.",
+    "file": "zenithsync/session_resource_bundle.py",
+    "kind": "FunctionDef",
+    "line": 88,
+    "symbol": "session_resource_payload(directory: Path, *, max_bytes: int)"
+  },
+  {
+    "description": "Copy only hash-checked bodies, reviewed transport and startup code.",
+    "file": "zenithsync/session_resource_bundle.py",
+    "kind": "FunctionDef",
+    "line": 111,
+    "symbol": "stage_session_resources(manager, container_id, directory: Path, adapter: Path, *, max_bytes: int)"
+  },
+  {
+    "description": "Validate all records before replacing Session.send; return its restorer.\n\nEach exact prepared URL maps to body bytes, sha256 and content_type fields.\nRecorded responses are public, status 200 and decoded as UTF-8. Callers must\nindependently qualify provenance, rights and the adequacy of this model.",
+    "file": "zenithsync/session_resource_replay.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "install_session_resource_replay(resources, events)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/session_resource_replay.py",
+    "kind": "FunctionDef",
+    "line": 44,
+    "symbol": "send(session, request, **kwargs)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/session_resource_replay.py",
+    "kind": "FunctionDef",
+    "line": 87,
+    "symbol": "restore()"
+  },
+  {
+    "description": "Require the observed head and clean files before a non-forced checkout.\n\nThis is not an agent-safe snapshot. On any failure discard the disposable\ncontainer; untracked files and solution history deliberately remain unaudited.",
+    "file": "zenithsync/source_base.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "normalize_base(repo, *, expected_head, target_base)"
+  },
+  {
+    "description": "Bind the parser's actual bytes to a trusted size and SHA-256 identity.\n\nThis does not authenticate the caller's manifest or promise that the original\npath will remain unchanged. Callers retain their provenance and final drift\nchecks. Reading at most the declared size plus one bounds allocation even if\na file grows after its metadata was inspected.",
+    "file": "zenithsync/source_bytes.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "verified_source_bytes(path: Path, identity: dict, *, max_bytes: int)"
+  },
+  {
+    "description": "Export explicit regular Git blobs from an identity-checked clean snapshot.\n\nAll sizes are checked before blob reads. Symlinks and submodules are excluded.\nThe successful report is written last; partial output is not acceptance.\nCommit/tree identity must come from separately qualified snapshot evidence.\nThis does not inspect embedded licenses or dependency notices automatically.",
+    "file": "zenithsync/source_capture.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "capture_tracked_sources(root, output, paths, *, expected_commit, expected_tree, max_file_bytes=2 * 1024 ** 2, max_total_bytes=8 * 1024 ** 2, max_files=128)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_capture.py",
+    "kind": "FunctionDef",
+    "line": 38,
+    "symbol": "git(*args)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_capture.py",
+    "kind": "FunctionDef",
+    "line": 45,
+    "symbol": "check_snapshot()"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_credentials.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "_preserve_json_members(pairs)"
+  },
+  {
+    "description": "Return deterministic non-secret diagnostics; offsets are Unicode characters.",
+    "file": "zenithsync/source_credentials.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "scan_text(text)"
+  },
+  {
+    "description": "Reject indicators anywhere in a decoded source message tree before replay.\n\nDictionary authorization fields are scanned together with their values.\nJSON-encoded observations are also decoded, preserving duplicate members.\nDecoding has aggregate character and nesting limits; exceeding either fails\nclosed. Malformed JSON is still scanned as text, not executed or repaired.\nErrors deliberately omit values, field names and snippets. This is a narrow\nindicator gate, not a general secret detector or training admission gate.",
+    "file": "zenithsync/source_credentials.py",
+    "kind": "FunctionDef",
+    "line": 41,
+    "symbol": "require_no_credential_indicators(value)"
+  },
+  {
+    "description": "Require every fully qualified case to satisfy its publisher group.\n\nThe publisher uses Class.method identities, which may collide across modules.\nWe retain all cases and require all members to agree with the expected state;\nno last-write-wins dictionary collapse is used to assign acceptance.",
+    "file": "zenithsync/source_evaluator.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "compare_publisher_expectations(junit: Path, expected: dict)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_http_fixture.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "source_http_fixture(scenario, output)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_http_fixture.py",
+    "kind": "ClassDef",
+    "line": 19,
+    "symbol": "Handler"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_http_fixture.py",
+    "kind": "FunctionDef",
+    "line": 20,
+    "symbol": "log_message(self, *args)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_http_fixture.py",
+    "kind": "FunctionDef",
+    "line": 23,
+    "symbol": "do_POST(self)"
+  },
+  {
+    "description": "Map a reviewed relative directory without accepting path-list injection.\n\nThis validates lexical paths only. Runtime module-origin checks must still\nprove that imports resolve to the intended checkout file.",
+    "file": "zenithsync/source_imports.py",
+    "kind": "FunctionDef",
+    "line": 5,
+    "symbol": "source_pythonpath(import_root, checkout)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_runner_fixture.py",
+    "kind": "ClassDef",
+    "line": 13,
+    "symbol": "SourceRunnerFixture"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_runner_fixture.py",
+    "kind": "FunctionDef",
+    "line": 19,
+    "symbol": "retain_to(self, output)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_runner_fixture.py",
+    "kind": "AsyncFunctionDef",
+    "line": 22,
+    "symbol": "generate_content_async(self, llm_request, stream=False)"
+  },
+  {
+    "description": "Path-component containment compatible with Python 3.7 task images.",
+    "file": "zenithsync/source_snapshot.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "is_relative_to(path, parent)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_snapshot.py",
+    "kind": "FunctionDef",
+    "line": 25,
+    "symbol": "git(repo, *args, data=None, check=True)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_snapshot.py",
+    "kind": "FunctionDef",
+    "line": 37,
+    "symbol": "tracked_snapshot(repo)"
+  },
+  {
+    "description": "Sanitize an owned disposable filesystem; discard it on any failure.\n\nPreflight checks precede deletion. Post-mutation integrity failures cannot\nroll back removed history and must never be treated as successful output.",
+    "file": "zenithsync/source_snapshot.py",
+    "kind": "FunctionDef",
+    "line": 81,
+    "symbol": "sanitize(repo, *, expected_base, solution, oracle_paths, solution_relation='first_parent')"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_task.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "project_source_issue(*, problem_statement, repo, source_instance_id, source_revision, snapshot_commit)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "_object(pairs)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "_commit(value)"
+  },
+  {
+    "description": "Return an allowlisted record; never return diffs, test code or prompts.",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 27,
+    "symbol": "project_r2e_task(row)"
+  },
+  {
+    "description": "Match exact owner/repo plus solution suffix; basename is not ownership proof.",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 65,
+    "symbol": "match_trajectory(task, *, repo, instance_id)"
+  },
+  {
+    "description": "Select one declared source; reject contradictory exclusion metadata.\n\nThis is an exact-name exclusion gate, not fork or semantic clearance.\nRows remain quarantined and no trajectory bodies are accessed here.",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 73,
+    "symbol": "select_source_metadata(rows, *, reserved_repositories, source_dataset)"
+  },
+  {
+    "description": "Compatibility entrypoint for the R2E task join.",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 108,
+    "symbol": "select_r2e_metadata(rows, *, reserved_repositories)"
+  },
+  {
+    "description": "Allowlist SWE-rebench task metadata; never export issue bodies or patches.",
+    "file": "zenithsync/source_task_metadata.py",
+    "kind": "FunctionDef",
+    "line": 116,
+    "symbol": "project_swebench_task_identity(row)"
+  },
+  {
+    "description": "Locate unconditional module-level success claims and broad handlers.",
+    "file": "zenithsync/source_test_risk.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "review_python_test_source(source: str)"
+  },
+  {
+    "description": "Move one qualified source root into /workspace, then tag its baseline.\n\nThe caller owns this disposable container and must destroy it on failure.\nOnly the qualified installer leftover is removed. Unknown untracked files,\nmismatched source identities, and unexpected workspace files reject.\nAn explicitly allowed .cache directory moves outside the source tree.\nSource-root and /testbed aliases preserve existing dependency paths.",
+    "file": "zenithsync/source_workspace.py",
+    "kind": "FunctionDef",
+    "line": 7,
+    "symbol": "prepare_source_workspace(manager, container_id, *, snapshot_commit, source_tree, installer_leftover=True, source_root='/testbed', preserve_workspace_cache=False)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/splits.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "validate_splits(value: object)"
+  },
+  {
+    "description": "Apply reviewed task links transitively to a draft without moving tasks.\n\nExisting leakage families remain indivisible. Links are lists of at least\ntwo known task IDs; their evidential justification belongs to the caller.\nA linked component crossing split assignments fails rather than silently\nmoving or dropping records. Frozen manifests cannot be rewritten here.",
+    "file": "zenithsync/splits.py",
+    "kind": "FunctionDef",
+    "line": 42,
+    "symbol": "merge_leakage_groups(manifest, links, *, max_link_members=1000000)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/splits.py",
+    "kind": "FunctionDef",
+    "line": 60,
+    "symbol": "root(task)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/splits.py",
+    "kind": "FunctionDef",
+    "line": 66,
+    "symbol": "join(first, second)"
+  },
+  {
+    "description": "Retain error multiplicity and identity, excluding unstable line numbers.",
+    "file": "zenithsync/static_controls.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "mypy_diagnostics(stdout, returncode)"
+  },
+  {
+    "description": "Report new diagnostics against both controls; line movement is not novelty.",
+    "file": "zenithsync/static_controls.py",
+    "kind": "FunctionDef",
+    "line": 45,
+    "symbol": "compare_mypy_controls(base, reference, candidate)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/static_controls.py",
+    "kind": "FunctionDef",
+    "line": 50,
+    "symbol": "rows(counter)"
+  },
+  {
+    "description": "Render an explicit standalone action using the same inspected planner.\n\nThe generated command needs only Python's standard library and Git. It\nreads the source-exported patch and native baseline at execution time, and\nnever carries a reference solution or depends on an injected support module.\nCalling this renderer performs no filesystem mutation.",
+    "file": "zenithsync/submission_reconciliation.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "scratch_cleanup_command(*, python, scratch_paths, repository='/workspace')"
+  },
+  {
+    "description": "Check the bounded tracked-repair/untracked-scratch submission profile.\n\nExact diff-byte equality is intentional. New source files, staged changes,\nunknown scratch files, ignored files selected for deletion, and symlink\ncleanup are outside this profile and reject rather than being guessed.",
+    "file": "zenithsync/submission_reconciliation.py",
+    "kind": "FunctionDef",
+    "line": 51,
+    "symbol": "plan_scratch_cleanup(repository, *, baseline, intended_patch, scratch_paths)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/submission_reconciliation.py",
+    "kind": "FunctionDef",
+    "line": 77,
+    "symbol": "git(*arguments)"
+  },
+  {
+    "description": "Require exact captured exchanges followed by separately authored prose.",
+    "file": "zenithsync/synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "validate_synthetic_projection(events, messages, tools, charged_calls)"
+  },
+  {
+    "description": "Bind a synthetic capture to a grader task without relabeling provenance.\n\nCallers must hash the supplied artifacts and recheck them after execution.\nThis verifies local consistency, not authenticity or training eligibility.",
+    "file": "zenithsync/synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 44,
+    "symbol": "validate_synthetic_task_binding(*, receipt, messages, events, tools, task, snapshot, image, patch_identity, history_identity, tools_identity)"
+  },
+  {
+    "description": "Recompute projection/counts/outcomes and bind the separate content review.",
+    "file": "zenithsync/synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 73,
+    "symbol": "assess_synthetic_bundle(*, attempt, history, grade, tokens, profile, review, max_input_tokens=32768, output_reserve=8192, max_tool_calls=40)"
+  },
+  {
+    "description": "Read a bounded JSONL index and fail closed on schema drift or duplicates.",
+    "file": "zenithsync/task_intake.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "load_official_tasks(path: Path)"
+  },
+  {
+    "description": "Explicit allowlist; callers must first validate the official index.\n\nExcludes hints as well as patches. This is structural separation, not a\nsemantic guarantee that arbitrary issue text contains no answer clues.",
+    "file": "zenithsync/task_intake.py",
+    "kind": "FunctionDef",
+    "line": 49,
+    "symbol": "agent_input(task: dict)"
+  },
+  {
+    "description": "Select by identifier only and reserve the entire pilot repository for dev.\n\nDoes not freeze a confirmation split or use outcome/patch content to select.",
+    "file": "zenithsync/task_intake.py",
+    "kind": "FunctionDef",
+    "line": 58,
+    "symbol": "select_pilot(rows: list[dict], repository: str)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/task_intake.py",
+    "kind": "FunctionDef",
+    "line": 76,
+    "symbol": "jsonl_bytes(rows: list[dict])"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/tool_diagnostic.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "parse_native_write(raw)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/tool_diagnostic.py",
+    "kind": "FunctionDef",
+    "line": 49,
+    "symbol": "assess_write_response(response, raw, expected)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_batch.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "collate_training_examples(examples, *, pad_token_id, vocab_size, max_length)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 20,
+    "symbol": "_positive(value, name)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 26,
+    "symbol": "_identity(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 35,
+    "symbol": "_bound_file(root, reference, max_bytes)"
+  },
+  {
+    "description": "Admission is bound to content; adding receipts cannot change this identity.",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 55,
+    "symbol": "corpus_content_identity(manifest)"
+  },
+  {
+    "description": "Require exact task/repository coverage; this does not prove review truth.\n\nMultiple traces of one task share its issue-level review. Identity spelling\nmust match the manifest exactly; reviewers must resolve aliases upstream.",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 61,
+    "symbol": "validate_task_alignment(evidence_documents, records)"
+  },
+  {
+    "description": "Validate every example before returning any, with no truncation or packing.",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 94,
+    "symbol": "load_corpus(root: Path, manifest_path: Path, *, expected_manifest_sha256: str, purpose='inspection', max_examples=100000, max_total_bytes=1024 ** 3)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 103,
+    "symbol": "_load_corpus(root, manifest_path, *, expected_manifest_sha256, purpose, max_examples, max_total_bytes, materialize, max_example_bytes)"
+  },
+  {
+    "description": "Validate all splits once; rehash individual examples on demand.\n\nHost storage scales with manifest metadata plus the largest example, rather\nthan all token arrays. Callers must also bound their own fetched batches.\nThis is a snapshot over a quiescent owned directory, not a live filesystem\nauthorization service. Receipt validity is established at construction.",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "ClassDef",
+    "line": 257,
+    "symbol": "IndexedCorpus"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 266,
+    "symbol": "__init__(self, root: Path, manifest_path: Path, *, expected_manifest_sha256, purpose='training', max_examples=100000, max_total_bytes=1024 ** 3, max_example_bytes=16 * 1024 ** 2)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 282,
+    "symbol": "summary(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 285,
+    "symbol": "metadata(self)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 289,
+    "symbol": "example_metadata(self, example_id)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_corpus.py",
+    "kind": "FunctionDef",
+    "line": 293,
+    "symbol": "fetch(self, example_id)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_fixture.py",
+    "kind": "FunctionDef",
+    "line": 8,
+    "symbol": "prepare_pilot_batch(model_path, manifest, *, max_length=64)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_masks.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "annotate_template(template: str, expected_sha256: str)"
+  },
+  {
+    "description": "Keep complete exchanges by default; permit one named terminal call explicitly.",
+    "file": "zenithsync/training_masks.py",
+    "kind": "FunctionDef",
+    "line": 36,
+    "symbol": "normalize_training_history(messages, *, allowed_tools, terminal_call_tools=None)"
+  },
+  {
+    "description": "Require exact native rendering and token IDs before returning labels.\n\nNo truncation, packing, padding, or inference about missing messages occurs.",
+    "file": "zenithsync/training_masks.py",
+    "kind": "FunctionDef",
+    "line": 53,
+    "symbol": "assistant_training_tokens(tokenizer, messages, *, template_sha256, allowed_tools, tools=None, terminal_call_tools=None)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_pilot.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "_stage(name)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_pilot.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "_adapter_names(model)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_pilot.py",
+    "kind": "FunctionDef",
+    "line": 25,
+    "symbol": "_adapter_fingerprint(model, names)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_pilot.py",
+    "kind": "FunctionDef",
+    "line": 29,
+    "symbol": "_updated_adapter(load_base, batch, target_shapes, rank, alpha, learning_rate, output)"
+  },
+  {
+    "description": "Require a fresh independently loaded base on each load_base invocation.\n\nThe caller owns checkpoint identity, device admission, native masking,\ndeadline supervision and durable storage. Batch must already be validated.\nOutput must not exist. Failures preserve partial files without a receipt.\nReload tolerances must be declared before execution, never adjusted to fit.",
+    "file": "zenithsync/training_pilot.py",
+    "kind": "FunctionDef",
+    "line": 111,
+    "symbol": "qualify_adapter(*, load_base, batch, target_shapes, output, rank=4, alpha=8, learning_rate=0.0001, reload_atol=0.0, reload_rtol=0.0)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_rng.py",
+    "kind": "FunctionDef",
+    "line": 11,
+    "symbol": "_runtime()"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_rng.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "capture_rng_state()"
+  },
+  {
+    "description": "Validate using private generators before mutating global RNG state.\n\nRuntime equality is necessary, not sufficient, for deterministic execution.\nUnsupported generators (including MPS) must not be used by this training path.",
+    "file": "zenithsync/training_rng.py",
+    "kind": "FunctionDef",
+    "line": 46,
+    "symbol": "validate_rng_state(payload)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_rng.py",
+    "kind": "FunctionDef",
+    "line": 88,
+    "symbol": "restore_rng_state(payload)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_schedule.py",
+    "kind": "FunctionDef",
+    "line": 11,
+    "symbol": "_positive(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_schedule.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "_hash(value)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_schedule.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "make_schedule(examples, *, corpus_content_sha256, seed, target_supervised_tokens, max_epochs, max_update_supervised_tokens)"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/training_schedule.py",
+    "kind": "FunctionDef",
+    "line": 51,
+    "symbol": "initial_cursor(schedule)"
+  },
+  {
+    "description": "Resume only at an exactly reproduced completed-update boundary.",
+    "file": "zenithsync/training_schedule.py",
+    "kind": "FunctionDef",
+    "line": 57,
+    "symbol": "iter_updates(schedule, *, resume=None)"
+  },
+  {
+    "description": "Checkpoint every successful update; resume only a supplied hash-bound file.\n\nFailures propagate: callers must discard mutable training state. Checkpoints\nfrom preceding updates remain recoverable. No automatic directory scan or\ninferred latest checkpoint is accepted.",
+    "file": "zenithsync/training_session.py",
+    "kind": "FunctionDef",
+    "line": 19,
+    "symbol": "run_training_session(model, optimizer, *, corpus, schedule, bindings, expected_frozen, output: Path, max_updates, max_seconds, max_sequence_tokens, max_checkpoint_bytes, max_session_checkpoint_bytes, resume=None)"
+  },
+  {
+    "description": "Hash parameters and persistent buffers without cloning entire tensors.\n\nExclusions are exact state-dict names, never substring rules. Noncontiguous,\nsparse, quantized and meta tensors are rejected instead of silently creating\npotentially model-sized copies. CPU transfer is synchronous. At most one\nchunk is transferred at a time; Python conversion adds another chunk copy.\nDevice placement is deliberately absent from the identity, allowing reload\ncomparison across devices. Shape and dtype remain part of that identity.",
+    "file": "zenithsync/training_state.py",
+    "kind": "FunctionDef",
+    "line": 10,
+    "symbol": "fingerprint_state(model, *, excluded_names=(), chunk_bytes=8 * 1024 * 1024)"
+  },
+  {
+    "description": "Reject missing/added tensors, metadata drift, and any content change.",
+    "file": "zenithsync/training_state.py",
+    "kind": "FunctionDef",
+    "line": 52,
+    "symbol": "require_identical_state(before, after)"
+  },
+  {
+    "description": "Stable reason code, without echoing source code or message bodies.",
+    "file": "zenithsync/trajectory_import.py",
+    "kind": "ClassDef",
+    "line": 12,
+    "symbol": "SourceHistoryError"
+  },
+  {
+    "description": "",
+    "file": "zenithsync/trajectory_import.py",
+    "kind": "FunctionDef",
+    "line": 16,
+    "symbol": "convert_swe_hero_history(history)"
+  },
+  {
+    "description": "Verify both trees and retain metadata in a fresh, disjoint directory.",
+    "file": "zenithsync/transfer_evidence.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "record_transfer_verification(*, original: Path, restored: Path, manifest: Path, publish_receipt: Path, restore_receipt: Path, output: Path)"
+  },
+  {
+    "description": "Assess the V2 publisher schema with its two declared outcome categories.",
+    "file": "zenithsync/v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 14,
+    "symbol": "assess_v2_synthetic_bundle(*, attempt, grade, tokens, task, snapshot, review, capture_sources, max_input_tokens=32768, output_reserve=8192, max_tool_calls=40)"
+  },
+  {
+    "description": "Assess legacy publisher evidence without discarding stable failures.\n\nThe producer must bind a complete task document with all four transition\ncategories, plus the same raw execution evidence required for V2 captures.\nThis is a separate report contract, not permission to relabel old replays.",
+    "file": "zenithsync/v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 24,
+    "symbol": "assess_legacy_synthetic_bundle(*, attempt, grade, tokens, task, snapshot, review, capture_sources, max_input_tokens=32768, output_reserve=8192, max_tool_calls=40)"
+  },
+  {
+    "description": "Recompute bounded evidence, keeping training gates outside this decision.",
+    "file": "zenithsync/v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 39,
+    "symbol": "_assess_publisher_synthetic_bundle(*, attempt, grade, tokens, task, snapshot, review, capture_sources, max_input_tokens, output_reserve, max_tool_calls, legacy)"
+  },
+  {
+    "description": "",
+    "file": "scripts/qualify_rebench_v2.py",
+    "kind": "FunctionDef",
+    "line": 19,
+    "symbol": "validate_v2_profile(profile)"
+  },
+  {
+    "description": "Require an explicit source-only allowance before starting a container.",
+    "file": "scripts/qualify_rebench_v2.py",
+    "kind": "FunctionDef",
+    "line": 65,
+    "symbol": "validate_source_allowance(paths, *, package_root='src')"
+  },
+  {
+    "description": "Select publisher nodes, widening truncated parameters to their function.\n\nLog-derived parameter labels may be truncated at whitespace. Execute the\nfull function in that case; compare_controls must still enforce exact\npublisher-group coverage and valid phases for every collected case.",
+    "file": "scripts/qualify_rebench_v2.py",
+    "kind": "FunctionDef",
+    "line": 84,
+    "symbol": "publisher_test_targets(task, reviewed_files)"
+  },
+  {
+    "description": "",
+    "file": "scripts/qualify_rebench_v2.py",
+    "kind": "FunctionDef",
+    "line": 106,
+    "symbol": "main()"
+  },
+  {
+    "description": "",
+    "file": "scripts/run_corpus_training.py",
+    "kind": "FunctionDef",
+    "line": 20,
+    "symbol": "main()"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "ClassDef",
+    "line": 11,
+    "symbol": "MatrixProbeTests"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 12,
+    "symbol": "setUp(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 28,
+    "symbol": "program(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 31,
+    "symbol": "check(self, source, version=None)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 44,
+    "symbol": "test_known_program_and_version_assertion(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 50,
+    "symbol": "test_executable_duplicate_settings_and_altered_body_reject(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 56,
+    "symbol": "test_rehashed_weakened_targets_role_plugin_and_snapshot_reject(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 65,
+    "symbol": "test_missing_or_substituted_patch_rejects(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_matrix_probe_contract.py",
+    "kind": "FunctionDef",
+    "line": 73,
+    "symbol": "test_exact_historical_body_and_alias_equivalence(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "ClassDef",
+    "line": 8,
+    "symbol": "SyntheticProjectionTests"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "ClassDef",
+    "line": 83,
+    "symbol": "SyntheticTaskBindingTests"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 9,
+    "symbol": "setUp(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 20,
+    "symbol": "test_exact_projection_accepts_and_does_not_mutate(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 25,
+    "symbol": "test_fabricated_observation_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 30,
+    "symbol": "test_boolean_call_count_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 34,
+    "symbol": "test_missing_or_tool_bearing_final_prose_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 40,
+    "symbol": "test_teacher_kind_and_duplicate_schema_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 48,
+    "symbol": "test_status_inspection_is_recorded_but_not_charged(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 60,
+    "symbol": "test_failed_submission_rejected_even_when_history_agrees(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 67,
+    "symbol": "test_post_submission_calls_cannot_hide_failed_or_stale_submission(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 84,
+    "symbol": "setUp(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 98,
+    "symbol": "test_bound_capture_accepts_without_mutation(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 103,
+    "symbol": "test_provenance_and_cleanup_cannot_be_relabelled(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 113,
+    "symbol": "test_changed_artifact_or_snapshot_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 123,
+    "symbol": "test_wrong_issue_and_fabricated_transcript_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "ClassDef",
+    "line": 12,
+    "symbol": "V2SyntheticBundleTests"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "setUp(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 83,
+    "symbol": "write(path, value)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 86,
+    "symbol": "test_valid_bundle_remains_unapproved_and_does_not_mutate(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 94,
+    "symbol": "test_context_and_call_limits_remain_blockers(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 100,
+    "symbol": "test_mutated_source_is_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 105,
+    "symbol": "test_mutated_capture_is_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 110,
+    "symbol": "test_false_grade_is_recomputed(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 120,
+    "symbol": "test_labels_and_boolean_counts_are_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 129,
+    "symbol": "test_review_must_bind_exact_grade(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 134,
+    "symbol": "legacy_bundle(self, *, stable_failure=False)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 163,
+    "symbol": "test_legacy_retains_declared_stable_failure_without_training_approval(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 172,
+    "symbol": "test_publisher_formats_cannot_be_interchanged(self)"
+  },
+  {
+    "description": "",
+    "file": "tests/test_v2_synthetic_admission.py",
+    "kind": "FunctionDef",
+    "line": 179,
+    "symbol": "test_legacy_missing_category_and_false_summary_rejected(self)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 13,
+    "symbol": "encoded(value)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 17,
+    "symbol": "digest(data)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 21,
+    "symbol": "read_regular(path, limit)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 34,
+    "symbol": "source(root, relative)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 46,
+    "symbol": "snapshot(root, relative, start, end, temp_root=None)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 68,
+    "symbol": "recall(root, handle)"
+  },
+  {
+    "description": "",
+    "file": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "kind": "FunctionDef",
+    "line": 95,
+    "symbol": "main()"
+  }
+]

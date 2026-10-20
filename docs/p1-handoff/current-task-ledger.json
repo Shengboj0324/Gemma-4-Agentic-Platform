@@ -1,0 +1,1842 @@
+[
+  {
+    "audit": {
+      "identity": {
+        "sha256": "7e9afb33155feedb0a752e12f70c72b63f7b92c91bae543c3f280f51b8dd729e",
+        "size_bytes": 1952
+      },
+      "path": "examples/cced07d792b45f4ccf69c0c9f99c68b52426ba3a9bdb9254d6ac319194e442d1/report.json"
+    },
+    "example_id": "2bd25bdd-8342-4fb7-99a8-6ef15a2ea5ff-reviewed-ea3b044360b8",
+    "history": {
+      "sha256": "ea3b044360b8d2d31bbb71c94e6860236c089686fbc565ddfd249605e0deb507",
+      "size_bytes": 49479
+    },
+    "input_tokens": 14550,
+    "leakage_group": "brandonschabell__datetransform-2",
+    "repository_group": "brandonschabell/datetransform",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requests optional inplace mutation defaulting to False. The selected patch adds inplace=False and copies before make_date, so both date conversion and new columns operate on the copy unless requested otherwise. Its runtime change matches the reference; reference CI dependencies and release metadata are incidental. Three publisher cases cover returned columns, explicit inplace=True mutation and default input-column preservation. These are finite ordinary-dataframe checks, not deep isolation of nested Python objects or arbitrary pandas versions. Existing diagnostic checks of returned columns are not recast as mutation tests.",
+      "repository_group": "brandonschabell/datetransform",
+      "task_id": "brandonschabell__datetransform-2"
+    },
+    "shifted_targets": 4292,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "brandonschabell__datetransform-2",
+    "tokens": {
+      "identity": {
+        "sha256": "7539536dea90a454b20271734007b869222f7cd4cd93b66c877bef076b3a1683",
+        "size_bytes": 157207
+      },
+      "path": "examples/cced07d792b45f4ccf69c0c9f99c68b52426ba3a9bdb9254d6ac319194e442d1/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "68358e6a4dfcfc8bf7ff124e8304f34adc4884f739f8705ae428d457259d7120",
+        "size_bytes": 1450
+      },
+      "path": "examples/ed88aac0d08f27eaf0b716902440f9e1c13ff9b08b1a74850a9998e3d0dcd70c/report.json"
+    },
+    "example_id": "40eb374a-0850-4770-8b29-61e6905e5c55",
+    "history": {
+      "sha256": "12400f9e5e46d1a8698ef2ad10b38fe546b3d6c4765f769ca401494fa069e9e2",
+      "size_bytes": 53704
+    },
+    "input_tokens": 15297,
+    "leakage_group": "colinfike__easy-ptvsd-2",
+    "repository_group": "colinfike/easy-ptvsd",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue explicitly identifies the missing return from the decorated function. The selected patch returns function(*args, **kwargs) after the existing attach/wait/break calls; the reference has the same runtime change plus incidental formatting and package metadata. Four publisher cases match. Nineteen patch-bound semantic controls cover return identity for six values under ordinary, classmethod and staticmethod usage, plus exception identity; all candidate controls pass. These controls stub debugger interaction and do not prove a live debugger session or arbitrary decorator ordering.",
+      "repository_group": "colinfike/easy-ptvsd",
+      "task_id": "colinfike__easy-ptvsd-2"
+    },
+    "shifted_targets": 4527,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "colinfike__easy-ptvsd-2",
+    "tokens": {
+      "identity": {
+        "sha256": "8b0a1472d6dc56ddcb41f601594a37abc33d528d82dd1783ebee8fd3db61dcb1",
+        "size_bytes": 165007
+      },
+      "path": "examples/ed88aac0d08f27eaf0b716902440f9e1c13ff9b08b1a74850a9998e3d0dcd70c/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "0519ad3a4dac5c851bd2e5238ff121a06f4aa2863bc02e8267771a4aaa1ee31a",
+        "size_bytes": 1915
+      },
+      "path": "examples/bac242424fc0860b8b9e157e400d57e2c235383305c119b9a072ac83507d5663/report.json"
+    },
+    "example_id": "36d5cbd6-beb5-4351-8335-870413beb087",
+    "history": {
+      "sha256": "360b1a6d36f0d4ce2c46cc802fb386d211cb3578ea1cbe2080d9d56af5a69d65",
+      "size_bytes": 39517
+    },
+    "input_tokens": 12199,
+    "leakage_group": "pallets__werkzeug-2971",
+    "repository_group": "pallets/werkzeug",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Raises historical PBKDF2 default to one million iterations and updates its documentation. Fresh real-module checks verify the count and four explicit iteration choices, including legacy 600000 verification. Retained publisher comparison matches 12 outcomes; retained semantic tests cover 55 cases per role. Scrypt remains the public default. The work-factor ratio 5/3 is not an entropy increase, measured speed ratio or security guarantee. No current password-policy, whole-history quality or training-admission claim.",
+      "repository_group": "pallets/werkzeug",
+      "task_id": "pallets__werkzeug-2971"
+    },
+    "shifted_targets": 4607,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "pallets__werkzeug-2971",
+    "tokens": {
+      "identity": {
+        "sha256": "d442dff26d3eee77a125ccd12bfbe84ad021271585523858e02815e5523257af",
+        "size_bytes": 135410
+      },
+      "path": "examples/bac242424fc0860b8b9e157e400d57e2c235383305c119b9a072ac83507d5663/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "1f2fa224af68bf975f7bb342283de9bd9b82d3c9f485916c199e6d6d97314adb",
+        "size_bytes": 2789
+      },
+      "path": "examples/e24adc387ba4a5d38a69cc741b3e69dd5ba94ed0b8010a4f41caa4c66e864db8/report.json"
+    },
+    "example_id": "rochacbruno__dynaconf-413-assistant-synthetic-f2035b79e639e6b1",
+    "history": {
+      "sha256": "f2035b79e639e6b1d312838a1c03f5ced3d990568675918a06dfe8fe24f59a5b",
+      "size_bytes": 26709
+    },
+    "input_tokens": 7708,
+    "leakage_group": "rochacbruno__dynaconf-413",
+    "repository_group": "dynaconf/dynaconf",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Fresh attributed repair fixes the original combined-rule collision and conditional registration exception. Actual native execution passes finite structural checks and 19 original validator tests; a fresh 26-case publisher grade matches the reference. All 31 messages have bound content review. Exact-type structural equality retains historical equality fields and does not establish arbitrary predicate equivalence, custom subclass compatibility or full-repository acceptance.",
+      "repository_group": "dynaconf/dynaconf",
+      "task_id": "rochacbruno__dynaconf-413"
+    },
+    "shifted_targets": 2519,
+    "split": "train",
+    "synthetic_provenance": {
+      "author": "assistant",
+      "content_review": {
+        "sha256": "ce26259efe786daf5c60be77919b91a639df96beb0aea450addf79bb48c191f7",
+        "size_bytes": 3696
+      },
+      "grading": {
+        "sha256": "989b16c61b084a74d8efa2c8b35581a7cb764cde843ae3e70d50c291e1ccbb9e",
+        "size_bytes": 5783
+      },
+      "kind": "synthetic_native_trajectory",
+      "mechanical_admission": {
+        "sha256": "1b87ce40fd806511b379e42048c6a15e01b4dd1eb398034ee494a8451c3d4b79",
+        "size_bytes": 3546
+      },
+      "native_capture": {
+        "sha256": "73994e21c21861827908f30cc9d601b633b0fcdb8e63ca2b169c7c349cdc97c1",
+        "size_bytes": 2140
+      },
+      "new_model_evaluated": false,
+      "original_tokenizer_report": {
+        "sha256": "3bb437384b2490659f323a3e5b178f285acae29aa2bbb0f35a2d478780b89704",
+        "size_bytes": 2051
+      },
+      "reference_informed": true,
+      "training_approved": false
+    },
+    "task_id": "rochacbruno__dynaconf-413",
+    "tokens": {
+      "identity": {
+        "sha256": "bdbf6cfaa3e2ed511235b0da4c16cad1224a435f94ff59d7e85f70d15ff6c2aa",
+        "size_bytes": 84020
+      },
+      "path": "examples/e24adc387ba4a5d38a69cc741b3e69dd5ba94ed0b8010a4f41caa4c66e864db8/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "29b02be2c8999e464bbb14f0238d32dd463ddc4a6c3ab443e927db84d2384bc8",
+        "size_bytes": 1924
+      },
+      "path": "examples/ebe6e2bce722478ed86113d8e3da024f05fbb36dff0dd7db4a8d8844178f1b17/report.json"
+    },
+    "example_id": "052ab663-c8f1-4b39-bccf-de2af6792471",
+    "history": {
+      "sha256": "86fbbd47ae52b5f8960d3291134ea64f7f0060f72cf74fc82056a0dcd8e6226a",
+      "size_bytes": 73757
+    },
+    "input_tokens": 20149,
+    "leakage_group": "peopledoc__workalendar-493",
+    "repository_group": "workalendar/workalendar",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Adds direct get lookup and preserves get_calendar_class as a warning-emitting dynamic wrapper. Fresh actual-package checks pass all 20 candidate cases: known and unknown keys, nonmutation, subclass dispatch, exception propagation, caller warning location and warning-as-error behavior. Reference passes 19 because its warning points inside the library. Retained publisher outcomes match all 11 cases. Under warning-as-error policy the warning prevents dispatch; the deprecated method is therefore not observationally identical to direct get. No holiday-date correctness, full-history quality, release-documentation parity or training approval is claimed.",
+      "repository_group": "workalendar/workalendar",
+      "task_id": "peopledoc__workalendar-493"
+    },
+    "shifted_targets": 7312,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "peopledoc__workalendar-493",
+    "tokens": {
+      "identity": {
+        "sha256": "bd96300c517402bf89547ebcf3bfc31535bde6ab7283054fce45a96e67900b88",
+        "size_bytes": 218537
+      },
+      "path": "examples/ebe6e2bce722478ed86113d8e3da024f05fbb36dff0dd7db4a8d8844178f1b17/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "faaba1ad85f5fa1571331a524a0805aee25da9356b9f3c3e9f49ef4faf4a82f8",
+        "size_bytes": 1952
+      },
+      "path": "examples/f088112cefb1ac75ae85098c0115c98eac8b250021968bb6717a871a03b56248/report.json"
+    },
+    "example_id": "5ba75bfa-8c2e-4a1d-91a2-16681ef8351e-reviewed-c494221c6ee1",
+    "history": {
+      "sha256": "c494221c6ee1b56dd35a839a0323e4a2491b9c6f87cf67d11d7c22195bece8e9",
+      "size_bytes": 60832
+    },
+    "input_tokens": 18874,
+    "leakage_group": "pennylaneai__pennylane-5716",
+    "repository_group": "PennyLaneAI/pennylane",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Uses the third axis from the end as the layer count for unbatched (L,W,3) and single-axis batched (B,L,W,3) inputs. Fresh independently constructed NumPy dense-state checks pass 60/60 for selected patch and reference versus 24/60 for baseline. Baseline passes unbatched cases and coincident batch/layer sizes, masking the defect. Recomputed retained grade covers 41 publisher identities plus three explicitly declared interface cases. Multiple batch axes, arbitrary gradients, full-history quality and training approval are not established. Candidate omits upstream changelog.",
+      "repository_group": "PennyLaneAI/pennylane",
+      "task_id": "pennylaneai__pennylane-5716"
+    },
+    "shifted_targets": 5791,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "pennylaneai__pennylane-5716",
+    "tokens": {
+      "identity": {
+        "sha256": "04a9fd365a2c880b69b3112c222e443b294d4ab497d611746ed51cab8f15da70",
+        "size_bytes": 209170
+      },
+      "path": "examples/f088112cefb1ac75ae85098c0115c98eac8b250021968bb6717a871a03b56248/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "3b1137a54e9c74cf08ba1f480098d70966cbe42d75af8ef836eff11965d7aeb2",
+        "size_bytes": 1957
+      },
+      "path": "examples/7c3187a972e040a7c3ec05c9d52380a2eb6dbb9d6c1416f111dbc5c6827a0437/report.json"
+    },
+    "example_id": "3f26a1fa-d845-45c4-8815-8f1e0e422c7d",
+    "history": {
+      "sha256": "6b3de86b95e4764a02085c632cf049b991d29d47701b8e7a38aa0068308dedb5",
+      "size_bytes": 43008
+    },
+    "input_tokens": 12307,
+    "leakage_group": "dbt-labs__dbt-snowflake-716",
+    "repository_group": "dbt-labs/dbt-snowflake",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Dispatches system$cancel_all_queries for the connection session instead of system$abort_session, consistent with the issue and Snowflake documentation. Real module import with mocked SQL/cursor/logger boundaries passes 17 cases versus two baseline cases; selected patch preserves fetch count, return behavior and error propagation. Retained 38-case comparison matches reference. No live Snowflake cancellation, privilege validation, Ctrl+C routing, whole-history quality or training approval is established.",
+      "repository_group": "dbt-labs/dbt-snowflake",
+      "task_id": "dbt-labs__dbt-snowflake-716"
+    },
+    "shifted_targets": 4125,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "dbt-labs__dbt-snowflake-716",
+    "tokens": {
+      "identity": {
+        "sha256": "8e84150558e010854b2875c44a612c824a3af7c497c0751a474061508a1aa155",
+        "size_bytes": 134222
+      },
+      "path": "examples/7c3187a972e040a7c3ec05c9d52380a2eb6dbb9d6c1416f111dbc5c6827a0437/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "547f11b63e5fb504e88c1672ef9120a7088a35e7b93af0cf012dc3ecdfdd65f1",
+        "size_bytes": 1951
+      },
+      "path": "examples/6f17823e44f97d010b033843a9374dc52e6be5b7b78138267ba1bac43436c32e/report.json"
+    },
+    "example_id": "65085155-103e-4ae4-95cd-482d56b0cc4f",
+    "history": {
+      "sha256": "e64853045a2a2a95299baff648db1b309f062a050c15290af49758476c049f29",
+      "size_bytes": 56203
+    },
+    "input_tokens": 17691,
+    "leakage_group": "pennylaneai__pennylane-5831",
+    "repository_group": "PennyLaneAI/pennylane",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Both simplify return branches preserve num_steps, including scalar-product folding. Exact corpus-selected patch passes 100 fresh finite NumPy cases across four operators, five coefficients and five step settings; baseline preserves metadata in only 20. Explicit 4x4 Pauli matrix exponential comparisons pass at 1e-12 for all roles. Retained 169 publisher cases match reference. This is metadata/finite matrix alignment, not decomposition accuracy, autodiff, whole-history quality or training approval. Candidate omits reference changelog.",
+      "repository_group": "PennyLaneAI/pennylane",
+      "task_id": "pennylaneai__pennylane-5831"
+    },
+    "shifted_targets": 6993,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "pennylaneai__pennylane-5831",
+    "tokens": {
+      "identity": {
+        "sha256": "acadb6358033fe90ccac1f91c6e1cd2b15feee6373a14014dd3bdf275267d485",
+        "size_bytes": 196374
+      },
+      "path": "examples/6f17823e44f97d010b033843a9374dc52e6be5b7b78138267ba1bac43436c32e/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "7da84ab696701974ddd4029b60873115b843812545395f50cc9b319567c0120f",
+        "size_bytes": 1948
+      },
+      "path": "examples/95a36c582a1be4953fbe8771332a538978aa8d29c352ed490ea420227a9c550e/report.json"
+    },
+    "example_id": "f91dfa69-26ae-4647-8cb1-5650d078a8c3-correction-914b2da39352",
+    "history": {
+      "sha256": "2e2f43e9bc0d65b929f0b239a0eca8499d9b3ae817d47b7ec193f267ddb0ac9c",
+      "size_bytes": 79487
+    },
+    "input_tokens": 22706,
+    "leakage_group": "openmined__pysyft-250",
+    "repository_group": "OpenMined/PySyft",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Implements eq as a fresh Boolean TensorBase and eq_ as mutation/return of the same tensor, with encrypted-left NotImplemented sentinel before conversion. Selected corrected patch passes twenty fresh scalar-oracle checks spanning int, float, nonfinite, scalar/broadcast, empty and complex cases plus incompatible shape and encrypted guards; baseline lacks methods. Retained 132-case grade matches reference. In-place replaces the data array and may expand broadcast shape; no PyTorch storage-alias equivalence, encrypted computation, arbitrary dtype correctness or training approval is claimed. Inline documentation is included.",
+      "repository_group": "OpenMined/PySyft",
+      "task_id": "openmined__pysyft-250"
+    },
+    "shifted_targets": 8218,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "openmined__pysyft-250",
+    "tokens": {
+      "identity": {
+        "sha256": "d3c61fb97d480a45be0922338d5f94252c69814e9b9ce9985e95256a6bdc8612",
+        "size_bytes": 249353
+      },
+      "path": "examples/95a36c582a1be4953fbe8771332a538978aa8d29c352ed490ea420227a9c550e/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "da4a0a16b0a9d7a6400715b9a74c315149c9a610f18571c42d2391dca967b8ce",
+        "size_bytes": 1958
+      },
+      "path": "examples/8d5e0fa3587f68b152fb726e3f3d171fbce3d573157c38d4692f259a7f844fd2/report.json"
+    },
+    "example_id": "7b47355d-5254-4022-a43a-8a50d7ce7e92-reviewed-4df3e092a77c",
+    "history": {
+      "sha256": "4df3e092a77ccce60fa46622453b366aa0897172a5b55e4df249e44fdf952126",
+      "size_bytes": 49352
+    },
+    "input_tokens": 14841,
+    "leakage_group": "statsmodels__statsmodels-8339",
+    "repository_group": "statsmodels/statsmodels",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Initializes the admissible lag at one and the best score at minus infinity, so negative finite penalized statistics participate in selection. Fresh extracted helper agrees with first-argmax in 2184 finite cases spanning both implemented penalties, and 1452 retained exact rational score cases. Retained publisher comparison matches 131 outcomes, but the reference has an independently documented lag-index defect and is not a mathematical oracle. Caller still includes lag-zero correlation in its threshold, forcing the 2p branch for ordinary finite nonconstant input. Conditional correctness assumes at least one finite score; constant data, NaN handling, asymptotic calibration, whole-history quality and training approval remain outside scope.",
+      "repository_group": "statsmodels/statsmodels",
+      "task_id": "statsmodels__statsmodels-8339"
+    },
+    "shifted_targets": 4181,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "statsmodels__statsmodels-8339",
+    "tokens": {
+      "identity": {
+        "sha256": "614f5ef1cb201c55df48a82f7c773658237bd9685eb75a5f431b26ce01366929",
+        "size_bytes": 163248
+      },
+      "path": "examples/8d5e0fa3587f68b152fb726e3f3d171fbce3d573157c38d4692f259a7f844fd2/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "87f05109ab418a5f2d46e7c3a6b16d3b6ce95f60789fd76e2e723d373dea2116",
+        "size_bytes": 1924
+      },
+      "path": "examples/a27571f936b44bec6dcb3315ce8cbe248004908c49c133a60dd7928b3ccff02c/report.json"
+    },
+    "example_id": "9157adb5-0648-4a1d-8ab6-c58fdc6394d2-completion-9afff3410a07",
+    "history": {
+      "sha256": "f68b0eb5052db6c7a1f64b91832ffd357b81b81e2482abf1d6a7a883bcbab601",
+      "size_bytes": 59998
+    },
+    "input_tokens": 19117,
+    "leakage_group": "Becksteinlab__numkit-8",
+    "repository_group": "Becksteinlab/numkit",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Python 3 true division creates float slice bounds. For supported odd w>=3 and n>=w, integer division gives k=(w-1)/2 exactly on both signed bounds; reflected input length n+2(w-1), valid convolution length n+w-1 and trimming 2k leave exactly n values. Selected patched source equals the tested control byte-for-byte; smooth AST matches reference. Retained 53 publisher outcomes match reference and 1,620 scalar-oracle cases verify the source boundary convention, with visible original failures. These finite correlated cases do not prove arbitrary floating-point, nonfinite/zero-sum window, Python2 or full-suite correctness. Assistant-authored completion remains explicit; whole-history quality and training gates are separate.",
+      "repository_group": "Becksteinlab/numkit",
+      "task_id": "Becksteinlab__numkit-8"
+    },
+    "shifted_targets": 4958,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "Becksteinlab__numkit-8",
+    "tokens": {
+      "identity": {
+        "sha256": "fb9aa385daaaa559b5dd0bc83308527f2c1ab74e1422e6bd667a6a254425e269",
+        "size_bytes": 209975
+      },
+      "path": "examples/a27571f936b44bec6dcb3315ce8cbe248004908c49c133a60dd7928b3ccff02c/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "80e0bf8427bc99bb2bf18aca92278b3956ba7e1ca46fb87409fdf4a3523aa339",
+        "size_bytes": 2782
+      },
+      "path": "examples/76cb925e0d0f477f5e11c72686cc75983643d7c13bec2f4b3677e995fa913652/report.json"
+    },
+    "example_id": "dfm__emcee-295-assistant-synthetic-84a7f36fe8766fad",
+    "history": {
+      "sha256": "84a7f36fe8766fad328b36b9533c04cef14d34ed88fc5ef398930bc35a8f7372",
+      "size_bytes": 27128
+    },
+    "input_tokens": 8295,
+    "leakage_group": "dfm__emcee-295",
+    "repository_group": "dfm/emcee",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Fresh source-bound Emcee axis repair; exact patch and all 21 reference outcomes matched. Assistant-authored and reference-informed; original test failures retained. See bound content review for finite limits.",
+      "repository_group": "dfm/emcee",
+      "task_id": "dfm__emcee-295"
+    },
+    "shifted_targets": 2279,
+    "split": "train",
+    "synthetic_provenance": {
+      "author": "assistant",
+      "content_review": {
+        "sha256": "98ba35abb78bacec37958d3c977e48408b99108230456cdf376e1f90002e4449",
+        "size_bytes": 1455
+      },
+      "grading": {
+        "sha256": "b1b248d466d32279d66ccbf28acadab20fee53b54adffcd78a08ada53c698a64",
+        "size_bytes": 6397
+      },
+      "kind": "synthetic_native_trajectory",
+      "mechanical_admission": {
+        "sha256": "72d6b3eb9f8d469c23c646ae199348a2fcfa0e1b5d749d26e6b232cae0a85219",
+        "size_bytes": 2944
+      },
+      "native_capture": {
+        "sha256": "9a182cc2b07b0e2eb2ef26467697381aca804d1f915f55605bf2cf1f2b972192",
+        "size_bytes": 1724
+      },
+      "new_model_evaluated": false,
+      "original_tokenizer_report": {
+        "sha256": "aa4a0a0f2812555dba0ee5ac513b12c79ab5534eb91303ccb3559070cce7cbbe",
+        "size_bytes": 2044
+      },
+      "reference_informed": true,
+      "training_approved": false
+    },
+    "task_id": "dfm__emcee-295",
+    "tokens": {
+      "identity": {
+        "sha256": "9deecf5051db8d7d062faed1acbf3bd9638235f7f5df23ae08880e5088e8e946",
+        "size_bytes": 91003
+      },
+      "path": "examples/76cb925e0d0f477f5e11c72686cc75983643d7c13bec2f4b3677e995fa913652/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "429b47b88e8e4f94e56666f0069482ede709711882feeedf66966cb5af6818a6",
+        "size_bytes": 1943
+      },
+      "path": "examples/ec37d643bba19dbe7dbba551545064d430e319e741df1189c323bc00bb1025c0/report.json"
+    },
+    "example_id": "137e14c2-16bf-4393-9ab0-c5932ad8218b-reviewed-ff9ef7de5f08",
+    "history": {
+      "sha256": "ff9ef7de5f089c911f6063734dc1e90ee7c1c494e4226f9370f3c2bf75888c63",
+      "size_bytes": 57254
+    },
+    "input_tokens": 17588,
+    "leakage_group": "optuna__optuna-3545",
+    "repository_group": "optuna/optuna",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The selected repair changes unsupported GridSampler type rejection to UserWarning while preserving the supported-type guard. Fresh isolated-method checks reproduce base rejection, candidate/reference warning behavior and warnings-as-errors propagation. Candidate type-name formatting differs from reference, without changing the requested warning category. Retained nine publisher outcomes match reference; selected native completion covers twenty concrete types and all six points of one in-memory Cartesian grid with unique minimum 1 at (1,0). Constructor sorting, persistence, distributed duplicate evaluation and arbitrary object compatibility are not guaranteed. Diagnostic amendments are assistant-authored; no model improvement or whole-corpus training approval is inferred.",
+      "repository_group": "optuna/optuna",
+      "task_id": "optuna__optuna-3545"
+    },
+    "shifted_targets": 3539,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "optuna__optuna-3545",
+    "tokens": {
+      "identity": {
+        "sha256": "843a38033c51e4ef310181dd0ad26bfbf42cde2c9064024a4f61661bf694bba5",
+        "size_bytes": 193686
+      },
+      "path": "examples/ec37d643bba19dbe7dbba551545064d430e319e741df1189c323bc00bb1025c0/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "c5f40a2b5689a5316167632e24aa99f03e6502ca36b14e87d413a5fe549fc402",
+        "size_bytes": 1955
+      },
+      "path": "examples/96543a0a63b54548f4b98ca52ff7d36c77ad48c4b98e4e3399a3e8b9a0fffd4b/report.json"
+    },
+    "example_id": "69fbb70e-0f5a-4ba8-b788-eaafc8754b18-reviewed-242294660b82",
+    "history": {
+      "sha256": "242294660b8234a376751115eaa697a7404aa50967a1191239a4737ac35bde6c",
+      "size_bytes": 78561
+    },
+    "input_tokens": 23420,
+    "leakage_group": "cloudevents__sdk-python-172",
+    "repository_group": "cloudevents/sdk-python",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue concerns equality against ordinary non-events raising AttributeError. The selected guard returns False before accessing their data, while preserving event-to-event comparison. Fresh isolated checks reproduce base failure and candidate/reference guard behavior, including a foreign data-property trap; a foreign equality override demonstrates asymmetry. Exact selected publisher grade matches 26 outcomes; retained native finite relation checks cover 32 stable constructed events. Conditional reflexivity/symmetry/transitivity depend on payload equality and non-overriding subclasses, not the guard alone. No universal equality, arbitrary payload, full-suite/Sanic or learned-model correctness is claimed. Training gates remain separate.",
+      "repository_group": "cloudevents/sdk-python",
+      "task_id": "cloudevents__sdk-python-172"
+    },
+    "shifted_targets": 4836,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "cloudevents__sdk-python-172",
+    "tokens": {
+      "identity": {
+        "sha256": "3852ee51b130f429d4d99e9ff1c6a52e973257c267494643d188f4496846ce5e",
+        "size_bytes": 254238
+      },
+      "path": "examples/96543a0a63b54548f4b98ca52ff7d36c77ad48c4b98e4e3399a3e8b9a0fffd4b/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "0fd30e454cc8250e7b9743c0268684de9f1b0d5cedf1a606f7e3f21b2e7cd2c2",
+        "size_bytes": 1943
+      },
+      "path": "examples/e18c9873ea3e7b4d1912132813d533f8b06b7b4be4ede272b39b8f25bb625430/report.json"
+    },
+    "example_id": "ea74b16c-852a-45aa-84f2-2f4b1726c6d6-reviewed-17d6ffecf857",
+    "history": {
+      "sha256": "17d6ffecf85722cb101889a0d24ac6795454b1122f41c26f68007d9b18f52410",
+      "size_bytes": 65320
+    },
+    "input_tokens": 20215,
+    "leakage_group": "mahmoud__boltons-205",
+    "repository_group": "mahmoud/boltons",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requires preserving float priority ordering instead of int truncation. The selected patch negates numeric priorities directly, retaining integer/rational precision, and falls back to legacy int conversion when negation raises TypeError. Its patch bytes equal the retained compatibility-control patch and its exact native grade matches both publisher tests. The selected 66-message history executes the inspected verifier unchanged and records 8640 finite permutation/mutation checks over both queue backends, 32 compatibility cases and two custom-key cases. The Fraction oracle orders finite represented values and uses insertion counters for ties; correlated permutations are not independent statistical samples. Assistant-authored compatibility corrections remain attributed. NaN, infinity, arbitrary numeric protocols, concurrent mutation and whole-history quality are outside this acceptance; no training approval.",
+      "repository_group": "mahmoud/boltons",
+      "task_id": "mahmoud__boltons-205"
+    },
+    "shifted_targets": 6926,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "mahmoud__boltons-205",
+    "tokens": {
+      "identity": {
+        "sha256": "b51819683b70e071c5646133b1967dd57a6492958dbb6e9a63707190658060e0",
+        "size_bytes": 222095
+      },
+      "path": "examples/e18c9873ea3e7b4d1912132813d533f8b06b7b4be4ede272b39b8f25bb625430/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "5661fc995978cfc49eb1bdf856f2747628dd957049daac7b1da6eee966f7e23d",
+        "size_bytes": 1940
+      },
+      "path": "examples/8e9984f0e8fda3f39332f4c432c723cd5a93bf1b392f2a7b02c2308223c782c3/report.json"
+    },
+    "example_id": "4fd2dd8c-01b0-4f32-9e4d-984be49bb281-reviewed-77ed62df1dc2",
+    "history": {
+      "sha256": "77ed62df1dc239d7193ce4e6aecb322a0ab79970644d3672225e44b67b8e72d5",
+      "size_bytes": 77755
+    },
+    "input_tokens": 22789,
+    "leakage_group": "glotzerlab__signac-622",
+    "repository_group": "glotzerlab/signac",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The requested key/value CLI syntax now recognizes bracketed JSON arrays before scalar casting. Fresh execution of the selected parser preserves bool/int/null/container types in 292 finite cases and rejects three malformed closed JSON strings. Exact retained publisher grade matches 36 outcomes; selected native completion records eight real CLI cases. Candidate retains whitespace and empty-value handling that differ from reference, while also retaining the JSON-shaped-key validation bypass and lone-array nonmapping behavior. Acceptance is for the requested list-valued search, not universal query validation, Python tuple parsing, full-shell-suite correctness or training admission.",
+      "repository_group": "glotzerlab/signac",
+      "task_id": "glotzerlab__signac-622"
+    },
+    "shifted_targets": 6011,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "glotzerlab__signac-622",
+    "tokens": {
+      "identity": {
+        "sha256": "9548e42f77ea99751963e108abf7fccd85a84c45ddafa0be5cea2b1127df6c53",
+        "size_bytes": 249339
+      },
+      "path": "examples/8e9984f0e8fda3f39332f4c432c723cd5a93bf1b392f2a7b02c2308223c782c3/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "7ee843c4753f1f187d0a1a579e7b142b6e0b9a98c70998d834b86a129e08fe95",
+        "size_bytes": 2777
+      },
+      "path": "examples/a8efe4f1316e2850655fd468ceb0985af0f26a2e2f473508da41b324141fa629/report.json"
+    },
+    "example_id": "ramonhagenaars__jsons-86-assistant-synthetic-8a46629b8561f62f",
+    "history": {
+      "sha256": "8a46629b8561f62f1fb59c1c93f843da14065aecf6ee5f5822362dcde675cfd9",
+      "size_bytes": 25728
+    },
+    "input_tokens": 8118,
+    "leakage_group": "ramonhagenaars__jsons-86",
+    "repository_group": "ramonhagenaars/jsons",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Fresh attributed capture resolves the exact literal strict dataclass issue and three actual-tuple boundaries. All 126 finite API checks and 19 original tuple/list tests pass; fresh ten-case publisher grading matches reference. All 29 messages were reviewed, retaining the literal string-to-character-list behavior and explicit limits. No arbitrary type-system, parallel-worker or full-suite guarantee.",
+      "repository_group": "ramonhagenaars/jsons",
+      "task_id": "ramonhagenaars__jsons-86"
+    },
+    "shifted_targets": 2152,
+    "split": "train",
+    "synthetic_provenance": {
+      "author": "assistant",
+      "content_review": {
+        "sha256": "9a7b54bf0c23ebf78cdafda71eccb5abe9c1b6bb75a9169b70ddf10ea55f52c9",
+        "size_bytes": 633
+      },
+      "grading": {
+        "sha256": "b3a3e748f2cd9569b43b7a012c9884be2ed3459e77b0110093ad32eaab707520",
+        "size_bytes": 13928
+      },
+      "kind": "synthetic_native_trajectory",
+      "mechanical_admission": {
+        "sha256": "944c4728ffaeda252a33b5e2ae5cdeb5c418d57f4e424809f1b7c49c2f3ce986",
+        "size_bytes": 3587
+      },
+      "native_capture": {
+        "sha256": "f369557e97741497e186d2547195209840e9dab9f290693116fab49d0284bc0e",
+        "size_bytes": 2155
+      },
+      "new_model_evaluated": false,
+      "original_tokenizer_report": {
+        "sha256": "9234510e42038fe9b00b6c12c50dc50aef2f506689dd5316dfab486af3127ab3",
+        "size_bytes": 2039
+      },
+      "reference_informed": true,
+      "training_approved": false
+    },
+    "task_id": "ramonhagenaars__jsons-86",
+    "tokens": {
+      "identity": {
+        "sha256": "8e40f30131b58c0dd8a5350db3d15f3ca71eb6f350e7f49ac0c84e7bac8883c1",
+        "size_bytes": 88550
+      },
+      "path": "examples/a8efe4f1316e2850655fd468ceb0985af0f26a2e2f473508da41b324141fa629/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "018be14002d8b67306a44e449729e6041c3de647fd2a34f35c2b16df99fcde48",
+        "size_bytes": 1921
+      },
+      "path": "examples/ce14305159664a4ac0d452a716c422ed7153263ff2a3201bb65e858f88ef3813/report.json"
+    },
+    "example_id": "db4bc4c4-f7bc-4eb8-9718-9f18fdb7235e-completion-c34b77c04093",
+    "history": {
+      "sha256": "e37fa6fa13876a4ffe0c2b675cf3be8d199c4d77e9b3ec3a81bd02beaae6b996",
+      "size_bytes": 62909
+    },
+    "input_tokens": 20802,
+    "leakage_group": "espdev__csaps-3",
+    "repository_group": "espdev/csaps",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requires smooth=0 to bypass automatic smoothing. Selected patch uses an explicit None check, logically equivalent to the reference reordered branches. Candidate and retained control patches produce identical source bytes. The selected 68-message history is hash-bound to its corpus tokens and replay, includes successful cleanup and separately attributed rational-oracle completion, and submits only the 420-byte source repair. Retained controls match 46 publisher cases and cover 324 zero-smoothing plus 162 interpolation cases; a fresh 54-system exact-rational audit verifies the weighted affine projector under positive-weight/increasing-grid assumptions. The native receipt remains replayed_not_graded: controlled-source agreement is not represented as a new native publisher grade. Whole-history privacy/quality, corpus mechanical admission and training remain unapproved. Separate n=2 smoothing metadata and unbounded floating-point conditioning are outside this scoped repair.",
+      "repository_group": "espdev/csaps",
+      "task_id": "espdev__csaps-3"
+    },
+    "shifted_targets": 6244,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "espdev__csaps-3",
+    "tokens": {
+      "identity": {
+        "sha256": "013dbfa684a6879c01862647ec293c21b473db88a632ec7c055386d456fecfd1",
+        "size_bytes": 230430
+      },
+      "path": "examples/ce14305159664a4ac0d452a716c422ed7153263ff2a3201bb65e858f88ef3813/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "13e4ab2c7bf9ca18c1e1409eee68ca5b8d5b4e81cbb2d1af16c66b35a6f195f9",
+        "size_bytes": 2900
+      },
+      "path": "examples/1baa11df1d124c595f4498db655b102f75ef7671f02c46d905f6efb0933dbcea/report.json"
+    },
+    "example_id": "lenskit__lkpy-312-assistant-synthetic-37c4fe7ec17366ba",
+    "history": {
+      "sha256": "37c4fe7ec17366ba3611dc45239e0b1534c16b5c1c81360aa9e250bb27ad480a",
+      "size_bytes": 40416
+    },
+    "input_tokens": 13225,
+    "leakage_group": "lenskit__lkpy-312",
+    "repository_group": "lenskit/lkpy",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The exact original issue requests implicit-length normalization and explicit-k truncation before lookup. The corrected capture demonstrates both, with required pre-edit source/test inspection and budget checks. Bulk behavior is consistent with scalar semantics. The finite oracle and exact contract tests support the candidate. The three old-denominator tests contradict the requested behavior and remain recorded as failures; shared accumulator failures and 34 skips are not certified. Reference equivalence is explicitly false; no model or full-suite success is claimed.",
+      "repository_group": "lenskit/lkpy",
+      "task_id": "lenskit__lkpy-312"
+    },
+    "shifted_targets": 5028,
+    "split": "train",
+    "synthetic_provenance": {
+      "author": "assistant",
+      "content_review": {
+        "sha256": "d0220f212d527f41c68191d3e87af320ddd6c75c0cb5991703232383938cf1b4",
+        "size_bytes": 1067
+      },
+      "grading": {
+        "sha256": "a7e3f5e5db0890b3173b2bb299f1dbcd60682cd48b7a71dd6d0fb9043a09451e",
+        "size_bytes": 16020
+      },
+      "grading_backend": "explicit_issue_contract_with_retained_compatibility_failures",
+      "kind": "synthetic_native_trajectory",
+      "mechanical_admission": {
+        "sha256": "a7e3f5e5db0890b3173b2bb299f1dbcd60682cd48b7a71dd6d0fb9043a09451e",
+        "size_bytes": 16020
+      },
+      "native_capture": {
+        "sha256": "7405594ec3baf5a4eb10b5045e9fcb44ecd4912021688e105e4a1edbcd68c012",
+        "size_bytes": 2162
+      },
+      "new_model_evaluated": false,
+      "original_tokenizer_report": {
+        "sha256": "6fb47a87b933700e2fa23a7ef8a40c3bb780e4c834b6932ac6a430fd7792bdc9",
+        "size_bytes": 2050
+      },
+      "reference_equivalent": false,
+      "reference_informed": true,
+      "training_approved": false
+    },
+    "task_id": "lenskit__lkpy-312",
+    "tokens": {
+      "identity": {
+        "sha256": "4cc9a2cd82807f0b66cfb59b4043e20252f176d6bcb9e97132c53751d808b073",
+        "size_bytes": 144733
+      },
+      "path": "examples/1baa11df1d124c595f4498db655b102f75ef7671f02c46d905f6efb0933dbcea/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "5615709c845a28c84d9aa3accc4d29f3efefb6813264a8d470e5a0c2a4c1a721",
+        "size_bytes": 1927
+      },
+      "path": "examples/510141951b57157ed957b59a40202d71dcc06e0cbe7552c2dc65132e13ae6f5f/report.json"
+    },
+    "example_id": "9f10129b-dcf5-4971-be2d-2bb9a6ffa55c-completion-89f3964a64ca",
+    "history": {
+      "sha256": "c8f5315ee376b5507e2569222fdf8bb3aa14c0cb06151da634ab67887c5ba144",
+      "size_bytes": 76576
+    },
+    "input_tokens": 24056,
+    "leakage_group": "EmilStenstrom__conllu-35",
+    "repository_group": "EmilStenstrom/conllu",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requests parsing dependency labels such as ARG1 rather than returning the original string. Selected candidate and reference patches are byte-identical: accept ASCII upper/lower letters initially and digits subsequently in labels and their optional subtype. Existing ID grammar and fallback are preserved. Publisher regression checks uppercase/digit labels and rejects a digit-leading label; 49 case outcomes match. The selected patch excludes earlier print-only diagnostic scripts. This is alignment with the stated examples and publisher grammar, not certification of the entire evolving CoNLL-U specification or arbitrary Unicode labels.",
+      "repository_group": "EmilStenstrom/conllu",
+      "task_id": "EmilStenstrom__conllu-35"
+    },
+    "shifted_targets": 5893,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "EmilStenstrom__conllu-35",
+    "tokens": {
+      "identity": {
+        "sha256": "73de10facb4f233003060d10efe56c53db0c660d8f0eca0bbc28a5088e6d417b",
+        "size_bytes": 263662
+      },
+      "path": "examples/510141951b57157ed957b59a40202d71dcc06e0cbe7552c2dc65132e13ae6f5f/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "269f72a96022c779dba855a7de2143c86d796aeef0d21ff399915fbf81a7b7ea",
+        "size_bytes": 1915
+      },
+      "path": "examples/059629b265615a577f37d58c846c93613ec9a23618455644c56d214dcecbfbd2/report.json"
+    },
+    "example_id": "aae0287f-8964-4e0b-9d71-dc4ed3ac962a-completion-8cc9f81f4433",
+    "history": {
+      "sha256": "65fd7f0fe9c254d8c09251f1f37771d6c0c5be94b4dfa26f87923eef61f4a5d7",
+      "size_bytes": 55555
+    },
+    "input_tokens": 15369,
+    "leakage_group": "mherrmann__gitignore_parser-38",
+    "repository_group": "mherrmann/gitignore_parser",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requires pathlib.Path support without subscripting Path. Candidate converts the input to str before inspecting the trailing slash, while the reference restricts that branch to exact str instances and adds type annotations. Both address the supplied Path example. Twelve publisher cases match; 120 retained finite literal-rule/precedence/trailing-slash controls have zero candidate mismatches. Empty string and empty string-subclass inputs still raise IndexError; these are explicitly outside the demonstrated nonempty-path repair, not silently declared solved. This review does not establish arbitrary PathLike protocols, Windows behavior or full Git-ignore semantics.",
+      "repository_group": "mherrmann/gitignore_parser",
+      "task_id": "mherrmann__gitignore_parser-38"
+    },
+    "shifted_targets": 4251,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "mherrmann__gitignore_parser-38",
+    "tokens": {
+      "identity": {
+        "sha256": "7ac3f997b7fe9697973727f8bd41994d23b1a3864c6efc27bb1b3e851335d5af",
+        "size_bytes": 166522
+      },
+      "path": "examples/059629b265615a577f37d58c846c93613ec9a23618455644c56d214dcecbfbd2/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "da9f07c06513147663c2b7c4cf229882dfdee5bb55eb8b17843f2c5d7c3e9476",
+        "size_bytes": 1906
+      },
+      "path": "examples/2ab76efa86504680bf32a815ced7543133d9bccc8c238e4092a0bba40dceeba3/report.json"
+    },
+    "example_id": "00dfa12f-9072-448b-8fc6-2810d3cd8a0f-completion-b93c4c7b5774",
+    "history": {
+      "sha256": "a62f71e9513f7a63ce8f56b8bae6f9e25a9af8b19ea1ded7761844ec66903f98",
+      "size_bytes": 69218
+    },
+    "input_tokens": 19911,
+    "leakage_group": "asdf-format__asdf-1853",
+    "repository_group": "asdf-format/asdf",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Removes the direct-subclass warning exception: more than one relevant tag and absent select_tag now raise RuntimeError for both direct and registered virtual converters. Fresh actual-package execution checks 1024 exact-tag subset/inheritance/selector combinations with zero candidate mismatches or warnings; the baseline has exactly 67 mismatches and warnings. All 28 retained publisher outcomes match. Cardinality concerns unique relevant extension tags, not raw declaration length; presence via hasattr is retained, not arbitrary callable validation. Wildcards, dynamic attributes and serialization remain outside the finite check.",
+      "repository_group": "asdf-format/asdf",
+      "task_id": "asdf-format__asdf-1853"
+    },
+    "shifted_targets": 5025,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "asdf-format__asdf-1853",
+    "tokens": {
+      "identity": {
+        "sha256": "2e7fa740339c6a03d63ad01545339bcb8adf444067c368fc886fdaa29a121bcb",
+        "size_bytes": 216025
+      },
+      "path": "examples/2ab76efa86504680bf32a815ced7543133d9bccc8c238e4092a0bba40dceeba3/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "7ca572e2b9a7daf528f850de8091991078b4b40f91e12aeee448c8cfac4f1767",
+        "size_bytes": 1931
+      },
+      "path": "examples/948ff73172bfd91eba93811b65b34983e0404d11937feeae9cfb73faefa323d4/report.json"
+    },
+    "example_id": "e7b9fa06-7d33-4a38-b370-55a14f1de2f8-reviewed-3fe243972fac",
+    "history": {
+      "sha256": "3fe243972fac1edc1f4283d926eb9c983f26021eb8ef1162a7bec9642b11be9d",
+      "size_bytes": 74561
+    },
+    "input_tokens": 21161,
+    "leakage_group": "lmfit__lmfit-py-487",
+    "repository_group": "lmfit/lmfit-py",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Clears stale error list and message before parsing a nonempty expression, allowing recovery without suppressing subsequent parse errors. Retained hash-bound real-runtime grade matches all 13 publisher outcomes; native final diagnostic covers same/shared evaluator recovery. Fresh AST-extracted method probes use an explicit evaluator double and establish ordering/list-identity semantics only. Candidate clear() preserves list aliases unlike reference replacement; empty-expression removal does not reset evaluator errors. Acceptance concerns issue alignment, not whole-history quality, all asteval versions, concurrency, fitting accuracy or training approval.",
+      "repository_group": "lmfit/lmfit-py",
+      "task_id": "lmfit__lmfit-py-487"
+    },
+    "shifted_targets": 5269,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "lmfit__lmfit-py-487",
+    "tokens": {
+      "identity": {
+        "sha256": "dcbedbd0c84e98e70c3ae4a148b2258d353fac7179b877b69f8101a95cd946c5",
+        "size_bytes": 229806
+      },
+      "path": "examples/948ff73172bfd91eba93811b65b34983e0404d11937feeae9cfb73faefa323d4/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "3839c1cba7552d6575b5a73d8218a252b6d6657b341b937d6f24550b064cde66",
+        "size_bytes": 1903
+      },
+      "path": "examples/aca2f3f694da6a18accf4dc8256c6f91df43d4b9568078357aa8e76b99ac86a0/report.json"
+    },
+    "example_id": "92607f34-ecf0-4385-92d2-db9f238675e6-completion-13d4a7a72b0d",
+    "history": {
+      "sha256": "cedc0a3f8123a40c2697405478a4b4d71eeca94372a4d36859744d3cca3259c1",
+      "size_bytes": 83156
+    },
+    "input_tokens": 24332,
+    "leakage_group": "Infinidat__munch-52",
+    "repository_group": "Infinidat/munch",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue asks for DefaultMunch.fromYAML with a default argument. The reference generalizes the loader to a subclass-aware classmethod; selected candidate preserves this and an explicit DefaultMunch override supporting omitted, positional and keyword defaults. Six publisher cases match, including default identity and YAML round-trip. Retained exact-source-equivalent controls cover 54 subclass/graph cases and 12 default compatibility cases with zero candidate mismatches. Optional/keyword behavior is a deliberate extension, not a publisher promise. The repair is reference-informed; finite loader checks do not guarantee arbitrary custom constructors/loaders, untrusted YAML safety or universal graph behavior.",
+      "repository_group": "Infinidat/munch",
+      "task_id": "Infinidat__munch-52"
+    },
+    "shifted_targets": 5953,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "Infinidat__munch-52",
+    "tokens": {
+      "identity": {
+        "sha256": "cfab038d830e0a5457fac45b3c5ee0038ae67804eff59672321a5a9989929341",
+        "size_bytes": 265747
+      },
+      "path": "examples/aca2f3f694da6a18accf4dc8256c6f91df43d4b9568078357aa8e76b99ac86a0/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "6205b16331e2dc0e801616a3fcc18ac822d7e7dc6f7529a5467da1a7d78d41a3",
+        "size_bytes": 1936
+      },
+      "path": "examples/36d39a9f66acb6c131af0e14ae76f454792bbf6f258cbe09b329986feaa42634/report.json"
+    },
+    "example_id": "793a509f-b1e1-44bc-b098-13b4ba2558fc-reviewed-60a1a23a20f1",
+    "history": {
+      "sha256": "60a1a23a20f1242eb0ae5623bbc70e1b81c47467de91a3328ce346e196627fb6",
+      "size_bytes": 85679
+    },
+    "input_tokens": 24306,
+    "leakage_group": "google__importlab-23",
+    "repository_group": "google/importlab",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requires foo/bar/__init__.py to infer foo.bar. Candidate removes only a terminal path-separator-plus-__init__ suffix before translating separators to dots. This is equivalent to the reference last-separator truncation under its suffix condition. Thirty publisher outcomes match; 30 retained POSIX controls preserve ordinary modules, dotted filenames, top-level __init__, non-Python paths and leading search misses while repairing package initializers. Source-equivalence checks bind those controls to the selected amended replay. Earlier correction/reference exposure is retained; this is not a claim about Windows, namespace packages or the entire import system.",
+      "repository_group": "google/importlab",
+      "task_id": "google__importlab-23"
+    },
+    "shifted_targets": 6664,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "google__importlab-23",
+    "tokens": {
+      "identity": {
+        "sha256": "2e09182b526c20a1d6ea135ed020b28c4023e174f794ac644e7a40ea117e8195",
+        "size_bytes": 262721
+      },
+      "path": "examples/36d39a9f66acb6c131af0e14ae76f454792bbf6f258cbe09b329986feaa42634/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "17c8afd414c089bc30d7e0bc75738299bcfbf1bd410691d801850a525c42abce",
+        "size_bytes": 1940
+      },
+      "path": "examples/f9a370679e9350a5fa16377b6c442a474a33c96b67ce7209a598e8887fe3f75e/report.json"
+    },
+    "example_id": "855e1a2d-e5f4-42c3-88ad-f21aef5233f2-reviewed-cdfd43105d4c",
+    "history": {
+      "sha256": "cdfd43105d4cea5fa68beb7c22f52036be82fcc8aa7275aa4ba94a8ea51a201d",
+      "size_bytes": 84116
+    },
+    "input_tokens": 23621,
+    "leakage_group": "marshmallow-code__apispec-950",
+    "repository_group": "marshmallow-code/apispec",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Selected patch supplies explicit additionalProperties={} for an untyped Dict while preserving already accumulated caller metadata. It leaves typed-value and non-Dict branches unchanged. Fresh patch application to the hash-bound base proves identical resulting source to the retained 36-case semantic controls; exact selected native grading matches all 117 publisher outcomes. The issue incorrectly says omission permits only empty objects: OpenAPI 3.0.2 defaults this property to true, and the amended trace explicitly corrects that claim. The reference overwrites closed or typed caller metadata; the candidate preserves it. This is an attributed reference-informed derivative, not a held-out model solve. Correlated version configurations are not independent samples. This decision covers task/source alignment only, not whole-history quality, privacy, rights or training admission.",
+      "repository_group": "marshmallow-code/apispec",
+      "task_id": "marshmallow-code__apispec-950"
+    },
+    "shifted_targets": 3885,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "marshmallow-code__apispec-950",
+    "tokens": {
+      "identity": {
+        "sha256": "e19440c6fcedf31e673ef6468e60f710f23891591c49efcb600764fbca607203",
+        "size_bytes": 257686
+      },
+      "path": "examples/f9a370679e9350a5fa16377b6c442a474a33c96b67ce7209a598e8887fe3f75e/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "c6fe493ca02c9c42f9c741bdbb5947f9c3db562161d2941a5420e66438ed1c2f",
+        "size_bytes": 1915
+      },
+      "path": "examples/a4d88f610015acaa2b49a6a6c45919247702dcc683423eab600fa07a4c0b0198/report.json"
+    },
+    "example_id": "c492bafb-a8f6-4708-ac54-874f5deb8dc8",
+    "history": {
+      "sha256": "22bf93d040fd1ac662cedf005dc7f0fbd7a91a5f50bf0833bd1f891a6c80e036",
+      "size_bytes": 71734
+    },
+    "input_tokens": 20807,
+    "leakage_group": "sphinx-contrib__spelling-177",
+    "repository_group": "sphinx-contrib/spelling",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Adds caption to the text-node whitelist. Exact selected patch passes ten fresh required Sphinx document cases versus six for baseline; emphasized-caption behavior is separately observed, not relabeled as passed. Literal exclusions, excluded documents and custom dictionaries retain expected behavior. Retained grade matches all eleven reference outcomes, including one existing docstring failure. This does not establish unrestricted inline-node traversal, dictionary accuracy, whole-history quality or training admission.",
+      "repository_group": "sphinx-contrib/spelling",
+      "task_id": "sphinx-contrib__spelling-177"
+    },
+    "shifted_targets": 4433,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "sphinx-contrib__spelling-177",
+    "tokens": {
+      "identity": {
+        "sha256": "04a308022d379aae4a1feacba5197a954ee51e4030db207c7c587e34db215762",
+        "size_bytes": 224652
+      },
+      "path": "examples/a4d88f610015acaa2b49a6a6c45919247702dcc683423eab600fa07a4c0b0198/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "f3fbdb7e16b6654046e8fad99efa44d5126c17ca3e11b0e860f547a74adc3b26",
+        "size_bytes": 1937
+      },
+      "path": "examples/167b96c18984abd220709ef65f45afe43e6310159e8311a75971c40ffb915412/report.json"
+    },
+    "example_id": "cb3a0730-2b79-478f-90bc-edbe2ce6f0ce-reviewed-bfbcc76bd829",
+    "history": {
+      "sha256": "bfbcc76bd8295e1937ddd9e0b66f231945829cd5434922473555830f003f0842",
+      "size_bytes": 58300
+    },
+    "input_tokens": 17157,
+    "leakage_group": "numba__numba-6653",
+    "repository_group": "numba/numba",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Returns the present NUMBA-prefixed value instead of default, preserving the empty string. Fresh actual-module execution checks 36 current/legacy/default combinations and three invalid prefix arguments: selected/reference have no value, warning or rejection mismatches; baseline has 27 value failures. Absent current variables return the identical default object; deprecated NUMBAPRO values are ignored and may warn, not used as fallbacks. One retained publisher case matches. These are environment-helper checks, not CUDA/GPU or arbitrary warning-policy guarantees.",
+      "repository_group": "numba/numba",
+      "task_id": "numba__numba-6653"
+    },
+    "shifted_targets": 6353,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "numba__numba-6653",
+    "tokens": {
+      "identity": {
+        "sha256": "2f6dc5d69f5f1bdbca653b4928ec6abdd69b068b299d99bbdb36bc5ad3b02454",
+        "size_bytes": 186662
+      },
+      "path": "examples/167b96c18984abd220709ef65f45afe43e6310159e8311a75971c40ffb915412/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "50e3f3ffee5a704b3ec302beb26da3d4a11cd8ae446dfe4318067d0d9d13738b",
+        "size_bytes": 1927
+      },
+      "path": "examples/891f426a14d4a41daaf1415a50a1321cb00d56bfca5ccab42ce969f4e93f2adb/report.json"
+    },
+    "example_id": "1b2622af-c959-40c7-8c9d-f4b0449f82a0",
+    "history": {
+      "sha256": "7d6c07d7d072a64c1e0c8ab1807e21b5264e4e189820041f85d4a8f4252c4434",
+      "size_bytes": 54475
+    },
+    "input_tokens": 16291,
+    "leakage_group": "softlayer__softlayer-python-2188",
+    "repository_group": "softlayer/softlayer-python",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Replaces identity-with-True test by truth-value testing so a nonempty query tuple activates basic search. Exact selected patch passes 28 actual CLI/local XML-RPC cases versus 22 baseline, checking exit codes and exact method/argument dispatch across query and Boolean option combinations. Retained four-case grade matches reference. A tuple containing an empty string is still truthy and is forwarded; semantic nonempty text validation and external search relevance are not established. Whole-history quality and training approval remain separate.",
+      "repository_group": "softlayer/softlayer-python",
+      "task_id": "softlayer__softlayer-python-2188"
+    },
+    "shifted_targets": 2850,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "softlayer__softlayer-python-2188",
+    "tokens": {
+      "identity": {
+        "sha256": "272a9dfa03f4fbf0391a6c4c875a176e3d1cc526149a4c22e2c959b247888bcc",
+        "size_bytes": 176715
+      },
+      "path": "examples/891f426a14d4a41daaf1415a50a1321cb00d56bfca5ccab42ce969f4e93f2adb/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "6d4c569cdf51fd84359a6641191aa65b634a04ec4812d8ab960c23b41feb2832",
+        "size_bytes": 1928
+      },
+      "path": "examples/dff76f6666add7efc09c95b63da131a18c3a85a1ae0c252446e09a64b387236f/report.json"
+    },
+    "example_id": "80bbc7c6-43b4-4c82-a4de-d9b4f3f27f86-reviewed-0e0689ac73d3",
+    "history": {
+      "sha256": "0e0689ac73d3c77b3238889c58f702e7ebda3635f6cccd58a6ff357ff8d8bec6",
+      "size_bytes": 55264
+    },
+    "input_tokens": 15614,
+    "leakage_group": "ovasquez__mkdocs-merge-18",
+    "repository_group": "ovasquez/mkdocs-merge",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Prefixes bare string entries by list position, supporting section-index pages and nested sections. Exact extracted source passes 576 finite trees; reference fails nine prefix-collision cases because list.index selects a previously rewritten equal value. Four invalid-input diagnostics are preserved. Five retained publisher/integration outcomes match the reference. Fresh function extraction bypasses unavailable YAML import, so no new package-level or full-history approval is claimed. Finite acyclic nonaliased structures and literal prefixing define the checked scope.",
+      "repository_group": "ovasquez/mkdocs-merge",
+      "task_id": "ovasquez__mkdocs-merge-18"
+    },
+    "shifted_targets": 4876,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "ovasquez__mkdocs-merge-18",
+    "tokens": {
+      "identity": {
+        "sha256": "22418004e51b9e4373e692216aa5a947d0c5f8b34f3a988d2893c2352529533c",
+        "size_bytes": 167546
+      },
+      "path": "examples/dff76f6666add7efc09c95b63da131a18c3a85a1ae0c252446e09a64b387236f/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "260ba26271cc6c4490f7c77ca995698aaaae4cfd5ad28c210cb420eb955f9dd3",
+        "size_bytes": 1940
+      },
+      "path": "examples/c126c6c7087f1045f4d7efeb65b1ee38c2d3174acdca83697c4f0d9ec4921a94/report.json"
+    },
+    "example_id": "71b26ba1-503b-4960-a524-48d91ce68f66-reviewed-ffcaae54a9c8",
+    "history": {
+      "sha256": "ffcaae54a9c87c6d82309d7df7bd232cad0cdf576b1b71e22c9675cc97ed9c9c",
+      "size_bytes": 69622
+    },
+    "input_tokens": 19709,
+    "leakage_group": "elastic__rally-1469",
+    "repository_group": "elastic/rally",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Changes absent enable_cleanup_closed default to true in both code and command-line documentation while preserving explicit true/false overrides. Fresh real aiohttp connector/session lifecycle checks cover absent/true/false, static/normal and SSL/non-SSL configurations: candidate/reference pass twelve, baseline fails four absent-option cases. All sessions/connectors close, timers cancel and no pending async tasks remain. Retained 197-case grade matches reference. No TLS handshake, leak reduction, throughput, whole-history quality or training approval is established.",
+      "repository_group": "elastic/rally",
+      "task_id": "elastic__rally-1469"
+    },
+    "shifted_targets": 3513,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "elastic__rally-1469",
+    "tokens": {
+      "identity": {
+        "sha256": "2271ab56049806c4fca4038a7f2e00306a3439aedbe157440d8ba40ad30449d1",
+        "size_bytes": 215171
+      },
+      "path": "examples/c126c6c7087f1045f4d7efeb65b1ee38c2d3174acdca83697c4f0d9ec4921a94/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "04f38c641e0a8907c1c2ae108563bf292d534e66ace5886029babb40e38c7082",
+        "size_bytes": 1946
+      },
+      "path": "examples/d89a01c375b4a816377514777be09191c4debd203ef04839ab97611820a51a66/report.json"
+    },
+    "example_id": "477fa364-0990-444a-b308-330695b1858a-reviewed-1f8193a3a361",
+    "history": {
+      "sha256": "1f8193a3a3614d6603426695d7e67e0d7a2478d46155da2cc03c175134792e9e",
+      "size_bytes": 61879
+    },
+    "input_tokens": 17612,
+    "leakage_group": "sissbruecker__linkding-691",
+    "repository_group": "sissbruecker/linkding",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Parses configured SingleFile options into argv using shlex.split and passes them before URL and temporary output path without shell execution. Exact amended patch passes 77 fresh real child-process cases including 64 seeded encoded token vectors and three malformed strings; base passes two. Gzip payload and temporary-file removal are checked for valid cases. Six retained publisher cases match reference. No actual SingleFile browser, Reddit access, remote user-agent behavior or general command safety is established. Unrelated reference CSS changes are outside this issue.",
+      "repository_group": "sissbruecker/linkding",
+      "task_id": "sissbruecker__linkding-691"
+    },
+    "shifted_targets": 7571,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "sissbruecker__linkding-691",
+    "tokens": {
+      "identity": {
+        "sha256": "fc0cbd9a0e7493e987941fd15ae4bfcb8059a53ab970fc4e3eefefccd9995481",
+        "size_bytes": 193884
+      },
+      "path": "examples/d89a01c375b4a816377514777be09191c4debd203ef04839ab97611820a51a66/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "08aeb9db00d8fd6e1f55c3bdf16b3dac30714c5b1c977b7f06f45d21df97881f",
+        "size_bytes": 1925
+      },
+      "path": "examples/845d726345d6f2a7d537c0bc187f847073a12a020cb93e9bd9d96cce739bab09/report.json"
+    },
+    "example_id": "0c63f53b-96cf-4904-8500-619e1c6d09d9-reviewed-d4e05fb64b77",
+    "history": {
+      "sha256": "d4e05fb64b77f20124217b46ae34f9db85d2c10843eeff8142bf5f219f175052",
+      "size_bytes": 43955
+    },
+    "input_tokens": 14102,
+    "leakage_group": "vacanza__holidays-2052",
+    "repository_group": "vacanza/holidays",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Adds the issue-named Tag der Befreiung only for Berlin on May 8 2025 in 1496 tested calendar configurations. Exact executed probe hashes bind the selected corpus patch and source to all three fresh roles. Eight changed configurations arise from four languages times two observed modes; all other date-label entries unchanged. Reference uses a longer anniversary label, so exact mapping parity is false. Retained 43 publisher outcomes match, but the new German test asserts date membership, not label identity. Issue alignment accepted with this explicit label limitation; no full-reference, translation or training approval claim.",
+      "repository_group": "vacanza/holidays",
+      "task_id": "vacanza__holidays-2052"
+    },
+    "shifted_targets": 7123,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "vacanza__holidays-2052",
+    "tokens": {
+      "identity": {
+        "sha256": "3cf86a0c13202e0e14a6ea1aa8f8cd8053c044a0a5256d8212dbc9eb9dd974f3",
+        "size_bytes": 157860
+      },
+      "path": "examples/845d726345d6f2a7d537c0bc187f847073a12a020cb93e9bd9d96cce739bab09/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "8647ce2d28ec59e2645c3f4ea604eacb4c52542c3e8238cbedc8ccf50e8e81ae",
+        "size_bytes": 1916
+      },
+      "path": "examples/ae90b51c52bd22fe9dc074ad74a52655bc7786b3c7762bf111c97fa90d2ea710/report.json"
+    },
+    "example_id": "cc5f80fd-fb7b-414f-8ab5-b113a1eaa2fa-reviewed-96f9050a4741",
+    "history": {
+      "sha256": "96f9050a4741b6cb9a280c4387dde0f8074bbe2f875d818d9a085260f20e09db",
+      "size_bytes": 52154
+    },
+    "input_tokens": 16708,
+    "leakage_group": "hetznercloud__hcloud-go-547",
+    "repository_group": "hetznercloud/hcloud-go",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Trims leading/trailing whitespace in the shared metadata getter before parsing or returning values, preserving internal whitespace. Exact selected patch is bound to retained publisher probe hashes and 627 package-qualified outcomes: five baseline failures become passes. Independently recovered test source and verified controls cover 1080 boundary combinations, public methods and failure propagation; three incorrect trimming mutants fail. Candidate uses strings.TrimSpace while reference uses bytes.TrimSpace. No remote service, universal Unicode or training approval claim.",
+      "repository_group": "hetznercloud/hcloud-go",
+      "task_id": "hetznercloud__hcloud-go-547"
+    },
+    "shifted_targets": 6391,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "hetznercloud__hcloud-go-547",
+    "tokens": {
+      "identity": {
+        "sha256": "e7dc9ff1290a80037f12aa02f9d396ea64f662f2d098f5c3a40e7f2ac6ef3d23",
+        "size_bytes": 185262
+      },
+      "path": "examples/ae90b51c52bd22fe9dc074ad74a52655bc7786b3c7762bf111c97fa90d2ea710/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "0d8a0c1e2915b641ba0d423f1951b5ab74d88c180f13eb243f0afc1f245c179a",
+        "size_bytes": 1919
+      },
+      "path": "examples/aec04387a57eadf4c75e3e2c8fe59288cd2d074e75775f5e9890e9bafb04ce9e/report.json"
+    },
+    "example_id": "678d02c6-9bcf-47e9-b8ef-4f81dc96c60c-reviewed-ca463b211e60",
+    "history": {
+      "sha256": "ca463b211e6061bead66fd67d507d7c801156c8846fae32c23517cd5b159e386",
+      "size_bytes": 50821
+    },
+    "input_tokens": 15096,
+    "leakage_group": "kubernetes-sigs__cluster-api-provider-kubevirt-99",
+    "repository_group": "kubernetes-sigs/cluster-api-provider-kubevirt",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Returns before dereferencing nil DataSecretName during bootstrap-secret deletion. Exact selected history/attempt/patch recovered by corpus hashes. Reconstructed retained publisher probes and raw Go logs verify all five declared unit-suite entrypoints; the controller suite fails on base and passes for candidate/reference. Publisher regression calls reconcileDelete with no bootstrap secret and checks no requeue, no error and finalizer removal. Thirteen unit-scope packages include eight with no tests; live-cluster e2e is excluded. No arbitrary nil-context, real-cluster or training approval claim.",
+      "repository_group": "kubernetes-sigs/cluster-api-provider-kubevirt",
+      "task_id": "kubernetes-sigs__cluster-api-provider-kubevirt-99"
+    },
+    "shifted_targets": 4519,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "kubernetes-sigs__cluster-api-provider-kubevirt-99",
+    "tokens": {
+      "identity": {
+        "sha256": "211ddcb507bb13f5b66a1d8c0b8eaf7f622bc08c57ca6f7b68250b8ebbf194cb",
+        "size_bytes": 165823
+      },
+      "path": "examples/aec04387a57eadf4c75e3e2c8fe59288cd2d074e75775f5e9890e9bafb04ce9e/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "3966cec8c317ba011386d9fe81c1fb260be8cb694d12bc3a183f159cb2bd486d",
+        "size_bytes": 1916
+      },
+      "path": "examples/9b1772e441d2527944394e64f95880589707ce4f43872288863a5b4585565900/report.json"
+    },
+    "example_id": "2c5d12ef-9833-4ed1-9ce4-2865122e1d8a-reviewed-505194cf5fa4",
+    "history": {
+      "sha256": "505194cf5fa4400dce873c9026f24a03a07b8197277cb2c5d58178aa7f3c7c04",
+      "size_bytes": 69398
+    },
+    "input_tokens": 20390,
+    "leakage_group": "aws__aws-xray-sdk-node-70",
+    "repository_group": "aws/aws-xray-sdk-node",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Preserves version-1 method/path and other fields while mapping service_name to host, retaining version-2 behavior. Current amended history003/native006 recovered by exact corpus hashes submits byte-identical code to graded replay004. Reconstructed retained publisher probes and all 321 unique full-title outcomes match expectations; every ambiguous publisher short-title match is checked. Fresh parser controls cover 4320 field/version cases with targeted mutants. No new full runtime run, independent stochastic sample, external AWS or whole-history training approval is claimed.",
+      "repository_group": "aws/aws-xray-sdk-node",
+      "task_id": "aws__aws-xray-sdk-node-70"
+    },
+    "shifted_targets": 8298,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "aws__aws-xray-sdk-node-70",
+    "tokens": {
+      "identity": {
+        "sha256": "2daac6a638c9c130795086fb60184d3ad9a8d3607bbc183d052d7f140547d6b4",
+        "size_bytes": 222283
+      },
+      "path": "examples/9b1772e441d2527944394e64f95880589707ce4f43872288863a5b4585565900/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "707f1166db1748b4ebf6a251a0e0d19c1ab2b9f114fee149050694d1a242e156",
+        "size_bytes": 1925
+      },
+      "path": "examples/3385396ec11be07253748ed0762baf5d6a32cb458e5cf228106006bf38defc6e/report.json"
+    },
+    "example_id": "38c6399d-e62c-4723-9e18-b427fc02dbbe-reviewed-437005942fed",
+    "history": {
+      "sha256": "437005942fed6d7748f0a03ed60980ff49bd0b377397c95c16259bcd7c305234",
+      "size_bytes": 81622
+    },
+    "input_tokens": 22782,
+    "leakage_group": "ipython__traitlets-517",
+    "repository_group": "ipython/traitlets",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Selected repair implements the requested isinstance(parent, LoggingConfigurable) guard and parent.log default, retaining global fallback. Its executable syntax matches the controlled source after removing only the LoggingConfigurable class docstring; no byte-identical source claim. All eight retained behavior controls pass: four hierarchy depths, orphan, nonlogging parent, explicit child override and independent families. Base and two mutants fail controls. Exact selected publisher grade matches 34 cases. This establishes bounded default-initialization behavior, not live synchronization after changing parents/loggers or cyclic-parent handling. Docstring ordering is less precise than parent-first implementation. Python 3.9.20 alternate runtime, capped observations, no-tests error and missing final prose remain documented; whole-history quality/privacy/rights and training admission remain separate.",
+      "repository_group": "ipython/traitlets",
+      "task_id": "ipython__traitlets-517"
+    },
+    "shifted_targets": 5935,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "ipython__traitlets-517",
+    "tokens": {
+      "identity": {
+        "sha256": "c3054d325174ffc49908fabd36ee67cbb267775888bb0cf57ea29dea7cc4c376",
+        "size_bytes": 248244
+      },
+      "path": "examples/3385396ec11be07253748ed0762baf5d6a32cb458e5cf228106006bf38defc6e/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "eb016b7d9480fc481bff329179e134bf468e0d7b8d1b81573da927cce0d563c8",
+        "size_bytes": 2018
+      },
+      "path": "examples/32cf994ec93dafcc8a36d3e8e1ab4b2655c37a5ff541c01838aba700b27a3156/report.json"
+    },
+    "example_id": "2872bbb5-05e8-44d8-8c23-53c390904bfa-assistant-corrected-10260e38e08a",
+    "history": {
+      "sha256": "10260e38e08af2211ac5d91e7e00d949aff49d5b7cc7dc402afd54f3e1415a19",
+      "size_bytes": 88499
+    },
+    "input_tokens": 24366,
+    "leakage_group": "pypa__build-290",
+    "repository_group": "pypa/build",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The selected repair adds an instance-specific runner argument with the existing default, stores it, and delegates backend invocation through it while preserving the existing environment/path setup. Exact native grade matches 42 full publisher node IDs; publisher short-key collisions remain visible. Fresh offline checks of exact patched source exercise both wheel and sdist creation, capture stdout/stderr, forward configuration settings and verify an artifact exists. The first probe had a fixture SyntaxError; corrected fixture passes without changing candidate source. Runner return value is ignored, as corrected documentation states. This covers requested output customization, not wheel-format validity, arbitrary backends, subprocess security or learned performance. Post-evaluator quality amendments, retained replay errors and capped observations remain documented. Whole-history rights/privacy/splits and training admission remain separate.",
+      "repository_group": "pypa/build",
+      "task_id": "pypa__build-290"
+    },
+    "shifted_targets": 7577,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "pypa__build-290",
+    "tokens": {
+      "identity": {
+        "sha256": "df10d83b5e097502b7127810abd37eb144de6619120190e567cdb0b5ae752316",
+        "size_bytes": 266264
+      },
+      "path": "examples/32cf994ec93dafcc8a36d3e8e1ab4b2655c37a5ff541c01838aba700b27a3156/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "f486df0f79bb742878ccbae2be537e592f4126a96e7bad2ad330e159a8939d81",
+        "size_bytes": 2033
+      },
+      "path": "examples/8f7368796eea26d8699209e829c6cd29a7cf2bc4ab24bd2a5e0771cd3561a1ab/report.json"
+    },
+    "example_id": "888c60d0-0a64-4816-aa3b-6c0aaacbf89a-assistant-corrected-0997552887c8",
+    "history": {
+      "sha256": "0997552887c8c10842758a57e1bc87ff15a643027d8a3a6694627e86b250b21b",
+      "size_bytes": 68928
+    },
+    "input_tokens": 21053,
+    "leakage_group": "Nicoretti__crc-153",
+    "repository_group": "Nicoretti/crc",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Digest now reads the register without overwriting it with reflected bits, so repeated calls preserve state and continuation. Fresh actual-module execution reproduces baseline alternation 81/138/81; candidate and reference each pass all 131072 combinations of 8-bit state, xor mask and reflection mode, plus 96 multiwidth continuation cases across both register implementations. Retained publisher grade matches 17 outcomes. The general purity claim assumes the built-in read-only reverse method and stable configuration, not arbitrary subclass overrides or concurrent mutation. This is issue alignment, not whole-history quality or training admission.",
+      "repository_group": "Nicoretti/crc",
+      "task_id": "Nicoretti__crc-153"
+    },
+    "shifted_targets": 3731,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "Nicoretti__crc-153",
+    "tokens": {
+      "identity": {
+        "sha256": "6a16a8224918b1683eb81e6aa5b21bf60888a1654510baba715d096f8424fb5e",
+        "size_bytes": 230206
+      },
+      "path": "examples/8f7368796eea26d8699209e829c6cd29a7cf2bc4ab24bd2a5e0771cd3561a1ab/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "809848fae253e3cdc1397ad59446393153e7d47d0f88831d3f0d468a3c23d06f",
+        "size_bytes": 2030
+      },
+      "path": "examples/a34fce2fdcbd9e05d33795fa3d4f7d313048abf989b86cefafe1dea775f93601/report.json"
+    },
+    "example_id": "bc772694-0392-43c5-b372-77c81e6ce593-assistant-amended-da00f5f0fc68",
+    "history": {
+      "sha256": "da00f5f0fc68ebc94e5692d270009010dc7a1606b5e80fd60a916ef52cca44b3",
+      "size_bytes": 79668
+    },
+    "input_tokens": 24112,
+    "leakage_group": "lzakharov__csv2md-22",
+    "repository_group": "lzakharov/csv2md",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requires pipes in CSV cells to remain within rendered Markdown cells. The current candidate escapes each pipe into a rendered copy, recomputes rendered widths, and uses those widths for padding and alignment separators, preserving source cells. The reference performs the same escaping/width correction with a helper extraction; the helper itself is not a requirement. Publisher tests add pipe-containing input and exact aligned-output expectations. Retained 510 invariant checks pass for the corrected candidate, while earlier variants fail 270. This is text transformation and finite regression evidence, not interoperability with every Markdown renderer. The existing post-evaluator-exposure derivation remains explicit.",
+      "repository_group": "lzakharov/csv2md",
+      "task_id": "lzakharov__csv2md-22"
+    },
+    "shifted_targets": 7201,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "lzakharov__csv2md-22",
+    "tokens": {
+      "identity": {
+        "sha256": "cbefe918252b1e8f244e83a585c8aaa8b91071ca3a32ecbf6cafdece6dba435c",
+        "size_bytes": 265876
+      },
+      "path": "examples/a34fce2fdcbd9e05d33795fa3d4f7d313048abf989b86cefafe1dea775f93601/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "9b90a48eb82ee38c629da6ee93e3f449c3cc62c9c07af6ff9abd555527cb28e8",
+        "size_bytes": 2055
+      },
+      "path": "examples/0ea2736578e18669d47ba0ebfc7420ea83cf4e71a2a49d8efa8858d6c610cad7/report.json"
+    },
+    "example_id": "ddba67a1-2574-4e62-97bc-416c9a6fc0ae-assistant-amended-34be510377ef",
+    "history": {
+      "sha256": "34be510377efd065b2c6ae59a8f749ec589023feb2fba19acff9b5bf3913f2eb",
+      "size_bytes": 78654
+    },
+    "input_tokens": 23679,
+    "leakage_group": "eyeseast__python-frontmatter-31",
+    "repository_group": "eyeseast/python-frontmatter",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requests caller-specified encoding during loading and dumping. Candidate propagates encoding through parse/load/loads and handles binary, text and codecs streams separately during dump. Reference documentation and Sphinx path changes are incidental to runtime behavior; its unconditional encoding introduces text-stream failures and should not be copied as ground truth. Publisher tests mainly check loading and do not establish dump correctness. Current codec-corrected variant passes all 36 retained four-encoding/nine-operation controls, including dump paths and codecs streams. This supports stated task alignment under those interfaces, not arbitrary custom writer protocols or all codecs. Prior reference exposure is not relabeled independent.",
+      "repository_group": "eyeseast/python-frontmatter",
+      "task_id": "eyeseast__python-frontmatter-31"
+    },
+    "shifted_targets": 11887,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "eyeseast__python-frontmatter-31",
+    "tokens": {
+      "identity": {
+        "sha256": "f09c089fdf079582b29d04c07bbdc01fdcbfe37ea9397de1cd9632e3e8e43cc1",
+        "size_bytes": 263372
+      },
+      "path": "examples/0ea2736578e18669d47ba0ebfc7420ea83cf4e71a2a49d8efa8858d6c610cad7/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "073ec92b9e0a455c8fb3ad1bf4f28c6ce951c99f1831d26e8323829a3c791d6c",
+        "size_bytes": 2059
+      },
+      "path": "examples/f413848b1eeb45dcb5bbd6358d5d1b478e27b4b1c30111852e47daac221e56b7/report.json"
+    },
+    "example_id": "c271b984-784c-4668-bbbe-9dd8a83c181b-assistant-amended-30f931efe445",
+    "history": {
+      "sha256": "30f931efe445138bbf2eba0d288c08eda153386db0b00ee360779615cb9cc5e3",
+      "size_bytes": 82797
+    },
+    "input_tokens": 23863,
+    "leakage_group": "florimondmanca__djangorestframework-api-key-187",
+    "repository_group": "florimondmanca/djangorestframework-api-key",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Version-gated default_app_config preserves legacy app registration and removes the deprecated setting on a fresh Django 3.2+ import. Fresh controlled-import probes cover eight version tuples, prereleases and defined exports; they are not real Django runtime tests. Retained two-environment grade is recomputed with full probe/patch/snapshot bindings and 64 unique test nodes. Native final completion records warning capture during setup on Django 3.2.25 and 62 passing repository tests. Candidate improves __all__ over reference, but retains stale globals if re-executed after changing Django VERSION. Task alignment does not certify all Django versions, arbitrary reloads, whole-history quality or training admission.",
+      "repository_group": "florimondmanca/djangorestframework-api-key",
+      "task_id": "florimondmanca__djangorestframework-api-key-187"
+    },
+    "shifted_targets": 4305,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "florimondmanca__djangorestframework-api-key-187",
+    "tokens": {
+      "identity": {
+        "sha256": "0d82c7d17a242d464ecd791ee973bbc42b29e81c3d421ee07f7c258ad9c1f12f",
+        "size_bytes": 261211
+      },
+      "path": "examples/f413848b1eeb45dcb5bbd6358d5d1b478e27b4b1c30111852e47daac221e56b7/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "a632e65da9e61718ba3bbe7053941c11252a10973ce400940f73ac305e18701f",
+        "size_bytes": 2048
+      },
+      "path": "examples/26730f5914cd7e7a8e733b33cdd72b2e92f69add661e1adbc1c35a83ef09bbf5/report.json"
+    },
+    "example_id": "b4927f27-48ac-4d48-b6a5-69c72c267e88-assistant-amended-6b123bc2141a",
+    "history": {
+      "sha256": "6b123bc2141ad3d297663dfb9530a4f86ac953dae926d0a8a7c566a3a1fac4d2",
+      "size_bytes": 66779
+    },
+    "input_tokens": 22940,
+    "leakage_group": "rsheftel__pandas_market_calendars-11",
+    "repository_group": "rsheftel/pandas_market_calendars",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue identifies duplicate merge columns with more than two schedules and input-list mutation by pop. Candidate copies/projections inputs, reduces each merge to market_open/market_close and handles absent-date NaT explicitly; reference only moves the projection into the loop and avoids pop. Publisher regression merges three identical schedules and is narrow. Current proposal controls cover 78 finite inner/outer cases with zero value, column or input-mutation failures, including single-schedule projection compatibility. Added empty-input/invalid-mode errors are explicit defensive behavior beyond the narrow issue. This is not a claim about arbitrary duplicate date indices, malformed schedules or all timezone cases.",
+      "repository_group": "rsheftel/pandas_market_calendars",
+      "task_id": "rsheftel__pandas_market_calendars-11"
+    },
+    "shifted_targets": 5000,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "rsheftel__pandas_market_calendars-11",
+    "tokens": {
+      "identity": {
+        "sha256": "df9414ccb2dc1ee84c477dc3b4a671412e7fcd8202e8030744afff29ed39d64b",
+        "size_bytes": 256509
+      },
+      "path": "examples/26730f5914cd7e7a8e733b33cdd72b2e92f69add661e1adbc1c35a83ef09bbf5/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "b5bec3b197b70ae53cb52a19de11ef38c40bddcb7049eb447046b32f6ad636e8",
+        "size_bytes": 2042
+      },
+      "path": "examples/081fbb2471a4068f926f18893bc72e240e8b05ee5401aceba134f429ef59c24b/report.json"
+    },
+    "example_id": "b97be327-9fc2-48ae-a90a-eb3194316e04-assistant-amended-00ac7c1ae652",
+    "history": {
+      "sha256": "00ac7c1ae6523ac4ed93b8c3b72184b7a7dee4c21352434264da5b5dbe000780",
+      "size_bytes": 58200
+    },
+    "input_tokens": 17018,
+    "leakage_group": "Stewori__pytypes-37",
+    "repository_group": "Stewori/pytypes",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue is iteration over None __args__ for a generic type in resolve_fw_decl. Candidate returns the original type and False when __args__ is None; reference skips the iterable branch and reaches the same fallback. Both preserve the original recursive branch for non-None arguments. Publisher test constructs a Generic TypeVar class and calls resolution without exception; it does not assert all return semantics. Retained 19 semantic cases additionally check unchanged types and forward-reference resolution. The 156-case publisher comparison matches outcomes; matching is not a claim that every upstream test passes. This does not establish compatibility with every Python/typing version or adversarial dynamic descriptors.",
+      "repository_group": "Stewori/pytypes",
+      "task_id": "Stewori__pytypes-37"
+    },
+    "shifted_targets": 3036,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "Stewori__pytypes-37",
+    "tokens": {
+      "identity": {
+        "sha256": "02943dbfa61e70ecf9e0084ca2c5b19cb84e2ce24532025950379ffed58d5124",
+        "size_bytes": 185242
+      },
+      "path": "examples/081fbb2471a4068f926f18893bc72e240e8b05ee5401aceba134f429ef59c24b/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "e9962747d0acfc1b585d753210ddd27003f86cd56b94f372c6a0f74a5f415974",
+        "size_bytes": 2045
+      },
+      "path": "examples/460363d683c2c3a135f8d264a4da6b7d263ce8fa447c5bb21a30c948957defe7/report.json"
+    },
+    "example_id": "0a32149d-cfbd-4a19-a787-70f3e9bff287-assistant-amended-5635a3798f4b",
+    "history": {
+      "sha256": "5635a3798f4bbc4d50c5eb5f9c2e318ab38cce09b788b9611a78f8684a04ffae",
+      "size_bytes": 73153
+    },
+    "input_tokens": 22969,
+    "leakage_group": "thu-ml__tianshou-67",
+    "repository_group": "thu-ml/tianshou",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Explicit pickle state hooks avoid uninitialized _meta lookup recursion. Fresh actual Batch module execution reproduces baseline failure and verifies six data families across all locally supported pickle protocols, plus the issue Pipe/file paths. Candidate preserves shared nested Batch aliases where reference reconstruction does not. Reference recurses in all 12 tested protocol-0/1 cases, while candidate passes. Retained publisher grade matches four outcomes. Scope excludes cross-process spawn, CUDA, untrusted pickle, cross-version storage compatibility, arbitrary malformed states and reinforcement-learning convergence. Whole-history quality and training approval remain separate.",
+      "repository_group": "thu-ml/tianshou",
+      "task_id": "thu-ml__tianshou-67"
+    },
+    "shifted_targets": 4868,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "thu-ml__tianshou-67",
+    "tokens": {
+      "identity": {
+        "sha256": "63a8f19c01c01666d1e8cafd74fac870f734338999c101f0543df2722e9948cb",
+        "size_bytes": 253681
+      },
+      "path": "examples/460363d683c2c3a135f8d264a4da6b7d263ce8fa447c5bb21a30c948957defe7/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "1de11d17194a93b1b97b3a5d52b9f3bb97715394e9b5477ef71ef986d54afc16",
+        "size_bytes": 2039
+      },
+      "path": "examples/3ee659244e90abd6a6639bc80b0d4fe7b560d6931ef9c4421a650c02830be610/report.json"
+    },
+    "example_id": "46d6dede-6aa2-4610-a372-06804b45bdac-assistant-amended-3990b48c0df2",
+    "history": {
+      "sha256": "3990b48c0df2280e6b96e9fae66a798c11fcfc3ba4057f7fcb788ae0d7361419",
+      "size_bytes": 72342
+    },
+    "input_tokens": 21137,
+    "leakage_group": "titipata__pubmed_parser-89",
+    "repository_group": "titipata/pubmed_parser",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Corrects the article-categories XPath so subjects in nested subject groups are returned. Selected source is byte-identical to reference after patch application. Fresh real lxml checks cover 36 nested structures, mixed text and all retained nxml fixtures, preserving all unrelated output fields. Four retained publisher outcomes match. Namespaced XML and ambiguous semicolon serialization remain limitations; task alignment does not imply lossless metadata representation, whole-history quality or training approval.",
+      "repository_group": "titipata/pubmed_parser",
+      "task_id": "titipata__pubmed_parser-89"
+    },
+    "shifted_targets": 2879,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "titipata__pubmed_parser-89",
+    "tokens": {
+      "identity": {
+        "sha256": "bdcb0f050e4a0dc13c839a3c76b29ce2db7e471779ee3bc08d3e5870f02734bf",
+        "size_bytes": 229691
+      },
+      "path": "examples/3ee659244e90abd6a6639bc80b0d4fe7b560d6931ef9c4421a650c02830be610/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "aae46ff8f6dd12e74c22f7bb31c22c6ce3ef6dafbf5cc694c65750a3822d9ff8",
+        "size_bytes": 2039
+      },
+      "path": "examples/1a92a795c58c7fb60e102956786ddbb0996ef631dd67eeee2172a2b88e412dd5/report.json"
+    },
+    "example_id": "7434ed8e-99f3-4908-acf2-7367575f3189-assistant-amended-eb307fbb4440",
+    "history": {
+      "sha256": "eb307fbb44401a2628491923e917a0a6005607ed8ab10a011330b0ed375cb55f",
+      "size_bytes": 59487
+    },
+    "input_tokens": 16388,
+    "leakage_group": "mirumee__prices-26",
+    "repository_group": "mirumee/prices",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue forbids unequal currencies in net and gross Amounts. Candidate and reference both check currency inequality after validating Amount types and raise ValueError; only message wording differs. The reference setup.py version bump is incidental. The new publisher regression asserts mismatched USD/EUR rejection; retained controls additionally cover 576 amount/currency combinations and ten type cases. Constructor behavior is aligned; no monetary conversion or post-construction immutability claim is made.",
+      "repository_group": "mirumee/prices",
+      "task_id": "mirumee__prices-26"
+    },
+    "shifted_targets": 2758,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "mirumee__prices-26",
+    "tokens": {
+      "identity": {
+        "sha256": "010ea5d5af1438d6753350c1e0045d8c5b74dc1307979654228c1c8eb5498247",
+        "size_bytes": 178022
+      },
+      "path": "examples/1a92a795c58c7fb60e102956786ddbb0996ef631dd67eeee2172a2b88e412dd5/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "636d98d7affa6238d55ad3ab3791ade447d8f10f1af9720e6020bc933a948cb1",
+        "size_bytes": 2042
+      },
+      "path": "examples/a338ab5454449f7655068231c31be433be1bce694c92c48a200f59322b87f66e/report.json"
+    },
+    "example_id": "87389947-53dc-4f57-83d8-1e42f872dd8a-assistant-amended-6d6f693ec07c",
+    "history": {
+      "sha256": "6d6f693ec07c15f917680ee0f2fa1f2f30959c24a9dd7b58f968b5978c810c0b",
+      "size_bytes": 55670
+    },
+    "input_tokens": 16226,
+    "leakage_group": "ASFHyP3__hyp3-sdk-53",
+    "repository_group": "ASFHyP3/hyp3-sdk",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue requests Batch() to behave like Batch([]). The candidate uses a None sentinel and creates a fresh empty list, preserving explicit-list behavior. Publisher test adds omitted-input construction; retained controls check separate live lists and explicit-list alias behavior. The reference additionally removes the existing empty-list warning and annotates Optional[List[Job]]; the candidate preserves that warning and older annotation. Warning removal and changelog User-Agent notes are outside the explicit issue requirement. This is acceptance of task alignment, not warning-policy parity or static typing quality.",
+      "repository_group": "ASFHyP3/hyp3-sdk",
+      "task_id": "ASFHyP3__hyp3-sdk-53"
+    },
+    "shifted_targets": 4007,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "ASFHyP3__hyp3-sdk-53",
+    "tokens": {
+      "identity": {
+        "sha256": "7878f10e7df27b18a77bb42b0cc135cc02438efd61b16922b1fe75e6d23b5297",
+        "size_bytes": 176829
+      },
+      "path": "examples/a338ab5454449f7655068231c31be433be1bce694c92c48a200f59322b87f66e/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "798ca8a73ff293a83e7d1fac2a4115e800b5b01d70f00ee4740c749aa989a8d1",
+        "size_bytes": 2042
+      },
+      "path": "examples/dd57dceb7f9913467bc0be15757cc116471e7875ce423563719b8050f901a998/report.json"
+    },
+    "example_id": "c384f42f-9be5-4133-8923-6dc47785f454-assistant-amended-c43762358b06",
+    "history": {
+      "sha256": "c43762358b06fbbb3a6549b485452fa9276758af53d7b1d9f9ad63a002c29b95",
+      "size_bytes": 66798
+    },
+    "input_tokens": 21752,
+    "leakage_group": "Wortmeister-HQ__zahlwort2num-6",
+    "repository_group": "Wortmeister-HQ/zahlwort2num",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue asks for the German alternative zwo. Candidate and reference patches are byte-identical and add the lexical mapping zwo to 2; this is language data, not a fabricated test response. Publisher tests check zwo and compound forms 222 and 2000. Retained generated controls cover 7996 canonical and 7996 alternative cases with zero candidate mismatches. This is finite lexical/compositional evidence, not correctness for every German numeral or an independent model solve rate.",
+      "repository_group": "Wortmeister-HQ/zahlwort2num",
+      "task_id": "Wortmeister-HQ__zahlwort2num-6"
+    },
+    "shifted_targets": 2110,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "Wortmeister-HQ__zahlwort2num-6",
+    "tokens": {
+      "identity": {
+        "sha256": "89745a7f0b558d84b9f601e7cb7e6753f6ff0c9d710c6ce56d8a53b5a1bd8bb9",
+        "size_bytes": 237379
+      },
+      "path": "examples/dd57dceb7f9913467bc0be15757cc116471e7875ce423563719b8050f901a998/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "60c96f7d43dc8ef80cb590012d03bd2cf92ff6b1b56c7642800ad83531e41267",
+        "size_bytes": 2036
+      },
+      "path": "examples/90dc8ac32e5fc6f43ec23ca33ea2ba98ad30ec8148480d85712ff618427bc8f0/report.json"
+    },
+    "example_id": "f7053638-1163-4e6c-8ba3-c4affa81a69a-assistant-amended-039657a71f1d",
+    "history": {
+      "sha256": "039657a71f1dbf735015f6a0236bc2ba0b16b5f72b13ab6fb041d2e09da289b2",
+      "size_bytes": 58954
+    },
+    "input_tokens": 17681,
+    "leakage_group": "crccheck__project_runpy-17",
+    "repository_group": "crccheck/project_runpy",
+    "review": {
+      "decision": "accepted",
+      "rationale": "The issue is a None SQL slicing failure. The submitted one-condition repair bypasses slicing only for None and preserves the original non-None path. The publisher adds a directly relevant None regression; its Makefile comment reorder is incidental and absent from the candidate. The reference uses broader falsey handling; that is not required by this None-specific issue. Retained independent controls cover 54 None and 2673 string cases; the frozen candidate matches all 25 publisher cases. This accepts semantic alignment only, not universal correctness or runtime/platform parity.",
+      "repository_group": "crccheck/project_runpy",
+      "task_id": "crccheck__project_runpy-17"
+    },
+    "shifted_targets": 2335,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "crccheck__project_runpy-17",
+    "tokens": {
+      "identity": {
+        "sha256": "d5d99a0ddef18d243ea500f3860c49d0f89479e7726ef2d5af18ed8698c9886e",
+        "size_bytes": 191089
+      },
+      "path": "examples/90dc8ac32e5fc6f43ec23ca33ea2ba98ad30ec8148480d85712ff618427bc8f0/tokens.json"
+    }
+  },
+  {
+    "audit": {
+      "identity": {
+        "sha256": "fc034a91e2a04aeb3edfbc386b17ebc1412f9dbc695661d2bc5ae33d9c856382",
+        "size_bytes": 2033
+      },
+      "path": "examples/aa16b732246a64d0e42e529248caf3c8828b723cb2978691966f9a6af3ad187a/report.json"
+    },
+    "example_id": "10b89ee3-49ca-454d-a1dc-e4888eb9e5e6-reference-informed-7a59f9e03406",
+    "history": {
+      "sha256": "7a59f9e03406cc89e68022d7d47f77b8d249b1c02d377431def66a36dda24b75",
+      "size_bytes": 84742
+    },
+    "input_tokens": 22634,
+    "leakage_group": "python__mypy_extensions-47",
+    "repository_group": "python/mypy_extensions",
+    "review": {
+      "decision": "accepted",
+      "rationale": "Current reference-informed derivative warns for functional, direct and inherited TypedDict definitions; argument-conflict TypeError precedence and caller attribution are preserved. Native replay 005 yields exactly the locally tested source. Ten upstream tests, eleven publisher cases and expanded inheritance/policy controls pass. Publisher tox warning strictness is relevant validation; its test code is not included in the trajectory. This replaces the prior candidate alignment hold, with no held-out solve or universal-correctness claim.",
+      "repository_group": "python/mypy_extensions",
+      "task_id": "python__mypy_extensions-47"
+    },
+    "shifted_targets": 7559,
+    "split": "train",
+    "synthetic_provenance": null,
+    "task_id": "python__mypy_extensions-47",
+    "tokens": {
+      "identity": {
+        "sha256": "e3574b1a5db43320d12fd8f274070a77e0267770169311a5d70a3b9c5256f926",
+        "size_bytes": 243837
+      },
+      "path": "examples/aa16b732246a64d0e42e529248caf3c8828b723cb2978691966f9a6af3ad187a/tokens.json"
+    }
+  }
+]

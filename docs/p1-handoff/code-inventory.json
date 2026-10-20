@@ -1,0 +1,2070 @@
+[
+  {
+    "bytes": 88,
+    "description": "Development-side contracts for the Gemma repository agent.",
+    "materialized": true,
+    "path": "zenithsync/__init__.py",
+    "sha256": "3f5c74efe764f9d13f7f5d8bac4a2f5969f30dc189ca4c587f0ea3730fb7a6c5"
+  },
+  {
+    "bytes": 2767,
+    "description": "Offline inspection CLI. Results go to stdout; inputs are never modified.",
+    "materialized": true,
+    "path": "zenithsync/__main__.py",
+    "sha256": "0a38cd78624161b049c8965f820835ac1ae23508e98b9fd2f2c201e576aff3e3"
+  },
+  {
+    "bytes": 3103,
+    "description": "Experimental causal next-action supervision, separate from corpus admission.",
+    "materialized": true,
+    "path": "zenithsync/action_training.py",
+    "sha256": "e6dbefc34edee394b2df7d7c133d8c4cd4d58abe0ed44d2f7d9e4b8a5ce0e615"
+  },
+  {
+    "bytes": 6401,
+    "description": "Adapter-only resume contract over an independently verified frozen base.\n\nAssumes a quiescent single-process model with immutable persistent frozen state.\nNonpersistent buffers must be deterministically reconstructed by the worker.",
+    "materialized": true,
+    "path": "zenithsync/adapter_checkpoint.py",
+    "sha256": "f835f9b4f01b222630569a84bfcd394773dd9f2cf27aa4125e90c47a33d18992"
+  },
+  {
+    "bytes": 2580,
+    "description": "Exact descriptor coverage for the supported dense Gemma4 W4 checkpoint.",
+    "materialized": true,
+    "path": "zenithsync/architecture_layout.py",
+    "sha256": "1efeda387d1fb4bd2384ea1a6429cadfa7cdf5bd59fa8231fe3e4a152c6cdea8"
+  },
+  {
+    "bytes": 3310,
+    "description": "ZIP structural preflight only; official YAML/ADK validation is unresolved.",
+    "materialized": true,
+    "path": "zenithsync/archive.py",
+    "sha256": "61279d8a467974def4f6cbd18a461fa25d796deda01541ed0c6c7d330494d4e3"
+  },
+  {
+    "bytes": 5585,
+    "description": "Portable local inventory and verification for quiescent artifact directories.\n\nNot a sandbox for concurrently malicious filesystem writers. Supply an owned,\nstable staging directory. Symlinks and nonregular entries are rejected.",
+    "materialized": true,
+    "path": "zenithsync/artifacts.py",
+    "sha256": "3f1dc8036b9a247334fe870b37b63d4e41df58f95fd1734d998a4ba7bd7c97c2"
+  },
+  {
+    "bytes": 4151,
+    "description": "Atomic, no-overwrite checkpoint files for owned POSIX directories.\n\nOnly deserialize trusted, independently hash-bound local training artifacts.\nThis storage layer does not validate model/optimizer/cursor semantic compatibility.",
+    "materialized": true,
+    "path": "zenithsync/checkpoint_storage.py",
+    "sha256": "4f91c2d468755a11bb981d3c39412272e6287a4c6032bec1219e752e2d875b3c"
+  },
+  {
+    "bytes": 660,
+    "description": "Observable cleanup for an explicitly owned container; uncertainty is retained.",
+    "materialized": true,
+    "path": "zenithsync/container_cleanup.py",
+    "sha256": "32b2aa63390f781373780d00ae23a959daecf900473a54d89c0005c29153554b"
+  },
+  {
+    "bytes": 7437,
+    "description": "Pure contracts; no model, tool execution, or evaluator outcomes are invented.",
+    "materialized": true,
+    "path": "zenithsync/contracts.py",
+    "sha256": "fc407957a78424aa32909e8b817fb3d6149e8e9fe3082bc55ee901c797b1e8bf"
+  },
+  {
+    "bytes": 6644,
+    "description": "Validated text-only tool history for the supplied Gemma chat template.\n\nThis normalizes transport syntax and call/result linkage. Tool-specific argument\nschemas, execution authorization and generated Gemma-token parsing are separate.",
+    "materialized": true,
+    "path": "zenithsync/conversation.py",
+    "sha256": "ffa88e72f66aae3d7dbae7e84c33c94b20ea67421596f4da4451212e14d38413"
+  },
+  {
+    "bytes": 2874,
+    "description": "Credential-indicator screening of complete decoded corpus inputs.\n\nThis finite rule screen is review evidence, not a privacy guarantee or an\nadmission decision. It includes prompts, observations and assistant text; it\nnever redacts immutable training examples or returns matched values.",
+    "materialized": true,
+    "path": "zenithsync/corpus_credentials.py",
+    "sha256": "5b6ad8d9e2530989094e32ec86b626ee614ad43a95a360be65f2b7d8f9f758fe"
+  },
+  {
+    "bytes": 5901,
+    "description": "Single-device token-mean update over separately attended microbatches.\n\nThe model must return mean causal loss over labels[..., 1:] != -100, with no\nauxiliary loss. This contract is tested separately for each model backend.\nNo distributed reduction, AMP scaler, clipping or learning-rate schedule here.",
+    "materialized": true,
+    "path": "zenithsync/corpus_optimization.py",
+    "sha256": "f339f6140042536a9c54fb48f7eedd4874cc99602e746c9d65e512b31fe1c8e7"
+  },
+  {
+    "bytes": 3240,
+    "description": "CPU-only admission and configuration checks for the full-model corpus worker.",
+    "materialized": true,
+    "path": "zenithsync/corpus_run.py",
+    "sha256": "c62cd89922899d0d13dd08a9298915a6b7531ece06f66fef000aefcfe1ebfde4"
+  },
+  {
+    "bytes": 3358,
+    "description": "Bridge admitted indexed examples to one-example-at-a-time optimizer updates.",
+    "materialized": true,
+    "path": "zenithsync/corpus_training.py",
+    "sha256": "d544438c1a84b5b847affd9836d686aab314337cfd2b15cf86d939151d75575c"
+  },
+  {
+    "bytes": 1308,
+    "description": "POSIX main-thread deadline for bounded diagnostic I/O.\n\nThis interrupts Python/socket waits, not arbitrary uninterruptible native code\nor remote GPU billing. The serving process has its own session supervisor.",
+    "materialized": true,
+    "path": "zenithsync/deadline.py",
+    "sha256": "8e7e957c8e7bfb2c3f303d4b19d27df7472cb39c4393fb5fbc039acd780fbe77"
+  },
+  {
+    "bytes": 3471,
+    "description": "Strict paired JUnit accounting, not a benchmark solve or significance test.\n\nTests from one repository task are dependent observations. Counts here must not\nbe interpreted as independent task samples or evidence of generalization.",
+    "materialized": true,
+    "path": "zenithsync/evaluation.py",
+    "sha256": "260ff37d7c9e4a864bb8cbc46d5784aa9aff6c48c07baf73e7055e613f0b2b4f"
+  },
+  {
+    "bytes": 1483,
+    "description": "Exact-shape LoRA attachment for the full Gemma corpus worker.",
+    "materialized": true,
+    "path": "zenithsync/gemma_training.py",
+    "sha256": "684fdd8647fd1405b3a073805d412fb874c44f3c656adf09a056e7ef554f0cf2"
+  },
+  {
+    "bytes": 1976,
+    "description": "Explicit source-text projection into Gemma's pre-action channel.\n\nThis is a transport convention, not a claim that source content was originally\na private reasoning field. Source records and transformation hashes must remain\navailable. It changes no tool name, argument value, call ID or result text.",
+    "materialized": true,
+    "path": "zenithsync/gemma_trajectory.py",
+    "sha256": "5fc1dfc006eed54ba1fd7211a14593242a7912def9d97f9d232a5cab43a17abd"
+  },
+  {
+    "bytes": 8300,
+    "description": "Strict qualification of native Go 1.23 test JSON, without invented phases.\n\nThe caller supplies complete ``go test -json -count=1`` output and its process\nexit code. These checks validate recorded event consistency, not log authenticity\nor source immutability; the execution bundle must bind those independently.\nPackage-only skips require an explicit reviewed no-test-package allowlist.",
+    "materialized": true,
+    "path": "zenithsync/go_test_controls.py",
+    "sha256": "03c4193a08fcee4970df8627c55aee4c76230cf5c6b16f1087a2ac27db1076e5"
+  },
+  {
+    "bytes": 4801,
+    "description": "Device-wide sampled memory telemetry, distinct from allocator peak counters.",
+    "materialized": true,
+    "path": "zenithsync/gpu_memory.py",
+    "sha256": "c0871f5a5c195d7ef266485fbd8984afc7a0695e5ade96dab0cc6090a0e1804d"
+  },
+  {
+    "bytes": 948,
+    "description": "Local evaluation settings matching the acquired competition README section 7.2.\n\nThese settings delegate to ADK; they do not implement a custom compactor or\nguarantee that its summaries preserve tool observations. Hidden-grader parity\nand long-context behavior require separate evidence.",
+    "materialized": true,
+    "path": "zenithsync/harness_context.py",
+    "sha256": "85ce9996d6085c4ab2d5eb6ed3c3c1b3b08c8ce3994842f23ebfe91fbc475375"
+  },
+  {
+    "bytes": 5227,
+    "description": "Bounded, loopback-only diagnostic capture for nonstreaming inference.\n\nThe sole request change asks vLLM to return raw generated token IDs. The original\nand forwarded JSON bodies are both retained; response bytes pass through unchanged.\nUse only with curated development inputs: bodies may contain repository contents.",
+    "materialized": true,
+    "path": "zenithsync/inference_capture.py",
+    "sha256": "313d989f52ee8fc70533d728c10dff05e2016358e5f15a719d3e62f636823242"
+  },
+  {
+    "bytes": 2568,
+    "description": "Acceptance checks for a real generated tool call, not a simulated model.",
+    "materialized": true,
+    "path": "zenithsync/inference_probe.py",
+    "sha256": "f0adfdb739cf6b2a02d9bace97a26eaebb535ca907084752db8828dca391181c"
+  },
+  {
+    "bytes": 5286,
+    "materialized": false,
+    "path": "zenithsync/issue_contract.py"
+  },
+  {
+    "bytes": 5354,
+    "description": "Exact lexical overlap signals, never semantic or split admission decisions.\n\nPositive thresholds let an inverted index omit zero-intersection pairs without\nchanging the answer. NFKC/case/whitespace normalization is an explicit heuristic:\nit can change code semantics. Short issues use their complete token tuple.",
+    "materialized": true,
+    "path": "zenithsync/issue_similarity.py",
+    "sha256": "b63975013dac276ce097fa9ecdd44c2446a81655e2892022319ab317defec1f3"
+  },
+  {
+    "bytes": 7791,
+    "description": "Strict Maven Surefire XML outcomes; execution provenance is a separate gate.\n\nOnly UTF-8, single-suite reports without retries are supported. Missing reports\n(e.g. compilation failures) are not converted into fabricated failed test cases.\nSkipped cases remain explicit and cannot establish a fail-to-pass transition.",
+    "materialized": true,
+    "path": "zenithsync/junit_controls.py",
+    "sha256": "05dcbc05ab5639d81c3cc3456f82c796bb148fa26e25b4a96c6a01398556204e"
+  },
+  {
+    "bytes": 3640,
+    "description": "Exact historical evaluator body for read-only receipt verification.\n\nUses Python 3.7+ subprocess aliases; current execution uses the current probe.\nDo not normalize unknown program bodies into this accepted historical version.",
+    "materialized": true,
+    "path": "zenithsync/legacy_matrix_probe.py",
+    "sha256": "41eb17537c4a3c421ea87d956b9a65b1e85c07d746fb2b23de98d7cc9d758195"
+  },
+  {
+    "bytes": 8813,
+    "description": "Compose matrix outcomes, known probes and replay/task provenance checks.",
+    "materialized": true,
+    "path": "zenithsync/matrix_admission_evidence.py",
+    "sha256": "e27c3fcbe50d3f0763091abbd9f677947ea0a055d128be5f00c1130f2da1f42e"
+  },
+  {
+    "bytes": 5309,
+    "description": "Recompute publisher matrix outcomes from explicitly hash-bound files.\n\nThis verifies local evidence consistency, not provenance or training admission.\nProbe reconstruction and patch/snapshot binding remain separate requirements.",
+    "materialized": true,
+    "path": "zenithsync/matrix_grade_evidence.py",
+    "sha256": "36476d25f69c9da82e0913f2f979fc8a620229c9f228261f6b2cf485a3898fd2"
+  },
+  {
+    "bytes": 3684,
+    "description": "Bind recorded matrix probes to the known evaluator and exact task inputs.\n\nParse literal settings without executing the stored program. Snapshot and\npublisher provenance must still be checked by the admission caller.",
+    "materialized": true,
+    "path": "zenithsync/matrix_probe_contract.py",
+    "sha256": "4ce7b3a1577792132ae46f2a5ab7fe7fc483368a5b47827817fe208b7bdb3d62"
+  },
+  {
+    "bytes": 9181,
+    "description": "Recognize bounded Maven test-compilation missing-symbol controls.\n\nThis is a deliberately explicit log profile, not log authentication or a Java\ncompiler proof. The caller must bind fresh execution, source and test bytes.\nA compile failure has no runtime testcase outcomes.",
+    "materialized": true,
+    "path": "zenithsync/maven_compile_controls.py",
+    "sha256": "263b0ba897806ce1c6fd93d2bd72b8e30402420e09225e8391c0ba73ac146557"
+  },
+  {
+    "bytes": 6897,
+    "description": "Reconstruct Maven phase controls from bound artifacts; never admit training.",
+    "materialized": true,
+    "path": "zenithsync/maven_grade_bundle.py",
+    "sha256": "cf5b01ed0c01a3e395bbf927aedc0afa02c95cbe1f110f052a6fef1a6f8f5250"
+  },
+  {
+    "bytes": 20401,
+    "description": "Cross-check V2 replay evidence; never authorize training from local receipts.",
+    "materialized": true,
+    "path": "zenithsync/mini_replay_admission.py",
+    "sha256": "2eca3763fda72b96f38d281c343cab2b7f72e8e1557bdc20e5fd42e9f6a063ee"
+  },
+  {
+    "bytes": 2622,
+    "description": "Derive explicit mini-trace command amendments without reusing observations.",
+    "materialized": true,
+    "path": "zenithsync/mini_replay_amendment.py",
+    "sha256": "3457e2a5998e51e9bacbb5408d7ed30851d9eec32bd7c8b7cf65bd7d17d64e8f"
+  },
+  {
+    "bytes": 4036,
+    "description": "Serialize inspected Open-SWE mini histories without claiming native semantics.",
+    "materialized": true,
+    "path": "zenithsync/mini_source_history.py",
+    "sha256": "d7578cbe307a74c8bad5eac2135161e1acbc7a0b2cd102d368bd3b3ca56d3637"
+  },
+  {
+    "bytes": 7360,
+    "description": "Validate complete Mocha JSON reports, not log authenticity or test quality.\n\nThis profile rejects pending tests, retries, duplicate full titles and hook-only\nfailures. Execution provenance and source integrity must be bound separately.\nPublisher short titles must be resolved explicitly before comparison.",
+    "materialized": true,
+    "path": "zenithsync/mocha_controls.py",
+    "sha256": "1748cb61646db4c13739d1ac30933191583667511e9de6f53b6d672b5d7837b1"
+  },
+  {
+    "bytes": 5148,
+    "description": "Bounded, CPU-only inspection of checkpoint storage, without loading weights.\n\nThis checks byte layout, not numerical weight validity or loader compatibility.\nInputs must be in an owned, quiescent directory (as with artifacts.inventory).\nUnknown dtypes are rejected rather than assigned a guessed storage width.",
+    "materialized": true,
+    "path": "zenithsync/model_intake.py",
+    "sha256": "2d5d7c0e0dbb62cd6d79c83750c9d4be48bac9272ec44ac84f36e447cf26d294"
+  },
+  {
+    "bytes": 6871,
+    "materialized": false,
+    "path": "zenithsync/object_store.py"
+  },
+  {
+    "bytes": 3431,
+    "description": "Explicit evaluator-only replay of immutable HTTP response bodies.\n\nThis adapter is a qualification aid, not a general HTTP cache. It supports\nonly body reads through urllib.urlopen and requests.get. Unknown resources\nand request options fail closed; production/agent networking is unaffected.",
+    "materialized": true,
+    "path": "zenithsync/offline_resources.py",
+    "sha256": "5dff52f365433848c756c32b48f3287c99a0b950cc225b47d49731be38a25558"
+  },
+  {
+    "bytes": 5035,
+    "description": "Identity-checked single-group AdamW checkpoint contract.\n\nScope: dense, non-AMSGrad AdamW with a state entry for every trainable tensor.\nRNG, data-cursor and scheduler recovery are separate resume requirements.",
+    "materialized": true,
+    "path": "zenithsync/optimizer_checkpoint.py",
+    "sha256": "121fd44e7a8f2ade6a1c5a978f2ac9c26f6407e91dd7564e8620d01806014b14"
+  },
+  {
+    "bytes": 1971,
+    "description": "Bind successful local container receipts to reconstructed probe bytes.\n\nThis checks consistency of retained local evidence, not cryptographic\nattestation that an untrusted author actually ran a container.",
+    "materialized": true,
+    "path": "zenithsync/probe_receipt.py",
+    "sha256": "efc8331d3ddccf224d0e6f5c6b410393e510a5b48cc3dfe3deb56743e2fe7d23"
+  },
+  {
+    "bytes": 5459,
+    "description": "Bound an owned POSIX process group; never manages cloud billing.\n\nChildren must remain in the inherited process group. This is lifecycle control\nfor trusted workers, not confinement against processes that detach themselves.",
+    "materialized": true,
+    "path": "zenithsync/process_supervisor.py",
+    "sha256": "f82876c37ee75a66f929b91c7be26909fac260904fdc2866d237e3346a2f7249"
+  },
+  {
+    "bytes": 5612,
+    "description": "Interpret a deliberately small, auditable pytest version-condition language.\n\nThis is not Python execution. It supports direct django.VERSION comparisons\nagainst integer tuples in top-level pytest.mark.skipif decorators. Callers must\nbind the source bytes, module path and actual runtime version independently.",
+    "materialized": true,
+    "path": "zenithsync/pytest_applicability.py",
+    "sha256": "41624da06dca34fac0cd7a60424c47fd303364813f62d9857b7cd4ad25044439"
+  },
+  {
+    "bytes": 5484,
+    "description": "Strict paired-control checks retaining full pytest parameter identities.\n\nPublisher whitespace-truncated names are matched as groups. Every member must\nagree with the expected transition; last-write-wins collapse is never used.",
+    "materialized": true,
+    "path": "zenithsync/pytest_controls.py",
+    "sha256": "2b94381a159545123c17bd1c319ee979671ecf9aa6f49291dfd5b8b5fcb9b6c3"
+  },
+  {
+    "bytes": 7919,
+    "description": "Reconcile explicit version-dependent pytest obligations without counting skips.\n\nApplicability is caller-supplied reviewed evidence, not inferred from outcomes.\nThis checks outcome structure and repair behavior only; callers must separately\nbind runtime versions, test predicates, source/patch identities and provenance.\nIt does not grant corpus or training admission.",
+    "materialized": true,
+    "path": "zenithsync/pytest_matrix.py",
+    "sha256": "fdb236886e926c378272a806dd6f7da9c71fcad16f3bc2c3c75a38647a9e9d1b"
+  },
+  {
+    "bytes": 2699,
+    "description": "Deterministic repository coverage sampling, not an agent benchmark sample.",
+    "materialized": true,
+    "path": "zenithsync/qualification_sampling.py",
+    "sha256": "d094c26b149adb249f5472a905b533787884935cd36b247ca14fcafb1ce89822"
+  },
+  {
+    "bytes": 4252,
+    "description": "Dimension contracts for dense Gemma4 W4/group-32 text projections.\n\nScope deliberately excludes MoE, per-layer inputs, biases and shared KV layers.\nThese checks do not execute compressed-tensors unpacking or model inference.",
+    "materialized": true,
+    "path": "zenithsync/quantized_layout.py",
+    "sha256": "3d7a157b1e73cc24ecd11290678f95dd9d337af4298c5a7d5d9aad9c790b65c5"
+  },
+  {
+    "bytes": 2363,
+    "description": "Recompute a recorded SWE-rebench grade from hash-bound pytest outcomes.",
+    "materialized": true,
+    "path": "zenithsync/rebench_grade_evidence.py",
+    "sha256": "74cf18d0d47ee9de4db642a651238d4ec1e97a813f7833d75731174f09fe78d7"
+  },
+  {
+    "bytes": 10790,
+    "description": "Cross-check replay evidence before rights, split, and GPU admission reviews.\n\nThis verifies local evidence consistency, not the truth of arbitrary supplied\nreceipts. It never approves training or treats a replay as a new model result.",
+    "materialized": true,
+    "path": "zenithsync/replay_admission.py",
+    "sha256": "c489f590d81a36c8795c1a1ce9348e4d2b2cd7f230ce6f3eeb7cdda81fe1e215"
+  },
+  {
+    "bytes": 8714,
+    "description": "Construct explicitly attributed action derivatives; never reuse observations.\n\nThis is a provenance primitive, not a command sandbox or replay qualification.\nCallers must preflight source actions and execute the derivative in a fresh runtime.",
+    "materialized": true,
+    "path": "zenithsync/replay_amendment.py",
+    "sha256": "04d7c33cfca82b6901773d19e1d6bc148b77517c797770090b2760bf3c0117b5"
+  },
+  {
+    "bytes": 4507,
+    "description": "Explicit assistant-authored completion actions before native submission.",
+    "materialized": true,
+    "path": "zenithsync/replay_completion.py",
+    "sha256": "fde8057aa7286516aabff7ad2105e3fe160fcd0ec64bae5d8b85e5d11170d21d"
+  },
+  {
+    "bytes": 4032,
+    "description": "Explicit, hash-bound correction plans; no invented observations or admission.",
+    "materialized": true,
+    "path": "zenithsync/replay_correction.py",
+    "sha256": "fee8c6a1d86a64ac0c0912cc17d7fd2de6ad38beacadaa8b5419a25e8585b400"
+  },
+  {
+    "bytes": 6343,
+    "description": "Project captured native exchanges without inventing reasoning or observations.",
+    "materialized": true,
+    "path": "zenithsync/replay_history.py",
+    "sha256": "0cf79745fed9fbbd708a52f48021fe9f349b6500118158502e6d0e5fe159f779"
+  },
+  {
+    "bytes": 3009,
+    "description": "Verify a rejected identical edit without replacing its native observation.",
+    "materialized": true,
+    "path": "zenithsync/replay_noop.py",
+    "sha256": "348657037b505a81bb817872ef17fa15a2055babd70caaa050d3520b64786124"
+  },
+  {
+    "bytes": 3895,
+    "description": "Inventory replay observations without converting tool success into correctness.",
+    "materialized": true,
+    "path": "zenithsync/replay_observations.py",
+    "sha256": "2561c087bc65c17a17eeefa357ba309d3b7a6a4180794733475fe6ef9c64bd7a"
+  },
+  {
+    "bytes": 2732,
+    "description": "Stage explicitly pinned public resource responses in a disposable sandbox.",
+    "materialized": true,
+    "path": "zenithsync/replay_resources.py",
+    "sha256": "7ae31130d226e484ca32d0558af959b18a4e28f73b6a37996c3ac7a2236a7ef4"
+  },
+  {
+    "bytes": 2564,
+    "description": "Verify a recorded Session environment without approving its training use.",
+    "materialized": true,
+    "path": "zenithsync/resource_replay_binding.py",
+    "sha256": "f4ae5cd2c0f1fc2704303b7cd1000c958bb4ff546e12784f5d7a73821709e4d1"
+  },
+  {
+    "bytes": 3987,
+    "materialized": false,
+    "path": "zenithsync/review_coverage.py"
+  },
+  {
+    "bytes": 3147,
+    "description": "CPU-only validation of the versioned P1 serving profile.",
+    "materialized": true,
+    "path": "zenithsync/serving.py",
+    "sha256": "9aa3d31aff8b19438975d7ea60c279faed92c436b273a713a27faeff4bfcbec1"
+  },
+  {
+    "bytes": 5302,
+    "description": "Independent schedule/accounting verification of a completed worker report.\n\nThis establishes checkpoint and schedule consistency, not numerical training\nquality. The caller supplies an independently hash-bound checkpoint reader.",
+    "materialized": true,
+    "path": "zenithsync/session_report.py",
+    "sha256": "42e8b54b8602781afd56d7e6da2cb703edcd4075e57c442db2b566c7c2fcc4cb"
+  },
+  {
+    "bytes": 6878,
+    "description": "Load explicitly reviewed response bundles for offline Session replay.\n\nHashes establish byte identity, not authenticity, rights, or training admission.\nAll validation finishes before a caller receives a transport payload.",
+    "materialized": true,
+    "path": "zenithsync/session_resource_bundle.py",
+    "sha256": "55f118c212f7317d3aa1a68862f1a903ebdfe3efd365a3c1faa1206a3b79a101"
+  },
+  {
+    "bytes": 4488,
+    "description": "Exact public UTF-8 response replay for disposable, offline test processes.\n\nThis supports successful body reads through requests Sessions, not arbitrary\nHTTP behavior. It does not reproduce TLS, cookies, redirects, hooks or timing.\nInstall only in an isolated process; restoration is not concurrency-safe.",
+    "materialized": true,
+    "path": "zenithsync/session_resource_replay.py",
+    "sha256": "42a8f7954a28ee610d53a5630d455ef3e221c70a88228c2c873a109b6fa44a2c"
+  },
+  {
+    "bytes": 2293,
+    "description": "Normalize an owned disposable checkout; retain history for later sanitization.",
+    "materialized": true,
+    "path": "zenithsync/source_base.py",
+    "sha256": "599e2fbd0a25f76ecafbf7abcc43b790e76c43705263668c645f97b3c6e073e6"
+  },
+  {
+    "bytes": 1095,
+    "description": "Bounded immutable input snapshots for parsers that otherwise reopen files.",
+    "materialized": true,
+    "path": "zenithsync/source_bytes.py",
+    "sha256": "556935493e0266101e43824fb7919637a1b0dfe1975ca0843e2ae8debb2b7286"
+  },
+  {
+    "bytes": 4616,
+    "description": "Bounded export of selected committed blobs; never a rights approval.",
+    "materialized": true,
+    "path": "zenithsync/source_capture.py",
+    "sha256": "b2a9262801559bcc03b01135bc88528da0c543b816de3482312e50f0f1890980"
+  },
+  {
+    "bytes": 4124,
+    "description": "Conservative source-text credential indicators, never credential validation.\n\nReports contain only rule names and character locations. Absence of indicators\nis not proof of absence of secrets; flagged examples require review, not silent\nredaction that would break trajectory provenance.",
+    "materialized": true,
+    "path": "zenithsync/source_credentials.py",
+    "sha256": "452ff098cf1fed865352ead261d61ee0b10c9a35f1e38116dab4c75c37339020"
+  },
+  {
+    "bytes": 2374,
+    "description": "Compare source expectations without dropping colliding test identities.",
+    "materialized": true,
+    "path": "zenithsync/source_evaluator.py",
+    "sha256": "3bb60992b32b9f934a66eeb6da39084e4ab03c575cad0871fdfd06b8af9db97a"
+  },
+  {
+    "bytes": 3858,
+    "description": "Loopback-only scripted HTTP fixture; never evidence of model capabilities.",
+    "materialized": true,
+    "path": "zenithsync/source_http_fixture.py",
+    "sha256": "79c5d4da733aa93ea3471994877cb006b77402e70afa68a0c08052f3aa125706"
+  },
+  {
+    "bytes": 721,
+    "description": "Validate explicit checkout-relative import roots for offline Python runtimes.",
+    "materialized": true,
+    "path": "zenithsync/source_imports.py",
+    "sha256": "c75c8913c9c742ab485b7028ba354ce4f7855e67a20cdbe2d5a8d56e3349252c"
+  },
+  {
+    "bytes": 3447,
+    "description": "Scripted ADK lifecycle fixtures. Never use as training or model evidence.",
+    "materialized": true,
+    "path": "zenithsync/source_runner_fixture.py",
+    "sha256": "9f6df80cf7268e036a40c1145fd14588fad778d008b23ab7b0825cc6592e4eeb"
+  },
+  {
+    "bytes": 9096,
+    "description": "Create a fresh Git history while preserving an exact base tree.\n\nRun only in a disposable build container or an explicitly owned test fixture.\nThis removes known oracle paths; it does not certify arbitrary image contents.",
+    "materialized": true,
+    "path": "zenithsync/source_snapshot.py",
+    "sha256": "ac35ecf4815a118c781b4d5c7cd99cd97169fc0efc25e75008fd512ebc53125c"
+  },
+  {
+    "bytes": 1927,
+    "description": "Agent-visible source task projection, separate from evaluator metadata.",
+    "materialized": true,
+    "path": "zenithsync/source_task.py",
+    "sha256": "48da8bb410ffb9b1460f7c9040bb0bf63dca98eb5d0e0604ebecd39067f48be2"
+  },
+  {
+    "bytes": 6778,
+    "description": "Project source task identities without exporting reference fixes or tests.\n\nThese records describe publisher metadata, not verified runnable environments.\nImage tags remain untrusted mutable references until resolved and inspected.",
+    "materialized": true,
+    "path": "zenithsync/source_task_metadata.py",
+    "sha256": "90952fd4050dce7e93cf59fe2d7e01151f7079af9e6b148c74e362948c590639"
+  },
+  {
+    "bytes": 2215,
+    "description": "Conservative review hints for Python test snippets, never admission decisions.\n\nOnly supplied Python text is parsed. No code executes and no correctness claim\nis inferred from missing findings. Locations refer to the original snippet.",
+    "materialized": true,
+    "path": "zenithsync/source_test_risk.py",
+    "sha256": "73053a819ccdcce56edf2cd5e84650c08761c6b25b6c0c1e57d97262590c480e"
+  },
+  {
+    "bytes": 3672,
+    "description": "Prepare a qualified source snapshot for native /workspace tool semantics.",
+    "materialized": true,
+    "path": "zenithsync/source_workspace.py",
+    "sha256": "7fa0f77a4f5a88565d891ea14fc7a47024d41cc82d31e49020591dd9d06924fd"
+  },
+  {
+    "bytes": 5437,
+    "description": "Validate declared split isolation; semantic contamination needs a later audit.",
+    "materialized": true,
+    "path": "zenithsync/splits.py",
+    "sha256": "21442d623a8bd31f4156bfcf13c395a42ebfdbdd78f5f14d954fde5a87819909"
+  },
+  {
+    "bytes": 3057,
+    "description": "Compare bounded mypy text diagnostics without conflating existing and new errors.\n\nThis supports the explicit noncolored, error-code-bearing mypy output profile\nused by our offline evaluator. Unknown output or inconsistent exit status rejects.\nIt does not infer runtime correctness or approve a training example.",
+    "materialized": true,
+    "path": "zenithsync/static_controls.py",
+    "sha256": "a876eafa87cfeb7d3cf021b337fe6a6757e9d6ddaff3073db94f76510fe7a796"
+  },
+  {
+    "bytes": 6539,
+    "description": "Plan explicit scratch cleanup only when tracked repair bytes already agree.\n\nThis module never deletes files, stages changes, executes a source command, or\napproves a training example. The caller must expose any subsequent cleanup as\nan adapter-authored native action and reverify the submitted patch afterward.",
+    "materialized": true,
+    "path": "zenithsync/submission_reconciliation.py",
+    "sha256": "9a5c4b69b34ea1af7cfb44e1812d7c389474ec825707861a64bbba166caa53fb"
+  },
+  {
+    "bytes": 10446,
+    "description": "Consistency checks for assistant-authored native trajectories.\n\nSynthetic captures retain their own provenance; they are never relabeled as\nteacher replays. Passing these checks does not authorize training.",
+    "materialized": true,
+    "path": "zenithsync/synthetic_admission.py",
+    "sha256": "86d65816b69caa5a07666721b57471423feffefadde544661f6baebe5b8950a1"
+  },
+  {
+    "bytes": 3491,
+    "description": "Strict official-task projection: evaluator patches never enter agent inputs.",
+    "materialized": true,
+    "path": "zenithsync/task_intake.py",
+    "sha256": "aa0590f0dafad1affbb35fa94111ab7ed174148cc2f5a0541c49509e08b93b3d"
+  },
+  {
+    "bytes": 2659,
+    "description": "Independent, strict grammar check for two-string native Gemma write calls.\n\nDiagnostic only: not a replacement production parser. Inputs containing native\ndelimiter tokens as literal file content are outside this experiment's grammar.",
+    "materialized": true,
+    "path": "zenithsync/tool_diagnostic.py",
+    "sha256": "3b30af22cb1035c16849b7e144489de83c2c4e420053f2a1942d24435ceb9d4d"
+  },
+  {
+    "bytes": 2486,
+    "description": "Validated right-padding for independently masked causal training examples.\n\nNo truncation or concatenation: examples remain separate attention sequences.\nLoss normalization counts supervised next-token targets, not padded positions.",
+    "materialized": true,
+    "path": "zenithsync/training_batch.py",
+    "sha256": "95a10c81a73134f5834f922b3ff9996ef73509569c5e211f3043f7366a3210d4"
+  },
+  {
+    "bytes": 16571,
+    "description": "Hash-bound corpus loading; integrity checks are separate from training admission.\n\nReceipts are local reviewed evidence, not cryptographic proof of their truth.\nOperate on a quiescent, owned directory, not an adversarial concurrent filesystem.",
+    "materialized": true,
+    "path": "zenithsync/training_corpus.py",
+    "sha256": "4d43ee5dd982ef3b771ad65289f5327bc94a107614fcff4505b5433a95213a92"
+  },
+  {
+    "bytes": 1736,
+    "description": "Native-tokenized qualification input, explicitly separate from training data.",
+    "materialized": true,
+    "path": "zenithsync/training_fixture.py",
+    "sha256": "6eab062cfd347cebbf563579c6e656f200f2c838a035fc279fe39152fe0b8f2f"
+  },
+  {
+    "bytes": 5635,
+    "description": "Instrument the supplied Gemma template without changing rendered content.\n\nOnly this audited template layout is supported. Generation annotations label\nassistant reasoning/calls/content and terminal markers, never tool results.",
+    "materialized": true,
+    "path": "zenithsync/training_masks.py",
+    "sha256": "abbe999aad5b4ff0488cd219364dfcea6f60797b7b5f949051b221ba8d3aadb1"
+  },
+  {
+    "bytes": 8161,
+    "description": "One-update qualification engine; not a corpus trainer or performance claim.",
+    "materialized": true,
+    "path": "zenithsync/training_pilot.py",
+    "sha256": "c7736c5223befe654a6d2e7b2cc42fa4ced02095d5d0ee46ed9a04abedfaf534"
+  },
+  {
+    "bytes": 4402,
+    "description": "Process RNG checkpoints for quiescent CPU or CUDA training.\n\nIncludes Python, NumPy's legacy global generator, and Torch global generators.\nCustom Generator objects and data-loader workers require their own checkpoints.\nRestoration must occur after model/optimizer construction and before training.",
+    "materialized": true,
+    "path": "zenithsync/training_rng.py",
+    "sha256": "874a35cf1636cae5cffce8cbf5fe12e2fc6ba777a4a0b7b729ab76cce1569022"
+  },
+  {
+    "bytes": 5724,
+    "description": "Deterministic whole-example updates with exact supervised-token accounting.\n\nHash ordering is a reproducible shuffle rule, not a claim of statistical\nindependence. Repeated epochs are repeated exposures, not new training data.",
+    "materialized": true,
+    "path": "zenithsync/training_schedule.py",
+    "sha256": "cca3d519b633757b6815e1c63a88a174b2f1cdf205ce689b88f8f41cda15ff91"
+  },
+  {
+    "bytes": 5817,
+    "description": "Single-process corpus training with explicit budgets and durable update boundaries.\n\nThe caller constructs and verifies the model/runtime and uses an external hard\ndeadline supervisor. This loop's wall limit is checked only between updates.",
+    "materialized": true,
+    "path": "zenithsync/training_session.py",
+    "sha256": "85859118ea8b562c1c92fd873a9319f869ac242c384cc428e19b0c613d568fac"
+  },
+  {
+    "bytes": 3043,
+    "description": "Bounded-copy state fingerprints for quiescent, single-process training.\n\nThese fingerprints detect byte changes; they do not establish numerical quality.\nCall only between completed model operations, with no concurrent state writers.",
+    "materialized": true,
+    "path": "zenithsync/training_state.py",
+    "sha256": "20f803e4d9015e566b776b0f6d867460254ba7109dabf2bf640c73c6538da43a"
+  },
+  {
+    "bytes": 3456,
+    "description": "Strict SWE-Hero serialization conversion; not a tool-semantic adapter.\n\nResponse linkage is inferred only from a single outstanding source call.\nInferred linkage never establishes that a command ran or an issue was solved.",
+    "materialized": true,
+    "path": "zenithsync/trajectory_import.py",
+    "sha256": "01b2a5f21185774846d22e92135d1a3a1e24513d96913be7c1fbe6dcfe72cf42"
+  },
+  {
+    "bytes": 3080,
+    "description": "Retain transfer receipts outside the immutable artifacts they describe.\n\nUse quiescent, owned directories. Receipt contents are audit evidence, not\ncryptographic proof of a remote service; both local trees are verified here.",
+    "materialized": true,
+    "path": "zenithsync/transfer_evidence.py",
+    "sha256": "62de18f39f763d7292f97f9c39303a7e369ad5844a8c7bd80d51d9f6f8b18918"
+  },
+  {
+    "bytes": 10952,
+    "description": "Bind synthetic captures, publisher controls, content review and token audits.\n\nMechanical qualification never changes a corpus or grants training approval.",
+    "materialized": true,
+    "path": "zenithsync/v2_synthetic_admission.py",
+    "sha256": "04dd210d46ad72b727db507b55bf40eb4a9672caf0134a660bf184b8dce050a2"
+  },
+  {
+    "bytes": 5006,
+    "materialized": false,
+    "path": "scripts/acquire_official_wheels.py"
+  },
+  {
+    "bytes": 4494,
+    "materialized": false,
+    "path": "scripts/assemble_training_corpus.py"
+  },
+  {
+    "bytes": 2809,
+    "materialized": false,
+    "path": "scripts/assess_mini_replay.py"
+  },
+  {
+    "bytes": 1470,
+    "materialized": false,
+    "path": "scripts/assess_replay_admission.py"
+  },
+  {
+    "bytes": 6081,
+    "materialized": false,
+    "path": "scripts/audit_action_training.py"
+  },
+  {
+    "bytes": 5319,
+    "materialized": false,
+    "path": "scripts/audit_corpus_action_budget.py"
+  },
+  {
+    "bytes": 4055,
+    "materialized": false,
+    "path": "scripts/audit_exported_optimizer.py"
+  },
+  {
+    "bytes": 6468,
+    "materialized": false,
+    "path": "scripts/audit_issue_duplicates.py"
+  },
+  {
+    "bytes": 2881,
+    "materialized": false,
+    "path": "scripts/audit_issue_similarity.py"
+  },
+  {
+    "bytes": 6267,
+    "materialized": false,
+    "path": "scripts/audit_native_trajectory_masks.py"
+  },
+  {
+    "bytes": 4602,
+    "materialized": false,
+    "path": "scripts/audit_r2_multipart.py"
+  },
+  {
+    "bytes": 4518,
+    "materialized": false,
+    "path": "scripts/audit_replay_history_tokens.py"
+  },
+  {
+    "bytes": 1984,
+    "materialized": false,
+    "path": "scripts/audit_replay_observations.py"
+  },
+  {
+    "bytes": 4399,
+    "materialized": false,
+    "path": "scripts/audit_repository_lineage.py"
+  },
+  {
+    "bytes": 5330,
+    "materialized": false,
+    "path": "scripts/audit_source_expectation_corpus.py"
+  },
+  {
+    "bytes": 3520,
+    "materialized": false,
+    "path": "scripts/audit_source_expectations.py"
+  },
+  {
+    "bytes": 5899,
+    "materialized": false,
+    "path": "scripts/audit_source_task_join.py"
+  },
+  {
+    "bytes": 5673,
+    "materialized": false,
+    "path": "scripts/audit_source_tool_contracts.py"
+  },
+  {
+    "bytes": 5604,
+    "materialized": false,
+    "path": "scripts/audit_swe_rebench_task_join.py"
+  },
+  {
+    "bytes": 5649,
+    "materialized": false,
+    "path": "scripts/audit_training_representation.py"
+  },
+  {
+    "bytes": 5920,
+    "materialized": false,
+    "path": "scripts/audit_trajectory_conversion.py"
+  },
+  {
+    "bytes": 5447,
+    "materialized": false,
+    "path": "scripts/audit_trajectory_metadata.py"
+  },
+  {
+    "bytes": 4431,
+    "materialized": false,
+    "path": "scripts/build_deployment_bundle.py"
+  },
+  {
+    "bytes": 6858,
+    "materialized": false,
+    "path": "scripts/build_mini_replay_history.py"
+  },
+  {
+    "bytes": 9181,
+    "materialized": false,
+    "path": "scripts/build_rebench_replay_history.py"
+  },
+  {
+    "bytes": 4505,
+    "materialized": false,
+    "path": "scripts/build_replay_history.py"
+  },
+  {
+    "bytes": 6756,
+    "materialized": false,
+    "path": "scripts/build_source_snapshot.py"
+  },
+  {
+    "bytes": 5194,
+    "materialized": false,
+    "path": "scripts/capture_replay_rights_material.py"
+  },
+  {
+    "bytes": 1924,
+    "materialized": false,
+    "path": "scripts/capture_snapshot_notices.py"
+  },
+  {
+    "bytes": 6137,
+    "materialized": false,
+    "path": "scripts/census_trajectory_context.py"
+  },
+  {
+    "bytes": 5498,
+    "materialized": false,
+    "path": "scripts/census_trajectory_corpus.py"
+  },
+  {
+    "bytes": 1518,
+    "materialized": false,
+    "path": "scripts/compare_evaluations.py"
+  },
+  {
+    "bytes": 5854,
+    "materialized": false,
+    "path": "scripts/compare_source_snapshot.py"
+  },
+  {
+    "bytes": 3504,
+    "materialized": false,
+    "path": "scripts/compare_tornado_snapshot.py"
+  },
+  {
+    "bytes": 2196,
+    "materialized": false,
+    "path": "scripts/evaluator_source_plugin.py"
+  },
+  {
+    "bytes": 4670,
+    "materialized": false,
+    "path": "scripts/extract_rebench_evaluator_input.py"
+  },
+  {
+    "bytes": 7872,
+    "materialized": false,
+    "path": "scripts/grade_rebench_replay.py"
+  },
+  {
+    "bytes": 6661,
+    "materialized": false,
+    "path": "scripts/grade_replayed_patch.py"
+  },
+  {
+    "bytes": 5874,
+    "materialized": false,
+    "path": "scripts/grade_source_attempt.py"
+  },
+  {
+    "bytes": 5199,
+    "materialized": false,
+    "path": "scripts/grade_swe_rebench_patch.py"
+  },
+  {
+    "bytes": 254,
+    "materialized": false,
+    "path": "scripts/grade_tornado_teacher.py"
+  },
+  {
+    "bytes": 1496,
+    "materialized": false,
+    "path": "scripts/inspect_training_corpus.py"
+  },
+  {
+    "bytes": 6385,
+    "materialized": false,
+    "path": "scripts/intake_public_trajectory_source.py"
+  },
+  {
+    "bytes": 4148,
+    "materialized": false,
+    "path": "scripts/merge_source_token_screens.py"
+  },
+  {
+    "bytes": 2660,
+    "materialized": false,
+    "path": "scripts/plan_corpus_updates.py"
+  },
+  {
+    "bytes": 6120,
+    "materialized": false,
+    "path": "scripts/plan_qualification_batch.py"
+  },
+  {
+    "bytes": 2567,
+    "materialized": false,
+    "path": "scripts/plan_serving.py"
+  },
+  {
+    "bytes": 6506,
+    "materialized": false,
+    "path": "scripts/plan_trajectory_replays.py"
+  },
+  {
+    "bytes": 4913,
+    "materialized": false,
+    "path": "scripts/prepare_rebench_baseline.py"
+  },
+  {
+    "bytes": 5761,
+    "materialized": false,
+    "path": "scripts/prepare_source_task.py"
+  },
+  {
+    "bytes": 4678,
+    "materialized": false,
+    "path": "scripts/prepare_training_deployment.py"
+  },
+  {
+    "bytes": 4524,
+    "materialized": false,
+    "path": "scripts/prepare_unicode_comparison.py"
+  },
+  {
+    "bytes": 6577,
+    "materialized": false,
+    "path": "scripts/prepare_write_diagnostic.py"
+  },
+  {
+    "bytes": 5680,
+    "materialized": false,
+    "path": "scripts/probe_adapter_cpu.py"
+  },
+  {
+    "bytes": 7540,
+    "materialized": false,
+    "path": "scripts/probe_compaction_runner.py"
+  },
+  {
+    "bytes": 7311,
+    "materialized": false,
+    "path": "scripts/probe_compressed_gemma_loader.py"
+  },
+  {
+    "bytes": 6408,
+    "materialized": false,
+    "path": "scripts/probe_evaluator_source.py"
+  },
+  {
+    "bytes": 4141,
+    "materialized": false,
+    "path": "scripts/probe_gemma_parser.py"
+  },
+  {
+    "bytes": 8716,
+    "materialized": false,
+    "path": "scripts/probe_gemma_training_cpu.py"
+  },
+  {
+    "bytes": 3641,
+    "materialized": false,
+    "path": "scripts/probe_generated_write.py"
+  },
+  {
+    "bytes": 5812,
+    "materialized": false,
+    "path": "scripts/probe_harness_compaction.py"
+  },
+  {
+    "bytes": 1915,
+    "materialized": false,
+    "path": "scripts/probe_http_stack.py"
+  },
+  {
+    "bytes": 4633,
+    "materialized": false,
+    "path": "scripts/probe_inference.py"
+  },
+  {
+    "bytes": 10580,
+    "materialized": false,
+    "path": "scripts/probe_native_source_transport.py"
+  },
+  {
+    "bytes": 6285,
+    "materialized": false,
+    "path": "scripts/probe_native_training_batch.py"
+  },
+  {
+    "bytes": 10838,
+    "materialized": false,
+    "path": "scripts/probe_observation_recovery.py"
+  },
+  {
+    "bytes": 7941,
+    "materialized": false,
+    "path": "scripts/probe_observation_sandbox.py"
+  },
+  {
+    "bytes": 4948,
+    "materialized": false,
+    "path": "scripts/probe_observation_skill.py"
+  },
+  {
+    "bytes": 3766,
+    "materialized": false,
+    "path": "scripts/probe_serving_runtime.py"
+  },
+  {
+    "bytes": 4104,
+    "materialized": false,
+    "path": "scripts/probe_source_image.py"
+  },
+  {
+    "bytes": 5261,
+    "materialized": false,
+    "path": "scripts/probe_source_workspace.py"
+  },
+  {
+    "bytes": 4015,
+    "materialized": false,
+    "path": "scripts/probe_swe_rebench_image.py"
+  },
+  {
+    "bytes": 3380,
+    "materialized": false,
+    "path": "scripts/probe_training_pilot_cpu.py"
+  },
+  {
+    "bytes": 8030,
+    "materialized": false,
+    "path": "scripts/qualify_maven_compile_replay.py"
+  },
+  {
+    "bytes": 18578,
+    "description": "Qualify selected V2 Python base/reference controls in offline containers.",
+    "materialized": true,
+    "path": "scripts/qualify_rebench_v2.py",
+    "sha256": "296c2d70cd5f5a668b98cf85f2df6d73b22341e46409352ed6d71a2f7dd6fe58"
+  },
+  {
+    "bytes": 3667,
+    "materialized": false,
+    "path": "scripts/qualify_source_evaluator.py"
+  },
+  {
+    "bytes": 11151,
+    "materialized": false,
+    "path": "scripts/qualify_swe_rebench_evaluator.py"
+  },
+  {
+    "bytes": 5127,
+    "materialized": false,
+    "path": "scripts/qualify_tornado_evaluator.py"
+  },
+  {
+    "bytes": 12482,
+    "materialized": false,
+    "path": "scripts/replay_mini_source.py"
+  },
+  {
+    "bytes": 27878,
+    "materialized": false,
+    "path": "scripts/replay_source_teacher.py"
+  },
+  {
+    "bytes": 331,
+    "materialized": false,
+    "path": "scripts/replay_tornado_teacher.py"
+  },
+  {
+    "bytes": 8671,
+    "materialized": false,
+    "path": "scripts/resolve_source_environments.py"
+  },
+  {
+    "bytes": 4235,
+    "materialized": false,
+    "path": "scripts/resolve_swe_rebench_images.py"
+  },
+  {
+    "bytes": 5732,
+    "materialized": false,
+    "path": "scripts/review_budget_rebench_tasks.py"
+  },
+  {
+    "bytes": 1588,
+    "materialized": false,
+    "path": "scripts/review_python_test_source.py"
+  },
+  {
+    "bytes": 5249,
+    "materialized": false,
+    "path": "scripts/review_swe_rebench_teacher.py"
+  },
+  {
+    "bytes": 5279,
+    "description": "Deadline-supervised corpus training; never starts or stops a Runpod Pod.",
+    "materialized": true,
+    "path": "scripts/run_corpus_training.py",
+    "sha256": "9c72710c42e2124bb0991a72ddda19918f69fc2c409ad42468d547960dd53b06"
+  },
+  {
+    "bytes": 10680,
+    "materialized": false,
+    "path": "scripts/run_corpus_training_worker.py"
+  },
+  {
+    "bytes": 4590,
+    "materialized": false,
+    "path": "scripts/run_maven_grade_probe.py"
+  },
+  {
+    "bytes": 7870,
+    "materialized": false,
+    "path": "scripts/run_p1_repair.py"
+  },
+  {
+    "bytes": 5326,
+    "materialized": false,
+    "path": "scripts/run_p1_server.py"
+  },
+  {
+    "bytes": 3581,
+    "materialized": false,
+    "path": "scripts/run_p1_training.py"
+  },
+  {
+    "bytes": 7117,
+    "materialized": false,
+    "path": "scripts/run_p1_training_worker.py"
+  },
+  {
+    "bytes": 7861,
+    "materialized": false,
+    "path": "scripts/run_rebench_controls.py"
+  },
+  {
+    "bytes": 11433,
+    "materialized": false,
+    "path": "scripts/run_source_task.py"
+  },
+  {
+    "bytes": 8492,
+    "materialized": false,
+    "path": "scripts/run_write_diagnostic.py"
+  },
+  {
+    "bytes": 2249,
+    "materialized": false,
+    "path": "scripts/screen_corpus_credentials.py"
+  },
+  {
+    "bytes": 2374,
+    "materialized": false,
+    "path": "scripts/screen_issue_credentials.py"
+  },
+  {
+    "bytes": 7410,
+    "materialized": false,
+    "path": "scripts/screen_source_token_cost.py"
+  },
+  {
+    "bytes": 3429,
+    "materialized": false,
+    "path": "scripts/select_budget_rebench_tasks.py"
+  },
+  {
+    "bytes": 5116,
+    "materialized": false,
+    "path": "scripts/transfer_artifact.py"
+  },
+  {
+    "bytes": 4621,
+    "materialized": false,
+    "path": "scripts/verify_architecture_layout.py"
+  },
+  {
+    "bytes": 3152,
+    "materialized": false,
+    "path": "scripts/verify_conversation.py"
+  },
+  {
+    "bytes": 5219,
+    "materialized": false,
+    "path": "scripts/verify_gemma_causal_projection.py"
+  },
+  {
+    "bytes": 4773,
+    "materialized": false,
+    "path": "scripts/verify_graph_retrieval.py"
+  },
+  {
+    "bytes": 10196,
+    "materialized": false,
+    "path": "scripts/verify_linux_r0.py"
+  },
+  {
+    "bytes": 2748,
+    "materialized": false,
+    "path": "scripts/verify_model_storage.py"
+  },
+  {
+    "bytes": 3605,
+    "materialized": false,
+    "path": "scripts/verify_model_text_boundary.py"
+  },
+  {
+    "bytes": 7928,
+    "materialized": false,
+    "path": "scripts/verify_official_r0.py"
+  },
+  {
+    "bytes": 9056,
+    "materialized": false,
+    "path": "scripts/verify_p1_repair.py"
+  },
+  {
+    "bytes": 8048,
+    "materialized": false,
+    "path": "scripts/verify_pilot_environment.py"
+  },
+  {
+    "bytes": 4134,
+    "materialized": false,
+    "path": "scripts/verify_pilot_snapshot.py"
+  },
+  {
+    "bytes": 3517,
+    "materialized": false,
+    "path": "scripts/verify_quantized_layout.py"
+  },
+  {
+    "bytes": 4191,
+    "materialized": false,
+    "path": "scripts/verify_r0.py"
+  },
+  {
+    "bytes": 4664,
+    "materialized": false,
+    "path": "scripts/verify_r2_transport.py"
+  },
+  {
+    "bytes": 4314,
+    "materialized": false,
+    "path": "scripts/verify_serving_wheels.py"
+  },
+  {
+    "bytes": 4472,
+    "materialized": false,
+    "path": "scripts/verify_source_http_client.py"
+  },
+  {
+    "bytes": 4522,
+    "materialized": false,
+    "path": "scripts/verify_source_runner_lifecycle.py"
+  },
+  {
+    "bytes": 5024,
+    "materialized": false,
+    "path": "scripts/verify_source_snapshot.py"
+  },
+  {
+    "bytes": 7001,
+    "materialized": false,
+    "path": "scripts/verify_tokenizer.py"
+  },
+  {
+    "bytes": 6393,
+    "materialized": false,
+    "path": "scripts/verify_training_masks.py"
+  },
+  {
+    "bytes": 6380,
+    "materialized": false,
+    "path": "scripts/verify_weight_numerics.py"
+  },
+  {
+    "bytes": 4116,
+    "materialized": false,
+    "path": "tests/test_action_training.py"
+  },
+  {
+    "bytes": 6375,
+    "materialized": false,
+    "path": "tests/test_adapter_checkpoint.py"
+  },
+  {
+    "bytes": 5614,
+    "materialized": false,
+    "path": "tests/test_amendment_admission.py"
+  },
+  {
+    "bytes": 2265,
+    "materialized": false,
+    "path": "tests/test_architecture_layout.py"
+  },
+  {
+    "bytes": 1258,
+    "materialized": false,
+    "path": "tests/test_artifact_file_record.py"
+  },
+  {
+    "bytes": 6504,
+    "materialized": false,
+    "path": "tests/test_checkpoint_storage.py"
+  },
+  {
+    "bytes": 5193,
+    "materialized": false,
+    "path": "tests/test_completion_admission.py"
+  },
+  {
+    "bytes": 1465,
+    "materialized": false,
+    "path": "tests/test_container_cleanup.py"
+  },
+  {
+    "bytes": 1082,
+    "materialized": false,
+    "path": "tests/test_context_census.py"
+  },
+  {
+    "bytes": 3297,
+    "materialized": false,
+    "path": "tests/test_conversation.py"
+  },
+  {
+    "bytes": 6658,
+    "materialized": false,
+    "path": "tests/test_corpus_assembly.py"
+  },
+  {
+    "bytes": 3298,
+    "materialized": false,
+    "path": "tests/test_corpus_credentials.py"
+  },
+  {
+    "bytes": 3280,
+    "materialized": false,
+    "path": "tests/test_corpus_gemma_torch.py"
+  },
+  {
+    "bytes": 5720,
+    "materialized": false,
+    "path": "tests/test_corpus_optimization.py"
+  },
+  {
+    "bytes": 3025,
+    "materialized": false,
+    "path": "tests/test_corpus_run.py"
+  },
+  {
+    "bytes": 6012,
+    "materialized": false,
+    "path": "tests/test_corpus_training.py"
+  },
+  {
+    "bytes": 2177,
+    "materialized": false,
+    "path": "tests/test_deadline.py"
+  },
+  {
+    "bytes": 1711,
+    "materialized": false,
+    "path": "tests/test_editor_preflight.py"
+  },
+  {
+    "bytes": 4539,
+    "materialized": false,
+    "path": "tests/test_evaluation.py"
+  },
+  {
+    "bytes": 2550,
+    "materialized": false,
+    "path": "tests/test_evaluator_source_plugin.py"
+  },
+  {
+    "bytes": 14488,
+    "materialized": false,
+    "path": "tests/test_foundation.py"
+  },
+  {
+    "bytes": 3202,
+    "materialized": false,
+    "path": "tests/test_gemma_training_torch.py"
+  },
+  {
+    "bytes": 1983,
+    "materialized": false,
+    "path": "tests/test_gemma_trajectory.py"
+  },
+  {
+    "bytes": 6354,
+    "materialized": false,
+    "path": "tests/test_go_test_controls.py"
+  },
+  {
+    "bytes": 3738,
+    "materialized": false,
+    "path": "tests/test_gpu_memory.py"
+  },
+  {
+    "bytes": 6236,
+    "materialized": false,
+    "path": "tests/test_inference_capture.py"
+  },
+  {
+    "bytes": 2575,
+    "materialized": false,
+    "path": "tests/test_inference_probe.py"
+  },
+  {
+    "bytes": 4476,
+    "materialized": false,
+    "path": "tests/test_issue_contract.py"
+  },
+  {
+    "bytes": 1502,
+    "materialized": false,
+    "path": "tests/test_issue_duplicates.py"
+  },
+  {
+    "bytes": 5144,
+    "materialized": false,
+    "path": "tests/test_issue_similarity.py"
+  },
+  {
+    "bytes": 2207,
+    "materialized": false,
+    "path": "tests/test_issue_similarity_cli.py"
+  },
+  {
+    "bytes": 8346,
+    "materialized": false,
+    "path": "tests/test_junit_controls.py"
+  },
+  {
+    "bytes": 4404,
+    "materialized": false,
+    "path": "tests/test_leakage_merge.py"
+  },
+  {
+    "bytes": 8065,
+    "materialized": false,
+    "path": "tests/test_matrix_admission_evidence.py"
+  },
+  {
+    "bytes": 5102,
+    "materialized": false,
+    "path": "tests/test_matrix_grade_evidence.py"
+  },
+  {
+    "bytes": 5250,
+    "description": "Synthetic programs and receipts exercise probe substitution rejection.",
+    "materialized": true,
+    "path": "tests/test_matrix_probe_contract.py",
+    "sha256": "0f71d74209bc65d080cf9f0abd58569f6180fa6dc964d804ae96586086c66d1a"
+  },
+  {
+    "bytes": 6403,
+    "materialized": false,
+    "path": "tests/test_maven_compile_controls.py"
+  },
+  {
+    "bytes": 8740,
+    "materialized": false,
+    "path": "tests/test_maven_grade_bundle.py"
+  },
+  {
+    "bytes": 19321,
+    "materialized": false,
+    "path": "tests/test_mini_replay_admission.py"
+  },
+  {
+    "bytes": 7095,
+    "materialized": false,
+    "path": "tests/test_mini_replay_amendment.py"
+  },
+  {
+    "bytes": 3043,
+    "materialized": false,
+    "path": "tests/test_mini_replay_history.py"
+  },
+  {
+    "bytes": 3631,
+    "materialized": false,
+    "path": "tests/test_mini_source_history.py"
+  },
+  {
+    "bytes": 5917,
+    "materialized": false,
+    "path": "tests/test_mocha_controls.py"
+  },
+  {
+    "bytes": 4028,
+    "materialized": false,
+    "path": "tests/test_model_intake.py"
+  },
+  {
+    "bytes": 10503,
+    "materialized": false,
+    "path": "tests/test_object_store.py"
+  },
+  {
+    "bytes": 3264,
+    "materialized": false,
+    "path": "tests/test_offline_resources.py"
+  },
+  {
+    "bytes": 3817,
+    "materialized": false,
+    "path": "tests/test_optimizer_checkpoint_torch.py"
+  },
+  {
+    "bytes": 3975,
+    "materialized": false,
+    "path": "tests/test_p1_server.py"
+  },
+  {
+    "bytes": 2348,
+    "materialized": false,
+    "path": "tests/test_probe_receipt.py"
+  },
+  {
+    "bytes": 4787,
+    "materialized": false,
+    "path": "tests/test_process_supervisor.py"
+  },
+  {
+    "bytes": 2267,
+    "materialized": false,
+    "path": "tests/test_public_source_download.py"
+  },
+  {
+    "bytes": 3753,
+    "materialized": false,
+    "path": "tests/test_pytest_applicability.py"
+  },
+  {
+    "bytes": 5342,
+    "materialized": false,
+    "path": "tests/test_pytest_controls.py"
+  },
+  {
+    "bytes": 6889,
+    "materialized": false,
+    "path": "tests/test_pytest_matrix.py"
+  },
+  {
+    "bytes": 3193,
+    "materialized": false,
+    "path": "tests/test_qualification_sampling.py"
+  },
+  {
+    "bytes": 3433,
+    "materialized": false,
+    "path": "tests/test_quantized_layout.py"
+  },
+  {
+    "bytes": 4587,
+    "materialized": false,
+    "path": "tests/test_rebench_control_profile.py"
+  },
+  {
+    "bytes": 4296,
+    "materialized": false,
+    "path": "tests/test_rebench_grade_evidence.py"
+  },
+  {
+    "bytes": 765,
+    "materialized": false,
+    "path": "tests/test_rebench_replay_grader.py"
+  },
+  {
+    "bytes": 4190,
+    "materialized": false,
+    "path": "tests/test_rebench_snapshot_controls.py"
+  },
+  {
+    "bytes": 10434,
+    "materialized": false,
+    "path": "tests/test_rebench_source_snapshots.py"
+  },
+  {
+    "bytes": 7869,
+    "materialized": false,
+    "path": "tests/test_rebench_v2_profile.py"
+  },
+  {
+    "bytes": 7118,
+    "materialized": false,
+    "path": "tests/test_replay_admission.py"
+  },
+  {
+    "bytes": 13248,
+    "materialized": false,
+    "path": "tests/test_replay_amendment.py"
+  },
+  {
+    "bytes": 4058,
+    "materialized": false,
+    "path": "tests/test_replay_completion.py"
+  },
+  {
+    "bytes": 5245,
+    "materialized": false,
+    "path": "tests/test_replay_correction.py"
+  },
+  {
+    "bytes": 1714,
+    "materialized": false,
+    "path": "tests/test_replay_history.py"
+  },
+  {
+    "bytes": 4490,
+    "materialized": false,
+    "path": "tests/test_replay_noop.py"
+  },
+  {
+    "bytes": 2194,
+    "materialized": false,
+    "path": "tests/test_replay_observations.py"
+  },
+  {
+    "bytes": 1773,
+    "materialized": false,
+    "path": "tests/test_replay_resources.py"
+  },
+  {
+    "bytes": 1150,
+    "materialized": false,
+    "path": "tests/test_replay_selection.py"
+  },
+  {
+    "bytes": 1105,
+    "materialized": false,
+    "path": "tests/test_repository_lineage.py"
+  },
+  {
+    "bytes": 3683,
+    "materialized": false,
+    "path": "tests/test_resource_replay_binding.py"
+  },
+  {
+    "bytes": 4744,
+    "materialized": false,
+    "path": "tests/test_review_coverage.py"
+  },
+  {
+    "bytes": 2183,
+    "materialized": false,
+    "path": "tests/test_serving.py"
+  },
+  {
+    "bytes": 2542,
+    "materialized": false,
+    "path": "tests/test_serving_wheels.py"
+  },
+  {
+    "bytes": 4635,
+    "materialized": false,
+    "path": "tests/test_session_report.py"
+  },
+  {
+    "bytes": 5563,
+    "materialized": false,
+    "path": "tests/test_session_resource_bundle.py"
+  },
+  {
+    "bytes": 4799,
+    "materialized": false,
+    "path": "tests/test_session_resource_replay.py"
+  },
+  {
+    "bytes": 2282,
+    "materialized": false,
+    "path": "tests/test_source_base.py"
+  },
+  {
+    "bytes": 2182,
+    "materialized": false,
+    "path": "tests/test_source_bytes.py"
+  },
+  {
+    "bytes": 5311,
+    "materialized": false,
+    "path": "tests/test_source_capture.py"
+  },
+  {
+    "bytes": 5435,
+    "materialized": false,
+    "path": "tests/test_source_credentials.py"
+  },
+  {
+    "bytes": 3956,
+    "materialized": false,
+    "path": "tests/test_source_environment_resolution.py"
+  },
+  {
+    "bytes": 1749,
+    "materialized": false,
+    "path": "tests/test_source_evaluator.py"
+  },
+  {
+    "bytes": 1201,
+    "materialized": false,
+    "path": "tests/test_source_expectation_corpus.py"
+  },
+  {
+    "bytes": 2419,
+    "materialized": false,
+    "path": "tests/test_source_imports.py"
+  },
+  {
+    "bytes": 3745,
+    "materialized": false,
+    "path": "tests/test_source_local_commands.py"
+  },
+  {
+    "bytes": 2920,
+    "materialized": false,
+    "path": "tests/test_source_observations.py"
+  },
+  {
+    "bytes": 2249,
+    "materialized": false,
+    "path": "tests/test_source_pytest_paths.py"
+  },
+  {
+    "bytes": 4828,
+    "materialized": false,
+    "path": "tests/test_source_search_replay.py"
+  },
+  {
+    "bytes": 7378,
+    "materialized": false,
+    "path": "tests/test_source_snapshot.py"
+  },
+  {
+    "bytes": 3056,
+    "materialized": false,
+    "path": "tests/test_source_subdirectory_commands.py"
+  },
+  {
+    "bytes": 1151,
+    "materialized": false,
+    "path": "tests/test_source_task.py"
+  },
+  {
+    "bytes": 6544,
+    "materialized": false,
+    "path": "tests/test_source_task_metadata.py"
+  },
+  {
+    "bytes": 906,
+    "materialized": false,
+    "path": "tests/test_source_test_platform.py"
+  },
+  {
+    "bytes": 3560,
+    "materialized": false,
+    "path": "tests/test_source_test_risk.py"
+  },
+  {
+    "bytes": 2121,
+    "materialized": false,
+    "path": "tests/test_source_token_screen.py"
+  },
+  {
+    "bytes": 790,
+    "materialized": false,
+    "path": "tests/test_source_tool_contracts.py"
+  },
+  {
+    "bytes": 2221,
+    "materialized": false,
+    "path": "tests/test_static_controls.py"
+  },
+  {
+    "bytes": 4914,
+    "materialized": false,
+    "path": "tests/test_submission_reconciliation.py"
+  },
+  {
+    "bytes": 7946,
+    "description": "(No module docstring; inspect source.)",
+    "materialized": true,
+    "path": "tests/test_synthetic_admission.py",
+    "sha256": "aa164f3c409b54d78c2fcfd04839b469075d0a6de4c7b46463a673322934dba2"
+  },
+  {
+    "bytes": 3252,
+    "materialized": false,
+    "path": "tests/test_task_alignment.py"
+  },
+  {
+    "bytes": 2801,
+    "materialized": false,
+    "path": "tests/test_task_intake.py"
+  },
+  {
+    "bytes": 9653,
+    "materialized": false,
+    "path": "tests/test_teacher_replay_profile.py"
+  },
+  {
+    "bytes": 1606,
+    "materialized": false,
+    "path": "tests/test_terminal_training_history.py"
+  },
+  {
+    "bytes": 2205,
+    "materialized": false,
+    "path": "tests/test_tool_diagnostic.py"
+  },
+  {
+    "bytes": 1678,
+    "materialized": false,
+    "path": "tests/test_training_batch.py"
+  },
+  {
+    "bytes": 9976,
+    "materialized": false,
+    "path": "tests/test_training_corpus.py"
+  },
+  {
+    "bytes": 3292,
+    "materialized": false,
+    "path": "tests/test_training_pilot_torch.py"
+  },
+  {
+    "bytes": 5319,
+    "materialized": false,
+    "path": "tests/test_training_rng.py"
+  },
+  {
+    "bytes": 2558,
+    "materialized": false,
+    "path": "tests/test_training_schedule.py"
+  },
+  {
+    "bytes": 6934,
+    "materialized": false,
+    "path": "tests/test_training_session.py"
+  },
+  {
+    "bytes": 3405,
+    "materialized": false,
+    "path": "tests/test_training_state_torch.py"
+  },
+  {
+    "bytes": 1980,
+    "materialized": false,
+    "path": "tests/test_training_volume.py"
+  },
+  {
+    "bytes": 2961,
+    "materialized": false,
+    "path": "tests/test_trajectory_corpus_census.py"
+  },
+  {
+    "bytes": 2577,
+    "materialized": false,
+    "path": "tests/test_trajectory_import.py"
+  },
+  {
+    "bytes": 3584,
+    "materialized": false,
+    "path": "tests/test_trajectory_metadata_audit.py"
+  },
+  {
+    "bytes": 4393,
+    "materialized": false,
+    "path": "tests/test_transfer_evidence.py"
+  },
+  {
+    "bytes": 11833,
+    "description": "(No module docstring; inspect source.)",
+    "materialized": true,
+    "path": "tests/test_v2_synthetic_admission.py",
+    "sha256": "f2bfd00e1a245592acd061280833d6567b38e5efd30c5833c63d799db82cd496"
+  },
+  {
+    "bytes": 2720,
+    "materialized": false,
+    "path": "tests/test_weight_numerics.py"
+  },
+  {
+    "bytes": 3030,
+    "materialized": false,
+    "path": "tests/test_worker_architecture.py"
+  },
+  {
+    "bytes": 558,
+    "materialized": true,
+    "path": "configs/Dockerfile.p1-evaluator-http",
+    "sha256": "65df1b23a6b548708b952b676e9e148c51998fdeaa0f93aec595498d65d5fe44"
+  },
+  {
+    "bytes": 206,
+    "materialized": true,
+    "path": "configs/Dockerfile.p1-evaluator-http.dockerignore",
+    "sha256": "3eb59b1fa84a256e6f59e268cf1dbbc01432d8a8e42864f97ecbeadf0b844c8e"
+  },
+  {
+    "bytes": 703,
+    "materialized": true,
+    "path": "configs/Dockerfile.p1-http-compatibility",
+    "sha256": "eefa6e3b7ffcc12ec5dc1a243ad642962bcda36d3e761c7d6cee350f245a8405"
+  },
+  {
+    "bytes": 293,
+    "materialized": true,
+    "path": "configs/p1-corpus-qualification.json",
+    "sha256": "b48c008516a0c972d1376f739e191fa614e0e9847ca4339e9f4310199212bd6d"
+  },
+  {
+    "bytes": 7066,
+    "materialized": true,
+    "path": "configs/p1-deployment-files.json",
+    "sha256": "8b2debab7b437212a269a36ea3b2968e0d05f10fa3de357bd825852e491ece22"
+  },
+  {
+    "bytes": 620,
+    "materialized": true,
+    "path": "configs/p1-serving.json",
+    "sha256": "7a74cf688e94fbc7adf0136d934a76becbd23ef3de91858b0401f49851971238"
+  },
+  {
+    "bytes": 899,
+    "materialized": true,
+    "path": "configs/p1-training-pilot.json",
+    "sha256": "064ff24c1a47e999b992e2ae2f458c623351df4fba9c8d9713c1a09ff06904eb"
+  },
+  {
+    "bytes": 959,
+    "materialized": true,
+    "path": "configs/p1-unicode-comparison-file-map.json",
+    "sha256": "3d86c827dafbd52c47b17b6e57b9033a907c17e656b36a1fa9329dc0f3315107"
+  },
+  {
+    "bytes": 871,
+    "materialized": true,
+    "path": "configs/p1-write-diagnostic-file-map.json",
+    "sha256": "c2c9584946e3a53a24d8367262caba9ec01be89b6785be439efd043db1749dbf"
+  },
+  {
+    "bytes": 187,
+    "materialized": false,
+    "path": "requirements/evaluator-http-compatibility.lock.txt"
+  },
+  {
+    "bytes": 2683,
+    "materialized": false,
+    "path": "requirements/evaluator-http-linux-py313.lock.txt"
+  },
+  {
+    "bytes": 147,
+    "materialized": false,
+    "path": "requirements/r2-transport.lock.txt"
+  },
+  {
+    "bytes": 63115,
+    "materialized": false,
+    "path": "requirements/serving-download-linux-py312.lock.txt"
+  },
+  {
+    "bytes": 25432,
+    "materialized": false,
+    "path": "requirements/serving-linux-py312-httpfix.lock.txt"
+  },
+  {
+    "bytes": 25432,
+    "materialized": false,
+    "path": "requirements/serving-linux-py312.lock.txt"
+  },
+  {
+    "bytes": 1540,
+    "materialized": false,
+    "path": "requirements/serving-local.constraints.txt"
+  },
+  {
+    "bytes": 1063,
+    "materialized": false,
+    "path": "requirements/serving-official.constraints.txt"
+  },
+  {
+    "bytes": 421,
+    "materialized": false,
+    "path": "requirements/serving-p1.in"
+  },
+  {
+    "bytes": 480,
+    "materialized": false,
+    "path": "requirements/tokenizer-official-versions.lock.txt"
+  },
+  {
+    "bytes": 480,
+    "materialized": false,
+    "path": "requirements/tokenizer-preflight.lock.txt"
+  },
+  {
+    "bytes": 92,
+    "materialized": false,
+    "path": "requirements/training-peft-supplement.lock.txt"
+  },
+  {
+    "bytes": 49,
+    "materialized": false,
+    "path": "examples/splits.draft.json"
+  },
+  {
+    "bytes": 930,
+    "materialized": true,
+    "path": "candidates/p1-base/README.md",
+    "sha256": "5b14d7fa71ef10e745187269e5a5912be75209c57d30ca3d8d9070284ec1a9d1"
+  },
+  {
+    "bytes": 323,
+    "materialized": true,
+    "path": "candidates/p1-base/agent.yaml",
+    "sha256": "504d63de7169fe7ede22a369051f951af7dbd516c67a5e49fafd4182dbeb274e"
+  },
+  {
+    "bytes": 118,
+    "materialized": true,
+    "path": "candidates/p1-base/configs/sampling.yaml",
+    "sha256": "5cbfd2234e61d97e3a0acf8bb4ed772cc9644472f8c2229b2e4f176368844cbf"
+  },
+  {
+    "bytes": 166,
+    "materialized": true,
+    "path": "candidates/p1-base/eval_config.yaml",
+    "sha256": "b9f910e6983f6f49b8f4c176257d93982d6c8a01f6f3b053c53c693f765b9dda"
+  },
+  {
+    "bytes": 2308,
+    "materialized": true,
+    "path": "candidates/p1-base/prompts/system.md",
+    "sha256": "1c4137aabc3c996f1320156b7c3392e4190ee3803fbed2a0a3a56e849b89fd3d"
+  },
+  {
+    "bytes": 376,
+    "materialized": true,
+    "path": "candidates/p1-observation-memory/agent.yaml",
+    "sha256": "9678c3ffc5991b541acd7d9ad0a99a80078dd451e96b27be8896b29a8bfceaf2"
+  },
+  {
+    "bytes": 118,
+    "materialized": true,
+    "path": "candidates/p1-observation-memory/configs/sampling.yaml",
+    "sha256": "5cbfd2234e61d97e3a0acf8bb4ed772cc9644472f8c2229b2e4f176368844cbf"
+  },
+  {
+    "bytes": 166,
+    "materialized": true,
+    "path": "candidates/p1-observation-memory/eval_config.yaml",
+    "sha256": "b9f910e6983f6f49b8f4c176257d93982d6c8a01f6f3b053c53c693f765b9dda"
+  },
+  {
+    "bytes": 2667,
+    "materialized": true,
+    "path": "candidates/p1-observation-memory/prompts/system.md",
+    "sha256": "43cd22edb684b0eb41ae2ffa9994c05ad9a82ed08516abec43e43ba5fc482e10"
+  },
+  {
+    "bytes": 1685,
+    "materialized": true,
+    "path": "candidates/p1-observation-memory/skills/source-observations/SKILL.md",
+    "sha256": "cfc358586b76d71e02d4ea3bb68a36ccb25218d08e3658c4a7903b5d0e717eff"
+  },
+  {
+    "bytes": 5117,
+    "description": "Source snapshots for context recovery; checksums are integrity, not authenticity.",
+    "materialized": true,
+    "path": "candidates/p1-observation-memory/skills/source-observations/scripts/observe.py",
+    "sha256": "79d696501b8dc26a96a7e0daf8760af8de8997d3c7d1124141a576a769f8b1d0"
+  }
+]

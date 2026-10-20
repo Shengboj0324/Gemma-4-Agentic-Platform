@@ -1,0 +1,1620 @@
+# Existing document map
+
+Documents are versioned narratives; later receipts override earlier status claims.
+Headings below are extracted verbatim. Research 01–18 is not proof of implementation.
+
+## [01-competition-facts.md](../01-competition-facts.md)
+
+- Competition facts and requirements
+- Verified paper requirements
+- Rules affecting execution
+- Organizer clarifications
+- Code competition environment
+- Ambiguities to preserve
+
+## [02-judging-strategy.md](../02-judging-strategy.md)
+
+- Judging strategy and public judge information
+- Equal weights and marginal effort
+- Evidence needed for a strong internal review
+- What is actually known about the judge
+- Questions the paper must withstand
+- Award positioning
+
+## [03-research-positioning.md](../03-research-positioning.md)
+
+- Research positioning and choice of contribution
+- Closest work and novelty boundaries
+- Public competition landscape
+- Options considered
+- Three planned claims
+- Proposed resource
+
+## [04-technical-proposal.md](../04-technical-proposal.md)
+
+- Technical proposal and mathematical checks
+- Task and constraints
+- Evidence construction
+- A tractable selection objective
+- What can be proved
+- What cannot be proved from this formulation
+- Worked selection example
+- Adaptive extension and its cost
+- Optional training direction
+- Planned implementation boundary
+
+## [05-evaluation-protocol.md](../05-evaluation-protocol.md)
+
+- Evaluation protocol and statistical analysis
+- Joint-track evaluation added October 7
+- Data validity before model comparison
+- Split design
+- Prevent reference leakage
+- Baselines and matched conditions
+- Minimum ablations
+- Metrics and denominators
+- Statistical plan
+- Numerical checks with invented observations
+- Claim decisions
+- Required experiment record
+
+## [06-execution-and-resources.md](../06-execution-and-resources.md)
+
+- Execution schedule and resource plan
+- Dated milestones
+- Compute estimates
+- Added code-track resource envelope
+- Hardware feasibility
+- Effort priorities
+- Stop and simplify rules
+
+## [07-paper-and-submission.md](../07-paper-and-submission.md)
+
+- Paper structure and submission plan
+- Argument structure
+- Proposed opening templates
+- Planned tables and figures
+- Rhetorical review
+- Reproducibility package for a later round
+- Final submission checklist
+
+## [08-risks-and-decisions.md](../08-risks-and-decisions.md)
+
+- Risks and decisions
+- Risk register
+- Decision log
+- Questions to resolve without stopping this planning round
+- Organizer questions to draft later
+- Red-team review before freeze
+
+## [09-sources.md](../09-sources.md)
+
+- Source register and verification boundaries
+- Competition and organizer sources
+- Prior research
+- Public competing projects
+- Coverage and limits
+
+## [10-planning-validation.md](../10-planning-validation.md)
+
+- Planning validation and logical back checks
+- Arithmetic checked on October 6
+- Logical checks and corrections
+- Document integrity
+- Next acceptance gate
+- October 7 joint-track revision
+
+## [11-code-track-and-joint-strategy.md](../11-code-track-and-joint-strategy.md)
+
+- Code competition and joint strategy
+- What changes strategically
+- Verified code competition contract
+- New operational evidence
+- Optimize repairs under a shared deadline
+- Reliability has direct score value
+- Implementation sequence for the next round
+- Map the method to permitted capabilities
+- Artifact and release checks
+- Protect the paper while improving the agent
+
+## [12-continuous-implementation-plan.md](../12-continuous-implementation-plan.md)
+
+- Continuous implementation and acceptance plan
+- Cycle structure
+- Phases and exit gates
+- Acceptance and correctness
+- Adjustable variables
+- Required closeout and next cycle
+- R0 local foundation checkpoint — October 7, 2026
+- R0 official contract checkpoint — October 7, 2026
+- R0 Linux acceptance checkpoint — October 7, 2026
+- Data research update — October 8, 2026
+- P1 first GPU session — October 8, 2026
+- P1 local follow-up: final-destination recovery checks
+- P1 local follow-up: actual pytest-process source qualification
+- P1 requirements audit and resource evidence
+- P1 network-dependent evaluator qualification — October 8, 2026
+- P1 clean local repair qualification — October 8, 2026
+- Training representation preflight — October 8, 2026
+- Synthetic CPU adapter qualification — October 8, 2026
+- Reduced Gemma training mechanics — October 8, 2026
+- Native assistant supervision — October 8, 2026
+- Native batching integration — October 8, 2026
+- Compressed BF16 loader qualification — October 8, 2026
+- Full-checkpoint test preparation — October 8, 2026
+- Training supervisor implementation — October 8, 2026
+- Frozen-state audit implementation update
+- Shared adapter qualification engine
+- Full-checkpoint command and native fixture integration
+- Device-wide telemetry and deployable source closure
+- H100 full-checkpoint attempt and setup diagnosis
+- Full-checkpoint H100 one-update qualification passed
+- Optimizer export audit and identity-bound resume contract
+- Pinned public-data quarantine intake
+- Source-history conversion without fabricated tool outcomes
+- Native supervision qualified; long-context admission gap measured
+- Imported-history causal ordering correction
+- Full-shard context measurement and admission decision
+- Competition context configuration and summarizer audit
+- Runner-level compaction reproduction
+- Supported source-observation recovery candidate
+- Actual Docker skill execution and patch isolation
+- Compiled candidate through runner compaction and real skill dispatch
+- Actual Gemma paired development run
+- Corpus tool contracts and success-label qualification
+- Source task metadata recovered
+- Source environment resolution and isolation finding
+- Sanitized source snapshot and reference-control qualification
+- Native source workspace and patch transfer
+- External task packaging and rollout-driver dry-run
+- Actual offline source-runner lifecycle
+- Independent saved-patch grading and bounded native commands
+- Production-client loopback HTTP qualification
+- Source contract census update
+- Tornado runtime qualification update
+- Tornado workspace update
+- First independently graded teacher replay
+- Native training representation update
+- Corpus-scale replay selection
+- Budget-compatible replay milestone
+- Cross-repository budget-compatible replay
+- Admission evidence and source-license correction
+- P1 local follow-up — 2026-10-09: replay source provenance
+- P1 local follow-up — linked replay preflight
+- P1 local follow-up — full pinned trajectory acquisition
+- P1 local follow-up — verified R2 corpus and expanded task join
+- P1 local follow-up — SWE-rebench filtered source join
+- P1 local follow-up — full SWE-rebench task identity coverage
+- P1 local follow-up — SWE-rebench images
+- P1 local follow-up — SWE-rebench source snapshot
+- P1 evaluator qualification update — 2026-10-09
+- P1 offline evaluator controls — 2026-10-09
+- P1 sanitized source controls — 2026-10-09
+- P1 candidate grading path — 2026-10-09
+- P1 teacher data screening — 2026-10-09
+- P1 native Biolink replay integration — pending runtime result
+- P1 source-state discrepancy audit — 2026-10-09
+- P1 corpus-wide budget screening — 2026-10-09
+- P1 budget-first environment cohort — 2026-10-09
+- P1 replay retry after verified terminal failure
+- P1 native SWE-rebench success; admission still pending
+- P1 native context and mask audit — 2026-10-09
+- P1 budget-fit task triage — 2026-10-09
+- P1 second SWE-rebench evaluator qualification — 2026-10-09
+- P1 budget-fit native replay — 2026-10-09
+- P1 Nodebook mechanical candidate qualification — 2026-10-09
+- P1 provenance and trainable candidate export — 2026-10-09
+- P1 real-data corpus loader and deployment preflight — 2026-10-09
+- Corpus optimization progress — 2026-10-09
+- Indexed corpus progress — 2026-10-09
+- Streamed optimizer integration — 2026-10-09
+- Stochastic resume progress — 2026-10-09
+- Durable storage progress — 2026-10-09
+- Bound adapter recovery — 2026-10-09
+- Budgeted training session — 2026-10-09
+- Full corpus worker wiring — 2026-10-09
+- Supervisor evidence reconciliation — 2026-10-09
+- Data expansion: Mailmerge controls — 2026-10-09
+- Mailmerge alternate trace: independent replay and context rejection
+- Complete source-token cost screening (local, no GPU)
+- Task/evaluator alignment requirement and corpus schema v2
+- Shortlist alignment review and Datetransform base inspection
+- Datetransform exact-base normalization and paired controls
+- Datetransform sanitized replay and two-example corpus integration
+- Rights capture compatibility and restored corpus validation
+- Current repository identity and issue-duplicate audit
+- Native observation audit and direct-source attribution
+- Task alignment coverage cycle — 2026-10-09
+- Semantic probe and corpus exclusion cycle — 2026-10-09
+- Easy-ptvsd evaluator qualification — 2026-10-09
+- Easy-ptvsd sanitized replay and integration — 2026-10-09
+- Easy-ptvsd attribution and restore cycle — 2026-10-09
+- Fancy-header branch counterexamples — 2026-10-09
+- Supply feasibility and broader qualification batch — 2026-10-09
+- Broad batch triage and NumPyro mathematical check — 2026-10-09
+- CRC runtime and provenance qualification — 2026-10-09
+- CRC deep checks and native replay — 2026-10-09
+- NumPyro teacher mathematical screening — 2026-10-09
+- Verde contract audit and civisml intake — 2026-10-09
+- civisml runtime, deterministic controls and replay preflight — 2026-10-09
+- Source grep adapter and civisml native replay — 2026-10-09
+- Civisml context-policy analysis — 2026-10-09
+- Geomet native qualification and context gate — 2026-10-09
+- Experimental action supervision audit — 2026-10-09
+- Additional corpus pilot — 2026-10-09
+- Mini-swe-agent serialization and V2 task join — 2026-10-09
+- Submission contract reconciliation — 2026-10-09
+- Werkzeug V2 original-image controls — 2026-10-09
+- Werkzeug V2 exact-tree snapshot — 2026-10-09
+- P1 continuation: native V2 replay and independently graded candidate
+- P1 continuation: portable adapted history and measured token candidate
+- P1 continuation: V2 consistency assessment and corpus 006 round trip
+- P1 continuation: independent Werkzeug semantics and source review
+- P1 continuation: pipdeptree candidate held after pinned type checks
+- Dynaconf recursive-equality screen (local, pre-admission)
+- Dynaconf native qualification and historical evidence support
+- Corpus 007: four-task quarantine integration
+- Workalendar qualification and corpus 008
+- PennyLane 5716: independent numerical screen, interface gate still closed
+- Corpus 009: PennyLane integration, still quarantined
+- Two additional positive-supervision exclusions
+- Kubernetes client 247: source test acceptance counterexample
+- Corpus 012: preserved correction history and restored schedule
+- Statsmodels corrected native replay and completion integration
+- Corpus 013: corrected statsmodels quarantine integration
+- Corpus 014: Numkit numerical-verification integration
+- Explicit source timeout support and emcee runtime controls
+- Corpus 015: emcee completion integration
+- Optuna 3545: isolated runtime qualification
+- Reviewed standalone searches and first Optuna native replay
+- Corpus 016: Optuna completion integration
+- Next-cohort semantic screening: units, ordering and equality
+- CloudEvents 172: verified squash-merge provenance and paired controls
+- CloudEvents native replay and token audit
+- Corpus 017: CloudEvents finite-relation completion integration
+- Corpus 018: fifteen-task quarantine integration
+- Marshmallow-dataframe19 correction checkpoint
+- Marshmallow-dataframe19: native correction verified, context hold
+- Triage 009: API schemas and spelling captions
+- Apispec950 runtime correction
+- Apispec950 native qualification complete
+- Corpus030 integration verified
+- Storage and recovery checkpoint — October 10, 2026
+- Spelling177 runtime qualification — October 10, 2026
+- Spelling177 native replay and quarantine candidate — October 10, 2026
+- Corpus031 integration — October 10, 2026
+- Cohort010 static triage and queue reconciliation — October 10, 2026
+- Numba6653 pinned runtime qualification — October 10, 2026
+- Numba6653 native replay — October 10, 2026
+- Corpus032 integration — October 10, 2026
+- Verified source-byte ingestion and cohort011 triage — October 10, 2026
+- SoftLayer2188 runtime qualification — October 10, 2026
+- SoftLayer2188 native replay and token qualification — October 10, 2026
+- Corpus033 integration and R2 round trip — October 10, 2026
+- Rally1469 scope resolution and capacity hold — October 10, 2026
+- Scoped Docker build-cache recovery — October 10, 2026
+- Restore-test duplicate eviction — October 10, 2026
+- Immutable evaluator and history parser inputs — October 10, 2026
+- Recoverable image eviction and Rally1469 runtime qualification — October 10, 2026
+- Rally1469 native replay: mechanical pass, content hold — October 10, 2026
+- Current content-quality gate update — October 11, 2026
+- Current correction queue — October 11, 2026
+- October 11 checkpoint — Apispec exit-status qualification
+- October 11 checkpoint — Apispec reviewed replacement, corpus040
+- October 11 checkpoint — Pennylane5716 finite diagnostics
+- October 11 checkpoint — mini-source amendment integration
+- Corpus041: completed Pennylane semantic review and R2 integration — October 11, 2026
+- Boltons205 diagnostic correction — October 11, 2026
+- Corpus042: Boltons semantic qualification and integration — October 11, 2026
+- Statsmodels8339 finite diagnostic correction — October 11, 2026
+- Statsmodels8339 full semantic and publisher qualification — October 11, 2026
+- Corpus043: Statsmodels reviewed replacement — October 11, 2026
+- Numba6653 deprecated-prefix diagnostic correction — October 11, 2026
+- October 11 — Numba failure reporting and bounded claims
+- October 11 — Reviewed Numba integrated into corpus044
+- October 11 — New repository batch004
+- October 11 — Fuzzyfinder19 extraction and finite oracle
+- October 11 — Fuzzyfinder19 held for API contract mismatch
+- October 11 — MkDocs Merge18 finite structural validation
+- October 11 — MkDocs Merge selected-source compatibility
+- October 11 — Complete MkDocs Merge source and compatibility boundary
+- October 11 — MkDocs Merge Python 3.9 validation
+- October 11 — MkDocs Merge actual submitted-patch grading
+- October 11 — MkDocs Merge complete history review
+- October 11 — MkDocs Merge pytest qualification and mechanical admission
+- October 11 — Corpus045 quarantine integration
+- October 11 — Current corpus repository-network isolation review
+- October 11 — Corpus045 within-training issue duplication audit
+- October 11 — Restore disk preflight and interruption validation
+- October 11 — Training deployment includes the ingestion path
+- October 11 — Current-corpus attribution evidence index
+- October 11 — ptvsd 3.0.0 notice supplement
+- October 11 — Touvlo34 source and exact recurrence triage
+- October 11 — Broad CPU regression failed during dependency loading
+- October 11 — Touvlo34 held after publisher contract comparison
+- October 11 — R2 recovery bypasses local source hydration failure
+- October 11 — Flake8 candidate held on error-propagation regression
+- October 11 — CPU dependency import recovered outside cloud storage
+- October 11 — Repository-wide regression refresh launched
+- October 11 — Full-suite cache isolation and data test dependencies
+- October 11 — Full local regression passes
+- October 11 — Corpus045 review linkage index
+- October 11 — Lmfit current-history review chain reconciled
+- October 11 — Corpus evidence index and reusable review coverage checks
+- October 11 — Optuna evidence linkage resolved; diagnostic hold identified
+- October 11 — Optuna diagnostic corrections qualified locally
+- October 11 — Amended Optuna reconstruction, tokens and independent grading
+- October 11 — Full Optuna review and corpus046 replacement
+- October 11 — Current-history attribution and split evidence binding
+- October 11 — Reusable exact lexical similarity and corpus046 screening
+- October 11 — Bounded CLI and 1,575-task candidate screen
+- October 11 — Enforce reviewed duplicate families in split planning
+- October 11 — Rally1469 explicit diagnostic derivative
+- October 11 — Rally1469 review and grading completion
+- October 11 — Corpus047 adds reviewed Rally; restore and schedule verified
+- October 11 — Reusable bounded source attribution capture
+- October 11 — Corpus047 repository identity and draft split refresh
+- October 11 — Linkding691 diagnostic derivative, fresh replay pending
+- October 11 — Linkding691 fresh derivative fully reviewed
+- October 11 — Corpus048 Linkding integration and isolation update
+- Linkding selected shell attribution — 2026-10-11
+- Scoped local cache cleanup — 2026-10-11
+- Linkding exact dataset lineage — 2026-10-11
+- Final-input credential indicator screening — 2026-10-11
+- Full CPU regression after corpus credential screening — 2026-10-11
+- Complete checkpoint descriptor correspondence — 2026-10-11
+- Open-SWE mini-agent expansion shard000 — 2026-10-11
+- Diverse mini-agent qualification queue — 2026-10-11
+- Ember8613 source review and diagnostic counterexamples — 2026-10-11
+- Independent task joins and Ember pinned-source controls — 2026-10-11
+- Scoped Docker build-cache audit — 2026-10-11
+- More Itertools892 review checkpoint — 2026-10-11
+- More Itertools892 pinned-source controls — 2026-10-11
+- More Itertools892 whole-module container controls — 2026-10-11
+- More Itertools892 explicit diagnostic amendments — 2026-10-11
+- Corpus048 staged-worker integration — 2026-10-11
+- Worker-enforced complete architecture gate — 2026-10-11
+- Holidays2052 pinned-source review — 2026-10-11
+- Holidays2052 runtime checkpoint — 2026-10-11
+- Holidays2052 replay source prerequisite — 2026-10-11
+- Holidays2052 snapshot checkpoint — 2026-10-11
+- Holidays2052 native replay checkpoint — 2026-10-11
+- Holidays2052 history checkpoint — 2026-10-11
+- Holidays2052 independent controls checkpoint — 2026-10-11
+- Holidays2052 qualification checkpoint — 2026-10-11
+- Corpus049 checkpoint — 2026-10-11
+- Corpus049 qualification checkpoint — 2026-10-11
+- Hcloud547 runtime checkpoint — 2026-10-11
+- Hcloud547 recovery checkpoint — 2026-10-11
+- Runtime assembly storage gate — 2026-10-11
+- Storage recovery and P1 exit requirement — 2026-10-11
+- 2026-10-12: corpus exposure capacity audit and scaling priority
+- 2026-10-12 P1 batch continuation
+
+## [13-user-painpoints-and-change-synthesis.md](../13-user-painpoints-and-change-synthesis.md)
+
+- Developer pain points and coordinated change synthesis
+- Evidence and limits
+- Product opportunity
+- Mechanism
+- Demonstration and scope
+- Novelty audit
+- Evidence needed before adoption
+
+## [14-novelty-audit-and-alternative-directions.md](../14-novelty-audit-and-alternative-directions.md)
+
+- Change Compiler: novelty audit and replacement proposals
+- Decision
+- Scope and method
+- Mechanism comparison
+- Mathematical back-check
+- Existing agents and public competition work
+- Replacement proposal A: joint code-and-state migration
+- Mathematical object
+- Prior art and open risk
+- Replacement proposal B: dependency-preserving intent removal
+- Prior art and open risk
+- Recommendation and next decision gate
+- Claim and validation policy
+
+## [15-failure-first-research-study.md](../15-failure-first-research-study.md)
+
+- Failure-first selection study
+- Decision
+- What the investigation actually covered
+- Comparison and selection
+- 1. Ambiguous runtime causes
+- 2. Cross-layer performance optimization
+- 3. Long-term code evolution
+- 4. Numerical and scientific correctness
+- 5. Failure analysis of the agent itself
+- Mathematical formulation for the first investigation
+- Logical back-check of intervention validity
+- Competition and product decision boundary
+
+## [16-failure-evidence-and-source-ledger.md](../16-failure-evidence-and-source-ledger.md)
+
+- Failure task cards and source audit
+- Evidence labels
+- F01 — asynchronous form edits disappear
+- F02 — native debugger crash after logging redirection
+- F03 — distributed corruption or shutdown failure
+- F04 — optimization misses the native bottleneck
+- F05 — growing codebase loses prior functionality
+- F06 — scientific result passes superficial checks
+- Source reading ledger
+- Social and video audit
+- Audit conclusions
+
+## [17-replication-and-selection-protocol.md](../17-replication-and-selection-protocol.md)
+
+- Replication and product-selection protocol
+- Selection contract
+- Cycle R1 — validate one task and its oracle
+- Cycle R2 — challenge the failure with a strong baseline
+- Cycle R3 — minimal mechanism and causal ablations
+- Cycle R4 — unseen tasks and decision
+- Statistical specification
+- Primary endpoint and estimand
+- Reliability claims
+- Performance tasks
+- Mathematical and implementation assurance
+- Runtime and competition gate
+- Mandatory cycle closeout
+
+## [18-reproduction-cycle-results.md](../18-reproduction-cycle-results.md)
+
+- R1 reproduction cycle: evidence and product decision
+- Scope and task selection
+- What was actually executed
+- Baseline design and isolation
+- Measured results
+- Usage and operational cost
+- Broader-suite qualification
+- Statistical interpretation
+- Mathematical and logical assessment
+- Interpretation limits
+- Product decision gate
+- Completion audit
+
+## [19-agent-platform-and-model-handoff.md](../19-agent-platform-and-model-handoff.md)
+
+- Gemma agent platform: implementation contract and model handoff
+- Product and completion criteria
+- Live verification and unresolved facts
+- Architecture and boundaries
+- Mathematical and numerical requirements
+- Model handoff: when and where
+- Provider activation and live plugin audit
+- First cycle and update protocol
+
+## [20-r0-foundation.md](../20-r0-foundation.md)
+
+- R0 foundation implementation and acceptance
+- Implementation and usage
+- Event and manifest schemas
+- Mathematical claim ledger
+- Official integration inventory
+- Acceptance audit and next action
+
+## [21-cloud-preparation.md](../21-cloud-preparation.md)
+
+- Cloud preparation for inference training and deployment
+- Files and decisions needed from you
+- User handoff — October 7, 2026
+- Immutable transfer evidence (October 16, 2026)
+
+## [22-official-contract-audit.md](../22-official-contract-audit.md)
+
+- Official contract audit and compiler verification
+- Provenance and environment
+- Verified contracts and discrepancies
+- Test evidence and limits
+- Linux integration closeout
+
+## [23-data-requirements-and-acquisition-plan.md](../23-data-requirements-and-acquisition-plan.md)
+
+- Data requirements and acquisition plan
+- Decision
+- What we need and who may see it
+- Official package: exact inventory available now
+- Ranked external sources
+- Native data that external corpora do not replace
+- Canonical records and conversion
+- Quantity and the three-candidate experiment
+- Contamination and evaluation design
+- Acceptance gates for every training shard
+- Storage, acquisition order and remaining work
+
+## [24-p1-implementation-status.md](../24-p1-implementation-status.md)
+
+- P1 implementation and evidence
+- Checkpoint storage gate
+- R2 transport gate
+- Offline tokenizer and conversation gate
+- Operational transfer and official data intake
+- Pilot task reservation and asset preparation
+- Linux snapshot source verification
+- Official retrieval and conversation checks
+- Remaining P1 acceptance work
+- Real-inference probe prepared, not executed
+- Offline dependencies and detected source shadowing
+- Open gates
+- Launch planning and Linux resolution
+- Serving runtime dependency correction and version drift
+- Complete CPU numerical scan
+- Quantized text architecture and resolved serving candidate
+- Exact serving-wheel acquisition
+- Offline installation passed; official source selection still fails
+- Deployment handoff and bootstrap
+- Base-agent candidate and model publication
+- Complete model recovery verified
+- Complete runtime publication verified
+- Runtime recovery passed; user-controlled GPU boundary
+- Resumed access check
+- Authenticated Pod access and direct R2 staging
+- Pod runtime qualified; first GPU load started
+- First GPU load: HTTP middleware incompatibility and correction
+- First real repository attempt and evaluator baseline
+- GPU session closeout and independently measured regression
+- Local recovery hardening after the GPU session
+- Same-process evaluator provenance qualification
+- Prepared native tool-call diagnostic and GPU boundary
+
+## [25-p1-deployment-handoff.md](../25-p1-deployment-handoff.md)
+
+- P1 deployment handoff
+- Current decision
+- Artifacts to stage
+- Reuse procedure for a future explicitly authorized Pod session
+- GPU handoff conditions and remaining gates
+- Requests evaluator source-selection finding
+- Transfer interruption and cleanup procedure
+
+## [26-p1-acceptance-checklist.md](../26-p1-acceptance-checklist.md)
+
+- P1 acceptance checklist
+
+## [27-p1-gpu-validation-report.md](../27-p1-gpu-validation-report.md)
+
+- P1: first GPU validation session
+- What actually ran
+- Inference and repair evidence
+- Independent evaluation and correctness boundary
+- Assessment and remaining work
+
+## [28-p1-requirements-audit.md](../28-p1-requirements-audit.md)
+
+- P1 requirements audit
+- Resource interpretation
+- Acceptance decision and next work
+
+## [29-write-call-diagnostic.md](../29-write-call-diagnostic.md)
+
+- Native write-call diagnostic
+- Purpose and experimental scope
+- Exact-input qualification
+- Interpretation and isolation
+- Remaining work before GPU execution
+
+## [30-p1-h100-validation.md](../30-p1-h100-validation.md)
+
+- P1 H100 validation and content-fidelity finding
+- Deployment evidence
+- Diagnostic result
+- Retained evidence and closeout
+- Prepared follow-up: prompt representation
+- Follow-up executed within the original approved window
+- Production-boundary applicability check
+
+## [31-training-representation-readiness.md](../31-training-representation-readiness.md)
+
+- Training representation and memory readiness
+- What the pinned implementation does
+- Checkpoint-derived accounting
+- Next executable qualification
+- Synthetic CPU result
+- Reduced Gemma architecture result
+- Native template loss-mask qualification
+- Native-token batching and accumulation
+- Compressed checkpoint loader qualification
+- Full-checkpoint H100 result
+
+## [32-full-checkpoint-gpu-qualification.md](../32-full-checkpoint-gpu-qualification.md)
+
+- Full-checkpoint GPU qualification
+- Runtime and inputs
+- Required execution order
+- Acceptance boundaries
+- Supervisor evidence
+- Bounded frozen-state verification
+- Shared qualification engine
+- Full-checkpoint command implementation (not GPU-executed)
+- Device-wide telemetry and source deployment
+- First full-checkpoint attempt
+- Successful full-checkpoint qualification
+- Optimizer checkpoint audit and resume contract
+
+## [33-public-data-intake.md](../33-public-data-intake.md)
+
+- Public trajectory intake: pinned quarantine
+- Complete native-context census
+- Competition compaction behavior and local-driver correction
+- Actual runner integration probe
+- Experimental source-observation skill
+- Released Docker executor and patch-exclusion check
+- Integrated compaction/recovery and cost controls
+- Source tool-contract census and replay requirements
+- Reproducible sources
+- Actual metadata findings
+- Admission and next actions
+- Structural conversion audit
+- Native terminal supervision and real-context lengths
+- Source chronology: additional import defect and projection
+- Source task identity join
+- Registry resolution and first concrete isolation check
+- Sanitized snapshot and evaluator controls: Pyramid only
+- Native tool and evaluator transport qualification
+
+## [34-source-task-runtime.md](../34-source-task-runtime.md)
+
+- External task runtime: current qualification boundary
+- Task separation
+- Rollout driver
+- Evidence and next gates
+- Offline lifecycle qualification
+- Saved-output grading and slow-tool checks
+- Production-client HTTP transport check
+- Full source grading-contract census
+- Second repository: Tornado evaluator controls
+- Tornado source snapshot and native workspace
+- First adapted native teacher replay: Tornado
+- Fresh native history and exact tokenizer qualification
+- Corpus replay priorities
+- First replay within the 40-call profile
+- Second budget-compatible repository: Pyramid
+
+## [35-data-rights-and-evaluation-isolation.md](../35-data-rights-and-evaluation-isolation.md)
+
+- Data rights and evaluation isolation
+- Competition rules
+- Dataset and teacher evidence
+- Exact source revision findings
+- Repository isolation
+- Remaining admission work
+- File-level follow-up: short Pyramid replay
+- Linked replay preflight
+- Nodebook material and expanded identity checks — 2026-10-09
+- Rights capture compatibility and restored corpus validation
+- Current repository identity and issue-duplicate audit
+- Native observation audit and direct-source attribution
+- October 11 — Current-corpus attribution evidence index
+- October 11 — ptvsd 3.0.0 notice supplement
+- Candidate lexical screening and duplicate-family planning
+- Selected committed-source capture — October 11
+- Linkding selected shell attribution — 2026-10-11
+- Linkding exact dataset lineage — 2026-10-11
+- Final-input credential indicator screening — 2026-10-11
+- Hcloud547 notice binding — 2026-10-11
+
+## [36-full-trajectory-corpus-intake.md](../36-full-trajectory-corpus-intake.md)
+
+- Full trajectory corpus intake
+- Acquired material
+- Evaluation isolation
+- Evidence and operational status
+- Completed storage and R2E join follow-up
+- Full-corpus static replay-budget audit (2026-10-09)
+- Explicit source-edit derivatives
+
+## [37-swe-rebench-source-adapter.md](../37-swe-rebench-source-adapter.md)
+
+- SWE-rebench source adapter
+- Primary-source findings
+- Local evidence
+- Full-release identity resolution
+- Registry and first local image qualification
+- Exact-tree snapshot for the first image
+- Offline evaluator dependency diagnosis (2026-10-09)
+- Offline response replay and paired controls (2026-10-09)
+- Sanitized-image evaluator equivalence (2026-10-09)
+- Candidate patch grading integration (2026-10-09)
+- Three teacher traces verified and screened (2026-10-09)
+- Native replay integration started (2026-10-09; result pending)
+- Second-trace mismatch isolated (2026-10-09)
+- Budget-first source environment selection (2026-10-09)
+- Native replay 001 terminated; controlled retry 002 started
+- Native replay completed and independently graded (2026-10-09)
+- Native history, masks and linked admission audit (2026-10-09)
+- Budget-fit task triage — 2026-10-09
+- Nodebook original-image controls — 2026-10-09
+- Nodebook sanitized snapshot and native replay — 2026-10-09
+- Nodebook linked grading and context admission — 2026-10-09
+- Mailmerge expansion candidate — 2026-10-09
+- Mailmerge isolated replay and context result
+- Mailmerge alternate trace: independent replay and context rejection
+- Complete source-token cost screening (local, no GPU)
+- Task/evaluator alignment requirement and corpus schema v2
+- Shortlist alignment review and Datetransform base inspection
+- Datetransform exact-base normalization and paired controls
+- Datetransform sanitized replay and two-example corpus integration
+
+## [38-training-corpus-integration.md](../38-training-corpus-integration.md)
+
+- Training corpus integration
+- Portable corpus contract
+- Admission boundary
+- Actual candidate and verification
+- Indexed loading verification
+- Update scheduling and objective
+- Streamed corpus update integration
+- Random-state recovery
+- Durable checkpoint storage
+- Bound adapter checkpoint contract
+- Budgeted corpus training session
+- Full-model worker wiring
+- Independent session-report reconciliation
+- Task/evaluator alignment requirement and corpus schema v2
+- Datetransform sanitized replay and two-example corpus integration
+- Corpus 007: four-task quarantine integration
+- Workalendar qualification and corpus 008
+- Corpus 009: PennyLane integration, still quarantined
+- Corpus 010: dbt–Snowflake integration
+- Corpus 011: second PennyLane task, same repository split
+- Corpus 012: preserved correction history and restored schedule
+- Corpus 013: corrected statsmodels quarantine integration
+- Corpus 014: Numkit numerical-verification integration
+- Corpus 015: emcee completion integration
+- Corpus 016: Optuna completion integration
+- Corpus 017: CloudEvents finite-relation completion integration
+- Corpus 018: fifteen-task quarantine integration
+
+## [39-p1-current-readiness.md](../39-p1-current-readiness.md)
+
+- Current P1 readiness
+- Current evidence
+- Remaining work, in dependency order
+- GPU boundary and later training
+- Storage and recovery instructions
+- Latest Jsons quality decision
+- Historical GPU fixture moved to R2
+- Emcee replacement replay qualification in progress
+- Emcee concise synthetic replacement candidate
+- Corpus068 integration
+- Numkit issue alignment
+- Optuna issue alignment
+- LMFIT issue alignment
+- CRC issue alignment
+- Django API-key alignment and verifier compatibility
+- PubMed subject extraction alignment
+- Tianshou serialization alignment
+- Werkzeug historical PBKDF2 alignment
+- Statsmodels bounded initialization alignment
+- LensKit full-issue scope hold
+- LensKit full-issue repair candidate
+- LensKit paired compatibility and requested-behavior tests
+- LensKit fresh synthetic capture
+- LensKit contract binding and wider test inventory
+- Verified Linux serving-wheel release
+- Scoped Finder refresh
+- LensKit bounded full-inventory assessment
+- LensKit controlled retries and skipped-case review
+- Workalendar alignment and Finder confirmation
+- Dynaconf registration counterexample
+- Corrected Dynaconf candidate qualification
+- Fresh Dynaconf synthetic trajectory
+- Explicit synthetic V2 grading integration
+- Dynaconf content review and native budget accounting
+- Reusable V2 synthetic-bundle qualification
+- Corpus069 replacement and restored ingestion
+- MkDocs section-index alignment
+- ASDF converter tag-cardinality review
+- Numba environment-value alignment
+- October 17 — PennyLane Exp step-preservation review
+- October 17 — PennyLane single-axis broadcast alignment
+- October 17 — Sphinx caption-node alignment
+- October 17 — Linkding option delivery alignment
+- October 17 — Snowflake cancellation-command alignment
+- October 17 — Rally cleanup-default alignment
+- October 17 — SoftLayer search routing alignment
+- October 17 — PySyft equality/mutation alignment
+- October 17 — Berlin holiday label discrepancy preserved
+- October 17 — Berlin issue alignment accepted with label distinction
+- October 17 — Hetzner exact whitespace-test source recovered
+- October 17 — Hetzner metadata alignment accepted
+- October 17 — AWS X-Ray selected parser freshly checked
+- October 17 — AWS selected-history provenance and publisher checks
+- October 17 — KubeVirt missing-secret alignment accepted
+- October 17 — Jsons literal issue reproduction verified
+- October 17 — Fresh Jsons synthetic capture and grading
+- October 17 — Shared legacy synthetic admission validator
+- October 17 — Corpus070 integrated and independently restored
+- October 17 — LensKit publisher reference gap measured
+- October 17 — Explicit contract outcome policy implemented
+- October 17 — LensKit capture corrected against its prompt
+- October 17 — LensKit contract bundle qualification passed
+- October 17 — Corpus071 assembled with 51/51 task alignment
+- October 17 — Current Corpus071 material and indicator coverage
+- October 17 — Current Jsons source/notice binding verified
+
+## [39-p1-readiness-history-through-2026-10-16.md](../39-p1-readiness-history-through-2026-10-16.md)
+
+- Current P1 readiness
+- Earlier qualification history
+- Numba6653 failure-reporting correction — October 11
+- Statsmodels8339 diagnostic correction — October 11
+- Boltons205 diagnostic qualification — October 11
+- Pennylane5716 amended replay qualification — October 11
+- Apispec full semantic correction — October 11
+- Importlab failure-reporting correction — October 11
+- Importlab contract review — October 11
+- Current CloudEvents correction status — October 11
+- Amendment admission verification — October 11, 2026
+- Datetransform diagnostic correction — October 11
+- Training-content review — October 11, 2026
+- MkDocs Merge18 candidate triage — October 11
+- Selected-source compatibility follow-up
+- Complete-tree follow-up and runtime boundary
+- Python 3.9 compatibility follow-up
+- Fuzzyfinder19 publisher contract mismatch — October 11
+- Fuzzyfinder19 candidate triage — October 11
+- Data expansion queue — October 11
+- Next local cycle
+- GPU restart boundary
+- Signac review archive verified — October 11
+- October 11 — MkDocs Merge actual submitted-patch grading
+- October 11 — MkDocs Merge complete history review
+- October 11 — MkDocs Merge pytest qualification and mechanical admission
+- October 11 — Corpus045 quarantine integration
+- October 11 — Current corpus repository-network isolation review
+- October 11 — Corpus045 within-training issue duplication audit
+- October 11 — Restore disk preflight and interruption validation
+- October 11 — Training deployment includes the ingestion path
+- October 11 — Current-corpus attribution evidence index
+- October 11 — ptvsd 3.0.0 notice supplement
+- October 11 — Touvlo34 source and exact recurrence triage
+- October 11 — Broad CPU regression failed during dependency loading
+- October 11 — Touvlo34 held after publisher contract comparison
+- Linkding selected shell attribution — 2026-10-11
+- Scoped local cache cleanup — 2026-10-11
+- Linkding exact dataset lineage — 2026-10-11
+- Final-input credential indicator screening — 2026-10-11
+- Full CPU regression after corpus credential screening — 2026-10-11
+- Complete checkpoint descriptor correspondence — 2026-10-11
+- Open-SWE mini-agent expansion shard000 — 2026-10-11
+- Diverse mini-agent qualification queue — 2026-10-11
+- Ember8613 source review and diagnostic counterexamples — 2026-10-11
+- Independent task joins and Ember pinned-source controls — 2026-10-11
+- Scoped Docker build-cache audit — 2026-10-11
+- More Itertools892 review checkpoint — 2026-10-11
+- More Itertools892 pinned-source controls — 2026-10-11
+- More Itertools892 whole-module container controls — 2026-10-11
+- More Itertools892 explicit diagnostic amendments — 2026-10-11
+- Corpus048 staged-worker integration — 2026-10-11
+- Worker-enforced complete architecture gate — 2026-10-11
+- Holidays2052 pinned-source review — 2026-10-11
+- Holidays2052 runtime checkpoint — 2026-10-11
+- Holidays2052 replay source prerequisite — 2026-10-11
+- Holidays2052 snapshot checkpoint — 2026-10-11
+- Holidays2052 native replay checkpoint — 2026-10-11
+- AWS X-Ray70 reporter qualification follow-up
+- Corpus052: reviewed AWS X-Ray integration and restored-data qualification
+- Next-source semantic preflight: Traitlets517, TSDB649, Restic4446
+- Traitlets517 complete-source and finite runtime controls
+- Traitlets517 replay preparation and sanitized source
+- Traitlets517 native replay completed; publisher grading pending
+- 2026-10-12 — recovered corpus053 and verified R2 round trip
+- 2026-10-12 — corpus053 qualification follow-up
+- 2026-10-12 — Build290 source diagnostic review
+- 2026-10-12 — Build290 real-source controls
+- 2026-10-12 — Build290 upstream ProjectBuilder parity
+- 2026-10-12 — official native SDK environment recovered
+- 2026-10-12 — Build290 exact-tree native replay
+- 2026-10-12 — Build290 publisher grading and context audit
+- 2026-10-12: verified local serving dependency release
+- 2026-10-12: Build290 mechanical pass, semantic quality hold
+- 2026-10-12: Build290 attributed quality correction004
+- 2026-10-12: corpus054 quarantine integration
+- 2026-10-12: corpus054 provisional lineage and credential screens
+- 2026-10-12: context exception precisely diagnosed
+- 2026-10-12: official adapter budget transport verified locally
+- 2026-10-12: pinned-version context validation source audit
+- 2026-10-12: vLLM validator bound to deployment wheel
+- 2026-10-12: OpenVPN519 source preflight hold
+- 2026-10-12: OpenVPN519 real Go lost-update control
+- 2026-10-12: OpenVPN519 independent task mismatch confirmed
+- 2026-10-12: selected queue independent-task prompt audit
+- 2026-10-12: GumTree163 source preflight
+- 2026-10-12: GumTree163 local real-dependency controls
+- 2026-10-12: GumTree163 native replay, token qualification, semantic hold
+- 2026-10-12: correction to GumTree163 narrative hold
+- 2026-10-12: GumTree163 independent offline publisher-test controls
+- 2026-10-12: strict Surefire parser qualification002
+- 2026-10-12: Maven compilation-phase controls
+- 2026-10-12: fresh Maven grading receipts with source provenance
+- 2026-10-12: Maven admission reconstruction and mutation checks
+- 2026-10-12: full local CPU regression qualification
+- 2026-10-12: additional raw dataset storage release
+- 2026-10-12: corpus exposure capacity audit and scaling priority
+- 2026-10-12: SWE-Hero batch qualification queue
+- 2026-10-12: batch source extraction and structural preflight
+- 2026-10-12: batch source context census
+- 2026-10-12: source editor preflight and batch adapter feasibility
+- 2026-10-12: bounded nested pytest path compatibility
+- 2026-10-12: independent issue-text reconciliation for batch
+- 2026-10-12: complete independent text join and batch review ledger
+- 2026-10-12: CRC153 pinned source and digest invariants
+- 2026-10-12: CRC153 offline upstream regression controls
+- 2026-10-12: CRC153 pristine offline replay image
+- 2026-10-12: CRC153 native replay and token qualification
+- 2026-10-12: CRC153 attributed diagnostic correction and fresh replay
+- 2026-10-12: CRC153 publisher regression qualification
+- 2026-10-12: refreshed complete local regression suite
+- 2026-10-12: production grading interpreter integration and CRC153
+- 2026-10-12: CRC153 diagnostic semantics and amended replay004
+- 2026-10-12: corpus055 quarantine integration and restoration
+- 2026-10-12: corpus055 provisional split/context and next batch environments
+- 2026-10-12: eight pinned source snapshots and offline baseline screen
+- 2026-10-12: files-to-prompt36 offline dependency and baseline qualification
+- 2026-10-12: files-to-prompt36 exact snapshot and native replay
+- 2026-10-12: files-to-prompt36 encoding controls and publisher-scope mismatch
+- 2026-10-12: csv2md22 native replay and detected parsing regression
+- 2026-10-12: csv2md22 pure-render correction and attributed replay002
+- 2026-10-12: raw-outcome admission verification and storage release
+- 2026-10-12: frontmatter31 explicit baseline and native replay
+- 2026-10-12: frontmatter31 publisher grading and independent encoding failures
+- 2026-10-12: frontmatter31 explicit encoding correction and replay002
+- 2026-10-12: semantic integration holds and codec-stream regression
+- 2026-10-12: frontmatter31 attributed diagnostic amendment and replay003
+- 2026-10-12: csv22 attributed diagnostic amendment and replay003
+- 2026-10-12: two-candidate repository and lexical isolation checks
+- 2026-10-12: corpus056 quarantine integration and capacity assessment
+- 2026-10-12: structlog350 bounded dependency/runtime qualification
+- 2026-10-12: structlog350 source snapshot and no-op edit replay blocker
+- 2026-10-12: verified rejected-no-op replay support
+- 2026-10-12: native-call-aware batch expansion
+- 2026-10-12: new batch baseline and kombu1754 JSON environment
+- 2026-10-12: kombu1754 native replay and context exclusion
+- 2026-10-12: verified SWE-rebench-V2 raw-shard release
+- 2026-10-12: current training-worker R2 recovery qualification
+- 2026-10-12: Django API-key187 supported-version offline baseline
+- 2026-10-12: Django API-key187 offline snapshot and native replay
+- 2026-10-12: Django API-key187 warning negative controls and corrected replay
+- 2026-10-12: explicit evaluator architecture and Django publisher comparison
+- 2026-10-12: Django API-key187 two-version execution coverage
+- 2026-10-12: reusable explicit pytest matrix outcome contract
+- 2026-10-12: source-derived version applicability
+- 2026-10-12: publisher-complete matrix obligations
+- 2026-10-12: exact matrix probe and runtime bindings
+- 2026-10-12: bounded raw-data release and file-residency audit
+- 2026-10-12: recomputed matrix evidence contract
+- 2026-10-12: semantic binding of matrix probe programs
+- 2026-10-12: integrated version-matrix mechanical admission
+- 2026-10-12: complete Django history review and fresh attributed amendment
+
+## [40-p1-implementation-journal.md](../40-p1-implementation-journal.md)
+
+- P1 implementation journal
+- Preserved readiness record through corpus 018
+- Current P1 readiness
+- Current artifacts
+- Next implementation cycle
+- Task alignment coverage enforcement
+- Semantic counterexample review
+- Easy-ptvsd evaluator qualification — 2026-10-09
+- Easy-ptvsd sanitized replay and integration — 2026-10-09
+- Easy-ptvsd attribution and restore cycle — 2026-10-09
+- Fancy-header branch counterexamples — 2026-10-09
+- Supply feasibility and broader qualification batch — 2026-10-09
+- Broad batch triage and NumPyro mathematical check — 2026-10-09
+- CRC runtime and provenance qualification — 2026-10-09
+- CRC deep checks and native replay — 2026-10-09
+- NumPyro teacher mathematical screening — 2026-10-09
+- Verde contract audit and civisml intake — 2026-10-09
+- civisml runtime, deterministic controls and replay preflight — 2026-10-09
+- Source grep adapter and civisml native replay — 2026-10-09
+- Civisml context-policy analysis — 2026-10-09
+- Geomet native qualification and context gate — 2026-10-09
+- Experimental action supervision audit — 2026-10-09
+- Additional corpus pilot — 2026-10-09
+- Mini-swe-agent serialization and V2 task join — 2026-10-09
+- Submission contract reconciliation — 2026-10-09
+- Werkzeug V2 original-image controls — 2026-10-09
+- Werkzeug V2 exact-tree snapshot — 2026-10-09
+- P1 continuation: native V2 replay and independently graded candidate
+- P1 continuation: portable adapted history and measured token candidate
+- P1 continuation: V2 consistency assessment and corpus 006 round trip
+- P1 continuation: independent Werkzeug semantics and source review
+- P1 continuation: pipdeptree candidate held after pinned type checks
+- Dynaconf recursive-equality screen (local, pre-admission)
+- Dynaconf native qualification and historical evidence support
+- Corpus 007: four-task quarantine integration
+- Workalendar qualification and corpus 008
+- PennyLane 5716: independent numerical screen, interface gate still closed
+- PennyLane backend qualification follow-up
+- Corpus 009: PennyLane integration, still quarantined
+- Linkding 691 candidate qualification
+- Two additional positive-supervision exclusions
+- Kubernetes client 247: source test acceptance counterexample
+- Brutils 116: verification accepts a broken formatter
+- Online-judge-tools 445: repair supported, environment qualification pending
+- Online-judge-tools 445: current recorded-response controls
+- Reusable Session response adapter
+- Bound response bundles and native staging
+- Shared qualifier resource integration
+- Online-judge-tools snapshot and native workspace preflight
+- Online-judge-tools native replay and graded patch
+- Resource-aware history reconstruction and context audit
+- Resource-aware mechanical assessment; online-judge-tools supervision hold
+- dbt–Snowflake 716: method contract screened, native replay pending
+- dbt–Snowflake 716: native replay and mechanical assessment completed
+- Corpus 010 integration supersedes the six-example current assembly
+- PennyLane 5831 controls and publisher parameter selection
+- PennyLane 5831 native qualification
+- Corpus 011: eight tasks across seven repositories
+- PySyft 250: operational checks pass; documentation defects hold the trace
+- PySyft 250: verified documentation correction, not a new trajectory
+- Explicit correction replay support and PySyft fresh history
+- Corpus 012: preserved correction history and restored schedule
+- Explicit-input qualification batch planning
+- Batch reconciliation and new repository coverage
+- Statsmodels 8339: reference defect and teacher distinction
+- Statsmodels full-package runtime corroboration and control mismatch
+- Statsmodels random-state diagnosis and explicit control configuration
+- Statsmodels native replay preparation
+- Snapshot verification and exact blob-hash optimization
+- Snapshot optimization regression complete
+- Statsmodels native replay result and hold
+- Explicit pre-submission completion support
+- Statsmodels corrected native replay and completion integration
+- Corpus 013: corrected statsmodels quarantine integration
+- Numkit 8 mathematical/source screening
+- Numkit pinned runtime controls
+- Corpus 014: Numkit numerical-verification integration
+- Explicit source timeout support and emcee runtime controls
+- Completed emcee replay and bounded observation review
+- Corpus 015: emcee completion integration
+- Optuna 3545: isolated runtime qualification
+- Reviewed standalone searches and first Optuna native replay
+- Corpus 016: Optuna completion integration
+- Next-cohort semantic screening: units, ordering and equality
+- CloudEvents 172: verified squash-merge provenance and paired controls
+- CloudEvents native replay and token audit
+- Corpus 017: CloudEvents finite-relation completion integration
+- Corpus 017: current identity and tracked-notice evidence
+- Boltons 205: stateful exact-order review, still not admitted
+- Source issue credential indicators
+- Credential indicators enforced before native replay
+- Boltons 205: isolated runtime and native replay
+- Boltons 205: explicit finite completion and token-ready held trace
+- Boltons 205: compatibility-restoring assistant derivative
+- Corpus 018: fifteen-task quarantine integration
+- Diverse candidate triage 003
+- Signac 622: pinned runtime and incomplete shell controls
+- Signac622 offline dependency repair and publisher controls
+- Signac622 native trajectory replay and search adapter extension
+- Signac622 bounded semantic completion and native token audit
+- Corpus 019 integration and explicit incomplete lineage refresh
+- Corpus 019 authenticated lineage recovery
+- Additional parser/serialization cohort triage 004
+- Jsons86 historical runtime and paired-control failure
+- Jsons86 named-tuple runtime failure isolated
+- Jsons86 actual Python3.7 runtime and passing publisher controls
+- Jsons86 native replay and bounded public API screen
+- Jsons86 completed replay and finalized Python3.7 runner regression
+- Corpus 021 assembly and Jsons integration — October 10, 2026
+- Corpus 021 round-trip accepted — October 10, 2026
+- Next repository qualification queue — October 10, 2026
+- Batch 003 issue screening and archive completion
+- Numerical candidate triage completed
+- Csaps zero-smoothing qualification — October 10, 2026
+- Corpus 022 integration — October 10, 2026
+- Lenskit nDCG runtime qualification — October 10, 2026
+- Lenskit 312 completed native qualification
+- Corpus 023 integration and R2 round trip
+- Qualification triage 006: boundary and parsing tasks
+- Xhistogram runtime boundary checks and environment hold
+- Xhistogram single-dependency diagnostic
+- Conllu 35 runtime preparation
+- Conllu 35 snapshot and runtime qualification
+- Conllu 35 completed replay and token audit
+- Corpus 024 integration and restore verification
+- Corpus 024 integration evidence archive
+- Gitignore38 runtime and independent path qualification
+- Gitignore38 native replay and adapter compatibility
+- Corpus 025 integration and restore verification
+- Triage 007 and ASDF1853 runtime qualification
+- ASDF native replay and corpus 026 integration
+- Completion-aware mechanical admission
+- Standard mechanical assessment: Gitignore38 and Conllu35
+- Corpus 026 supply and context-policy audit
+- Lmfit 487 exact-base runtime qualification
+- Lmfit 487 diagnostic counterexamples and teacher hold
+- Lmfit 487 explicitly authored derivative
+- Corpus 027 quarantine integration
+- Munch 52 runtime qualification and incomplete-teacher hold
+- Munch 52 reference-informed corrected derivative
+- Corpus 028 corrected Munch integration
+- Qualification triage 008: three distinct repositories
+- Icontract 115 runtime qualification — teacher held
+- Icontract 115 assistant correction — runtime passes, replay policy hold
+- Importlab 23 runtime qualification — filename-boundary regression
+- Importlab 23 corrected replay and subdirectory command mapping
+- Corpus029 integration — corrected Importlab retained in quarantine
+- Marshmallow-dataframe 19 static policy and capacity qualification
+- Scoped build-cache recovery and Marshmallow-dataframe19 runtime hold
+- Marshmallow-dataframe19 correction checkpoint
+- Marshmallow-dataframe19: native correction verified, context hold
+- Triage 009: API schemas and spelling captions
+- Apispec950 runtime correction
+- Apispec950 native qualification complete
+- Corpus030 integration verified
+- Storage and recovery checkpoint — October 10, 2026
+- Spelling177 runtime qualification — October 10, 2026
+- Spelling177 native replay and quarantine candidate — October 10, 2026
+- Corpus031 integration — October 10, 2026
+- Cohort010 static triage and queue reconciliation — October 10, 2026
+- Numba6653 pinned runtime qualification — October 10, 2026
+- Numba6653 native replay — October 10, 2026
+- Corpus032 integration — October 10, 2026
+- Verified source-byte ingestion and cohort011 triage — October 10, 2026
+- SoftLayer2188 runtime qualification — October 10, 2026
+- SoftLayer2188 native replay and token qualification — October 10, 2026
+- Corpus033 integration and R2 round trip — October 10, 2026
+- Rally1469 scope resolution and capacity hold — October 10, 2026
+- Scoped Docker build-cache recovery — October 10, 2026
+- Restore-test duplicate eviction — October 10, 2026
+- Immutable evaluator and history parser inputs — October 10, 2026
+- Recoverable image eviction and Rally1469 runtime qualification — October 10, 2026
+- Rally1469 native replay: mechanical pass, content hold — October 10, 2026
+- Corpus033 claim review, first detailed batch — October 11, 2026
+- Corpus033 claim review, second contextual batch — October 11, 2026
+- Corpus033 claim review, third contextual batch — October 11, 2026
+- Corpus033 lexical-context pass and correction queue — October 11, 2026
+- Explicit action amendment primitive and Lenskit derivative — October 11, 2026
+- Native amendment integration and fresh Lenskit replay — October 11, 2026
+- October 11 — amendment-aware admission
+- October 11 — independent amended Lenskit grading
+- October 11 — Lenskit complete history review and source visibility
+- October 11 — corpus 034 Lenskit replacement and restore
+- October 11 — Signac diagnostic amendment and fresh replay
+- October 11 — Signac independent grading and child Python environment
+- October 11 — Signac full-history attribution correction
+- Signac review archive verified — October 11
+- October 11 — Corpus035 reviewed Signac integration
+- October 11 — CloudEvents attributed diagnostic corrections
+- October 11 — CloudEvents independent grade and admission failure
+- October 11 — CloudEvents concise diagnostic derivative
+- October 11 — CloudEvents full review and corpus036
+- October 11 — Importlab disputed expectation contract review
+- October 11 — Importlab graph-wrapper false-success correction
+- October 11 — Importlab exit-corrected replay qualification
+- October 11 — Importlab full-history content review
+- October 11 — Corpus037 Importlab integration
+- October 11 — Lmfit diagnostic claim correction
+- October 11 — Lmfit amended replay qualification
+- October 11 — Lmfit complete review and second derivative
+- October 11 — Lmfit review closure and corpus038
+- October 11 — Datetransform finite diagnostic correction
+- October 11 — Datetransform revised diagnostic replay
+- October 11 — Datetransform review and corpus039 integration
+- October 11 checkpoint — Apispec exit-status qualification
+- October 11 checkpoint — Apispec reviewed replacement, corpus040
+- October 11 checkpoint — Pennylane5716 finite diagnostics
+- October 11 checkpoint — mini-source amendment integration
+- Corpus041: completed Pennylane semantic review and R2 integration — October 11, 2026
+- Boltons205 diagnostic correction — October 11, 2026
+- Corpus042: Boltons semantic qualification and integration — October 11, 2026
+- Statsmodels8339 finite diagnostic correction — October 11, 2026
+- Statsmodels8339 full semantic and publisher qualification — October 11, 2026
+- Corpus043: Statsmodels reviewed replacement — October 11, 2026
+- Numba6653 deprecated-prefix diagnostic correction — October 11, 2026
+- October 11 — Numba failure reporting and bounded claims
+- October 11 — Reviewed Numba integrated into corpus044
+- October 11 — New repository batch004
+- October 11 — Fuzzyfinder19 extraction and finite oracle
+- October 11 — Fuzzyfinder19 held for API contract mismatch
+- October 11 — MkDocs Merge18 finite structural validation
+- October 11 — MkDocs Merge selected-source compatibility
+- October 11 — Complete MkDocs Merge source and compatibility boundary
+- October 11 — MkDocs Merge Python 3.9 validation
+- October 11 — MkDocs Merge actual submitted-patch grading
+- October 11 — MkDocs Merge complete history review
+- October 11 — MkDocs Merge pytest qualification and mechanical admission
+- October 11 — Corpus045 quarantine integration
+- October 11 — Current corpus repository-network isolation review
+- October 11 — Corpus045 within-training issue duplication audit
+- October 11 — Restore disk preflight and interruption validation
+- October 11 — Training deployment includes the ingestion path
+- October 11 — Current-corpus attribution evidence index
+- October 11 — ptvsd 3.0.0 notice supplement
+- October 11 — Touvlo34 source and exact recurrence triage
+- October 11 — Broad CPU regression failed during dependency loading
+- October 11 — Touvlo34 held after publisher contract comparison
+- October 11 — R2 recovery bypasses local source hydration failure
+- October 11 — Flake8 candidate held on error-propagation regression
+- October 11 — CPU dependency import recovered outside cloud storage
+- October 11 — Repository-wide regression refresh launched
+- October 11 — Full-suite cache isolation and data test dependencies
+- October 11 — Full local regression passes
+- October 11 — Corpus045 review linkage index
+- October 11 — Lmfit current-history review chain reconciled
+- October 11 — Corpus evidence index and reusable review coverage checks
+- October 11 — Optuna evidence linkage resolved; diagnostic hold identified
+- October 11 — Optuna diagnostic corrections qualified locally
+- October 11 — Amended Optuna reconstruction, tokens and independent grading
+- October 11 — Full Optuna review and corpus046 replacement
+- October 11 — Current-history attribution and split evidence binding
+- October 11 — Reusable exact lexical similarity and corpus046 screening
+- October 11 — Bounded CLI and 1,575-task candidate screen
+- October 11 — Enforce reviewed duplicate families in split planning
+- October 11 — Rally1469 explicit diagnostic derivative
+- October 11 — Rally1469 review and grading completion
+- October 11 — Corpus047 adds reviewed Rally; restore and schedule verified
+- October 11 — Reusable bounded source attribution capture
+- October 11 — Corpus047 repository identity and draft split refresh
+- October 11 — Linkding691 diagnostic derivative, fresh replay pending
+- October 11 — Linkding691 fresh derivative fully reviewed
+- October 11 — Corpus048 Linkding integration and isolation update
+- Linkding selected shell attribution — 2026-10-11
+- Scoped local cache cleanup — 2026-10-11
+- Linkding exact dataset lineage — 2026-10-11
+- Final-input credential indicator screening — 2026-10-11
+- Full CPU regression after corpus credential screening — 2026-10-11
+- Complete checkpoint descriptor correspondence — 2026-10-11
+- Open-SWE mini-agent expansion shard000 — 2026-10-11
+- Diverse mini-agent qualification queue — 2026-10-11
+- Ember8613 source review and diagnostic counterexamples — 2026-10-11
+- Independent task joins and Ember pinned-source controls — 2026-10-11
+- Scoped Docker build-cache audit — 2026-10-11
+- More Itertools892 diagnostic controls — 2026-10-11
+- More Itertools892 pinned-source controls — 2026-10-11
+- More Itertools892 whole-module container controls — 2026-10-11
+- More Itertools892 explicit diagnostic amendments — 2026-10-11
+- Corpus048 staged-worker integration — 2026-10-11
+- Worker-enforced complete architecture gate — 2026-10-11
+- Holidays2052 pinned-source review — 2026-10-11
+- Holidays2052 catalog and runtime qualification — 2026-10-11
+- Holidays2052 complete base-tree binding — 2026-10-11
+- Holidays2052 parentless snapshot — 2026-10-11
+- Holidays2052 fresh native replay — 2026-10-11
+- Holidays2052 history and token checkpoint — 2026-10-11
+- Holidays2052 independent finite repair controls — 2026-10-11
+- Holidays2052 full semantic history review — 2026-10-11
+- Holidays2052 publisher grading and mechanical qualification — 2026-10-11
+- Corpus049 quarantined integration — 2026-10-11
+- Corpus049 isolation, credential and deployment checks — 2026-10-11
+- Hcloud547 source and diagnostic review — 2026-10-11
+- Hcloud547 local Go package controls — 2026-10-11
+- Hcloud547 diagnostic amendments — 2026-10-11
+- Hcloud547 pinned Linux toolchain controls — 2026-10-11
+- Hcloud547 full source, dependencies and Linux base suite — 2026-10-11
+- Hcloud547 restored bootstrap and sanitized snapshot — 2026-10-11
+- Hcloud547 runtime assembly storage gate — 2026-10-11
+- Verified duplicate archive cleanup — 2026-10-11
+- Recurring storage blocker — 2026-10-11
+- Approved cache removal returned zero bytes — 2026-10-11
+- Hcloud547 runtime built and verified — 2026-10-11
+- Hcloud547 native amended replay — 2026-10-11
+- Hcloud547 submitted-patch controls and history — 2026-10-11
+- Hcloud547 publisher grading and tokenizer audit — 2026-10-11
+- Hcloud547 full history review and admission gap — 2026-10-11
+- Native Go control validator — 2026-10-11
+- Go admission integration and full regression — 2026-10-11
+- Corpus050 quarantined integration — 2026-10-11
+- Corpus050 isolation and deployment checks — 2026-10-11
+- Hcloud547 attribution coverage — 2026-10-11
+- Cogent2050 pinned-source screening — 2026-10-11
+- Cogent2050 full source and offline baseline — 2026-10-11
+- Cogent2050 sanitized snapshot qualification — 2026-10-11
+- Cogent2050 fresh native replay — 2026-10-11
+- Cogent2050 grading hold and evaluator import-path fix — 2026-10-11
+- Next repository screening and KubeVirt99 source acquisition — 2026-10-11
+- KubeVirt99 dependency acquisition and source-drift rejection — 2026-10-11
+- KubeVirt99 offline Linux controller baseline — 2026-10-11
+- KubeVirt99 independent behavioral comparison — 2026-10-11
+- KubeVirt99 parentless runtime qualification — 2026-10-11
+- KubeVirt99 native replay and broader runtime defect — 2026-10-11
+- KubeVirt99 cache repair and publisher unit-test grading — 2026-10-11
+- KubeVirt99 full history review and mechanical assessment — 2026-10-11
+- Corpus051 KubeVirt quarantine integration — 2026-10-11
+- Corpus051 isolation, credential and deployment checks — 2026-10-11
+- Hapi-pino103 semantic screen — 2026-10-11
+- AWS X-Ray70 pinned source and parser controls — 2026-10-11
+- AWS X-Ray70 offline Node10 baseline — 2026-10-11
+- AWS X-Ray70 paired actual-dependency sampling controls — 2026-10-11
+- AWS X-Ray70 sanitized native runtime — 2026-10-11
+- AWS X-Ray70 native replay cleanup failures — 2026-10-11
+- AWS X-Ray70 configuration diagnosis and native replay — 2026-10-11
+- AWS X-Ray70 publisher grading — 2026-10-11
+- Strict Mocha report controls — 2026-10-11
+- Mocha mechanical admission integration — 2026-10-11
+- AWS X-Ray70 full history review — 2026-10-11
+- AWS X-Ray70 reporter qualification follow-up
+- Corpus052: reviewed AWS X-Ray integration and restored-data qualification
+- Next-source semantic preflight: Traitlets517, TSDB649, Restic4446
+- Traitlets517 complete-source and finite runtime controls
+- Traitlets517 replay preparation and sanitized source
+- Traitlets517 native replay completed; publisher grading pending
+- Emergency local-storage recovery, 2026-10-12
+- 2026-10-12 — recovered corpus053 and verified R2 round trip
+- 2026-10-12 — corpus053 qualification follow-up
+- 2026-10-12 — Build290 source diagnostic review
+- 2026-10-12 — Build290 real-source controls
+- 2026-10-12 — Build290 upstream ProjectBuilder parity
+- 2026-10-12 — official native SDK environment recovered
+- 2026-10-12 — Build290 exact-tree native replay
+- 2026-10-12 — Build290 publisher grading and context audit
+- 2026-10-12: verified local serving dependency release
+- 2026-10-12: Build290 mechanical pass, semantic quality hold
+- 2026-10-12: Build290 attributed quality correction004
+- 2026-10-12: corpus054 quarantine integration
+- 2026-10-12: corpus054 provisional lineage and credential screens
+- 2026-10-12: context exception precisely diagnosed
+- 2026-10-12: official adapter budget transport verified locally
+- 2026-10-12: pinned-version context validation source audit
+- 2026-10-12: vLLM validator bound to deployment wheel
+- 2026-10-12: OpenVPN519 source preflight hold
+- 2026-10-12: OpenVPN519 real Go lost-update control
+- 2026-10-12: OpenVPN519 independent task mismatch confirmed
+- 2026-10-12: selected queue independent-task prompt audit
+- 2026-10-12: GumTree163 source preflight
+- 2026-10-12: GumTree163 local real-dependency controls
+- 2026-10-12: GumTree163 native replay, token qualification, semantic hold
+- 2026-10-12: correction to GumTree163 narrative hold
+- 2026-10-12: GumTree163 independent offline publisher-test controls
+- 2026-10-12: strict Surefire parser qualification002
+- 2026-10-12: Maven compilation-phase controls
+- 2026-10-12: fresh Maven grading receipts with source provenance
+- 2026-10-12: Maven admission reconstruction and mutation checks
+- 2026-10-12: full local CPU regression qualification
+- 2026-10-12: additional raw dataset storage release
+- 2026-10-12: corpus exposure capacity audit and scaling priority
+- 2026-10-12: SWE-Hero batch qualification queue
+- 2026-10-12: batch source extraction and structural preflight
+- 2026-10-12: batch source context census
+- 2026-10-12: source editor preflight and batch adapter feasibility
+- 2026-10-12: bounded nested pytest path compatibility
+- 2026-10-12: independent issue-text reconciliation for batch
+- 2026-10-12: complete independent text join and batch review ledger
+- 2026-10-12: CRC153 pinned source and digest invariants
+- 2026-10-12: CRC153 offline upstream regression controls
+- 2026-10-12: CRC153 pristine offline replay image
+- 2026-10-12: CRC153 native replay and token qualification
+- 2026-10-12: CRC153 attributed diagnostic correction and fresh replay
+- 2026-10-12: CRC153 publisher regression qualification
+- 2026-10-12: refreshed complete local regression suite
+- 2026-10-12: production grading interpreter integration and CRC153
+- 2026-10-12: CRC153 diagnostic semantics and amended replay004
+- 2026-10-12: corpus055 quarantine integration and restoration
+- 2026-10-12: corpus055 provisional split/context and next batch environments
+- 2026-10-12: eight pinned source snapshots and offline baseline screen
+- 2026-10-12: files-to-prompt36 offline dependency and baseline qualification
+- 2026-10-12: files-to-prompt36 exact snapshot and native replay
+- 2026-10-12: files-to-prompt36 encoding controls and publisher-scope mismatch
+- 2026-10-12: csv2md22 native replay and detected parsing regression
+- 2026-10-12: csv2md22 pure-render correction and attributed replay002
+- 2026-10-12: raw-outcome admission verification and storage release
+- 2026-10-12: frontmatter31 explicit baseline and native replay
+- 2026-10-12: frontmatter31 publisher grading and independent encoding failures
+- 2026-10-12: frontmatter31 explicit encoding correction and replay002
+- 2026-10-12: semantic integration holds and codec-stream regression
+- 2026-10-12: frontmatter31 attributed diagnostic amendment and replay003
+- 2026-10-12: csv22 attributed diagnostic amendment and replay003
+- 2026-10-12: two-candidate repository and lexical isolation checks
+- 2026-10-12: corpus056 quarantine integration and capacity assessment
+- 2026-10-12: structlog350 bounded dependency/runtime qualification
+- 2026-10-12: structlog350 source snapshot and no-op edit replay blocker
+- 2026-10-12: verified rejected-no-op replay support
+- 2026-10-12: native-call-aware batch expansion
+- 2026-10-12: new batch baseline and kombu1754 JSON environment
+- 2026-10-12: kombu1754 native replay and context exclusion
+- 2026-10-12: verified SWE-rebench-V2 raw-shard release
+- 2026-10-12: current training-worker R2 recovery qualification
+- 2026-10-12: Django API-key187 supported-version offline baseline
+- 2026-10-12: Django API-key187 offline snapshot and native replay
+- 2026-10-12: Django API-key187 warning negative controls and corrected replay
+- 2026-10-12: explicit evaluator architecture and Django publisher comparison
+- 2026-10-12: Django API-key187 two-version execution coverage
+- 2026-10-12: reusable explicit pytest matrix outcome contract
+- 2026-10-12: source-derived version applicability
+- 2026-10-12: publisher-complete matrix obligations
+- 2026-10-12: exact matrix probe and runtime bindings
+- 2026-10-12: bounded raw-data release and file-residency audit
+- 2026-10-12: recomputed matrix evidence contract
+- 2026-10-12: semantic binding of matrix probe programs
+- 2026-10-12: integrated version-matrix mechanical admission
+- 2026-10-12: complete Django history review and fresh attributed amendment
+- 2026-10-12: Corpus057 quarantine integration
+- 2026-10-12: current corpus ingestion and schedule recovery
+- 2026-10-12: all R2E raw shards released locally after R2 recovery checks
+- 2026-10-12: pypinfo137 bounded runtime and candidate counterexample
+- 2026-10-12: verified archive release and proposed predicate correction
+- 2026-10-12: pypinfo137 quiet native replay002
+- 2026-10-12: pypinfo137 corrected native003 fits context
+- 2026-10-12: pypinfo137 publisher evaluation reveals semantic conflict
+- 2026-10-12: live File Provider and residency investigation
+- 2026-10-12: market calendar candidate bounded baseline
+- 2026-10-12: market calendar baseline diagnosis separates target issue
+- 2026-10-12: market calendar historical baseline passes
+- 2026-10-15: recover completed calendar replay after interruption
+- 2026-10-15: Docker authentication diagnosis and calendar static review
+- 2026-10-15: Docker recovered; independent calendar controls executed
+- 2026-10-15: independent calendar correction and expanded controls
+- 2026-10-15: calendar native003, qualified publisher grading and probe compatibility
+- 2026-10-15: complete calendar history review and Corpus058 quarantine integration
+- 2026-10-15: pytypes37 historical runtime and native replay qualification
+- 2026-10-15: pytypes37 native004 publisher comparison and archive
+- 2026-10-15: pytypes complete review, Corpus059 and restored ingestion
+- 2026-10-15: Tianshou67 serialization baseline diagnostic
+- 2026-10-15: Tianshou67 full-package runtime and bounded baseline
+- 2026-10-15: Tianshou67 compatible base suite and paired serialization controls
+- 2026-10-15: Tianshou67 parentless runtime preparation
+- 2026-10-15: Tianshou67 explicit diagnostic derivative002
+- 2026-10-15: Tianshou67 frozen candidate publisher grading
+- 2026-10-15: Tianshou complete content review and Corpus060 integration
+- October 15 — bounded corpus assembly and capacity audit
+- October 15 — restore-tested historical corpus deduplication
+- October 15 — recover two source-budget-held candidates
+- October 15 — nbgrader1410 full-import diagnostic controls
+- October 15 — nbgrader1410 original native replay
+- October 15 — nbgrader1410 strengthened diagnostic replay
+- October 15 — full nbgrader review and publisher compatibility hold
+- October 15 — PubMed Parser89 package and finite XML controls
+- October 15 — PubMed Parser89 native replay and quality holds
+- October 15 — PubMed Parser89 exact diagnostic derivative
+- Pubmed89 native002 publisher qualification and complete content review
+- Corpus061 quarantine integration and restored ingestion
+- Expanded batch:256new repositories and bounded source extraction
+- Batch2 text/context reconciliation and four pinned baseline screens
+- Ordered-set independent model qualification detects teacher regression
+- Dkey package-version compatibility and diagnostic correction
+- Dkey real offline wheel build and installed import verification
+- Dkey isolated native replay and context qualification
+- Dkey attributed diagnostic amendments and fresh replay
+- Dkey publisher mismatch and reference metadata limitation
+- Batch2 next four pinned sources and runtime limitations
+- Prices currency invariants and paired full-suite controls
+- Prices native replay and diagnostic-quality hold
+- October 15, 2026 — Prices26 asserted native replay002
+- October 15, 2026 — Prices26 history review and publisher controls
+- October 15, 2026 — Corpus062 and explicit assembly input roots
+- October 15, 2026 — Corpus062 restored ingestion and resume boundaries
+- October 15, 2026 — Pyflipdot5 independent preliminary controls
+- October 15, 2026 — Pyflipdot5 protocol field comparison
+- October 15, 2026 — HyP3 SDK53 constructor and runtime controls
+- October 15, 2026 — HyP3 SDK53 native replay and token audit
+- October 15, 2026 — HyP3 SDK53 asserted replay002
+- October 15, 2026 — HyP3 SDK53 full history review and publisher controls
+- October 15, 2026 — Corpus063 restored ingestion qualification
+- October 15, 2026 — Verified duplicate cleanup and Zahlwort6 controls
+- October 15, 2026 — Zahlwort6 native replay
+- October 15, 2026 — Zahlwort6 attributed diagnostic correction
+- October 15, 2026 — Zahlwort6 independent publisher grading
+- October 15, 2026 — Zahlwort6 complete history and isolation review
+- October 15, 2026 — Corpus064 integration and recovery
+- October 15, 2026 — Third bounded source batch and baseline screens
+- October 15, 2026 — Project_runpy17 paired controls and type-policy hold
+- October 15, 2026 — Project_runpy17 None-only derivative qualification
+- October 15, 2026 — Versioned source-edit derivative provenance
+- October 15, 2026 — Project_runpy17 fresh source-derivative replay
+- October 15, 2026 — Project_runpy17 publisher grading and mechanical admission
+- October 15, 2026 — Project_runpy17 complete history and isolation review
+- October 15, 2026 — Corpus065 integration and restored ingestion
+- October 15, 2026 — Current-content attribution worklist
+- October 16, 2026 — Source metadata completion and repository identity exception
+- October 16, 2026 — Dynaconf canonical content qualification
+- October 16, 2026 — Exact-version ptvsd notice recovery
+- October16 — Verified shared-dependency deduplication
+- October16 — Current File Provider state and bounded retry
+- October16 — Complete current-history material inventory
+- October16 — Contextual contact-indicator review
+- October16 — Article fixture attribution and relevance review
+- October 16 — Current-state readiness consolidation
+- October 16 — encoded credential screening and regression 018
+- October 16 — JUnit outcome consistency
+- October 16 — mypy_extensions issue 47 preflight
+- October 16 — mypy47 warning-policy controls
+- October 16 — mypy47 native replay 003
+- October 16 — mypy47 history, tokens and publisher controls
+- October 16 — mypy47 full-message review
+- October 16 — mypy47 network, lexical and mechanical checks
+- October 16 — Corpus066 quarantine integration
+- October 16 — current Corpus066 attribution index
+- October 16 — historical corpus duplicate release
+- 2026-10-16 — inference capture HTTP framing repair
+- 2026-10-16 — Runpy embedded component lineage
+- 2026-10-16 — semantic alignment reveals mypy warning defects
+- 2026-10-16 — corrected mypy replay and Corpus067
+- 2026-10-16 — Corpus067 restored-worker checks and three task reviews
+- 2026-10-16 — recover historical receipt members and prevent metadata collisions
+- 2026-10-16 — four additional alignment reviews and exact control bindings
+- 2026-10-16 — release two redundant native evidence archives
+- 2026-10-16 — Datetransform, EasyPTVSD, Conllu and Munch alignment
+- 2026-10-16 — Gitignore and Importlab path repairs
+- 2026-10-16 — exact-rational spline projection audit
+- 2026-10-16 — bind spline review to current Corpus067 history
+- 2026-10-16 — Jsons current-content budget hold
+- 2026-10-16 — fresh Jsons replay within the call budget
+- 2026-10-16 — Jsons context-budget correction and fresh native tokenization
+- 2026-10-16 — Jsons exact native grading and mechanical qualification
+- 2026-10-16 — Jsons whole-history quality hold and Docker confirmation
+- 2026-10-16 — Verified historical GPU fixture archival and release
+- 2026-10-16 — APISpec current-content semantic alignment
+- 2026-10-16 — Boltons exact selected-history alignment
+- 2026-10-16 — Traitlets selected repair and finite-control alignment
+- 2026-10-16 — Build290 output capture through actual backend builds
+- 2026-10-16 — Full current-corpus context reserve audit
+- 2026-10-16 — Emcee fresh context-repair replays
+- 2026-10-16 — Emcee fresh grading and mechanical qualification
+- 2026-10-16 — Emcee complete-history quality decision
+- 2026-10-16 — Fresh concise synthetic emcee candidate
+- 2026-10-16 — Synthetic emcee independent grading and content acceptance
+- 2026-10-16 — Synthetic admission and Corpus068 replacement
+- 2026-10-16 — Corpus068 restored ingestion, resume and task-review rebinding
+- 2026-10-17 — Numkit selected-source mathematical alignment
+- 2026-10-17 — Optuna selected warning-behavior alignment
+- 2026-10-17 — CloudEvents equality task alignment
+- 2026-10-17 — Signac list-query task alignment
+- 2026-10-17 — LMFIT stale-error task alignment
+- 2026-10-17 — CRC digest state-preservation review
+- 2026-10-17 — Django startup review and exact historical probe support
+- 2026-10-17 — PubMed subjects review with actual parser execution
+- 2026-10-17 — Tianshou serialization and reference limitations
+- 2026-10-17 — Werkzeug historical iteration-default alignment
+- 2026-10-17 — Statsmodels lag-selection invariant and caller limitation
+- 2026-10-17 — LensKit partial-reference scope hold
+- 2026-10-17 — LensKit full-scope remediation candidate
+- 2026-10-17 — LensKit paired package-level top-N regression
+- LensKit fresh synthetic capture
+- LensKit contract binding and wider test inventory
+- Verified Linux serving-wheel release
+- Scoped Finder refresh
+- LensKit bounded full-inventory assessment
+- LensKit controlled retries and skipped-case review
+- Workalendar alignment and Finder confirmation
+- Dynaconf registration counterexample
+- Corrected Dynaconf candidate qualification
+- Fresh Dynaconf synthetic trajectory
+- Explicit synthetic V2 grading integration
+- Dynaconf content review and native budget accounting
+- Reusable V2 synthetic-bundle qualification
+- Corpus069 replacement and restored ingestion
+- MkDocs section-index alignment
+- ASDF converter tag-cardinality review
+- Numba environment-value alignment
+- October 17 — PennyLane Exp step-preservation review
+- October 17 — PennyLane single-axis broadcast alignment
+- October 17 — Sphinx caption-node alignment
+- October 17 — Linkding option delivery alignment
+- October 17 — Snowflake cancellation-command alignment
+- October 17 — Rally cleanup-default alignment
+- October 17 — SoftLayer search routing alignment
+- October 17 — PySyft equality/mutation alignment
+- October 17 — Berlin holiday label discrepancy preserved
+- October 17 — Berlin issue alignment accepted with label distinction
+- October 17 — Hetzner exact whitespace-test source recovered
+- October 17 — Hetzner metadata alignment accepted
+- October 17 — AWS X-Ray selected parser freshly checked
+- October 17 — AWS selected-history provenance and publisher checks
+- October 17 — KubeVirt missing-secret alignment accepted
+- October 17 — Jsons literal issue reproduction verified
+- October 17 — Fresh Jsons synthetic capture and grading
+- October 17 — Shared legacy synthetic admission validator
+- October 17 — Corpus070 integrated and independently restored
+- October 17 — LensKit publisher reference gap measured
+- October 17 — Explicit contract outcome policy implemented
+- October 17 — LensKit capture corrected against its prompt
+- October 17 — LensKit contract bundle qualification passed
+- October 17 — Corpus071 assembled with 51/51 task alignment
+- October 17 — Current Corpus071 material and indicator coverage
+- October 17 — Current Jsons source/notice binding verified
+- October 17, 2026 — Current synthetic source notices and Emcee quality gap
+- October 17, 2026 — Fresh Emcee candidate captured and archived
+- October 17, 2026 — Corpus072 integration and restored ingestion
+- October 17, 2026 — Corpus072 privacy indicators and mypy source ranges
+- October 17, 2026 — Current split and development-exposure audit
+- October 17, 2026 — Confirmation-source metadata acquisition in progress
+- October 17, 2026 — Broader development-exposure exclusions
+- October 19, 2026 — Comprehensive P1 developer handoff
+

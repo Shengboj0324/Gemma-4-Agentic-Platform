@@ -13,6 +13,7 @@ from zenithsync.pytest_controls import compare_candidate, compare_controls, vali
 from scripts.compare_source_snapshot import run_image
 from scripts.qualify_swe_rebench_evaluator import PROBE, PLUGIN
 from zenithsync.session_resource_bundle import session_resource_payload
+from zenithsync.synthetic_admission import validate_synthetic_task_binding
 
 
 def validate_v2_profile(profile):
@@ -111,15 +112,20 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--snapshot', type=Path,
                         help='Independently verified sanitized image, with bound source base')
-    parser.add_argument('--candidate-replay', type=Path,
+    candidate_group = parser.add_mutually_exclusive_group()
+    candidate_group.add_argument('--synthetic-capture', type=Path,
+                                 help='Explicit assistant-authored native capture, not a teacher replay')
+    candidate_group.add_argument('--candidate-replay', type=Path,
                         help='Native replay directory containing receipt and submitted patch')
     parser.add_argument('--allowed-source-path', action='append', default=[])
     parser.add_argument('--session-resources', type=Path)
     args = parser.parse_args()
+    candidate_directory = args.candidate_replay or args.synthetic_capture
     paths = [args.task, args.task_receipt, args.resolution, args.profile, Path(__file__),
              ROOT / 'scripts/compare_source_snapshot.py',
              ROOT / 'scripts/qualify_swe_rebench_evaluator.py',
-             ROOT / 'zenithsync/pytest_controls.py', ROOT / 'evidence/p1/task-index-001/receipt.json']
+             ROOT / 'zenithsync/pytest_controls.py', ROOT / 'zenithsync/synthetic_admission.py',
+             ROOT / 'evidence/p1/task-index-001/receipt.json']
     identities = {str(path): file_record(path) for path in paths}
     task = load_json(args.task)
     receipt = load_json(args.task_receipt)
@@ -147,11 +153,11 @@ def main():
         paths.extend(extra_paths)
         resource_payload = base64.b64encode(zlib.compress(raw)).decode('ascii')
         resource_adapter = (ROOT / 'zenithsync/session_resource_replay.py').read_text()
-    if bool(args.candidate_replay) != bool(args.allowed_source_path):
+    if bool(candidate_directory) != bool(args.allowed_source_path):
         raise ValueError('Candidate replay and reviewed source allowance required together')
-    if args.candidate_replay and args.snapshot is None:
+    if candidate_directory and args.snapshot is None:
         raise ValueError('Candidate grading requires a verified sanitized snapshot')
-    if args.candidate_replay:
+    if candidate_directory:
         package_root = (profile['module'].split('.')[0]
                         if profile.get('layout', 'src') == 'flat' else 'src')
         validate_source_allowance(args.allowed_source_path, package_root=package_root)
@@ -194,8 +200,8 @@ def main():
             raise ValueError('Unqualified snapshot')
         image, base, tree = execution['image_id'], snapshot['snapshot_commit'], snapshot['source_tree']
     candidate_body = None
-    if args.candidate_replay:
-        replay_paths = [args.candidate_replay / name for name in ('receipt.json', 'submitted.patch')]
+    if candidate_directory:
+        replay_paths = [candidate_directory / name for name in ('receipt.json', 'submitted.patch')]
         paths.extend(replay_paths)
         for path in replay_paths:
             identities[str(path)] = file_record(path)
@@ -207,16 +213,30 @@ def main():
                 raise ValueError('Candidate replay resource environment differs from grader')
         elif replay.get('session_resources') is not None:
             raise ValueError('Resource-backed replay needs a resource-backed grader')
-        if (replay['status'] != 'replayed_not_graded'
-                or replay['patch'] != identities[str(replay_paths[1])]
-                or replay['image'] != image
-                or replay['snapshot'] != identities[str(args.snapshot / 'receipt.json')]
-                or replay['workspace']['snapshot_commit'] != base
-                or replay['workspace']['source_tree'] != tree
-                or replay['cleanup']['removed'] is not True
-                or any(replay['task'][key] != task[key] for key in
-                       ('repo', 'instance_id', 'base_commit'))):
-            raise ValueError('Native replay does not bind to this task and snapshot')
+        if args.synthetic_capture:
+            capture_paths = {name: candidate_directory / (name + '.json')
+                             for name in ('history', 'events', 'tools')}
+            paths.extend(capture_paths.values())
+            for path in capture_paths.values():
+                identities[str(path)] = file_record(path)
+            validate_synthetic_task_binding(
+                receipt=replay, messages=load_json(capture_paths['history']),
+                events=load_json(capture_paths['events']), tools=load_json(capture_paths['tools']),
+                task=task, snapshot=snapshot, image=image,
+                patch_identity=identities[str(replay_paths[1])],
+                history_identity=identities[str(capture_paths['history'])],
+                tools_identity=identities[str(capture_paths['tools'])])
+        else:
+            if (replay['status'] != 'replayed_not_graded'
+                    or replay['patch'] != identities[str(replay_paths[1])]
+                    or replay['image'] != image
+                    or replay['snapshot'] != identities[str(args.snapshot / 'receipt.json')]
+                    or replay['workspace']['snapshot_commit'] != base
+                    or replay['workspace']['source_tree'] != tree
+                    or replay['cleanup']['removed'] is not True
+                    or any(replay['task'][key] != task[key] for key in
+                           ('repo', 'instance_id', 'base_commit'))):
+                raise ValueError('Native replay does not bind to this task and snapshot')
         candidate_body = replay_paths[1].read_bytes()
         if not 0 < len(candidate_body) <= 2 * 1024 * 1024:
             raise ValueError('Candidate patch must be nonempty and bounded')
@@ -264,6 +284,8 @@ def main():
         'candidate_comparison': candidate_comparison,
         'allowed_source_paths': args.allowed_source_path,
         'sanitized_snapshot': args.snapshot is not None,
+        'trajectory_kind': ('synthetic_native_trajectory' if args.synthetic_capture else
+                            'native_replay' if candidate_directory else None),
         'scope': 'V2 paired evaluator controls and optional native candidate grade; not model performance.'}
     if profile.get('supplemental_pass_to_pass'):
         report['supplemental_profile'] = str(args.profile)

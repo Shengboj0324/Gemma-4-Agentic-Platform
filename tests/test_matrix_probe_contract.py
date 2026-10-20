@@ -5,6 +5,7 @@ import unittest
 
 from scripts.qualify_swe_rebench_evaluator import PLUGIN, PROBE
 from zenithsync.matrix_probe_contract import verify_matrix_probe
+from zenithsync.legacy_matrix_probe import PROBE as LEGACY_PROBE
 
 
 class MatrixProbeTests(unittest.TestCase):
@@ -68,3 +69,20 @@ class MatrixProbeTests(unittest.TestCase):
         self.settings['PATCHES']['candidate'] = base64.b64encode(b'other patch').decode()
         with self.assertRaises(ValueError):
             self.check(self.program())
+
+    def test_exact_historical_body_and_alias_equivalence(self):
+        legacy = self.program()[:-len(PROBE)] + LEGACY_PROBE
+        self.check(legacy)
+        self.check("import django; assert django.get_version() == '3.1.14'\n" + legacy, '3.1.14')
+        # Only the two documented subprocess spelling changes are admitted.
+        upgraded = LEGACY_PROBE.replace(
+            'capture_output=True,check=True,timeout=30',
+            'stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True,timeout=30').replace(
+            'capture_output=True,text=True,timeout=30',
+            'stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=30')
+        self.assertEqual(upgraded, PROBE)
+        for mutated in (legacy + '\npass\n', legacy.replace('check=True', 'check=False'),
+                        legacy.replace("timeout=30", "timeout=300"),
+                        legacy.replace("if origin.returncode or", "if False and")):
+            with self.subTest(mutation=mutated[-40:]), self.assertRaises(ValueError):
+                self.check(mutated)

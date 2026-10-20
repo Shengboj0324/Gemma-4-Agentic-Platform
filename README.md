@@ -4,12 +4,15 @@ Joint research and execution plan for the Google Gemma 4 Developer Agent Competi
 
 **Adopted direction:** build a complete, trainable Gemma-powered repository engineering agent first, using the competition's supported runtime. Measure its failure profile, train targeted adapters, and add specialist capabilities only when their benefit is demonstrated. The discarded debugging/product hypotheses no longer gate core implementation. Research novelty remains unproved; documents 15–18 are historical evidence, not the current product mandate.
 
-**Status, October 11:** P1 remains incomplete. Corpus050 contains 34 quarantined examples across 33 declared repository groups, with 656,419 input tokens and 186,691 supervised shifted targets. All 33 prior records are preserved; the reviewed Hcloud547 Go replay is newly added. R2 restoration, independent token recount and identical original/restored 30-update schedules are verified. Corpus-wide lexical and provisional repository-network checks pass within their recorded scope; frozen splits and training approval remain pending. The latest full local regression passes 522 tests with zero failures/errors/skips. CPU/reduced-model checks and earlier bounded H100 evidence do not establish full-corpus GPU readiness or learned coding-performance gains. Keep the Pod stopped while data rights, split isolation, data expansion and runtime qualification remain open. See the [current P1 readiness summary](docs/39-p1-current-readiness.md), [implementation journal](docs/40-p1-implementation-journal.md), and [P1 acceptance checklist](docs/26-p1-acceptance-checklist.md).
+**Status, October 19:** P1 remains incomplete. Corpus072 contains 51 quarantined tasks across 50 declared repository groups, with 954,733 input tokens and 262,593 supervised shifted targets. All four corpus admission gates remain unset; no large training campaign has started. The latest recorded full local regression passed 671 tests with zero skips (not rerun for this documentation update). Earlier H100 inference and a single 24-token training fixture do not establish sustained real-corpus training or learned performance gains. Keep the Pod stopped while admission, independent confirmation, data expansion and runtime qualification remain open.
+
+**Developer handoff:** [P1 complete developer handoff](docs/41-p1-complete-developer-handoff.md) explains the implementation, mathematics, data, instance/storage history, known failures and remaining work, with code, task and artifact inventories. Also see [current readiness](docs/39-p1-current-readiness.md) and the [implementation journal](docs/40-p1-implementation-journal.md).
 
 ## Reading order
 
 | Document | Purpose |
 | --- | --- |
+| [Complete P1 developer handoff](docs/41-p1-complete-developer-handoff.md) | Start here for implementation boundaries, evidence inventories, mathematical contracts and remaining acceptance gates |
 | [Current P1 readiness](docs/39-p1-current-readiness.md) | Current evidence, open admission requirements and the next GPU decision |
 | [Pinned public data intake](docs/33-public-data-intake.md) | Acquired shard, measured metadata, conversion gaps and quarantine gates |
 | [Full-checkpoint training qualification](docs/32-full-checkpoint-gpu-qualification.md) | Actual H100 update/reload evidence, memory measurements and remaining long-run gates |

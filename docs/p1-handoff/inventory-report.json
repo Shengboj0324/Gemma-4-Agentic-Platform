@@ -1,0 +1,22 @@
+{
+  "artifact_counts": {
+    "artifacts": 9297,
+    "evidence": 23835,
+    "reproduction": 278
+  },
+  "artifact_files": 33410,
+  "code_files": 371,
+  "corpus_sha256": "42da2d372f908d00b72a3f7d89af9b5fa082f8caeb8a4307bd77cfc363a2de75",
+  "evidence_packages": 4421,
+  "input_tokens": 954733,
+  "limitations": [
+    "Filesystem snapshot only; no remote cloud state read.",
+    "No secret values, hidden environments or private keys copied.",
+    "Artifact file listing does not verify artifact contents.",
+    "External recovery directory and model location documented separately; not recursively copied."
+  ],
+  "parse_errors": [],
+  "shifted_targets": 262593,
+  "symbols": 323,
+  "tasks": 51
+}

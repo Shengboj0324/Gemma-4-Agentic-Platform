@@ -1,0 +1,18 @@
+{
+  "snapshot_date": "2026-10-19",
+  "local_markdown_links_checked": 4855,
+  "missing_local_links": [],
+  "task_identity_count": 51,
+  "input_tokens": 954733,
+  "shifted_targets": 262593,
+  "recorded_corpus_sha256": "42da2d372f908d00b72a3f7d89af9b5fa082f8caeb8a4307bd77cfc363a2de75",
+  "inventory_generator_python_syntax": "passed",
+  "configured_secret_pattern_hits": [],
+  "production_tests_rerun": false,
+  "limits": [
+    "Link existence does not verify target content.",
+    "Secret patterns are bounded, not exhaustive.",
+    "No cloud state or remote asset verification performed.",
+    "255 code inventory files were placeholders; symbols cover materialized files only."
+  ]
+}

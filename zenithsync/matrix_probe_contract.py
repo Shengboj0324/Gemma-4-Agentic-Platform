@@ -8,18 +8,22 @@ import base64
 
 from scripts.qualify_swe_rebench_evaluator import PLUGIN, PROBE
 from .probe_receipt import verify_probe_receipt
+from .legacy_matrix_probe import PROBE as LEGACY_PROBE
 
 
 def verify_matrix_probe(probe, receipt, *, image, snapshot, role, patches,
                         profile, allowed_paths, version_assertion=None):
     """Reject altered evaluator bodies, executable settings and wrong patches."""
     if (role not in ('base', 'reference', 'candidate')
-            or not isinstance(probe, str) or not probe.endswith(PROBE)
+            or not isinstance(probe, str)
             or not isinstance(patches, dict)
             or set(patches) != {'candidate', 'reference', 'tests'}
             or any(not isinstance(value, bytes) for value in patches.values())):
         raise ValueError('Known evaluator body and exact patch inputs required')
-    settings_source = probe[:-len(PROBE)]
+    body = next((known for known in (PROBE, LEGACY_PROBE) if probe.endswith(known)), None)
+    if body is None:
+        raise ValueError('Known evaluator body and exact patch inputs required')
+    settings_source = probe[:-len(body)]
     if version_assertion is not None:
         if (not isinstance(version_assertion, str)
                 or not version_assertion or any(c not in '0123456789.' for c in version_assertion)):

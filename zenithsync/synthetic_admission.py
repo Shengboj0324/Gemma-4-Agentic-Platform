@@ -32,12 +32,42 @@ def validate_synthetic_projection(events, messages, tools, charged_calls):
     calls = [call for event in events for call in event['native_calls']]
     if sum(call['name'] == 'submit_patch' for call in calls) != 1:
         raise ValueError('Exactly one terminal submission required')
-    actual = sum(call['name'] != 'submit_patch' for call in calls)
+    # Native status inspection and submission do not consume the tool-call budget.
+    actual = sum(call['name'] not in ('get_status', 'submit_patch') for call in calls)
     if type(charged_calls) is not int or charged_calls != actual:
         raise ValueError('Synthetic charged call count mismatch')
     if calls[-1]['result'].get('status') != 'ok':
         raise ValueError('Successful terminal submission required')
     return actual
+
+
+def validate_synthetic_task_binding(*, receipt, messages, events, tools, task,
+                                    snapshot, image, patch_identity,
+                                    history_identity, tools_identity):
+    """Bind a synthetic capture to a grader task without relabeling provenance.
+
+    Callers must hash the supplied artifacts and recheck them after execution.
+    This verifies local consistency, not authenticity or training eligibility.
+    """
+    if (receipt.get('kind') != 'synthetic_native_trajectory'
+            or receipt.get('author') != 'assistant'
+            or receipt.get('reference_informed') is not True
+            or receipt.get('source_observations_reused') is not False
+            or receipt.get('new_model_evaluated') is not False
+            or receipt.get('training_approved') is not False
+            or receipt.get('status') != 'captured_not_graded'
+            or receipt.get('cleanup', {}).get('removed') is not True):
+        raise ValueError('Completed explicitly synthetic capture required')
+    if (receipt.get('image') != image or receipt.get('snapshot') != snapshot
+            or task.get('base_commit') != snapshot.get('base_commit')
+            or receipt.get('patch') != patch_identity
+            or receipt.get('history') != history_identity
+            or receipt.get('tools') != tools_identity):
+        raise ValueError('Synthetic task artifact binding mismatch')
+    calls = validate_synthetic_projection(events, messages, tools, receipt.get('tool_calls'))
+    if messages[1]['content'] != task.get('problem_statement'):
+        raise ValueError('Synthetic capture issue differs from grading task')
+    return calls
 
 
 def assess_synthetic_bundle(*, attempt, history, grade, tokens, profile, review,

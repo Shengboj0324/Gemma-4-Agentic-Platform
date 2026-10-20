@@ -12539,3 +12539,912 @@ Prior cycle was progress: provenance-aware quarantine replacement and enabled 64
 Rebound twenty prior accepted task reviews only after exact current/prior record equality and current token/audit hash checks. Added accepted task alignment for the reviewed, reference-informed synthetic emcee repair. Coverage is 21 accepted and 30 pending; full-corpus validation continues to reject partial review. Gates remain null.
 
 Initial paired transfer verification rejected differing manifest identities: prior publication used a different source label although file inventories matched exactly. Preserved diagnostic; published the exact restore manifest, then independently verified the matching receipt pair and all 103 files before removing the temporary restored tree. Corpus primary and historical copies remain. Evidence/p1/corpus068-ingestion-001 has 24 files totaling 91,247 bytes, R2-published and independently restore-verified. Temporary evidence restore removed. Disk check showed about 23 GiB available; no whole-repository hydration or additional bulk deletion performed. No production code changes or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — Numkit selected-source mathematical alignment
+
+The interrupted prior turn read the issue, source and retained evidence but wrote no files or launched background work. Continued that review and bound selected Corpus068 token/audit identities to native history002, replay002 and its exact submitted patch. Fresh application of selected/control patches produces identical module bytes; smooth AST matches the reference, without claiming whole-module equivalence because reference imports differ. Recomputed retained 53-case control comparison: base 48 passes/5 failures, candidate/reference 53 passes. No new package runtime execution.
+
+Confirmed selected native completion command equals the inspected scalar oracle exactly: 1,620 finite cases, maximum absolute difference 7.105427357601002e-15, zero-output surrogate rejected in 1,620 and reversed custom weights in 180 cases. Derived exact odd-window trimming argument and freshly checked 4,032 finite slice endpoint pairs. Preserved asymmetric source reflection, zero-sum/nonfinite/Python2 exclusions, full-suite collection failure and NumPy warning. Acceptance concerns task alignment only, not all teaching content or training. During local packaging inspection corrected an index-based copy selecting metadata as oracle.py; replaced it with the explicit oracle path and checked byte identity before publication.
+
+Coverage is 22 accepted/29 pending; full-corpus validator still rejects partial coverage. Evidence/data/corpus068-task-alignment-001 contains 22 files totaling 169,349 bytes, R2-published and independently restore-verified. Temporary restore removed after verification. Corpus068 and all admission gates unchanged. No production changes or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — Optuna selected warning-behavior alignment
+
+Prior cycle was progress: Numkit alignment and verified R2 archival. Read Optuna issue, selected/reference patches, constructor sorting, type guard, amended history review and selected completion. Bound current corpus audit/history to replay/patch identities and retained exact grading. Freshly applied patches and executed isolated _check_value bodies: 33 concrete type cases across base/candidate/reference, plus two warnings-as-errors controls. Preserved category behavior and documented candidate/reference type-string difference; no byte equivalence or unconditional no-exception claim.
+
+Recomputed retained nine-case publisher comparison (base eight passes; candidate/reference nine). Selected native completion checks twenty concrete values and all six Cartesian points; exact objective minimum is 1 at (1,0). No new full-package runtime execution, arbitrary object sorting, persistence, distributed scheduling or model-performance claim. Amended diagnostics are distinguished from older faulty diagnostics; original obsolete-test failure remains visible.
+
+Coverage is 23 accepted/28 pending, and full-corpus validation still rejects incomplete coverage. Evidence/data/corpus068-task-alignment-002 contains 19 files totaling 67,158 bytes, R2-published and independently restore-verified; temporary restore removed. No production code changes, corpus changes or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — CloudEvents equality task alignment
+
+Prior cycle was progress: Optuna warning review and verified R2 archival. Bound current selected CloudEvents history to token audit, native receipt and exact graded patch. Read issue, original constructor/equality, candidate/reference branches, prior full-history scope and selected completion. Fresh isolated equality checks reproduce base integer AttributeError, candidate/reference rejection of nine ordinary foreign values including a data-property trap, and preserved equal/unequal event state. A foreign equality override demonstrates asymmetry. No new constructor or full-package runtime run claimed.
+
+Recomputed hash-bound retained publisher outcomes: all 26 match reference. Retained native relation covers 32 constructed events, 1,024 pairs, 32,768 examined triples with 512 transitive antecedents, and 512 ordinary foreign directional checks. Derived eight classes of four events giving 8*4^3=512; explicitly conditional on component equality and non-overriding subclasses. Arbitrary payloads, class-spoofing proxies, foreign dispatch and Sanic/full-suite behavior remain outside scope. No universal equality or learned-model claim.
+
+Task coverage is 24 accepted/27 pending; full-corpus validator still rejects incomplete coverage. Evidence/data/corpus068-task-alignment-003 contains 13 files totaling 97,990 bytes, R2-published and independently restore-verified; temporary restore removed. No production code or corpus changes, no training approval and no Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — Signac list-query task alignment
+
+Previous cycle was progress: CloudEvents review and verified R2 archival. Read Signac issue, selected/reference parser patches, complete relevant parsing flow and selected completion. Bound Corpus068 token audit/history to exact replay and graded patch. Fresh execution of the standalone parser module reproduces baseline string misinterpretation, 292 typed roundtrips and three malformed closed JSON rejections. Type tags distinguish bool/int. Enumerated family is 73 arrays times bare/nested times whitespace/no-whitespace; correlated finite cases, not generalization statistics.
+
+Freshly reproduced reference differences for whitespace-padded array values, empty values and JSON-shaped keys. Candidate preserves whitespace/empty handling but retains a key-validation bypass; lone-array output is not a query mapping and unclosed bracket text remains a string. Accepted concrete list-valued query alignment, not universal parser safety, tuple syntax or reference equivalence. Retained hash-bound grade matches 36 publisher outcomes; selected completion records eight real CLI checks, not rerun this cycle. Original full-shell timeout remains a limitation.
+
+Coverage is 25 accepted/26 pending; full-corpus validator rejects incomplete coverage. Evidence/data/corpus068-task-alignment-004 contains 13 files totaling 96,689 bytes, R2-published and independently restore-verified. Temporary restore removed. No production/corpus changes, training approval or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — LMFIT stale-error task alignment
+
+The previous check resolved the Docker availability question with a live client/server response. Continued local qualification without Runpod. Read the issue, selected/reference patches and selected completion; bound the corpus audit to the exact history, attempt and patch. Recomputed retained 13-case reference comparison from hash-verified outcomes. Fresh AST-extracted method probes reproduce baseline failure and verify reset-before-parse, new-error propagation, recovery, empty-expression retention and deferred parsing. Explicit evaluator double establishes control-flow semantics only; local asteval is absent. Candidate preserves list aliases while reference replaces the list. Existing same/shared-evaluator native checks remain retained evidence, not fresh integration execution.
+
+Coverage is 26 accepted/25 pending. Full-corpus alignment still rejects partial coverage. Five files totaling 36,977 bytes were uploaded to R2 and independently restore-verified; temporary restore removed only afterward. No production code or corpus changes, model inference, training approval or Runpod use. Whole-history quality and broader P1 gates remain incomplete.
+
+## 2026-10-17 — CRC digest state-preservation review
+
+Previous cycle made progress through LMFIT alignment and R2 archival. Bound the selected CRC history004 and replay004 to Corpus068 and the retained 17-case publisher grade. Fresh complete-module executions reproduce baseline 81/138/81 alternation. Candidate and reference each pass exhaustive eight-bit state/mask/reflection checks (131,072 cases) and 96 continuation cases across four widths, both reflection settings and two implementations. Documented the conditional mathematical purity argument and limits: stable configuration, built-in read-only reversal, no concurrent mutation, no universal CRC polynomial or whole-history quality claim.
+
+Coverage is 27 accepted/24 pending; full-corpus alignment rejects partial coverage. Five files totaling 37,858 bytes uploaded to R2, independently restored and exact-inventory verified; temporary restore removed afterward. No corpus or production changes, no training approval and no Runpod use. Local disk check reports approximately 23 GiB available. P1 remains incomplete.
+
+## 2026-10-17 — Django startup review and exact historical probe support
+
+Previous cycle made progress through CRC review and verified archival. Inspected selected API-key issue, history003, replay003 and version-matrix evidence. Fresh controlled imports cover eight version tuples, defined exports and a stale-global re-execution limitation. Initial full matrix verification rejected retained evaluator bytes. Compared bodies: only capture_output/PIPE and text/universal_newlines subprocess aliases differed. Added a frozen exact historical body to the verifier allowlist, preserving all settings, plugin, patch and receipt checks. New tests reject rehashed appended or altered code. Five focused tests pass; the full Torch-enabled local suite passes 648 tests with zero skips in 28.351 seconds. Recomputed full retained matrix provenance and outcomes successfully.
+
+Coverage is 28 accepted/23 pending. Nine files totaling 62,316 bytes, including changed verifier code and tests, uploaded to R2 and independently restore-verified. Temporary restore removed after verification. CRC restore duplicates inspected total only about 3 MiB and were left intact; no material disk release claimed. Corpus and training admission unchanged. No Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — PubMed subjects review with actual parser execution
+
+Previous cycle made progress on Django alignment and exact historical evaluator support. Bound the selected PubMed audit/history002/replay002/patch to retained four-case publisher controls. Reverse/applied patches verify candidate and reference source equality. Fresh local read-only, network-disabled Docker execution uses real lxml 5.3.0: 36 synthetic nesting/list cases, mixed text and eight NXML fixtures pass. All unrelated fields equal baseline for those fixtures. Reproduced namespace nonmatching and noninjective semicolon serialization; neither is claimed fixed. Retained and fresh evidence are explicitly distinguished.
+
+Coverage is 29 accepted/22 pending; full-corpus validation rejects incomplete alignment. Ten files totaling 47,811 bytes uploaded to R2 and independently restore-verified; temporary restore removed afterward. No production or corpus changes; latest production suite remains the preceding 648-test result. No training approval or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — Tianshou serialization and reference limitations
+
+Previous cycle made progress through actual PubMed parser checks and verified archival. Read Tianshou issue and selected/reference Batch changes. Bound history004, replay004 and four-case retained grading to Corpus068. Fresh real-module local Torch checks reproduce baseline recursion. Candidate passes six payload families across protocols 0–5 (36 cases), plus Pipe/file use cases. Reference fails all 12 protocol-0/1 cases, not only empty batches; initial broad-pass and empty-only hypotheses were rejected and documented. Candidate preserves shared nested aliases while reference reconstructs separate objects. Tests use trusted local payloads and CPU tensors, not arbitrary spawn/CUDA/distributed workloads.
+
+Coverage is 30 accepted/21 pending, with full-corpus partial-coverage rejection. Five files totaling 42,568 bytes uploaded to R2 and independently restore-verified; temporary restore removed only afterward. No production/corpus change, training approval or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — Werkzeug historical iteration-default alignment
+
+Previous cycle made progress through Tianshou serialization review and verified archival. The Werkzeug issue is PBKDF2 work count, not request parsing. Bound selected reconstructed history and replay002 patch to Corpus068. Fresh baseline source read from retained image; exact candidate/reference patch application; actual module checks confirm 600000 versus 1000000 defaults, explicit counts 1/2/37/600000, correct/wrong-password verification and unchanged public scrypt default. Recomputed retained 12-case publisher comparison and checked retained 55-case semantic records, with candidate/reference equality. Recorded 5/3 PRF work-count ratio without entropy, timing or current-policy claims.
+
+Coverage is 31 accepted/20 pending. Six files totaling 46,215 bytes uploaded to R2 and independently restore-verified; temporary restore removed afterward. No production/corpus changes, training approval or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — Statsmodels lag-selection invariant and caller limitation
+
+Previous cycle made progress through Werkzeug qualification and verified archival. Bound selected Statsmodels history/patch to Corpus068 and retained 131-case grade. Fresh extracted helper checks cover 2,184 monotone-statistic/penalty cases and 1,452 exact rational score cases. Documented first-argmax induction for nonempty finite scores. Confirmed unchanged caller includes lag-zero correlation; derived n > 2.4 log n using the positive global minimum of x-2.4 log x, so ordinary valid inputs force the 2p penalty. Bounded acceptance does not claim correction of that caller limitation or the publisher reference off-by-one defect.
+
+Coverage is 32 accepted/19 pending. Five files totaling 41,993 bytes uploaded to R2 and independently restore-verified; temporary restore removed afterward. No production/corpus changes, training approval or Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — LensKit partial-reference scope hold
+
+Previous cycle made progress through Statsmodels invariant checks and archival. Read both LensKit issue requests and selected/reference source. Fresh actual-function execution reproduces no-k 0.7344308063 versus requested 0.8888888889; explicit-k baseline 1.2103099179 becomes 1.0 after repair. Candidate/reference source equality and 20-case retained grade do not establish the first requirement. Recorded an explicit held decision and confirmed validator rejection. The previous high-precision oracle uses the unchanged full-truth convention, so it cannot validate the omitted behavior. No silent issue narrowing or corpus replacement performed.
+
+Accepted coverage remains 32, with 19 unaccepted including this hold. Six files totaling 45,294 bytes uploaded to R2 and independently restore-verified; temporary restore removed after verification. No production/corpus changes, training approval or Runpod use. This is local qualification progress, not a global blocker; P1 remains incomplete.
+
+## 2026-10-17 — LensKit full-scope remediation candidate
+
+Previous cycle made progress by reproducing the omitted issue behavior and holding admission. Implemented a separate assistant-authored candidate for both original scalar requests and consistent bulk cutoff per recommendation list. Bulk ideal uses cumulative per-truth gains and joins, avoiding per-list sorting. The oracle exposed an explicit-k/custom-array-discount index-alignment defect; reindexing repairs it without removing the failing case. A retained-runtime probe import failed on newer project annotations under Python 3.9; standalone portable verification resolved the probe incompatibility without altering production requirements.
+
+Both local and retained environments pass 3,510 scalar, 3,456 bulk and three mixed-truth cases against a 70-digit Decimal oracle, maximum absolute error 1.1102230246251565e-16. Nine files totaling 31,185 bytes uploaded to R2 and independently restore-verified. Temporary restore removed afterward. Candidate is not a captured trajectory or corpus replacement; full-package compatibility and admission still required. Accepted coverage remains 32/51, LensKit held. No Runpod use. P1 remains incomplete.
+
+## 2026-10-17 — LensKit paired package-level top-N regression
+
+Previous cycle produced and verified a full-issue candidate. Initial container preflight rejected an upstream commit check against the sanitized snapshot; retained failure and retried against verified snapshot commit/tree. Paired original eight-file top-N suite completes: baseline 81 passed, candidate 78 passed/3 failed. The initial assessment expected only one failure; inspected source shows all three assert old full-truth normalization (one scalar, two RecListAnalysis). Recorded this compatibility change without rewriting outcomes. The earlier bus error did not recur with 512 MiB shared memory.
+
+Four new assistant-authored contract tests fail baseline and pass candidate, asserting both original requests and bulk/integration consistency. Original tests unchanged. Regression package 28 files/66,273 bytes and contract package 22 files/24,558 bytes are R2-published and independently restore-verified; temporary restores removed afterward. All execution containers exited and were removed. Full repository assessment and fresh attributed trajectory remain; original corpus held, accepted coverage32/51, no training approval or Runpod use. P1 remains incomplete.
+
+## LensKit fresh synthetic capture
+
+[Fresh attributed capture](../evidence/data/lenskit312-synthetic-trajectory-001/assessment.md) observes both complete edit preimages, reproduces both issue failures and captures the qualified repair with numerical checks and the three disclosed legacy-test failures. Projection validation passes: 29 messages, 12 charged calls, 12,964 input tokens and 5,012 shifted targets. An 8,192-token output reserve leaves 11,612 context tokens. All 28 evidence files (558,052 bytes), including the two earlier incomplete attempts, are R2-published and independently restore-verified. Task-specific grading and full admission remain outstanding; Corpus068 and its LensKit hold are unchanged. Docker API is responding at version 29.8.2; no manual startup intervention is needed.
+
+## LensKit contract binding and wider test inventory
+
+[Contract assessment](../evidence/data/lenskit312-synthetic-contract-grade-001/assessment.md) binds the exact synthetic patch to retained paired tests: four issue-contract fixes, with three legacy compatibility failures preserved. Three changed-patch controls reject. The local project suite passes 648 tests in 28.443 seconds with Torch enabled. [Default repository assessment](../evidence/data/lenskit312-full-repository-001/assessment.md) remains incomplete: baseline timed out after 240 seconds; candidate was not run. Separate collection succeeds with 367 unique nodes across 38 files, now recorded for bounded paired execution. Both packages (25 files, 78,811 bytes total) are R2-published and independently restore-verified. No production admission policy was relaxed, no corpus record was replaced, and no Runpod resources were used.
+
+## Verified Linux serving-wheel release
+
+[Wheel release and recovery helper](../evidence/data/vllm-wheel-release-001/assessment.md) preserve the qualified vLLM 0.19.1 wheel in R2. A fresh independent 433,132,506-byte restore passed exact verification before local removal, releasing 433,135,616 allocated bytes (about 413 MiB). Other SDK wheels and installed environments remain. The ten-file release evidence package is also R2-published and independently restore-verified. Restore this wheel before any deployment step that requires it; no model or training qualification follows from this storage result.
+
+## Scoped Finder refresh
+
+[Current File Provider diagnostics](../evidence/data/fileprovider-diagnostic-004/assessment.md) show no unresolved conflicts in the four inspected project folders. Source and documentation are recursively downloaded and uploaded; the root is syncing recent changes. The user-visible Finder error remains unconfirmed, and a retry on only the small zenithsync folder has been requested. No sync-database repair or bulk artifact hydration was attempted. Seven evidence files are R2-published and independently restore-verified.
+
+## LensKit bounded full-inventory assessment
+
+[Paired execution](../evidence/data/lenskit312-full-repository-002/assessment.md) scheduled all 367 default-collected nodes in 38 file groups per role. Baseline records 323 passed, 30 skipped, 12 incomplete and two failed; candidate records 326 passed, 34 skipped, three incomplete and four failed. Both item-item groups timed out. Candidate failures are the three reviewed legacy NDCG expectations and an accumulator Hypothesis health check also seen in baseline. Baseline has an additional flaky accumulator failure. Randomized order and unpinned seeds prevent interpreting pass-count differences as improvement. Missing data and optional dependencies account for recorded skip reasons where final JUnit reports are available.
+
+The checker reconciles exact collection, stage observations, JUnit aggregates, source identities and container cleanup. Four altered-evidence controls reject. The [archive](../evidence/data/lenskit312-full-repository-002-archive/assessment.md) is R2-published and independently restored: all five archive-package files and all 472 extracted evidence members verify exactly. The follow-up plan records 20 paired retries with fixed seeds and 34 skipped-node reviews, not completed work. Both containers are removed. This is not full-repository acceptance or a model result; Corpus068, accepted alignment coverage and training admission remain unchanged.
+
+## LensKit controlled retries and skipped-case review
+
+[Fixed-seed per-node retries](../evidence/data/lenskit312-full-repository-003/assessment.md) execute all 20 selected cases without timeouts: baseline 14 passed, four skipped and two failed; candidate 11 passed, four skipped and five failed. The only paired differences are the three reviewed legacy NDCG expectations. Both roles reproduce the accumulator filtering health check and a timing-deadline failure. No assertions, deadlines or health checks were suppressed. Four altered-evidence controls reject.
+
+The explicit [coverage ledger](../evidence/data/lenskit312-full-repository-003/coverage-ledger.json) selects 347 original outcomes and 20 controlled retries, accounting for all 367 nodes with no incomplete entries. Baseline totals 331 passed, 34 skipped and two failed; candidate totals 328 passed, 34 skipped and five failed. This is evidence selection across two protocols, not a single-run full-suite pass or model score. The five-file archive package and all 260 extracted members are independently R2 restore-verified.
+
+[Skip prerequisite review](../evidence/data/lenskit312-skipped-fixtures-001/assessment.md) covers all 34 nodes: nonexclusive prerequisites are MovieLens 100K (20), MovieLens 20M (three), scikit-learn (seven) and explicit upstream disabling (five). One SVD case needs both 100K and scikit-learn. Dataset terms distinguish research use from redistribution/commercial permission; no new raw MovieLens data was downloaded or uploaded. All 17 review files are independently R2 restore-verified. Corpus068 remains unchanged and quarantined. No Runpod resources were used; both local test containers are removed.
+
+
+## Workalendar alignment and Finder confirmation
+
+[Workalendar review](../evidence/data/corpus068-task-alignment-013/assessment.md) accepts the requested registry API behavior: fresh pinned-image execution records baseline 0/20, reference 19/20 and candidate 20/20. The reference difference is warning caller location. Warning-as-error prevents delegation, so lookup-value equivalence is conditional on ordinary warning handling. The retained 11-case publisher comparison still matches; it was recomputed from recorded outcomes, not rerun. Documentation parity and whole-history quality remain separate. All 19 evidence files (63,061 bytes) were published to R2 and independently restored and verified. Accepted alignment coverage is now 33/51, with 18 unaccepted; full-corpus validation still rejects incomplete coverage. Corpus068 remains unchanged and quarantined, with no training approval or Runpod use.
+
+The user subsequently confirmed “No error now” after retrying Finder Keep Downloaded on the small `zenithsync` source folder. This resolves that scoped user-visible check. It does not establish whole-repository download status or authorize hydration of large artifact placeholders. The earlier archived diagnostic remains unchanged.
+
+
+## Dynaconf registration counterexample
+
+[Fresh Dynaconf qualification](../evidence/data/corpus068-task-alignment-014/assessment.md) finds a material gap despite the retained 26-case publisher match. Across 9,216 finite ordered comparisons of 96 instances representing 48 structural rule descriptions, baseline matches 1,680, reference 9,216 and candidate 9,184. Candidate registration raises AttributeError after 24 distinct rules when absent/present `when` conditions are compared; reference registers all 48 once. The literal issue example is repaired, but that narrower success does not establish registration correctness. The selected task is held, and the admission validator rejects that decision.
+
+Both the initial probe exception and completed exception-recording probe are retained. All 28 files (82,784 bytes) were R2-published and independently restored with exact verification; temporary restored copies were removed afterward. No test containers remain. Accepted alignment remains 33/51 with 18 unaccepted, now including explicit LensKit and Dynaconf holds. Corpus068 is unchanged and quarantined. This is finite local qualification, not a model score or a universal correctness proof. Next work is a corrected attributed Dynaconf repair with regression verification and fresh trajectory capture. No Runpod resources were used; P1 remains incomplete.
+
+
+## Corrected Dynaconf candidate qualification
+
+[New attributed candidate](../evidence/data/dynaconf413-repair-001/assessment.md) guards ordinary Validator comparisons by concrete type and compares combined validators through parent attributes and ordered children. Fresh actual-package checks pass all 9,216 finite comparisons and preserve exactly the first occurrence of each of 48 structural descriptions during registration. Candidate and reference pass all 26 publisher validator cases; baseline passes 24 and fails two. The argument is restricted to immutable acyclic structures with ordinary attribute equality, and preserves the historical equality-field selection. It is not semantic equivalence of arbitrary predicates or compatibility proof for custom subclasses.
+
+Full original test invocation stops on missing Flask, Redis and hvac collection dependencies in both roles. An explicit continuation run preserves those collection errors while executing available tests: baseline and candidate have identical identities and outcomes, 255 passed, 19 failed and three collection errors. No timeout or tracked-source mutation occurred, and execution containers were removed. Full-repository acceptance remains false.
+
+All 59 files (1,480,657 bytes) are R2-published and independently restore-verified. The temporary restored copy was removed after verification. This candidate is assistant-authored and reference-informed; a fresh attributed trajectory and replacement admission remain outstanding. Original Corpus068 Dynaconf remains held, accepted alignment stays 33/51, and no training or Runpod use is authorized by this result. P1 remains incomplete.
+
+
+## Fresh Dynaconf synthetic trajectory
+
+[Native capture and review](../evidence/data/dynaconf413-synthetic-trajectory-001/assessment.md) records both failures before editing, passes both afterward, passes all 9,216 finite structural comparisons and the 48-rule registration check, and passes 19 original validator tests. The prior 26-case publisher-patched qualification is separate retained evidence. Both edit preimages were observed, and applying the submitted patch reproduces the exact qualified candidate source bytes. The network-disabled container was removed.
+
+The assistant-authored, reference-informed capture has 11 exchanges, ten charged calls and 25 messages; projection and all nine tool schemas match the retained protocol and installed signatures. Untruncated pinned tokenization yields 6,800 inputs and 2,467 shifted supervised targets, leaving 17,776 tokens after an 8,192-token output reserve. This is token fit, not GPU readiness or model performance.
+
+All 17 files (187,204 bytes) are published to R2 and independently restore-verified; the temporary restore was removed afterward. Original Corpus068 and its Dynaconf hold remain unchanged. Task-specific admission integration, content/rights/split/runtime review and versioned replacement remain outstanding; full-repository acceptance remains false. P1 remains incomplete and Runpod was not used.
+
+
+## Explicit synthetic V2 grading integration
+
+[Fresh synthetic grading](../evidence/data/dynaconf413-synthetic-qualification-002/assessment.md) adds a mutually exclusive --synthetic-capture path to the V2 evaluator. It binds explicit authorship, snapshot/image, patch/history/schemas, captured exchanges, cleanup, call counts and original issue text without relabeling a synthetic capture as historical replay. Existing source-path restrictions, controls and post-execution identity checks remain. Fresh Dynaconf publisher grading passes all 26 candidate/reference cases against 24 baseline passes and the expected two failures.
+
+The old snapshot verification rejected on stale verifier-code bindings. Fresh verification of the same image confirms the 511-file source manifest and sanitized commit history; no old receipt was changed. The complete project suite passes 652 tests in 27.010 seconds with Torch enabled and no skips. All 41 qualification files (119,747 bytes), including code snapshots and test logs, are R2-published and independently restore-verified; the temporary restore was removed afterward.
+
+This enables direct grading of the synthetic patch but does not approve training or resolve full-repository failures/dependencies. Content review, generic synthetic-bundle admission integration and rights/split/runtime gates remain. Corpus068 stays unchanged with its Dynaconf hold; accepted alignment remains 33/51. P1 remains incomplete and Runpod was not used.
+
+
+## Dynaconf content review and native budget accounting
+
+[Revision 2](../evidence/data/dynaconf413-synthetic-trajectory-002/assessment.md) addresses two procedural omissions found in revision 1: nearby test-source inspection before edits and native budget-status inspection. The original capture is preserved. The fresh 31-message capture passes a complete content-review ledger, 9,216 finite structural checks, 19 original validator tests and a new 26-case publisher-reference grade. The submitted patch is byte-identical to revision 1.
+
+This capture exposed and corrected a production accounting defect: get_status is uncharged in the installed native runtime, like submit_patch. The projection validator now follows that contract, with a regression test that rejects an inflated charged count. The full local suite passes 653 tests in 26.092 seconds with Torch enabled and zero skips. Capture totals are 14 exchanges, 11 charged calls, 7,708 input tokens and 2,519 shifted targets; context margin is 16,868 after an 8,192-token reserve.
+
+All 50 files (308,816 bytes), including native runtime source evidence, code snapshots, grade, content ledger and test log, are independently R2 restore-verified. Temporary restore removed afterward; no Dynaconf execution containers remain. Content acceptance is assistant review, not independent human or training approval. Corpus068 is unchanged; generic bundle integration, versioned replacement and rights/split/runtime gates remain. P1 remains incomplete and Runpod was not used.
+
+
+## Reusable V2 synthetic-bundle qualification
+
+[Mechanical integration](../evidence/data/dynaconf413-synthetic-admission-001/assessment.md) now binds synthetic provenance, captured exchanges, source fixtures, task/snapshot identities, runtime receipts, recomputed publisher transitions, token arrays/audits and accepted content review in one reusable checker. Dynaconf revision 2 passes with no mechanical blockers: 7,708 inputs, 2,519 shifted targets and 11 charged calls. The result explicitly remains training_approved=false.
+
+The seven new tests cover nonmutation, context policy, changed source/capture, false outcome summary, inconsistent tokens and wrong-grade content review. The full local suite passes 660 tests in 26.751 seconds with Torch enabled and zero skips. All seven evidence files (27,687 bytes) are independently R2 restore-verified, with the temporary restore removed afterward. The prior full-nodeid synthetic backend is unchanged.
+
+Next is a versioned corpus replacement and ingestion requalification, not training. Corpus068 still contains the held original Dynaconf trajectory, so its accepted alignment remains 33/51. Rights, split isolation, full runtime gates and broader P1 work remain incomplete. No Runpod resources were used.
+
+
+## Corpus069 replacement and restored ingestion
+
+[Corpus069 integration](../evidence/data/corpus069-integration-001/assessment.md) replaces only the held original Dynaconf record with the reviewed synthetic revision 2. The other 50 records are unchanged. Totals are 978,548 inputs and 266,933 shifted supervised targets across 51 tasks and 50 repositories. All context reserves pass, minimum margin 210. Accepted task alignment increases to 34/51; 17 records remain unaccepted, including LensKit. All four training admission fields stay null and training loads reject.
+
+All 103 payload files (10,838,848 bytes) and 32 integration/ingestion evidence files (185,075 bytes) are independently R2 restore-verified. The existing 42-file worker bundle still matches current repository counterparts. Original/restored scheduling matches exactly, with ten planned updates, 51 examples each once, eleven exact resume suffixes and eleven rejected corrupted counters. The real worker rejects quarantine before model access. Temporary restores were removed after verification and ingestion checks. No optimizer steps or Runpod use occurred; P1 remains incomplete.
+
+
+## MkDocs section-index alignment
+
+[Bound navigation review](../evidence/data/corpus069-task-alignment-003/assessment.md) accepts the selected positional list repair. Exact extracted function execution in the pinned image passes all 576 finite navigation trees; reference passes 567 and baseline 144. A prefix-collision example demonstrates the reference list.index mutation defect; selected code preserves the intended leaf correspondence. Four malformed-input diagnostics remain unchanged. All five retained publisher/integration outcomes still match after recomputation.
+
+Fresh evidence is function-only: two preserved probes first failed on a historical path mismatch and then an unavailable ruamel.yaml import. No package-import success or new publisher run is claimed. The proof scope is finite acyclic nonaliased structures and literal prefixing, with path/URL normalization and idempotence excluded. All 33 evidence files (135,859 bytes) are independently R2 restore-verified, and execution containers are removed. Accepted alignment is now 35/51; 16 records remain unaccepted. Corpus069 remains unchanged and quarantined; P1 remains incomplete and Runpod was not used.
+
+
+## ASDF converter tag-cardinality review
+
+[Fresh actual-package checks](../evidence/data/corpus069-task-alignment-004/assessment.md) verify the selected warning-to-error repair across 1,024 combinations of exact-tag subsets, selector presence and direct/virtual inheritance. Candidate and reference have zero mismatches and warnings; baseline has exactly 67 of each. The set-count derivation, sum over k=2..4 of C(4,k)×3^(4-k)=67, matches observation. The check concerns distinct relevant tags and attribute presence; wildcard behavior, arbitrary callability and serialization are not claimed.
+
+All 28 retained publisher outcomes match after recomputation. All 20 evidence files (67,259 bytes) are independently R2 restore-verified; temporary restore and execution containers are removed. Accepted alignment rises to 36/51, with 15 unaccepted. Corpus069 remains unchanged and quarantined; no training approval or Runpod use. P1 remains incomplete.
+
+
+## Numba environment-value alignment
+
+[Fresh actual-module checks](../evidence/data/corpus069-task-alignment-005/assessment.md) verify the selected return-value fix over 36 current/legacy/default combinations and three invalid prefix arguments. Candidate/reference have no value, warning or rejection mismatches; baseline fails the 27 current-variable-present cases. Empty strings remain present values, default identity is preserved, and deprecated NUMBAPRO values are ignored with the existing warning behavior. No GPU or arbitrary-warning-policy correctness is claimed.
+
+The one retained publisher test matches after recomputation. All 20 evidence files (105,745 bytes) are independently R2 restore-verified; temporary restore and test containers are removed. Accepted alignment is now 37/51 with 14 unaccepted. Corpus069 remains unchanged and quarantined. P1 remains incomplete; no Runpod use.
+
+
+## October 17 — PennyLane Exp step-preservation review
+
+[Corpus069 alignment006](../evidence/data/corpus069-task-alignment-006/assessment.md)
+binds the current history and native patch to fresh execution in the sanitized
+snapshot. Candidate and reference pass 100 cases; baseline passes 20 because it
+loses non-None step metadata. All 300 matrix comparisons per role agree with
+explicit Pauli generators and SciPy expm at absolute tolerance 1e-12. SciPy may
+also underlie the implementation, so this is a generator/construction regression
+check, not an independent numerical algorithm validation. The retained 169-case
+publisher comparison was recomputed, not rerun. Initial interpreter failure is
+preserved alongside the successful attempt.
+
+The 25-file, 217,582-byte evidence bundle was independently restored from R2 and
+verified against its exact manifest. Temporary restore copies were removed only
+after verification. Task alignment is now 38 accepted / 13 unaccepted; full
+coverage still rejects and training approval remains zero. No production code
+changed; this cycle exercised qualification scripts and real package execution,
+not the full local regression suite. Runpod remains unnecessary.
+
+Corrected the current readiness page's stale Corpus068 manifest digest to the
+hash computed directly from Corpus069: 6bad23677fa222bf518b6f167af82cc6bf1f8c835e94b7e351c39ee513dd43cd.
+
+
+## October 17 — PennyLane single-axis broadcast alignment
+
+[Alignment007](../evidence/data/corpus069-task-alignment-007/assessment.md) verifies
+the selected amended history and exact submitted patch against Corpus069.
+Fresh sanitized-snapshot execution compares 60 circuit configurations against
+explicit rotation matrices, Kronecker operators and CNOT basis permutations.
+Candidate/reference pass 60/60; baseline passes 24/60. The baseline succeeds for
+unbatched input and when batch size equals layer count, which can conceal the
+axis-selection bug. Maximum candidate state error: 4.965068306494546e-16, under
+the declared 1e-11 absolute tolerance. This is finite NumPy evidence; multi-axis
+batches and general differentiation correctness are not claimed.
+
+Recomputed retained grading covers 41 publisher identities and three declared
+supplemental interface tests. No new interface/backend run is implied. Task
+alignment is now 39 accepted / 12 unaccepted; full-corpus coverage still rejects.
+Zero tokens are training-approved. All 20 files (128,337 bytes) in this evidence
+bundle were R2-published, independently restored and exactly verified. Only the
+temporary restored duplicate was removed afterward. No production source changes,
+full local-suite rerun or GPU execution occurred this cycle. Keep Runpod stopped.
+
+
+## October 17 — Sphinx caption-node alignment
+
+[Alignment008](../evidence/data/corpus069-task-alignment-008/assessment.md) binds
+the selected corpus history and native patch to fresh Sphinx integration runs.
+Each document runs in a separate process. Candidate/reference satisfy ten required
+cases; baseline fails four. The extra emphasized-caption observation still finds
+zero misspellings in every role and is not counted as passing. Missing-image and
+spelling warnings remain in the evidence. Retained grading matches eleven outcomes,
+including one pre-existing docstring failure; it is not an all-green suite.
+
+Task alignment is now 40 accepted / 11 unaccepted, with zero training-approved
+tokens. The 20-file, 96,479-byte evidence bundle was published to R2, independently
+restored and exactly verified; its temporary restored duplicate was then removed.
+No production source changed, no full-suite rerun was warranted, and no GPU was
+used. The previous 660-test local-suite result retains its documented scope.
+
+
+## October 17 — Linkding option delivery alignment
+
+[Alignment009](../evidence/data/corpus069-task-alignment-009/assessment.md) binds
+the amended current history and patch to real child-process argv checks in the
+sanitized snapshot. Candidate/reference pass all 77 cases; baseline passes two.
+The cases include ten fixed strings, 64 seeded token vectors and three malformed
+strings. Valid cases verify the complete argv, gzip payload and temporary-file
+cleanup. The child is a controlled executable, not SingleFile or a browser; no
+remote-page or user-agent acceptance claim follows. The assessment's network
+exclusion refers to test execution; R2 archival does use the network.
+
+Retained grading matches six reference outcomes. Task alignment is now 41 accepted
+/ 10 unaccepted; all training gates remain closed. The 20-file, 143,979-byte
+bundle was published to R2, independently restored and exactly verified. The
+temporary restored duplicate was removed after verification. No production code
+changed and no GPU was used; the full local suite was not rerun for this evidence-only
+review. Runpod remains unnecessary.
+
+
+## October 17 — Snowflake cancellation-command alignment
+
+[Alignment010](../evidence/data/corpus069-task-alignment-010/assessment.md) binds
+the current corpus patch to fresh real adapter imports with mocked query/cursor
+boundaries. Candidate/reference pass 17 cases; baseline passes two. The command
+matches Snowflake's documented session-level cancellation function. This is not
+live cancellation, privilege, latency, race-condition or Ctrl+C-routing evidence.
+The retained 38-case grade was recomputed, not freshly rerun.
+
+Coverage is now 42 accepted / 9 unaccepted; training admission remains closed.
+All 20 evidence files (67,445 bytes) were published to R2 and independently
+restore-verified. The temporary restored duplicate was removed afterward.
+No production code changed or GPU was used; no full local-suite rerun was needed
+for this evidence-only review. Keep Runpod stopped.
+
+
+## October 17 — Rally cleanup-default alignment
+
+[Alignment011](../evidence/data/corpus069-task-alignment-011/assessment.md) binds
+the current amended history and patch to fresh actual connector/session checks.
+Candidate/reference pass all twelve absent/true/false × static/normal × SSL/plain
+cases; baseline fails four default cases. All sessions and connectors close,
+cleanup timers cancel, and no pending async tasks remain. The pinned runtime uses
+aiohttp 3.11.18. This does not measure TLS leaks or performance. Code and
+command-line documentation defaults agree. Retained grading matches 197 reference
+outcomes; that publisher suite was reanalyzed, not freshly rerun.
+
+Task alignment is now 43 accepted / 8 unaccepted; training remains closed. All
+23 evidence files (96,928 bytes) were R2-published, independently restored and
+exactly verified. Temporary restore data was removed afterward. No production
+source changed, full local suite rerun or GPU session occurred. Runpod can remain
+stopped while remaining task and admission work proceeds.
+
+
+## October 17 — SoftLayer search routing alignment
+
+[Alignment012](../evidence/data/corpus069-task-alignment-012/assessment.md) binds
+the current history and native patch to 28 fresh actual CLI/local XML-RPC cases.
+Candidate/reference pass all 28; baseline fails six. Exit codes, routing priority
+and exact RPC arguments are checked. Empty-string-containing tuples remain truthy
+and forwarded; meaningful query validation and remote search relevance are not
+claimed. Retained grading matches four reference outcomes and was not rerun.
+
+Task alignment is now 44 accepted / 7 unaccepted; training admission remains
+closed. All 20 files (139,694 bytes) were R2-published, independently restored and
+exactly verified. The temporary restore duplicate was then removed. No production
+source changed, full local-suite rerun or GPU session occurred. Keep Runpod stopped.
+
+
+## October 17 — PySyft equality/mutation alignment
+
+[Alignment013](../evidence/data/corpus069-task-alignment-013/assessment.md) binds
+the corrected selected history and native patch to twenty fresh actual-package
+checks. Candidate/reference pass 20; baseline lacks the methods. Cases cover
+scalar and broadcast equality, integers/floats/nonfinite/complex/empty inputs,
+mutation identity and encrypted/conversion guards. In-place means tensor-object
+mutation, not underlying-array alias preservation. NotImplemented is a returned
+sentinel rather than a raised exception, following the explicit reference.
+Retained grading matches 132 reference outcomes and was not freshly rerun.
+
+Task alignment is now 45 accepted / 6 unaccepted; training remains closed. All
+20 files (71,305 bytes) were R2-published, independently restored and exactly
+verified. The temporary restored duplicate was removed afterward. No production
+code changed, full local-suite rerun or GPU execution occurred. Keep Runpod stopped.
+
+
+## October 17 — Berlin holiday label discrepancy preserved
+
+[Fresh calendar reconciliation](../evidence/data/holidays2052-current-semantics-001/assessment.md)
+compares 1,496 complete calendar configurations per base/reference/candidate role.
+Both patches change exactly eight Berlin-2025 mappings by adding May 8, but their
+labels differ: candidate uses the issue's short name, reference the anniversary
+name. All other entries agree with baseline in the tested domain. The original
+runner's exact-label assertion failed and remains preserved; separate reconciliation
+verifies the actual difference. The official Berlin source confirms date and
+jurisdiction, without establishing byte-identical naming. No acceptance ledger
+change was made: 45 accepted / 6 unaccepted, zero approved training tokens.
+
+All 18 files (4,146,076 bytes) were published to R2 and independently restore-verified;
+the temporary restore duplicate was removed afterward. No production changes,
+full-suite rerun or GPU execution occurred. Next integrate the label distinction
+with exact corpus provenance and retained publisher grading before deciding
+alignment. Runpod remains unnecessary.
+
+
+## October 17 — Berlin issue alignment accepted with label distinction
+
+[Alignment014](../evidence/data/corpus069-task-alignment-014/assessment.md) binds
+the calendar evidence to current Corpus069. Reconstructing each exact executed
+probe reproduces the receipt's source hash, including patch, snapshot and collector.
+The issue requests the short holiday name used by the candidate. The publisher's
+new German test checks date/subdivision membership, not label identity. Alignment
+is accepted with the candidate/reference label difference explicitly retained;
+there is no claim of full-reference or translation parity. Retained 43-case
+comparison is recomputed, with no new runtime run this cycle.
+
+Coverage is now 46 accepted / 5 unaccepted. Training remains closed. The five-file
+review package (51,055 bytes) was R2-published and independently restore-verified;
+the larger prior calendar bundle remains separately archived. Temporary restore
+data was removed after verification. No production changes or GPU use occurred.
+
+
+## October 17 — Hetzner exact whitespace-test source recovered
+
+[Recovery and verification](../evidence/data/hcloud547-test-recovery-001/assessment.md)
+restores the missing 4,407-byte test source by exact R2 content hash. Reconstructed
+probe identities match all five retained variant execution receipts. Recounted Go
+logs confirm candidate 13 metadata and 623 upstream test/subtest pass events; base
+and mutants fail their intended boundary checks. The source explicitly covers
+1,080 combinations plus method/failure checks. These are retained results, not
+fresh Go execution or independent statistical samples. Current-corpus and publisher
+join remains next; acceptance stays 46 / 51 and training remains closed.
+
+The seven-file recovery package (18,345 bytes) was independently R2 restore-verified.
+Temporary restored duplicates were removed afterward. No production changes,
+new compiler run or GPU use occurred. Keep Runpod stopped.
+
+
+## October 17 — Hetzner metadata alignment accepted
+
+[Alignment015](../evidence/data/corpus069-task-alignment-015/assessment.md) binds
+the current corpus record to retained publisher probes, raw Go logs and the
+recovered independent test source. All 627 publisher test/subtest identities
+resolve uniquely with exact outcome coverage: candidate/reference pass 627;
+baseline fails five. Probe hashes include both repair and test patches. Historical
+controls cover boundary trimming and reject three incorrect variants. No new Go
+execution or external metadata-service validation is claimed.
+
+Task alignment is now 47 accepted / 4 unaccepted; training remains closed. All
+five review files (50,553 bytes) were R2-published and independently restore-verified.
+Temporary restored duplicates were removed afterward. No production changes or
+GPU use occurred. Keep Runpod stopped.
+
+
+## October 17 — AWS X-Ray selected parser freshly checked
+
+[Fresh parser evidence](../evidence/data/awsxray70-current-parser-001/assessment.md)
+applies the exact native patch to retained base source and verifies resulting
+bytes. Node v20.14.0 runs 4,320 cases per variant (two versions, three configurations,
+720 field permutations). Candidate passes all; baseline and three mutants show
+the intended version/field failures. Checks preserve configuration and reservoir
+values. Wildcard sampling/file loading are explicitly stubbed out, so this is
+parser evidence rather than request matching or stochastic-performance evidence.
+Current-corpus and publisher joins remain pending; acceptance stays 47 / 51.
+
+All fourteen files (42,927 bytes) were R2-published and independently restore-verified.
+Temporary restored data was removed afterward. No production changes or GPU use
+occurred; training admission remains closed. Keep Runpod stopped.
+
+
+## October 17 — AWS selected-history provenance and publisher checks
+
+[Alignment016](../evidence/data/corpus069-task-alignment-016/assessment.md) recovers
+Corpus069's selected history003/native006 and missing publisher task from R2 by
+exact hashes. Selected patch bytes equal graded replay004; histories are explicitly
+different. Reconstructed probe hashes bind repair and publisher tests. All 321
+Mocha full-title outcomes are recounted, including every match for ambiguous short
+titles; candidate/reference pass 321 and baseline fails one. This is retained-suite
+verification, with fresh parser evidence separately scoped. Task alignment is now
+48 accepted / 3 unaccepted; training admission remains closed.
+
+All 18 files (267,339 bytes) were published to R2 and independently restore-verified.
+Temporary restored duplicates were removed afterward. No production changes,
+new full runtime suite or GPU execution occurred. Keep Runpod stopped.
+
+
+## October 17 — KubeVirt missing-secret alignment accepted
+
+[Alignment017](../evidence/data/corpus069-task-alignment-017/assessment.md) recovers
+exact selected history/attempt artifacts and raw grading files from R2. Reconstructed
+probes and recounted Go logs verify the five declared unit-suite entrypoints;
+the controller suite fails on baseline and passes for candidate/reference. The
+publisher regression exercises reconcileDelete with nil DataSecretName and checks
+successful finalizer removal. Thirteen packages include eight without tests;
+live-cluster e2e is explicitly excluded. No new Go execution or cluster-level
+acceptance is claimed.
+
+Task alignment is now 49 accepted / 2 unaccepted. Jsons and LensKit remain held;
+rights, privacy, split and training gates are still separate and closed. All 55
+files (304,857 bytes) were R2-published and independently restore-verified. Temporary
+restored duplicates were removed afterward. No production changes or GPU use.
+Keep Runpod stopped.
+
+
+## October 17 — Jsons literal issue reproduction verified
+
+[Fresh reproduction](../evidence/data/jsons86-literal-reproduction-001/assessment.md)
+checks the literal `A('abc')` issue separately from three annotation-conforming
+tuple inputs in pinned Python 3.7.16. All four reproduce exact SerializationError
+messages on the base snapshot and produce the expected decoded JSON with the
+candidate patch. Source remained unchanged by tests; both containers were removed.
+The string becomes a character list, which is historical serializer behavior,
+not annotation-conformity validation. The fail-closed verifier checks exact
+outcomes and input/probe identities.
+
+All 15 files (15,365 bytes) were R2-published and independently restore-verified;
+only the temporary restored duplicate was deleted. This resolves the reproduction
+ambiguity but does not approve the old history. A fresh attributed native capture,
+regrading, tokenization and content review remain required. Corpus069 stays
+unchanged at 49 accepted / 2 unaccepted task alignments, with zero training-approved
+tokens. No production code change or GPU use; keep Runpod stopped.
+
+
+## October 17 — Fresh Jsons synthetic capture and grading
+
+[Selected capture002](../evidence/data/jsons86-synthetic-trajectory-002/assessment.md)
+replaces the proposed use of the poor-quality old teaching history with a freshly
+executed assistant-authored, reference-informed candidate. Its 29 messages include
+13 exchanges (10 charged calls), source/helper/test inspection, four exact baseline
+failures, two focused edits, four successful reproductions, 126 finite API checks,
+19 original tuple/list test passes, submission and bounded final prose. Separate
+fresh base/reference/candidate grading matches all ten publisher cases. No model
+was evaluated. Attempt001 failed during setup and is retained with cleanup evidence.
+
+Native encoding verifies 8,118 input tokens and 2,152 shifted supervised targets;
+16,458 tokens remain after the 8,192 output reserve. Nine schemas and exact history
+projection are checked. Content review is assistant review, not independent human
+review. All 53 files (298,285 bytes) are R2-published and independently restore-verified;
+the temporary restored duplicate was removed only afterward.
+
+Next: bind this legacy evaluator's synthetic capture through a reusable admission
+validator before corpus replacement. Existing V2 and replay-only admission paths
+must not be bypassed or confused. Corpus069 remains unchanged, 49/51 task alignments
+accepted, zero training-approved tokens. No production code changed this cycle;
+the prior full local suite was not rerun. Runpod remains unnecessary.
+
+
+## October 17 — Shared legacy synthetic admission validator
+
+[Implementation and verification](../evidence/data/legacy-synthetic-admission-001/assessment.md)
+adds a separate legacy entry point to the shared publisher admission checker.
+Legacy reports require an explicit format and all four transition categories;
+V2 remains compatible. Tests reject format interchange, missing categories and
+false summaries, and accept a correctly declared stable failure without training
+approval. A regression test confirms the existing projector rejects calls after
+submission; no redundant production change was retained for that invariant.
+
+All 664 discovered local tests passed across two runs: 647 in full discovery,
+then the 17 skipped opt-in Torch tests explicitly enabled and passed. No GPU run.
+Ten evidence files (54,589 bytes) were R2-published and independently restore-verified;
+the temporary restored duplicate was removed. Current source/test snapshots and
+both test logs are archived.
+
+The real Jsons capture still needs a complete source-bound task document and
+canonical grade/review bindings before this checker can qualify it. Preserve
+prior immutable evidence. Corpus069 remains unchanged at 49 accepted / 2
+unaccepted task alignments and zero training-approved tokens. Keep Runpod stopped.
+
+
+## October 17 — Corpus070 integrated and independently restored
+
+Jsons now passes the reusable legacy synthetic admission checks against its exact
+source issue and fresh retained controls. The source shard was SHA256-verified in
+memory; no 109 MB local shard copy was created. The canonical grade explicitly
+records schema adaptation, with no new execution claim or replay relabeling.
+The 38-file admission bundle (81,145 bytes) is R2-published and restore-verified.
+
+Corpus070 replaces only Jsons, preserving the other 50 records. It contains 51
+tasks, 962,448 input tokens and 263,216 shifted supervised targets. Task alignment
+is 50 accepted / one unresolved (LensKit). All 103 payload files (10,662,970 bytes)
+were independently restored; current worker sources and restored schedules match.
+Nine planned updates cover all examples once with no overshoot. Ten resume
+boundaries reproduce exact suffixes and reject corrupted counters. The worker
+rejects quarantine before model access or output creation. All admission fields
+remain null; zero tokens are training-approved.
+
+The 32-file integration bundle (197,869 bytes) is also independently restore-verified.
+Temporary restored duplicates were removed after checks. Current readiness table
+and manifest pointer now identify Corpus070, SHA256
+`dacc63ba2161addb027eecdb270bc7db1792b4614b412569e4c5993778179754`.
+No production source changes this cycle; prior 664-test verification remains the
+latest local suite. Next: resolve the LensKit contract/reference discrepancy and
+continue rights, privacy, split and runtime admission work. Keep Runpod stopped.
+
+
+## October 17 — LensKit publisher reference gap measured
+
+[Fresh three-way contract comparison](../evidence/data/lenskit312-reference-contract-002/assessment.md)
+applies base, publisher reference and full-issue candidate to the same pinned
+runtime and four unchanged assertion-based tests. Results are 0/4, 1/4 and 4/4
+passes respectively. Reference fixes explicit scalar cutoff but fails the original
+implicit-cutoff request and both bulk consistency checks. Exact source SHA256,
+module origin, raw outcomes, unchanged tracked source and cleanup are verified.
+
+Under historical rank weights, the issue's implicit example is (3+5)/(5+4)=8/9.
+The former denominator includes the third ideal item and yields about 0.73443,
+which the issue explicitly rejects. This supports a documented contract distinction,
+not relabeling old tests or claiming a full-suite pass. The three legacy expectation
+failures and broader compatibility limits remain recorded. A first import-path
+failure was retained; the successful retry checks actual checkout import origin.
+
+Next: implement explicit issue-contract admission binding the source task, selected
+synthetic capture, contract comparisons, finite numerical oracle and compatibility
+ledger. Keep reference-equivalence checks strict. Corpus070 remains unchanged,
+LensKit held, and training unapproved. No production code changes or GPU use.
+
+All 29 comparison-evidence files (57,493 bytes) were R2-published and independently
+restore-verified. The temporary restored duplicate was removed afterward.
+
+
+## October 17 — Explicit contract outcome policy implemented
+
+[Contract checker](../evidence/data/lenskit312-contract-policy-001/assessment.md)
+requires exact three-role contract coverage and paired compatibility coverage.
+Declared intentional pass-to-fail changes need a rationale and links to supporting
+contract cases; all unexpected changes remain blockers. It preserves raw failures,
+skips and reference disagreement and grants no training approval.
+
+LensKit's four contract checks pass, and its three observed legacy changes match
+the declared normalization change. Actual compatibility remains 78 passed / three
+failed. Source hashes and captured patch bind the same candidate. The broader
+367-node ledger and its 34 skips/two shared failures remain separate limitations.
+No full-suite LensKit acceptance is claimed.
+
+Seven new tests passed, and the complete local suite passed 671 tests in 28.042
+seconds with Torch enabled and zero skips. Next: full issue-contract bundle
+admission binding source task, history, tokens, numerical oracle and compatibility
+ledger. Corpus070 is unchanged, LensKit remains held, and Runpod remains off.
+
+All eight evidence files (27,812 bytes) were R2-published and independently
+restore-verified; the temporary restored duplicate was removed afterward.
+
+
+## October 17 — LensKit capture corrected against its prompt
+
+[Corrected native capture](../evidence/data/lenskit312-synthetic-trajectory-002/assessment.md)
+binds the original issue recovered from the SHA256-verified archived source shard.
+The 101,556,119-byte shard was read in memory only. The former native003 capture
+was found to read nearby tests after editing and omit get_status; preserve it as
+superseded evidence, not an admitted teaching trace.
+
+Fresh native004 reads source preimages and nearby tests before editing and records
+both budget checks. It has 33 messages, 15 exchanges and 12 charged calls. Both
+issue reproductions pass after the edit, all 6,969 finite numerical cases pass,
+and three legacy failures remain visible. Its patch is byte-identical to the
+qualified candidate. Schema/projection/observation checks pass. Native tokenization
+has 13,225 inputs and 5,028 shifted targets, with 11,351 context margin after the
+output reserve. This is assistant-authored, reference-informed content.
+
+Next: bind this corrected history through full issue-contract bundle admission
+without concealing reference disagreement or compatibility failures/skips. No
+production code changed; the prior 671-test suite remains the latest regression
+result. Corpus070 remains unchanged and LensKit held. Keep Runpod stopped.
+
+All 20 corrected-capture/source-task files (328,605 bytes) were R2-published
+and independently restore-verified. The temporary restored duplicate was removed.
+
+
+## October 17 — LensKit contract bundle qualification passed
+
+[Task-specific admission assessment](../evidence/data/lenskit312-contract-admission-001/assessment.md)
+binds the exact source task, corrected native004 history, patch/source, token arrays,
+finite numerical observations, contract outcomes and retained compatibility ledger.
+Both original compatibility assessors were rerun read-only against raw collection,
+pytest stage and JUnit evidence; exact immutable reports matched. The full 367-node
+merged ledger was reconstructed, retaining candidate 328 passes, five failures and
+34 skips. Only three declared normalization changes differ from the baseline.
+
+The bundle passes mechanical checks under the explicit issue contract, with
+reference_equivalent=false and training_approved=false. Five parsed-evidence
+mutation controls reject. Assistant content/task review accepts the corrected
+history within those limits; this is not independent human adjudication or a
+single-process repository pass. Corpus070 remains unchanged until verified
+replacement assembly; next step is Corpus071 and its R2 restore/ingestion checks.
+No production code changes or GPU use this cycle; keep Runpod stopped.
+
+All 11 admission-evidence files (34,862 bytes) were R2-published and independently
+restore-verified; only the temporary restored duplicate was removed.
+
+
+## October 17 — Corpus071 assembled with 51/51 task alignment
+
+[Corpus071 integration](../evidence/data/corpus071-integration-001/assessment.md)
+replaces only LensKit with corrected native004 and explicit issue-contract provenance.
+The other 50 records remain unchanged. All 51 task reviews pass exact coverage;
+each of 51 leave-one-out controls rejects. Reference disagreement and all LensKit
+compatibility limitations remain visible. This is not training admission.
+
+The manifest SHA256 is
+`3b4df0c2294df8b4ddcd0e692853abcd513450a47ea1557098324b2ea939fccf`.
+There are 954,476 input tokens and 262,577 shifted supervised targets. All examples
+fit context plus output reserve. The 103-file payload (10,575,597 bytes) was
+R2-published and independently restored. Restored worker sources match; schedules
+are byte-identical, nine updates cover all examples once, all ten resume boundaries
+match, and corrupt counters reject. Quarantine blocks the real worker before model
+access. The temporary restored corpus was removed after verification.
+
+All four manifest gates remain null and zero tokens are training-approved. Current
+readiness now points to Corpus071. Next: current-content rights/privacy notices,
+split validation, qualified-data scaling and remaining runtime limitations. No
+production code changed this cycle; the 671-test suite remains the latest local
+regression evidence. No GPU use; keep Runpod stopped.
+
+The 32-file integration package (211,404 bytes) is also R2-published and independently
+restore-verified. Its temporary restored duplicate was removed afterward.
+
+
+## October 17 — Current Corpus071 material and indicator coverage
+
+All 51 exact current histories were located locally with no R2 recovery or large
+artifact download. A content delta identifies 46 unchanged and five changed/new
+histories since Corpus065. Nested history scanning and independent token-array
+decoding both yield zero configured credential indicators. This is a bounded
+indicator result, not universal privacy clearance.
+
+All 13 contact-pattern occurrences are reviewed: 12 carried only by exact history,
+location and matched-text hash; one new mypy_extensions package-author metadata
+occurrence classified as attribution. No history bytes were changed. Reports
+retain only locations and hashes, not contact values. Whole-history privacy and
+notice coverage remain unapproved. Next: observed-material notice bindings for
+changed histories and contextual privacy review. Corpus071 remains quarantined;
+no production changes or GPU use.
+
+All 13 inventory/screen/review files (152,470 bytes) were R2-published and
+independently restore-verified. The temporary restored duplicate was removed.
+
+
+## October 17 — Current Jsons source/notice binding verified
+
+[Snapshot extraction and observation comparison](../evidence/data/jsons86-current-notice-binding-001/assessment.md)
+maps the current capture's two structured file reads and shell helper excerpt to
+exact tracked source line ranges. Snapshot commit/tree and clean source are checked.
+The root LICENSE matches retained upstream bytes, as do both implementation files
+covered by that source receipt. All three pre-edit source-printing observations
+are accounted for; the container was removed.
+
+This is a current repository-source-to-notice binding, not approval for all dataset,
+issue-text, dependency or embedded material. Histories and production code remain
+unchanged. Next: the other four changed/new histories' observed materials and
+contextual notice/privacy coverage. Corpus071 remains quarantined; no GPU use.
+
+All 13 source/notice evidence files (39,163 bytes) were R2-published and independently
+restore-verified. The temporary restored duplicate was removed afterward.
+
+## October 17, 2026 — Current synthetic source notices and Emcee quality gap
+
+Bound Dynaconf's three, LensKit's five, and Emcee's three source observations
+to their pinned Git snapshots and retained root-license bytes. Independent local
+checks revalidated input identities and every observed line range. Preserved an
+initial Emcee interpreter-path failure; the corrected pinned-image inspection
+succeeded with its installed conda Python 3.9.20.
+
+The exact selected Emcee history reads nearby tests only after its edit and
+contains no get_status call, contrary to its system instructions. Its task-behavior
+review does not establish whole-prompt compliance. Recorded prompt-quality
+acceptance as false and scheduled a fresh native capture; no old observations
+or corpus records were rewritten.
+
+Evidence: [source-notice assessment](../evidence/data/corpus071-synthetic-notice-bindings-001/assessment.md)
+and [independent R2 restore](../evidence/data/corpus071-synthetic-notice-bindings-001-verification/verification.json).
+All 42 files (239,426 bytes) published and independently restored; the temporary
+restore copy was removed only after exact verification. Production code unchanged;
+no new full-suite claim. P1 remains incomplete, zero training-approved tokens,
+and no Runpod use. Next: fresh Emcee capture and remaining current-history
+notice/privacy qualification, followed by split and data-scale admission.
+
+## October 17, 2026 — Fresh Emcee candidate captured and archived
+
+Completed fresh native attempt emcee295-synthetic-native-004. Three source/test
+reads now precede editing and two get_status calls succeed. The same fixture
+fails before the repair and passes afterward, checking 112 stored probability
+values per backend for memory and HDF5 with zero observed absolute discrepancy.
+The original sampler run retains 11 passes and 10 failures. Independent publisher
+grading matches all 21 reference outcomes, including two persistent failures.
+
+Protocol reconstruction verifies 25 messages, eleven exchanges and nine tool
+schemas. Eight calls charge the budget. Untruncated encoding gives 8,295 input
+tokens, 2,279 shifted supervised targets and 16,281 context margin after output
+reserve. Exact source reads match the prior pinned snapshot audit. Mechanical
+synthetic admission passes; the review records reference-informed authorship,
+correlated seeded checks, absent explicit pre-edit prose rationale, and remaining
+rights/privacy/split/runtime gates. No claim of universal correctness or model
+performance follows.
+
+[Evidence](../evidence/data/emcee295-synthetic-trajectory-002/assessment.md):
+31 files, 285,688 bytes, published and independently restore-verified in R2.
+Temporary restored copies removed only after verification. Production code
+unchanged. Corpus071 remains authoritative and unchanged; next integrate this
+replacement with exact record preservation and restored ingestion/resume checks.
+P1 incomplete; zero training-approved tokens; no Runpod use.
+
+## October 17, 2026 — Corpus072 integration and restored ingestion
+
+Replaced only Emcee with fresh native-004 and preserved the other 50 records
+exactly. Corpus072 has 51 tasks, 954,733 input tokens and 262,593 shifted targets;
+all admission fields remain null. Independent recount matches the aggregate
+delta (+257 input tokens, +16 targets). All 51 task reviews remain bound to the
+current records; 51 missing-review controls reject incomplete coverage. Context
+margin remains at least 210 after reserving 8,192 output tokens.
+
+The 103-file payload (10,578,444 bytes) was published and independently restored
+from R2. All 42 restored deployment files match repository sources. Nine updates
+cover all examples once with zero overshoot; local and restored schedule streams
+match byte-for-byte. All ten resume boundaries match exact suffixes, and ten
+corrupted counters reject. The worker rejects quarantine before absent-model
+access and produces no training output. Removed only the verified temporary
+corpus restore after these checks.
+
+[Integration evidence](../evidence/data/corpus072-integration-001/assessment.md).
+Production code unchanged; no new full-model or optimizer claim. P1 incomplete,
+Runpod unused, zero training-approved tokens. Remaining priorities: current
+notice/privacy coverage, frozen split review and scaling the qualified pool.
+
+The 33-file integration evidence package (198,454 bytes) also passed independent
+R2 restore verification. Its temporary restore copy was removed after verification.
+
+## October 17, 2026 — Corpus072 privacy indicators and mypy source ranges
+
+Located all 51 exact histories locally, with no recovery downloads. Fifty are
+unchanged from Corpus071; only Emcee differs. Current nested-history and decoded
+token scans find zero configured credential indicators. All 13 contact reviews
+carry forward only after exact history/location/matched-text hash comparison.
+These bounded indicators do not establish complete privacy or notice clearance.
+
+Mypy initial README, implementation, tests and setup reads match pinned source
+ranges and the retained MIT notice. Two observations truncate at line 150.
+Four generated diagnostic files and three post-edit reads remain distinguished
+from initial upstream material. Two default-AMD64 inspection launches failed
+before execution; inspecting the retained image confirmed ARM64, and the
+explicit ARM64 inspection succeeded without downloading or rebuilding an image.
+
+Corpus history evidence: 13 files, 149,291 bytes, independently R2 restore-verified.
+Mypy evidence: 17 files, 56,213 bytes, independently R2 restore-verified. The
+first assessment prose mistakenly said four post-edit reads while its report
+correctly lists three. A separate version-002 correction preserves the original
+archive and corrects that count; raw observations are unchanged.
+
+Production code unchanged; P1 incomplete; zero training-approved tokens.
+Next work remains edited/shell-observed material and embedded/dependency notice
+coverage, contextual privacy decisions, frozen split review and data scale.
+
+## October 17, 2026 — Current split and development-exposure audit
+
+Corpus072 has 51 provisional train records and zero unseen confirmation tasks.
+All selected repair histories were inspected during development. Compared all
+1,275 first-user issue-text pairs: no exact or case-folded word-sequence duplicates.
+The highest five-word-shingle Jaccard overlap is 21/406 for the two PennyLane
+tasks. This lexical result does not establish semantic or repository-family
+independence. Current cross-split collision absence is vacuous in a train-only pool.
+
+Linked the two PennyLane tasks in a separate draft leakage manifest, preserving
+all authoritative corpus assignments. A negative control assigning one task
+to confirmation rejects. There are 50 case-normalized repository labels;
+detached forks/aliases/shared upstream code remain a lineage-review requirement.
+
+Wrote a prospective metadata-first confirmation protocol: explicit exposure
+exclusions, family-level separation, preregistered sampling/resource/scoring
+contracts and development-only candidate selection. Checked conservative
+Hoeffding integer boundaries for independent outcomes: 738 observations for
+absolute-rate error 0.05 at alpha 0.05; 2,952 for the paired range-two bound.
+These are conditional planning bounds, not a power result or actual independence
+claim. Clustered tasks cannot be counted as independent observations.
+
+[Split evidence and protocol](../evidence/data/corpus072-split-audit-001/assessment.md).
+P1 remains incomplete. No corpus mutation, production-code change or GPU use.
+
+## October 17, 2026 — Confirmation-source metadata acquisition in progress
+
+Pinned official SWE-rebench revision 89cdfbab4ab1bd8f5a658bb212d1b63624f4f881
+and V2 revision 10483de0f50fe5da545942705a76c6150171af7f, acquiring cards and
+V2 LICENSE without full shards. V2 explicitly warns of other-benchmark overlap.
+Recorded legacy web-viewer solution snippet exposure for spectree and sepal_ui;
+exclude those repositories from prospective confirmation rather than claiming
+unseen status. Raw-card and allowlisted metadata inspection is used afterward.
+
+The bounded V2 HTTP-range projection remains live at this checkpoint: exec
+session 56906, process 16947, script
+evidence/data/confirmation-source-intake-001/project_metadata.py. Poll this
+existing handle before starting any retry. No completed projection or selection
+is claimed yet. Output decodes only eight metadata columns, caps retrieval at
+32 MiB and records fragment hashes; full LFS digest verification remains absent.
+The provisional exclusion assessor is prepared but must run after projection.
+Source package is not yet archived while its output is being produced.
+
+No GPU use, model training, dependency installation, or confirmation freeze.
+
+## October 17, 2026 — Broader development-exposure exclusions
+
+Inspected direct task metadata from 2,894 materialized evidence receipts, with
+zero skipped receipts or placeholder hydration. Identified 108 case-normalized
+repository labels and 111 task IDs and rechecked the referenced receipt hashes.
+Recorded these as conservative exclusions for prospective confirmation, beyond
+the 50 repository labels in the current selected corpus. This remains a lower
+bound: receipt acquisition is not proof of viewing and absence is not proof of
+unseen status. No training or confirmation admission follows.
+
+The existing metadata extraction session 56906 remains live; do not start a
+replacement merely because it has no final output yet. Its process has an active
+HTTPS connection and remains within the script's bounded retrieval procedure.
+The completed exposure inventory is separately archived; the unfinished source
+projection package is left untouched. No GPU use or corpus mutation.
+
+
+## October 19, 2026 — Comprehensive P1 developer handoff
+
+Created [P1 complete developer handoff](41-p1-complete-developer-handoff.md) and
+the `docs/p1-handoff/` appendices. The package documents original/expanded scope,
+architecture, individual source/config/test files, current task records, mathematical
+contracts and assumptions, numerical and GPU qualification boundaries, failures,
+instances/storage, restart procedure, and outstanding acceptance criteria.
+
+The inventory enumerates 371 code/config/test/dependency/candidate files, 323
+definitions from materialized Python files, 33,410 retained artifact/evidence files
+and all 51 Corpus072 task records. 255 code-catalog entries are placeholders;
+no claim of inspecting their current contents is made. Exact source links and
+materialization flags are retained. Large artifacts were not hydrated.
+
+Current corpus SHA256 and independent token/target recount agree with Corpus072:
+954,733 input tokens and 262,593 shifted targets. All remain quarantined. Read the
+completed confirmation-source projection receipt: 32,079 rows, metadata only, full
+LFS hash not verified; no selection report or confirmation freeze. Earlier live
+extraction notes are superseded by that completed output. No acquisition or
+selection was resumed by this documentation task.
+
+README's stale Corpus050/522-test summary was updated and the current readiness
+page linked to the handoff. Latest recorded full regression remains 671 passed,
+zero skips; not rerun for these documentation/inventory changes. No production
+source, corpus payload, cloud resources or private credentials changed.
