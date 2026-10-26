@@ -12,3 +12,4 @@ models/
 artifacts/official/
 artifacts/data/
 .DS_Store
+/evidence
