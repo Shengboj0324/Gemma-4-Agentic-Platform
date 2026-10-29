@@ -13884,3 +13884,38 @@ error - which is a test, not a hope.
 
 Local suite 944 passed, zero skips on the full stack; 944 collected with 70 skips
 on the standard library alone.
+
+### Shipment complete, and the corpus is in the bucket
+
+The fourth run finished: **6,725 packages, 2,243 files uploaded, 51,369 reused,
+2,268,219,861 bytes verified**, index
+`c229ccaeb014f5e1693a63796b1c121aca7a335e414a475cdfca2f653046093e`, across
+`evidence` (3,970 packages), `reproduction` (3) and the recovered runtime tree
+(2,752). The zero uploads through the first 5,400 packages are the point: the
+three failed runs' work was genuinely in the bucket and was re-verified, not
+re-sent.
+
+**One package was refused**, as designed: `build290-base/exact-snapshot`, 49
+files, for `symlink:docs/changelog.rst`. A symlink's target is outside what the
+manifest controls, so the package is refused whole rather than partially
+published. That is the classifier working, not a failure to fix.
+
+With the lock free, the re-promoted corpus published: 115 files, 5 uploaded, 110
+reused, artifact manifest
+`326c9cd0fe69fb5c512513f5d037cbd075ace72670a4192e0eb2b7fee49d5cba`, corpus
+manifest `2853b558f4bba36e5b2a1bf22ee23c5028a73da06e20d3d94919b23a994ca6fa`,
+content identity `c081880c…` unchanged. The manifest digest moved again because
+it covers the receipts; the content identity is the one to compare, and it did
+not move.
+
+`verify_r2_training_readiness.py` then passed **from the bucket alone**: 115
+files restored and 10,783,215 bytes verified, 51 examples with 954,733 input and
+262,593 supervised targets, 210-token minimum margin, `loader_agreement: true`,
+the three tokenizer assets fetched by digest, all 8 model files present at
+23,297,590,856 bytes, the schedule digest
+`4664ecf632b35fad11dfa6d9d3e1ff19cfddb352816e99bb8750c8167cd1f06b` reproduced
+with exact coverage, and the real worker's preflight accepting the restored tree.
+
+What this does not establish is unchanged: no throughput measured, no sustained
+run, no learned improvement, and the corpus is still 51 all-`train`,
+development-exposed tasks.

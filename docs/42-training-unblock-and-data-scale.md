@@ -29,7 +29,8 @@ Promotion is immutable: the quarantined corpus is never edited. A complete new t
 | Quantity | Value |
 |---|---|
 | Source (quarantine) manifest SHA256 | `42da2d372f908d00b72a3f7d89af9b5fa082f8caeb8a4307bd77cfc363a2de75` |
-| Admitted manifest SHA256 | `fa984ca3ff1006e2cf7817a8ee67f613fb4e37a5b603bdc6d5e61b586f623887` |
+| Admitted manifest SHA256 (current, published to R2) | `2853b558f4bba36e5b2a1bf22ee23c5028a73da06e20d3d94919b23a994ca6fa` |
+| Admitted manifest SHA256 (superseded) | `fa984ca3ff1006e2cf7817a8ee67f613fb4e37a5b603bdc6d5e61b586f623887` — the same corpus before the latest re-promotion; the manifest digest covers the receipts, so it moves whenever one does |
 | Corpus content identity (unchanged by promotion) | `c081880c71b9f78ffb4fdcf319d0959e8d7dfcb39878b8ac06f510f2d088f103` |
 | Examples / unique tasks / repository groups | 51 / 51 / 50 |
 | Input tokens / supervised targets | 954,733 / 262,593 |
