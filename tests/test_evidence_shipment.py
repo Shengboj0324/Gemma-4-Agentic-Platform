@@ -5,8 +5,9 @@ import tempfile
 import unittest
 
 from zenithsync.artifacts import canonical_json
-from zenithsync.evidence_shipment import (classify_package, discover_packages,
-                                          forbidden, ship_tree, shipment_index,
+from zenithsync.evidence_shipment import (ShipmentLockError, classify_package,
+                                          discover_packages, forbidden, ship_tree,
+                                          shipment_index, shipment_lock,
                                           verify_local_coverage)
 from zenithsync.object_store import ArtifactStore
 
@@ -132,6 +133,66 @@ class ClassifyTests(unittest.TestCase):
         verdict = classify_package(self.root, [], max_package_bytes=10**6)
         self.assertFalse(verdict['publishable'])
         self.assertEqual(verdict['problems'], ['no_regular_files'])
+
+
+class ShipmentLockTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.directory = Path(self.temp.name)
+
+    def lock(self, bucket='bucket', prefix='artifacts/v1'):
+        return shipment_lock(bucket, prefix, directory=self.directory)
+
+    def test_a_second_shipment_on_the_same_prefix_is_refused(self):
+        with self.lock() as held:
+            self.assertTrue(held.path.is_file())
+            with self.assertRaises(ShipmentLockError) as caught:
+                with self.lock():
+                    pass
+            message = str(caught.exception)
+            self.assertIn('another shipment', message)
+            self.assertIn('artifacts/v1', message)
+            self.assertIn('integrity guard', message)
+        self.assertFalse(held.path.exists())
+
+    def test_a_different_prefix_or_bucket_is_a_different_lock(self):
+        with self.lock(prefix='artifacts/v1'):
+            with self.lock(prefix='quarantine/v1'):
+                pass
+            with self.lock(bucket='other'):
+                pass
+
+    def test_a_stale_lock_from_a_dead_process_is_reclaimed(self):
+        import json as json_module
+        # A killed shipment leaves nothing to clean up, so its lock is safe to
+        # take over. PID 2**31-1 is not a live process.
+        probe = self.lock()
+        probe.path.write_text(json_module.dumps(
+            {'pid': 2**31 - 1, 'bucket': 'bucket', 'prefix': 'artifacts/v1',
+             'started_utc': '2026-01-01T00:00:00+00:00'}))
+        with self.lock() as held:
+            self.assertTrue(held.path.is_file())
+        self.assertFalse(probe.path.exists())
+
+    def test_an_unreadable_lock_is_reclaimed_rather_than_blocking_forever(self):
+        probe = self.lock()
+        probe.path.write_text('not json')
+        with self.lock():
+            pass
+
+    def test_the_lock_is_released_even_when_the_body_raises(self):
+        held = self.lock()
+        with self.assertRaises(ZeroDivisionError):
+            with held:
+                1 / 0
+        self.assertFalse(held.path.exists())
+
+    def test_a_blank_bucket_or_prefix_is_refused(self):
+        with self.assertRaisesRegex(ValueError, 'Bucket is required'):
+            shipment_lock('  ', 'artifacts/v1', directory=self.directory)
+        with self.assertRaisesRegex(ValueError, 'Prefix is required'):
+            shipment_lock('bucket', '', directory=self.directory)
 
 
 class ShipTreeTests(unittest.TestCase):

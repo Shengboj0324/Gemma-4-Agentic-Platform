@@ -12,6 +12,7 @@ Use `--plan` first to see what a run would do without spending bandwidth.
 Nothing here deletes or rewrites a local file.
 """
 import argparse
+import contextlib
 from datetime import datetime, timezone
 from pathlib import Path
 import sys
@@ -19,7 +20,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record
-from zenithsync.evidence_shipment import ship_tree, shipment_index
+from zenithsync.evidence_shipment import (ship_tree, shipment_index,
+                                           shipment_lock)
 from zenithsync.object_store import ArtifactStore
 from zenithsync.r2_client import build_client
 
@@ -72,8 +74,14 @@ def main():
         if not args.quiet:
             print(message, flush=True)
 
+    # Two shipments against one prefix would upload the same content-addressed
+    # keys, and a readback racing an in-flight overwrite can report an integrity
+    # failure that is a false alarm but indistinguishable from a real one.
+    holder = (shipment_lock(bucket, args.prefix) if not args.plan
+              else contextlib.nullcontext())
     results = []
-    for tree in args.tree:
+    with holder:
+      for tree in args.tree:
         result = ship_tree(store, tree, source_prefix=args.source_prefix,
                            revision=args.revision, package_depth=args.package_depth,
                            max_package_bytes=args.max_package_bytes,
@@ -93,6 +101,7 @@ def main():
                'timestamp_utc': datetime.now(timezone.utc).isoformat(),
                'sources': sources, 'connection': connection, 'prefix': args.prefix,
                'package_depth': args.package_depth, 'workers': args.workers,
+               'exclusive_lock_held': not args.plan,
                'trees': [{key: value for key, value in result.items()
                           if key not in ('packages', 'refused')}
                          for result in results],

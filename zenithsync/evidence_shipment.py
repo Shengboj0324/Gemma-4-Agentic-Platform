@@ -26,8 +26,18 @@ leaves complete published packages plus, at worst, uploaded blobs that no
 manifest references yet. Those are content-addressed and are reused by the next
 run, so resuming costs a presence check per file and no re-upload. There is no
 partially published package and nothing to clean up.
+
+Two shipments must not run against one bucket prefix at the same time. Both would
+upload the same content-addressed keys, and a readback that races an in-flight
+overwrite of the same key can return a length or digest that matches neither
+writer — which the object store correctly reports as an integrity failure and
+which aborts the run. The bytes are identical either way, so this is a false
+alarm rather than corruption, but it is indistinguishable from a real one at the
+point it is raised, so it must be prevented rather than tolerated.
+`shipment_lock` provides that mutual exclusion.
 """
 
+import json
 import os
 from pathlib import Path
 import stat
@@ -48,6 +58,87 @@ FORBIDDEN_PARTS = frozenset({'.ssh', '.aws', '.kaggle'})
 SKIPPED_DIRECTORIES = frozenset({'.git', '__pycache__', '.venv', 'venv',
                                  'node_modules', '.pytest_cache', '.mypy_cache',
                                  '.ruff_cache', '.hg', '.svn'})
+
+
+class ShipmentLockError(RuntimeError):
+    """Another shipment holds the lock for this bucket prefix."""
+
+
+class shipment_lock:
+    """Exclude a second shipment against the same bucket prefix.
+
+    A context manager holding an `O_EXCL` lock file keyed by bucket and prefix.
+    A stale lock whose recorded process is gone is reclaimed, since a killed
+    shipment leaves nothing to clean up; a lock whose process is alive is
+    refused, naming the holder.
+    """
+
+    def __init__(self, bucket, prefix, *, directory=None):
+        import hashlib
+        import tempfile
+        if not isinstance(bucket, str) or not bucket.strip():
+            raise ValueError('Bucket is required for the shipment lock')
+        if not isinstance(prefix, str) or not prefix.strip():
+            raise ValueError('Prefix is required for the shipment lock')
+        key = hashlib.sha256(canonical_json([bucket, prefix])).hexdigest()[:32]
+        base = Path(directory) if directory is not None else Path(tempfile.gettempdir())
+        self.path = base / ('zenithsync-shipment-' + key + '.lock')
+        self.bucket = bucket
+        self.prefix = prefix
+        self._descriptor = None
+
+    def _holder(self):
+        try:
+            return json.loads(self.path.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            return None
+
+    @staticmethod
+    def _alive(pid):
+        if type(pid) is not int or pid <= 0:
+            return False
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True
+        return True
+
+    def __enter__(self):
+        import json as _json
+        for attempt in range(2):
+            try:
+                self._descriptor = os.open(
+                    self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+            except FileExistsError:
+                holder = self._holder()
+                if holder is not None and self._alive(holder.get('pid')):
+                    raise ShipmentLockError(
+                        f'another shipment (pid {holder.get("pid")}, started '
+                        f'{holder.get("started_utc")}) is publishing to '
+                        f'{self.bucket}/{self.prefix}; concurrent runs can trip the '
+                        'integrity guard on a shared content-addressed key')
+                if attempt:
+                    raise ShipmentLockError('shipment lock could not be reclaimed: '
+                                            + str(self.path))
+                # The recorded process is gone; a killed shipment leaves nothing
+                # to clean up, so the lock is safe to reclaim.
+                self.path.unlink(missing_ok=True)
+                continue
+            break
+        payload = _json.dumps({'pid': os.getpid(), 'bucket': self.bucket,
+                               'prefix': self.prefix,
+                               'started_utc': __import__('datetime').datetime.now(
+                                   __import__('datetime').timezone.utc).isoformat()})
+        with os.fdopen(self._descriptor, 'w') as stream:
+            stream.write(payload)
+        self._descriptor = None
+        return self
+
+    def __exit__(self, *exception):
+        self.path.unlink(missing_ok=True)
+        return False
 
 
 def forbidden(relative: str) -> bool:

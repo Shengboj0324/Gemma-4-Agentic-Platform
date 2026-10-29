@@ -13736,4 +13736,17 @@ honest: `tests/test_source_credentials.py` legitimately contains bare PEM header
 to prove the scanner detects them, and an exemption that could hide a real key
 would be worse than no scan. A stale or unnecessary exemption also fails.
 
-Local suite after all of this: 896 passed, zero skips, Torch enabled.
+One operational hazard surfaced during the shipment itself and is now fixed. A
+`pgrep` pattern of mine misread the first long run as dead, so a second was
+started alongside it; both uploaded the same content-addressed keys and the first
+aborted with an `IntegrityError` from the object store's readback guard. The
+guard was right to fire — a readback racing an in-flight overwrite of the same
+key can return a length matching neither writer — and because the keys are
+content-addressed both writers were putting identical bytes, so it was a false
+alarm rather than corruption. It is nonetheless indistinguishable from a real
+failure at the point it is raised, so `shipment_lock` now excludes a second
+shipment against the same bucket prefix: an `O_EXCL` lock file keyed by bucket
+and prefix, reclaimed when its recorded process is gone, refused by name when it
+is alive. Verified against the live bucket.
+
+Local suite after all of this: 902 passed, zero skips, Torch enabled.
