@@ -59,6 +59,7 @@ FILES = [
     # needs is complete — and the shipment tool that keeps the bucket complete.
     'scripts/verify_r2_training_readiness.py',
     'zenithsync/evidence_shipment.py', 'scripts/ship_evidence_to_r2.py',
+    'scripts/audit_r2_shipment.py',
     'requirements/r2-transport.lock.txt',
     'docs/42-training-unblock-and-data-scale.md',
 ]
@@ -90,7 +91,8 @@ def main():
                        'stage_corpus_from_r2.py', 'publish_corpus_to_r2.py',
                        'verify_admitted_corpus.py', 'admit_training_corpus.py',
                        'plan_training_campaign.py', 'verify_training_runtime.py',
-                       'verify_r2_training_readiness.py', 'ship_evidence_to_r2.py']:
+                       'verify_r2_training_readiness.py', 'ship_evidence_to_r2.py',
+                       'audit_r2_shipment.py']:
             command = [sys.executable, '-I', '-B',
                        str((args.directory / 'scripts' / script).resolve()), '--help']
             result = subprocess.run(command, cwd=isolated, env=env, capture_output=True,

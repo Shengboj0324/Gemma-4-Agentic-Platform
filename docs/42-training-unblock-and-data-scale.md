@@ -15,7 +15,7 @@ Read this together with [the complete P1 developer handoff](41-p1-complete-devel
 | 51 tasks / 50 repository groups, all `train`, no held-out cohort | **2,966** screened public tasks / **507** repositories / **439** owners, split into repository- and owner-disjoint train / development / confirmation cohorts |
 | Token budgets discussed in prose | `zenithsync/campaign_plan.py` computes exposure, padding, mixture and cost exactly, and refuses a forecast without measured throughput |
 | OpenHands trajectories unusable without undeclared tool renaming | `zenithsync/openhands_translation.py` translates actions under named rules and refuses the rest |
-| Local regression: 671 tests | **886 tests, zero skips, Torch enabled** |
+| Local regression: 671 tests | **896 tests, zero skips, Torch enabled** |
 | No way to check a host before the worker billed for the failure | `zenithsync/runtime_preflight.py` + `scripts/verify_training_runtime.py`, with tests that assert the pins match the worker source |
 | New code reviewed only by its author | 35 findings from two independent adversarial reviews, all substantive ones fixed, each with a regression test |
 | No single command proved a run could start from the bucket | `scripts/verify_r2_training_readiness.py` — corpus, both layers, tokenizer assets by digest, all 8 model files, schedule digest, worker preflight |
@@ -270,10 +270,11 @@ Agreement between the layers is evidence of **consistent accounting**. It is not
 
 | `tests/test_evidence_shipment.py` | 22 | Every file lands in exactly one package at any depth; caches and `.git` skipped but the working tree still shipped; credential paths, symlinks, oversized and empty packages each refused whole with their reason; re-shipping reuses every object; a planning run publishes nothing; a 1-worker and a 4-worker run produce identical results including the index digest; the index locates every package; coverage reports exactly what is absent. |
 | `tests/test_r2_client.py` | 9 | A missing-field error names fields and never values; blank treated as missing; which source supplied each field; the exposed surface is exactly the four declared operations and no destructive one; upload counting exact under eight concurrent threads. |
+| `tests/test_repository_hygiene.py` | 10 | That all three layers keeping the live credential file out of Git and out of the bucket still hold: the ignore rules, the object store's manifest refusal, and shipment's package refusal. It also scans every tracked text file for live-secret patterns, requires no tracked file to carry private-key *material* (which keeps the scanner-fixture exemption honest), and refuses a stale or unnecessary exemption. |
 | `tests/test_r2_readiness_helpers.py` | 8 | A blob whose bytes differ, or that is longer or shorter than declared, is refused; the ceiling is checked before any request; presence is confirmed from metadata with no `get_object` at all, so a 21 GiB checkpoint is never streamed by a readiness check. |
 | `tests/test_runtime_preflight.py` | 35 | That the preflight pins are byte-identical to the worker's own (parsed out of `run_corpus_training_worker.py`, so the two cannot drift apart); local build tags stripped before comparison; absent packages, wrong platform, wrong Python, insufficient device memory and an over-capacity example each reported with every problem kept. |
 
-Full local suite: **886 passed, zero skips, Torch tests enabled, 25.869 seconds**, run as
+Full local suite: **896 passed, zero skips, Torch tests enabled, 27.025 seconds**, run as
 `ZENITHSYNC_TEST_TORCH=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 <qualified-python> -m unittest discover -s tests`.
 
 **One caveat on that suite, found by the new preflight.** The development

@@ -13621,3 +13621,119 @@ obtained restore receipt and a `verification.json` from
 follows.
 
 Local suite after the fixes: 830 passed, zero skips, Torch enabled.
+
+### Second review, full R2 shipment, and an end-to-end readiness command
+
+The first review covered the seven library modules. The command-line tools and
+two helpers had not been reviewed at all, so they went to a second independent
+reader, which returned 19 findings plus minors. Four would have mattered in
+practice.
+
+Three lived in `device_report`, which had no test. A missing `nvidia-smi`
+produced `device_exclusive: None`, and the CLI only reacted to `False`, so a host
+without `nvidia-smi` on PATH exited zero with `runtime_preflight_passed` — and
+then the worker, which makes the same query with `check=True`, died after the pod
+was already billing. That is precisely the inversion the module exists to
+prevent. The same check failed a *healthy* host from the other direction: the
+worker excludes its own PID, the preflight counted any PID, and reading free
+memory initialises CUDA and creates a context, so the preflight found itself.
+And only `import torch` was guarded, while `device_count`, `mem_get_info`,
+`get_device_name` and `get_device_capability` can all raise on a real host, which
+produced no receipt at all from a command whose docstring promises one either
+way. `device_report` now has six tests driven by a stubbed torch and a stubbed
+`subprocess.run`, and the CLI's exit codes distinguish a failed check (1) from a
+failed run (3) from bad arguments (2).
+
+The fourth was in `verify_admitted_corpus.py`, and it is the one worth
+remembering. The refetch loop compared each example against *its own* audit row,
+which means a held-out example substituted into the training set matched itself
+on split, task identity and both token counts; a one-for-one substitution kept
+the count right too. The reviewer built a 2-train/1-development admitted corpus,
+patched the loader to hand back a development example in place of a train one,
+and the real CLI printed `two_layer_corpus_verification_passed` under a receipt
+whose own scope claims the two layers agree on split isolation. The second layer
+existed to catch exactly a first-layer defect of that shape and was blind to it.
+
+The fix compares the *set* of identities the loader offers against the set the
+audit says belongs to the purpose, asserts each row's split explicitly, and
+re-hashes every fetched token array against the digest the audit already
+computed. It moved into `corpus_audit.verify_loader_offers` so it could be tested
+directly rather than only through a CLI, and the reviewer's scenario is now a
+regression test.
+
+The remaining findings were about pinning and bookkeeping, and two stand out.
+The development-exposure ledger was the only unpinned input anywhere in the
+toolchain — every other input takes a digest — and it is the single thing that
+makes a selected pool arguably unseen; a stale or truncated ledger would exclude
+fewer repositories and the run would still succeed. It now requires
+`--exposure-ledger-sha256`, and the ledger's `receipt_files_read` and
+`skipped_receipts` are recorded, because those are what make it a lower bound
+rather than a census. And `build_task_pool` checked its metadata digest, then
+rebound the variable to a fresh `file_record` taken inside the reader, so the pin
+was never enforced on the bytes actually parsed; the expected digest now goes
+into the reader.
+
+`r2_client` had an honesty problem rather than a bug: the docstring said
+credentials are "never logged, returned or written to a receipt" while
+`load_credentials` returns them in a plain dict. True for logs and receipts,
+false for the return value. The docstring now says what is true. The "bounded"
+client is likewise convention and not a sandbox — the reviewer demonstrated
+`store.client._client.delete_object(...)` working — and that is now stated, with
+the declared operation set asserted by a test. `load_credentials` also reports
+which source supplied each field, because the process environment silently
+overrides `--env-file` and a stale exported `R2_BUCKET_NAME` would otherwise
+publish to the wrong bucket undetectably.
+
+Three tests passed for the wrong reason and were rewritten: one restated the
+constants it was meant to check and would have passed with `check_platform`
+deleted, one grepped the literal string `'free < 70*1024**3'` so reformatting the
+worker would fail a test about behaviour, and one exercised a path the only
+production caller cannot reach.
+
+**The model weights turn out to be in R2.** The docs recorded them as
+archived/released, and the development machine has only ~14 GiB free, so they
+could not be re-downloaded here. A check of the model manifest's digests against
+the bucket found all eight files present, including the 23,265,352,448-byte
+`model.safetensors`, and the three tokenizer assets Corpus072 binds are
+byte-identical to the model manifest's. That is what makes a run possible at all,
+and nothing had previously established it. `verify_r2_training_readiness.py` now
+checks it as one step of a single command that also restores the corpus, runs
+both verification layers, requires the loader to offer exactly the audited
+training set, fetches each tokenizer asset by content digest, regenerates the
+schedule to its declared hash, and runs the worker's own preflight.
+
+**A coverage audit found 15,426 local files, about 1.03 GiB, with no bytes in the
+bucket** — deployment bundles, replay contexts, dependency wheels, Debian
+packages and recovered working artifacts across `evidence/`, `reproduction/` and
+the recovered tree outside the repository. `ship_evidence_to_r2.py` groups a
+tree into packages, publishes each under its own content-addressed manifest, and
+indexes where they landed.
+
+One design decision there is worth recording. Treating `.git` as a credential
+path, which is what `object_store._snapshot` does, refused six genuine evidence
+packages outright — repository checkouts whose working tree *is* the retained
+evidence. A `.git` directory is reproducible from the pinned commit and is a
+place a remote URL could carry a credential, so the right handling is to skip it,
+never ship it, and not let it block the package. Credential paths proper
+(`.env`, `.ssh`, `.aws`, `.kaggle`) remain hard refusals of the whole package,
+because shipping a package with the offending file removed would publish a bundle
+whose manifest disagrees with the directory it was built from.
+
+Sequential shipping ran at about 2.6 files per second, hours for a tree this
+size, so concurrency was added at the package level: different packages publish
+at once while each keeps its full sequential contract. Admission against the byte
+ceiling is decided up front in sorted order, so the shipped set cannot depend on
+worker scheduling, and a test asserts a 1-worker and a 4-worker run produce
+byte-identical results down to the index digest. The botocore connection pool is
+sized to the worker count, or packages block on the pool rather than the network.
+
+Finally, `tests/test_repository_hygiene.py` makes the credential protections
+testable instead of assumed. It checks all three layers — the ignore rules, the
+object store's manifest refusal, shipment's package refusal — scans every tracked
+text file for live-secret patterns, and requires no tracked file to carry private
+key *material*. That last check is what keeps the one scanner-fixture exemption
+honest: `tests/test_source_credentials.py` legitimately contains bare PEM headers
+to prove the scanner detects them, and an exemption that could hide a real key
+would be worse than no scan. A stale or unnecessary exemption also fails.
+
+Local suite after all of this: 896 passed, zero skips, Torch enabled.
