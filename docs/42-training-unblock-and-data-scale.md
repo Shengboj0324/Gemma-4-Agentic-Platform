@@ -17,7 +17,8 @@ Read this together with [the complete P1 developer handoff](41-p1-complete-devel
 | OpenHands trajectories unusable without undeclared tool renaming | `zenithsync/openhands_translation.py` translates actions under named rules and refuses the rest |
 | Local regression: 671 tests | **932 tests, zero skips, Torch enabled** |
 | No way to check a host before the worker billed for the failure | `zenithsync/runtime_preflight.py` + `scripts/verify_training_runtime.py`, with tests that assert the pins match the worker source |
-| New code reviewed only by its author | 35 findings from two independent adversarial reviews, all substantive ones fixed, each with a regression test |
+| New code reviewed only by its author | 49 findings from three independent adversarial reviews, all substantive ones fixed, each with a regression test |
+| No held-out cohort could be spent safely | The 445-task confirmation cohort is frozen under `e5b7cf7a…` with its 105 owners, and a gate refuses any candidate that would spend it |
 | No single command proved a run could start from the bucket | `scripts/verify_r2_training_readiness.py` — corpus, both layers, tokenizer assets by digest, all 8 model files, schedule digest, worker preflight |
 | ~1.03 GiB of local evidence had no bytes in the bucket | `zenithsync/evidence_shipment.py` + `scripts/ship_evidence_to_r2.py` |
 
@@ -127,17 +128,27 @@ both the repository's `evidence/` and `reproduction/` trees and the recovered
 material held outside the repository.
 
 `scripts/ship_evidence_to_r2.py` closes that gap. It groups a tree into packages
-at a declared depth, publishes each under its own content-addressed manifest, and
-writes an index saying where every package landed so any one can be restored
-later. Three things it refuses rather than works around:
+at a declared depth, stages each into a fresh directory holding exactly the files
+classification admitted, publishes it from there under its own content-addressed
+manifest, and writes an index saying where every package landed so any one can be
+restored later.
 
-* A package containing a **credential path** (`.env`, `.ssh`, `.aws`, `.kaggle`)
-  is refused whole. Shipping it with the file removed would publish a bundle
-  whose manifest disagrees with the directory it was built from. A test plants a
-  `.env` and asserts nothing is uploaded.
+**Staging is what makes the refusals below mean anything**, and it was not how
+the first version worked — see the third review in section 6. Three things it
+refuses rather than works around:
+
+* A package whose **root path or contents** include a credential path (`.env`,
+  `.ssh`, `.aws`, `.kaggle`) is refused whole. Shipping it with the file removed
+  would publish a bundle whose manifest disagrees with the directory it was
+  built from. The root's own components are checked as well as the paths beneath
+  it, because a root named `.ssh` contributes nothing to the paths relative to
+  itself. Tests plant a `.env` inside a package and a `.ssh` directory as a
+  package root, and assert nothing is uploaded in either case.
 * A package containing a **symlink or non-regular file** is refused whole, since
   the inventory contract covers regular files and a symlink's target is not part
-  of the bundle.
+  of the bundle. Directory symlinks included: on the real trees exactly one
+  package is refused for this, and under the first version it aborted the entire
+  run instead.
 * A package **over its byte ceiling** is refused, so one unexpectedly large
   directory cannot consume the whole transfer budget.
 
@@ -311,6 +322,134 @@ Refused with stable reason codes: `insert` and `undo_edit` (no official counterp
 
 `finish` is not mapped to `submit_patch` because they are different acts — one signals that the agent considers itself done, the other captures the working tree as a diff. The terminal submission is therefore authored by the replay adapter and recorded as adapter-authored, which is the precedent `mini_replay_history` already set.
 
+## 5a. Third review: the shipment module and the readiness check
+
+The shipment module, its CLI and the readiness check were written after the
+second review, so a third reader was given those three files and the two test
+modules alongside them. It found **14 defects**. Five shared one cause, and two
+were severe on their own.
+
+### The shared cause: classification was not authoritative
+
+`classify_package` decided what a package contained; then `artifacts.inventory`
+re-walked the live directory, knowing nothing about grouping or exclusions. Every
+one of these was reproduced:
+
+* A package at or above the grouping depth published its **whole subtree**.
+* Files below the grouping depth published **twice**, under two manifests.
+* Byte ceilings were checked against a fraction of what shipped, so a single
+  root-level file made the per-package ceiling bypassable. The index over-counted
+  to match.
+* Skipped directories shipped anyway. **Six `__pycache__` files had in fact
+  reached the bucket**, which is how this stopped being hypothetical.
+* A symlinked *directory* was invisible to classification — `discover_packages`
+  collected only file names — and then made `inventory` raise, aborting the
+  **whole run** rather than refusing one package.
+
+Each package is now staged into a fresh directory holding exactly the admitted
+files and published from there, so the manifest covers exactly what
+classification admitted. `_publish_one` additionally refuses if the staged
+manifest's file count or byte total disagrees with the verdict. On the real
+trees: 6,725 packages, 2,163 MiB, and one refusal — a package containing
+`docs/changelog.rst` as a symlink, precisely the case that used to abort
+everything.
+
+### A credential directory that is a package root
+
+A package root's own name is not part of any path relative to itself, and
+`object_store._snapshot` inspects those same relative paths — so a root named
+`.ssh` escaped **both** credential guards and `.ssh/id_rsa` would have been
+classified publishable and uploaded.
+
+`classify_package` now takes the tree root and checks the package root's own
+components. To establish what had already happened rather than assume, all
+**4,073 published manifests were read back from the live bucket** and every path
+re-checked: zero credential-path files, and no credential path exists anywhere in
+the three shipped trees. A real defect that was never exercised.
+
+### The readiness check carried the blindness it was meant to prove absent
+
+`verify_r2_training_readiness.py` used the *old* insufficient loader check — the
+one `verify_loader_offers` was written to replace, and which had been fixed in
+`verify_admitted_corpus.py` but not here. The reviewer replayed the block
+verbatim against a loader offering a development example in place of a training
+one: the readiness check passed, `verify_loader_offers` refused it with
+`extra=['D1'], missing=['T2']`. So the end-to-end proof asserted a property it
+had not established. It now calls `verify_loader_offers`.
+
+### The lock, two hours old, had two defects
+
+It created the file with `O_EXCL` and wrote the payload afterwards. A second
+publisher arriving in that window saw an empty file, found no holder to check for
+liveness, concluded the lock was stale and reclaimed a **live** publisher's lock
+— after which release-by-path could delete a third publisher's lock in turn. The
+reviewer demonstrated three concurrent writers against one prefix, which is the
+exact hazard the lock exists to prevent. The payload is now written complete and
+`os.link`ed into place atomically, and release unlinks only the lock this object
+wrote.
+
+Liveness was also PID-only, so a recycled PID would block a prefix forever while
+naming a publisher that was not running. PID and the OS-reported process start
+time are now compared. Fixing that exposed a second bug in the fix: the
+`PermissionError` branch returned early, so a live process this user cannot
+signal never reached the start-time comparison — and PID 1 is exactly that case,
+which the new test caught.
+
+### Concurrency did not fail safely
+
+With `workers > 1`, `ThreadPoolExecutor.__exit__` calls `shutdown(wait=True)`
+without `cancel_futures`, so a failing package did not abort the tree: every
+queued package published first, committing manifests that no index would locate,
+behind an error nobody had seen. The sequential path stopped correctly, so the
+docstring's claim that concurrency "changes throughput and nothing else" was
+false. Queued work is now cancelled on the first failure.
+
+### Bookkeeping and reporting
+
+Two `--tree` values sharing a basename overwrote one sidecar, silently discarding
+a tree's rows — sidecars are now numbered by position and bound by hash.
+`--max-total-bytes` was applied per tree, so N trees could ship N times the
+budget; it is now a running budget across the whole run. The ceilings, the index
+digest and the sidecar identities were unrecorded. The `exceeds_total_ceiling`
+refusal carried no figures, so it could not be interpreted later. Coverage
+counted deliberately refused files as gaps, which made `complete` unreachable for
+any tree with a refused package; refusals and skips are now reported as
+`exclusions`, and an overlapping tree is counted once. A run that shipped nothing
+wrote a passing `evidence_shipped` receipt; it now says so.
+
+In the readiness check: an equality test that could never fire was replaced by the
+binding that matters, `--target-supervised-tokens 0` was coerced to the default
+rather than refused, the restored corpus manifest was the one read with no byte
+ceiling, a failed run left a `schedule.json` in `--output` looking like a
+product, and `max_update_supervised_tokens`, the context policy and the byte
+policy were unrecorded despite binding the schedule digest and the context
+margin.
+
+### Four more tests that passed for the wrong reason
+
+`test_reconstructable_caches_and_vcs_metadata_are_not_shipped` only called
+`discover_packages`, so it was green while caches shipped — adding a `ship_tree`
+assertion is what would have caught the defect.
+`test_a_concurrent_failure_aborts_the_tree` asserted only that *something*
+raised, so it passed while all remaining packages published, and would have
+passed on an unrelated `AttributeError`.
+`test_the_fetch_ceiling_is_checked_before_any_request` asserted only the
+exception, so it would pass with the check moved after the request; it now
+records calls and asserts none was made. `test_every_publisher_cli_takes_the_lock`
+grepped source text, which a comment satisfies; it now parses the AST for a real
+call and a real import.
+
+### What the reviewer could not break
+
+`planned_bytes` never counts a refused package; the admitted set is fixed before
+any transport in sorted order, so sequential and concurrent runs agree including
+the index digest; `_publish_one` never mutates its verdict and the log callback
+is serialised; `--keep` is handled on both the success and failure paths;
+`shipment_index` cannot claim an unpublished package; `discover_packages` never
+loses or double-*assigns* a file at any depth (the double-counting came from
+`inventory`'s recursion, not the grouping); and zero-byte files, hard links,
+FIFOs and awkward path characters are all handled as documented.
+
 ## 6. Two-layer verification
 
 `zenithsync/corpus_audit.py` is a deliberately separate second layer. It does not call the training loader, the collator or the schedule iterator, and it does not trust any summary those produce. It recomputes from stored bytes: every file digest and size, the corpus content identity, per-example supervised-target counts by walking labels directly, token/label validity against the vocabulary, the audit file's declared counts and digests, duplicate token-sequence detection, split isolation across task, repository and leakage families, context margin under a declared output reserve, and every gate receipt's binding and coverage.
@@ -345,7 +484,7 @@ Agreement between the layers is evidence of **consistent accounting**. It is not
 | `tests/test_task_pool.py` | 22 | Stable reason codes for malformed rows; placeholder licences refused separately and un-allowlistable; each exclusion having its own reason; duplicate instance and repeated base commit; deterministic selection that changes with the seed; owner caps honoured and shortfall reported rather than a cap broken; cohorts repository- and owner-disjoint with whole owners kept together even when that skews a share. |
 | `tests/test_openhands_translation.py` | 24 | Every translation rule and its argument mapping; every refusal reason; thoughts folding onto the next action and a trailing thought dropped rather than attached to an invented one; one untranslatable call failing the whole trajectory; actions after or duplicated terminals refused; determinism. |
 
-| `tests/test_evidence_shipment.py` | 30 | Every file lands in exactly one package at any depth; caches and `.git` skipped but the working tree still shipped; credential paths, symlinks, oversized and empty packages each refused whole with their reason; re-shipping reuses every object; a planning run publishes nothing; a 1-worker and a 4-worker run produce identical results including the index digest; the index locates every package; coverage reports exactly what is absent; and a second shipment against the same bucket prefix is refused by name while a stale or unreadable lock is reclaimed rather than blocking forever. |
+| `tests/test_evidence_shipment.py` | 35 | Every file lands in exactly one package at any depth, and classification and publication cover the same file set with no subtree, cache or duplicate; a `.ssh` directory that *is* a package root is refused and its planted key never uploaded; caches and `.git` are skipped while the working tree still ships; a symlinked directory refuses its package instead of aborting the run; credential paths, oversized and empty packages each refused whole with their reason; re-shipping reuses every object; a planning run publishes nothing; a 1-worker and a 4-worker run agree including the index digest; a failing package does not let queued ones publish; coverage separates deliberate exclusions from real gaps and counts an overlapping tree once; and the lock is never observed half-written, releases only what it wrote, blocks a live holder, and reclaims a recycled PID. |
 | `tests/test_r2_client.py` | 9 | A missing-field error names fields and never values; blank treated as missing; which source supplied each field; the exposed surface is exactly the four declared operations and no destructive one; upload counting exact under eight concurrent threads. |
 | `tests/test_cohort_freeze.py` | 17 | That a freeze is reproducible and its identity covers every input that matters; that a tampered record, a draft one, reserving every cohort or none, an unpinned input, an instance in two cohorts, or an owner spanning a reserved and a training cohort are all refused; and that enforcement catches a reserved task, a sibling of a reserved owner, and a case-differing spelling of either. |
 | `tests/test_repository_hygiene.py` | 10 | That all three layers keeping the live credential file out of Git and out of the bucket still hold: the ignore rules, the object store's manifest refusal, and shipment's package refusal. It also scans every tracked text file for live-secret patterns, requires no tracked file to carry private-key *material* (which keeps the scanner-fixture exemption honest), and refuses a stale or unnecessary exemption. |
