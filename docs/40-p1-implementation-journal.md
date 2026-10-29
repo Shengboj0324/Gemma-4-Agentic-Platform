@@ -13790,3 +13790,36 @@ backports, vendored copies and base-model pretraining exposure are all invisible
 here. Those remain open, and the record says so rather than implying otherwise.
 
 Local suite 932 passed, zero skips, Torch enabled.
+
+## README rewrite, and the claim it got wrong
+
+Rewrote the README from the October 6-7 research and execution plan into a
+developer-facing document: the data path end to end, the three rules the
+implementation follows, the competition contract with the nine tool signatures
+and the budget arithmetic, each layer with the mathematics it rests on, and a
+status section that separates what is measured from what is not by name.
+
+Writing the Quickstart produced a false claim and then caught it. The draft said
+the core checks need only the Python standard library and offered
+`python3 -m unittest discover -s tests` as the first command a reader runs.
+Running it as a reader would, with `/usr/bin/python3`, gave 364 collected, 122
+errors and 4 failures. The cause was not a missing dependency: macOS ships
+Python 3.9, and `artifact_sha256: str | None = None` in the `Event` class body is
+a PEP 604 annotation evaluated at class-creation time, so `zenithsync.contracts`
+cannot import at all. The core really does need no third-party packages; it needs
+Python 3.11 or newer, which is a different claim. 3.11.14, 3.12.14 and 3.13.7 all
+collect 932 and pass.
+
+On a clean 3.13.7 with nothing installed, one test errored rather than skipped:
+`tests/test_r2_client.py` exercises `--env-file` precedence, which is the only
+path in `load_credentials` that imports `python-dotenv`. Every other optional
+dependency in the suite is guarded with `skipUnless(find_spec(...))`; this one
+was not, so a stdlib-only run reported a failure that was really an absent
+package. Guarded it the same way. The stdlib-only run is now 932 collected, 67
+skipped, zero errors.
+
+The README now states both numbers and what separates them, because "932 tests,
+zero skips" alone would send a reader to an error they could not interpret.
+
+Local suite 932 passed, zero skips on the full stack; 932 collected with 67 skips
+on the standard library alone.

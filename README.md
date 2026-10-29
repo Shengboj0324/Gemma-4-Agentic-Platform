@@ -54,20 +54,31 @@ git clone https://github.com/Shengboj0324/Gemma-4-Agentic-Platform
 cd Gemma-4-Agentic-Platform
 ```
 
-**Core checks need only the Python standard library** (verified on 3.13.7):
+**The core needs no third-party packages** — only Python 3.11 or newer (3.11,
+3.12 and 3.13.7 all verified; `/usr/bin/python3` on macOS is 3.9 and fails on
+PEP 604 annotations):
 
 ```bash
 python3 -m unittest discover -s tests
 python3 -m zenithsync --help
 ```
 
-The full suite — **932 tests, zero skips** — needs the pinned tokenizer/Torch
-environment and explicit opt-in, because a smaller default run is not equivalent:
+That collects all **932 tests** and passes, skipping the 67 that need an
+optional dependency. Every such test *skips* — a suite that errors instead
+cannot tell you whether your environment or the code is wrong.
+
+The **zero-skip** run needs torch, transformers, tokenizers, boto3 and
+python-dotenv, plus explicit Torch opt-in, because a smaller default run is not
+equivalent:
 
 ```bash
 ZENITHSYNC_TEST_TORCH=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
-  <qualified-python> -m unittest discover -s tests
+  python3 -m unittest discover -s tests
 ```
+
+Locks for each environment are in `requirements/`; they are **not** one
+interchangeable environment, so install the one matching the layer you are
+touching.
 
 To prove **from the R2 bucket alone** that a training run has everything it needs
 — corpus restored and double-verified, the loader offering exactly the audited
@@ -361,7 +372,7 @@ refused.
 
 | Area | Evidence |
 |---|---|
-| Local suite | **932 tests, zero skips**, Torch enabled, ~28 s |
+| Local suite | **932 tests, zero skips** with the full dependency stack and Torch enabled, ~27 s; 932 collected and passing with 67 skips on a stdlib-only 3.13 |
 | Official contract | unchanged starter compiles with the nine real bound functions; 25 Linux integration checks with networking disabled, 4 GiB, 2 CPUs |
 | Model intake | 8 files / 23,297,590,856 B / 2,009 tensors; 410 quantized projections verified |
 | Masks | six positive and six rejection fixtures against the real tokenizer |
@@ -416,7 +427,8 @@ zenithsync/     104 modules, ~11.8k lines — contracts, model, masks, training,
                 admission, audit, transport, intake. Core needs no third-party packages.
 scripts/        134 CLIs, ~14.5k lines — every one writes a hash-bound receipt,
                 refuses an existing --output, and writes nothing on failure.
-tests/          134 modules, ~14.0k lines, 932 tests, zero skips.
+tests/          134 modules, ~14.0k lines, 932 tests — zero skips with the
+                full stack, 67 skips with the standard library alone.
 configs/        pinned serving/training profiles, deployment file map, Dockerfiles.
 requirements/   separate locks: serving, evaluator, tokenizer, R2, PEFT supplement.
                 These are NOT one interchangeable environment.

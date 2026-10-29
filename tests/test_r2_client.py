@@ -1,5 +1,6 @@
 """Credentials must not leak, and the bounded surface must be exactly four calls."""
 
+import importlib.util
 import unittest
 
 from zenithsync.r2_client import (BoundedR2Client, NONSECRET, REQUIRED,
@@ -39,6 +40,12 @@ class LoadCredentialsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'R2_ACCESS_KEY_ID'):
             load_credentials(environ=environment(R2_ACCESS_KEY_ID=''))
 
+    # `--env-file` is the only path that needs python-dotenv, so this is the
+    # only test that requires it. Every other optional dependency in the
+    # suite skips when absent; erroring here would make a stdlib-only run
+    # look like a real failure.
+    @unittest.skipUnless(importlib.util.find_spec('dotenv'),
+                         'python-dotenv is required for --env-file loading')
     def test_the_process_environment_wins_and_the_source_says_so(self):
         import tempfile
         from pathlib import Path
