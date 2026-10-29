@@ -15,8 +15,9 @@ Read this together with [the complete P1 developer handoff](41-p1-complete-devel
 | 51 tasks / 50 repository groups, all `train`, no held-out cohort | **2,966** screened public tasks / **507** repositories / **439** owners, split into repository- and owner-disjoint train / development / confirmation cohorts |
 | Token budgets discussed in prose | `zenithsync/campaign_plan.py` computes exposure, padding, mixture and cost exactly, and refuses a forecast without measured throughput |
 | OpenHands trajectories unusable without undeclared tool renaming | `zenithsync/openhands_translation.py` translates actions under named rules and refuses the rest |
-| Local regression: 671 tests | **805 tests, zero skips, Torch enabled** |
+| Local regression: 671 tests | **830 tests, zero skips, Torch enabled** |
 | No way to check a host before the worker billed for the failure | `zenithsync/runtime_preflight.py` + `scripts/verify_training_runtime.py`, with tests that assert the pins match the worker source |
+| New code reviewed only by its author | 16 findings from an independent adversarial review, all real, all fixed, each with a regression test |
 
 ## 2. Corpus072 is admitted
 
@@ -25,7 +26,7 @@ Promotion is immutable: the quarantined corpus is never edited. A complete new t
 | Quantity | Value |
 |---|---|
 | Source (quarantine) manifest SHA256 | `42da2d372f908d00b72a3f7d89af9b5fa082f8caeb8a4307bd77cfc363a2de75` |
-| Admitted manifest SHA256 | `c37dc07f2e33f2492b12025487ee87c8a9902ccceccdd8ca2a8a954faf40599d` |
+| Admitted manifest SHA256 | `fa984ca3ff1006e2cf7817a8ee67f613fb4e37a5b603bdc6d5e61b586f623887` |
 | Corpus content identity (unchanged by promotion) | `c081880c71b9f78ffb4fdcf319d0959e8d7dfcb39878b8ac06f510f2d088f103` |
 | Examples / unique tasks / repository groups | 51 / 51 / 50 |
 | Input tokens / supervised targets | 954,733 / 262,593 |
@@ -62,7 +63,7 @@ Verified live round trip, in order:
 
 1. `stage_corpus_from_r2.py` restored the quarantined Corpus072 payload from `quarantine/v1` — 103 files, 10,578,444 bytes.
 2. `admit_training_corpus.py` promoted it with the evidence above.
-3. `publish_corpus_to_r2.py` published the admitted corpus to `artifacts/v1` — 115 files, 10,782,715 bytes, artifact manifest `2959faedf43b2f0d77bdc0f160085bd2cf863f843d7e0404cc1d20178289014a`.
+3. `publish_corpus_to_r2.py` published the admitted corpus to `artifacts/v1` — 115 files, 10,782,715 bytes, artifact manifest `50c8ee9398ff6c3a186ef558c08c72365060d41e3e796950cd5d7dd2b8eab323`.
 4. `stage_corpus_from_r2.py` restored it again with `--purpose training` and the loader reported `training_admitted: true`.
 5. `preflight_corpus_run` — the real worker's own preflight — accepted the staged tree, schedule and `configs/p1-corpus-qualification.json`.
 
@@ -175,7 +176,7 @@ Agreement between the layers is evidence of **consistent accounting**. It is not
 
 | `tests/test_runtime_preflight.py` | 22 | That the preflight pins are byte-identical to the worker's own (parsed out of `run_corpus_training_worker.py`, so the two cannot drift apart); local build tags stripped before comparison; absent packages, wrong platform, wrong Python, insufficient device memory and an over-capacity example each reported with every problem kept. |
 
-Full local suite: **805 passed, zero skips, Torch tests enabled, 27.135 seconds**, run as
+Full local suite: **830 passed, zero skips, Torch tests enabled, 27.890 seconds**, run as
 `ZENITHSYNC_TEST_TORCH=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 <qualified-python> -m unittest discover -s tests`.
 
 **One caveat on that suite, found by the new preflight.** The development
@@ -186,6 +187,110 @@ real limitation on what the suite establishes, and it is exactly what
 `scripts/verify_training_runtime.py` is for: run on this machine it exits nonzero
 and names both mismatches. The reduced-model numerical checks remain valid for the
 interpreter that ran them; they are not evidence about torch 2.10.0 kernels.
+
+### Adversarial review and what it found
+
+An independent reader was given the seven new modules, the authoritative loader
+and the house conventions, and asked to break them. It reported **16 findings**,
+every one of which was real; all are fixed, and each fix carries a regression
+test. Recording them matters more than recording the clean result, because they
+show which invariants were only *stated* until something tried to violate them.
+
+**Two confirmed path escapes in the second verification layer.** `corpus_audit`
+resolved a declared path as `root / reference['path']` with no canonical-path
+check, no containment check, and a symlink test covering only the final
+component — three checks the loader has and the audit did not re-derive. Both
+escapes returned `training_admitted: True` from the audit on a corpus the loader
+*refuses*:
+
+* An evidence path of `../planted/ev.json`, with the receipt-to-manifest chain
+  re-signed, pointed outside the tree entirely.
+* An entire gate directory moved out of the tree and replaced with a symlink,
+  leaving every declared path byte-identical and fully canonical.
+
+This was the most serious class of defect available here: the audit's whole
+purpose is to establish that the corpus tree contains the corpus, and it did
+not. Both are now refused, both are regression-tested, and both tests also
+assert that the loader refuses the same tree, so the layers are shown to agree
+rather than assumed to. The audit's byte ceilings were also looser than the
+loader's; it now re-derives the loader's 1 MiB receipt, 16 MiB evidence, 16 MiB
+manifest and 1 GiB aggregate limits, and the test asserts those constants
+against the loader's source.
+
+**Two translation rules that were not semantically justified.** The source
+`str_replace_editor` accepts a *directory* for `view` and lists it, while the
+official `read_file` reads a file — so a directory listing was being turned into
+a file read. And `execute_bash` documents `C-c` as a control character sent to a
+running process, so `{'command': 'C-c'}` was being translated into a literal
+shell command that would run a nonexistent program instead of interrupting one.
+The module had correctly refused `is_input` for exactly the reasoning that
+applies to `C-c`. Both are now refused. The directory case is resolved exactly
+when the caller supplies `file_paths` — the set of files in the pinned snapshot
+— and otherwise by a declared suffix heuristic that errs toward refusal, so
+extensionless files such as `Makefile` are refused rather than mistranslated.
+
+**Promotion could write into the corpus it promised not to edit.** A destination
+nested inside `source_root` was accepted, putting the admitted tree and its
+staging directory inside the quarantined corpus, which then failed its own
+publish with extra files. The symmetric guard already existed for evidence
+documents but not for the destination. Now refused, and the test asserts the
+source directory listing is unchanged afterwards.
+
+**A verification receipt could attest coverage for an unrunnable schedule.**
+`verify_schedule_coverage` never re-derived the schedule's own identity, so a
+schedule with a stale `schedule_sha256` — one `iter_updates` refuses to execute
+— was reported as `coverage_exact: True`. It now rebuilds the schedule through
+`make_schedule` and requires an exact match, and the test confirms the iterator
+refuses the same object.
+
+**A rejected restore blocked every retry.** The object store promotes the tree
+before `restore_corpus` runs its four corpus checks, so a content-identity
+mismatch left a rejected corpus at the destination and made the next attempt
+fail with `FileExistsError`. The tree is now removed before the error
+propagates, and a failure to remove it is reported rather than masked.
+
+**The evidence-to-corpus binding was not re-derivable.** Promotion checked each
+evidence document's declared corpus against the quarantine manifest, but that
+manifest was not recorded anywhere in the admitted tree, so neither layer could
+re-derive the check afterwards. Each gate receipt now records
+`reviewed_against_manifest`, and the audit requires every evidence document that
+declares a corpus to declare that same one. Writing the test for this surfaced a
+further defect of my own: a shadowed local variable had been putting the
+task-alignment coverage set into the gate report where the manifest identity
+belonged.
+
+**The rest.** A missing `path` raised a bare `KeyError`, which both broke the
+stable-reason-code contract and aborted a whole shard screen instead of counting
+one refusal; `audit_translation` now maps any unexpected exception type to a
+named reason. `finish` was the only tool with no field-set check and accepted
+arbitrary arguments. One rule name claimed a whole-file read for a call that
+reads from a line. `execute_bash` used one reason code for three different
+situations, so an exporter that writes schema defaults explicitly would have
+yielded zero translatable trajectories with no way to tell why.
+`padding_overhead` raised `ZeroDivisionError` and `diversity_limits` raised
+`IndexError` on empty input rather than `ValueError`, and neither enforced unique
+example identities, so a duplicated row could inflate a measured concentration
+share that `account_tokens` would have refused outright. A float rate too small
+to represent was rounded to zero and then misreported as nonpositive. A symlink
+guard was vacuous because the path had already been resolved — the honest fix
+was to delete it and document that resolution is the containment mechanism,
+rather than add a check that rejects ordinary system symlinks.
+
+**Four tests that passed for the wrong reason** were rewritten to assert the
+behaviour rather than a hardcoded flag: `repository_disjoint`, `owner_disjoint`
+and `owner_indivisible` are literal `True` in the return value and would have
+passed with the entire disjointness verification loop deleted, so the test now
+intersects the cohort assignments itself. The receipt-binding test tripped an
+identity check before reaching the binding check it named, so the chain is now
+re-signed to make the intended check fire.
+
+**What the reviewer could not break.** 3,000 randomised selection trials found
+no cap breach, no duplicate and no shortfall error; 2,000 randomised cohort
+splits lost no task and split no owner; 4,000 randomised mixture allocations
+summed exactly to their total with every rounding adjustment in {0, 1}; and no
+input was found on which both verification layers accept and disagree. Promotion
+could not be made to publish a tree the loader rejects, and transport could not
+be made to carry an extra or missing object.
 
 ### Runtime preflight and the image gap
 
@@ -220,10 +325,10 @@ image on the intended GPU; until that happens the image is unqualified.
 
 | Package | Local receipts | R2 artifact manifest SHA256 |
 |---|---|---|
-| Admitted Corpus072 bundle | — (bytes live only in R2) | `2959faedf43b2f0d77bdc0f160085bd2cf863f843d7e0404cc1d20178289014a` |
-| Admission receipts and two-layer verification | `evidence/data/corpus072-admission-001/` | `12079b1854b8979221a8dfc42790b17cc465dc1e59b512a5e4daa2426dd1aa9e` |
-| Screened task pool, cohorts and pinned source metadata | `evidence/data/task-pool-v2-python-001/` | `c841921f7fea1812cbb9609b2dec2e71d72af4bebaf4718cecb7c089398b4ea5` (pool, 53,181,615 bytes) and `23f20dea57d3eee23d03a1b8f6e351effece65b7e0d7787c1ab58788d196d96b` (receipts) |
-| Campaign plan | `evidence/data/campaign-plan-001/` | `f58b0f893da37fa7daced614b9ef0a7638bc63262b8f3f567f4c5ded7b25eee0` |
+| Admitted Corpus072 bundle | — (bytes live only in R2) | `50c8ee9398ff6c3a186ef558c08c72365060d41e3e796950cd5d7dd2b8eab323` |
+| Admission receipts and two-layer verification | `evidence/data/corpus072-admission-001/` | `876f5a2c46ded1cc9ba80ad5d04973b6c2db363841cd6c354b56a2d1294d178f` |
+| Screened task pool, cohorts and pinned source metadata | `evidence/data/task-pool-v2-python-001/` | `c841921f7fea1812cbb9609b2dec2e71d72af4bebaf4718cecb7c089398b4ea5` (pool, 53,181,615 bytes) and `73f1e0e3603f4906defe51848407249164ff6012ccf084c89d5ca2c16a954a13` (receipts) |
+| Campaign plan | `evidence/data/campaign-plan-001/` | `9c93232706646c92fd9a29d02403104891a53df05279e7783add3bbbfc7c347e` |
 
 Receipts are audit records, not cryptographic proof of a remote service's behaviour. Keep the artifact manifest with the receipt, never inside the bundle it describes.
 

@@ -153,6 +153,29 @@ class AdmissionTests(unittest.TestCase):
             self.promote(source_manifest_sha256=identity['sha256'])
         self.assertFalse(self.destination.exists())
 
+    def test_a_destination_inside_the_source_tree_is_refused(self):
+        # Staging inside the source would write the admitted tree, and its
+        # temporary directory, into the corpus promotion promises not to edit.
+        before = sorted(path.name for path in self.source.iterdir())
+        with self.assertRaisesRegex(ValueError, 'outside the source corpus tree'):
+            self.promote(destination=self.source / 'admitted')
+        (self.source / 'nested').mkdir()
+        with self.assertRaisesRegex(ValueError, 'outside the source corpus tree'):
+            self.promote(destination=self.source / 'nested' / 'admitted')
+        (self.source / 'nested').rmdir()
+        self.assertEqual(sorted(path.name for path in self.source.iterdir()), before)
+
+    def test_a_missing_destination_parent_is_named_rather_than_crashing(self):
+        with self.assertRaisesRegex(ValueError, 'parent directory does not exist'):
+            self.promote(destination=self.evidence_root / 'absent' / 'admitted')
+
+    def test_each_receipt_records_the_manifest_its_evidence_was_reviewed_against(self):
+        self.promote()
+        promoted = load_json(self.destination / 'corpus.json')
+        for gate in GATES:
+            body = load_json(self.destination / promoted['admission'][gate]['path'])
+            self.assertEqual(body['reviewed_against_manifest'], self.manifest_identity)
+
     def test_wrong_manifest_digest_and_existing_destination_are_refused(self):
         with self.assertRaisesRegex(ValueError, 'Untrusted or oversized'):
             self.promote(source_manifest_sha256='b' * 64)

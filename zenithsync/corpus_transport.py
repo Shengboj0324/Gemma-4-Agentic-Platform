@@ -11,6 +11,7 @@ handling, no bucket creation and no deletion.
 """
 
 from pathlib import Path
+import shutil
 
 from .artifacts import file_record, inventory, load_json, relative_path, validate_manifest
 from .contracts import digest
@@ -114,9 +115,10 @@ def restore_corpus(store, artifact_manifest, destination: Path, *,
     """Restore a corpus bundle and prove it is the expected corpus before use.
 
     The caller must authenticate the artifact manifest separately; a digest in a
-    local file is not authentication. Restoration is atomic: a tree that fails
-    any corpus check is never promoted to the destination by the object store,
-    and a mismatch found afterwards raises instead of returning a usable corpus.
+    local file is not authentication. Restoration leaves nothing behind on
+    failure: the object store promotes only a byte-verified tree, and a tree that
+    then fails any corpus check is removed before the error propagates, so a
+    retry is not blocked by a rejected destination.
     """
     validate_manifest(artifact_manifest)
     digest(expected_corpus_manifest_sha256)
@@ -130,18 +132,33 @@ def restore_corpus(store, artifact_manifest, destination: Path, *,
         raise ValueError('Artifact manifest does not contain a corpus manifest')
     restored = store.restore(artifact_manifest, destination, max_bytes=max_restore_bytes)
     root = Path(restored['destination'])
-    corpus, manifest = _validated(root, corpus_manifest_sha256=expected_corpus_manifest_sha256,
-                                  purpose=purpose, max_total_bytes=max_total_bytes,
-                                  max_example_bytes=max_example_bytes)
-    summary = corpus.summary
-    if summary['content_sha256'] != expected_content_sha256:
-        raise ValueError('Restored corpus content identity differs')
-    if summary['status'] != expected_status:
-        raise ValueError('Restored corpus status differs from the declared status')
-    if purpose == 'training' and not summary['training_admitted']:
-        raise ValueError('Restored corpus is not training admitted')
-    if corpus_file_paths(root, manifest) != declared:
-        raise ValueError('Restored tree differs from the paths its corpus manifest reaches')
+    try:
+        corpus, manifest = _validated(
+            root, corpus_manifest_sha256=expected_corpus_manifest_sha256,
+            purpose=purpose, max_total_bytes=max_total_bytes,
+            max_example_bytes=max_example_bytes)
+        summary = corpus.summary
+        if summary['content_sha256'] != expected_content_sha256:
+            raise ValueError('Restored corpus content identity differs')
+        if summary['status'] != expected_status:
+            raise ValueError('Restored corpus status differs from the declared status')
+        if purpose == 'training' and not summary['training_admitted']:
+            raise ValueError('Restored corpus is not training admitted')
+        if corpus_file_paths(root, manifest) != declared:
+            raise ValueError('Restored tree differs from the paths its corpus '
+                             'manifest reaches')
+    except BaseException:
+        # The object store promotes the tree before these corpus checks run, so
+        # a failure here would otherwise leave a rejected corpus at the
+        # destination and block every retry with FileExistsError. Remove it, and
+        # say so if that removal itself fails rather than masking either error.
+        try:
+            shutil.rmtree(root)
+        except OSError as cleanup_error:
+            raise RuntimeError(
+                'Restored corpus failed validation and could not be removed from '
+                + str(root) + '; remove it before retrying') from cleanup_error
+        raise
     return {'schema_version': 1, 'status': 'corpus_restored', 'restore': restored,
             'root': str(root), 'corpus': corpus, 'summary': summary,
             'scope': 'Byte-identical restoration bound to the declared corpus identity '

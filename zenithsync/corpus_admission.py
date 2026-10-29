@@ -32,7 +32,7 @@ CORPUS_BINDING_KEYS = ('corpus', 'corpus_manifest')
 
 
 def build_gate_receipt(*, gate, corpus_content_sha256, evidence, reviewer, scope,
-                       supporting_evidence=None):
+                       supporting_evidence=None, source_manifest=None):
     """Return the exact receipt body the training loader will re-validate.
 
     `evidence` holds the documents the loader itself re-reads and, for the task
@@ -81,8 +81,19 @@ def build_gate_receipt(*, gate, corpus_content_sha256, evidence, reviewer, scope
         digest(identity['sha256'])
         if type(identity['size_bytes']) is not int or not 0 < identity['size_bytes'] <= EVIDENCE_MAX_BYTES:
             raise ValueError('Supporting evidence size out of bounds')
+    if source_manifest is not None:
+        if (not isinstance(source_manifest, dict)
+                or set(source_manifest) != {'sha256', 'size_bytes'}):
+            raise ValueError('Exact source manifest identity required')
+        digest(source_manifest['sha256'])
+        if type(source_manifest['size_bytes']) is not int or source_manifest['size_bytes'] <= 0:
+            raise ValueError('Invalid source manifest size')
     return {'schema_version': 1, 'gate': gate, 'status': 'passed',
             'corpus_content_sha256': corpus_content_sha256,
+            # The quarantine manifest these documents were reviewed against.
+            # Recording it is what lets a later audit re-derive the binding that
+            # `_evidence_document` checked at promotion time.
+            'reviewed_against_manifest': source_manifest,
             'evidence': evidence, 'supporting_evidence': supporting_evidence,
             'reviewer': reviewer, 'scope': scope,
             'training_approved_by_this_receipt_alone': False}
@@ -156,10 +167,23 @@ def promote_corpus(*, source_root: Path, source_manifest_sha256, destination: Pa
     source_root = source_root.resolve(strict=True)
     if os.path.lexists(destination):
         raise FileExistsError('Admitted corpus destination already exists')
+    # Resolution, not an ancestor scan, is the containment mechanism here: the
+    # destination is rebound to its fully resolved parent once, before any
+    # transport callback runs, so a symlink anywhere above it cannot redirect a
+    # later write. An ancestor symlink check after resolving would be vacuous,
+    # and before resolving it would reject ordinary system symlinks such as
+    # macOS's /var -> /private/var.
+    if not destination.parent.is_dir():
+        raise ValueError('Destination parent directory does not exist')
     parent = destination.parent.resolve(strict=True)
-    if any(part.is_symlink() for part in [parent, *parent.parents]):
-        raise ValueError('Symlinked destination ancestry rejected')
     destination = parent / destination.name
+    if destination == source_root or destination.is_relative_to(source_root):
+        # Staging inside the source would write the admitted tree, and its
+        # temporary directory, into the corpus this function promises not to
+        # edit; a later publish of the source would then carry extra files.
+        raise ValueError('Destination must be outside the source corpus tree')
+    if source_root.is_relative_to(destination):
+        raise ValueError('Destination must not contain the source corpus tree')
 
     source_manifest_path = source_root / 'corpus.json'
     source_manifest_identity = file_record(source_manifest_path)
@@ -242,6 +266,7 @@ def promote_corpus(*, source_root: Path, source_manifest_sha256, destination: Pa
             receipt = build_gate_receipt(
                 gate=gate, corpus_content_sha256=content_identity, evidence=references,
                 supporting_evidence=support, reviewer=reviewer,
+                source_manifest=dict(source_manifest_identity),
                 scope='Identity, coverage and corpus binding of the referenced evidence. '
                       'Not proof that the review conclusion is correct.')
             payload = canonical_json(receipt)

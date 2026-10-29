@@ -7,7 +7,7 @@ Corpus072 is now **training-admitted**, its bytes live in R2 rather than on the
 development machine, and the real worker's own `preflight_corpus_run` accepts it.
 A screened public task pool supplies 2,966 tasks across 507 repositories and 439
 owners with a 445-task repository- and owner-disjoint confirmation cohort. The
-local suite is 805 tests with zero skips. The rows marked *(superseded October
+local suite is 830 tests with zero skips. The rows marked *(superseded October
 29)* below are kept for history; see
 [the training unblock and data-scale cycle](42-training-unblock-and-data-scale.md)
 for what replaced them, what it does not establish, and the measurement work
@@ -31,7 +31,7 @@ time. Historical successes apply only to their recorded inputs and scope.
 
 | Area | Verified result | Limit |
 |---|---|---|
-| Local regression | **805 tests passed** in 27.135 seconds, Torch enabled, zero skips, October 29. The previous [671-test run](../evidence/data/lenskit312-contract-policy-001/local-full-suite.log) is retained as history. | Finite CPU and reduced-model checks do not establish full-model GPU correctness. **The development interpreter has torch 2.14.1, not the worker's pinned 2.10.0, and no `compressed-tensors` at all**, so the Torch-dependent checks passed on a different Torch than the training stack. `scripts/verify_training_runtime.py` exits nonzero on this machine and names both mismatches. |
+| Local regression | **830 tests passed** in 27.890 seconds, Torch enabled, zero skips, October 29. The previous [671-test run](../evidence/data/lenskit312-contract-policy-001/local-full-suite.log) is retained as history. | Finite CPU and reduced-model checks do not establish full-model GPU correctness. **The development interpreter has torch 2.14.1, not the worker's pinned 2.10.0, and no `compressed-tensors` at all**, so the Torch-dependent checks passed on a different Torch than the training stack. `scripts/verify_training_runtime.py` exits nonzero on this machine and names both mismatches. |
 | Runtime preflight | `scripts/verify_training_runtime.py` checks the worker's own preconditions — Linux, Python exactly 3.12, the four pinned versions, one exclusive CUDA device, the 70 GiB free-memory floor, and the corpus's longest example against configured capacity — and exits nonzero naming every mismatch. Tests parse those pins out of `run_corpus_training_worker.py` and assert they match, so the two cannot drift. | Preconditions only. Not peak memory at full sequence length, not throughput, not checkpoint durability. No official Runpod template ships the pinned Torch 2.10 / Python 3.12 pair, so `configs/Dockerfile.p1-training-runtime` is prepared — **it has never been built or run** and is unqualified until the preflight exits zero inside it on the intended GPU. |
 | Inference transport | [Real HTTP framing controls](../evidence/p1/inference-framing-001/assessment.md) reproduce five previous failure cases and verify rejection after the fix; three valid framing variants preserve response bodies. Evidence independently restored from R2. | Diagnostic nonstreaming transport only; no new model-generation or streaming qualification. |
 | Evaluation accounting | [JUnit consistency audit](../evidence/p1/junit-accounting-001/report.json) preserves the retained 324-case Requests comparison and rejects eight contradictory aggregate reports. Supplied failure/error/skip counts must match case outcomes. | Existing report reanalysis, not a new repair run or official hidden-grader qualification. |
@@ -850,7 +850,7 @@ tree was staged from the R2-restored payload, its 103 example files were copied
 with post-copy identity verification, eight reviewer evidence documents were
 copied in, one receipt per gate was written binding the corpus content identity,
 and the result was published only after `IndexedCorpus(purpose='training')`
-accepted it. Admitted manifest `c37dc07f2e33f2492b12025487ee87c8a9902ccceccdd8ca2a8a954faf40599d`;
+accepted it. Admitted manifest `fa984ca3ff1006e2cf7817a8ee67f613fb4e37a5b603bdc6d5e61b586f623887`;
 content identity `c081880c71b9f78ffb4fdcf319d0959e8d7dfcb39878b8ac06f510f2d088f103`
 unchanged, which is what lets the receipts bind it. The regenerated schedule hash
 `4664ecf632b35fad11dfa6d9d3e1ff19cfddb352816e99bb8750c8167cd1f06b` reproduces the
@@ -861,7 +861,7 @@ preflight — accepts the staged tree, the schedule and
 
 The live R2 round trip ran in order: restore the quarantined payload (103 files,
 10,578,444 bytes) → promote → publish the admitted corpus (115 files, 10,782,715
-bytes, artifact manifest `2959faedf43b2f0d77bdc0f160085bd2cf863f843d7e0404cc1d20178289014a`)
+bytes, artifact manifest `50c8ee9398ff6c3a186ef558c08c72365060d41e3e796950cd5d7dd2b8eab323`)
 → restore it again with `--purpose training`, loader reporting
 `training_admitted: true`. No corpus bytes were retained on the development
 machine; every step ran in a session scratch directory. Publication uploads
@@ -899,8 +899,8 @@ refuses to forecast without one.
 What this does **not** establish: rights clearance on either corpus, the truth of
 any reviewer's conclusion, that the remaining pool is unseen, that peak memory at
 the corpus's longest example (24,366 input tokens) fits an 80 GB card, or any
-learned improvement. The local suite is 805 tests, zero skips, Torch enabled,
-27.135 seconds. No GPU training ran and no Runpod resource was created, started,
+learned improvement. The local suite is 830 tests, zero skips, Torch enabled,
+27.890 seconds. No GPU training ran and no Runpod resource was created, started,
 stopped or modified. Full detail, including the refused OpenHands translation
 rules and the remaining work in order, is in
 [the training unblock and data-scale cycle](42-training-unblock-and-data-scale.md).

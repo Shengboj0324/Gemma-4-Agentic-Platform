@@ -90,6 +90,13 @@ class PaddingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'truncation is forbidden'):
             padding_overhead(rows(('a', 500, 25, 'x')), batch_width_tokens=400)
 
+    def test_degenerate_input_raises_a_value_error_not_a_division_error(self):
+        with self.assertRaisesRegex(ValueError, 'Nonempty example metadata'):
+            padding_overhead([], batch_width_tokens=400)
+        with self.assertRaisesRegex(ValueError, 'Unique nonempty example identity'):
+            padding_overhead(rows(('a', 10, 1, 'x'), ('a', 10, 1, 'x')),
+                             batch_width_tokens=400)
+
 
 class MixtureTests(unittest.TestCase):
     def test_shares_allocate_exactly_with_recorded_rounding(self):
@@ -149,6 +156,16 @@ class DiversityTests(unittest.TestCase):
         self.assertEqual(report['distribution'][0]['examples'], 2)
         self.assertTrue(report['policy_satisfied'])
 
+    def test_degenerate_input_raises_a_value_error_not_an_index_error(self):
+        with self.assertRaisesRegex(ValueError, 'Nonempty example metadata'):
+            diversity_limits([])
+
+    def test_duplicate_rows_cannot_inflate_a_measured_share(self):
+        duplicated = rows(('a', 100, 10, 'o/r'), ('a', 100, 10, 'o/r'),
+                          ('b', 100, 10, 'o/other'))
+        with self.assertRaisesRegex(ValueError, 'Unique nonempty example identity'):
+            diversity_limits(duplicated)
+
     def test_missing_or_blank_group_field_is_refused(self):
         with self.assertRaisesRegex(ValueError, 'lacks the grouping field'):
             diversity_limits([{'example_id': 'a', 'input_tokens': 2,
@@ -198,6 +215,19 @@ class ForecastTests(unittest.TestCase):
                                   ({'storage_gib': -1}, 'storage_gib')]:
             with self.assertRaisesRegex(ValueError, message):
                 forecast_campaign(**{**base, **override})
+
+    def test_a_rate_too_small_to_represent_is_named_as_a_precision_failure(self):
+        from fractions import Fraction
+        with self.assertRaisesRegex(ValueError, 'too small to represent'):
+            forecast_campaign(processed_input_tokens=1000,
+                              measured_tokens_per_second=1e-10,
+                              measurement_evidence='measured', hourly_usd=1)
+        # An exact Fraction carries the same magnitude without loss.
+        report = forecast_campaign(processed_input_tokens=1,
+                                   measured_tokens_per_second=Fraction(1, 10**10),
+                                   measurement_evidence='measured',
+                                   hourly_usd=Fraction(1, 1000))
+        self.assertEqual(report['compute_seconds'], 1e10)
 
     def test_zero_storage_needs_no_storage_price(self):
         report = forecast_campaign(processed_input_tokens=1000,

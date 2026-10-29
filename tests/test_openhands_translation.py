@@ -57,9 +57,82 @@ class TranslateCallTests(unittest.TestCase):
 
     def test_interactive_stdin_writes_are_refused(self):
         self.assertRefused('execute_bash', {'command': 'y', 'is_input': True},
-                           'unsupported_execute_bash_arguments')
+                           'interactive_stdin_write')
+        self.assertRefused('execute_bash', {'command': 'ls', 'timeout': 30},
+                           'unsupported_execute_bash_timeout')
+        self.assertRefused('execute_bash', {'command': 'ls', 'shell': 'zsh'},
+                           'unsupported_execute_bash_argument_shell')
         self.assertRefused('execute_bash', {}, 'execute_bash_without_command')
         self.assertRefused('execute_bash', {'command': '  '}, 'empty_command')
+
+    def test_interactive_control_sentinels_are_not_run_as_commands(self):
+        # `C-c` arrives through `command` but interrupts a running process in
+        # the source runtime; run_command has no process to interrupt.
+        for sentinel in ('C-c', 'C-d', 'C-z', '  C-c  '):
+            self.assertRefused('execute_bash', {'command': sentinel},
+                               'interactive_control_sentinel')
+        # A command that merely mentions one is still a command.
+        self.assertEqual(translate_call('execute_bash',
+                                        {'command': 'echo C-c'})['arguments'],
+                         {'command': 'echo C-c'})
+
+    def test_an_explicit_is_input_false_is_a_plain_command(self):
+        result = translate_call('execute_bash', {'command': 'ls', 'is_input': False})
+        self.assertEqual(result['arguments'], {'command': 'ls'})
+        self.assertEqual(result['rule'], 'execute_bash_to_run_command')
+
+    def test_a_directory_view_is_not_translated_into_a_file_read(self):
+        # The source schema accepts a directory for `view` and lists it; the
+        # official read_file reads a file. Guessing would change the trajectory.
+        self.assertRefused('str_replace_editor',
+                           {'command': 'view', 'path': '/workspace/pkg'},
+                           'view_target_may_be_a_directory')
+        self.assertRefused('str_replace_editor',
+                           {'command': 'view', 'path': '/workspace/src/tests'},
+                           'view_target_may_be_a_directory')
+        # The heuristic errs toward refusal: extensionless files are refused too.
+        self.assertRefused('str_replace_editor',
+                           {'command': 'view', 'path': '/workspace/Makefile'},
+                           'view_target_may_be_a_directory')
+
+    def test_a_snapshot_file_set_decides_the_question_exactly(self):
+        known = {'pkg/a.py', 'Makefile'}
+        self.assertEqual(
+            translate_call('str_replace_editor',
+                           {'command': 'view', 'path': '/workspace/Makefile'},
+                           file_paths=known)['arguments'],
+            {'filepath': 'Makefile'})
+        with self.assertRaises(UntranslatableCall) as caught:
+            translate_call('str_replace_editor',
+                           {'command': 'view', 'path': '/workspace/pkg'},
+                           file_paths=known)
+        self.assertEqual(caught.exception.reason,
+                         'target_is_not_a_known_snapshot_file')
+        with self.assertRaises(UntranslatableCall) as caught:
+            translate_call('str_replace_editor',
+                           {'command': 'view', 'path': '/workspace/absent.py'},
+                           file_paths=known)
+        self.assertEqual(caught.exception.reason,
+                         'target_is_not_a_known_snapshot_file')
+        with self.assertRaisesRegex(ValueError, 'must be a set'):
+            workspace_relative('a.py', file_paths=['a.py'])
+
+    def test_a_missing_path_is_a_reason_code_not_a_key_error(self):
+        for arguments, reason in [
+                ({'command': 'view'}, 'missing_path'),
+                ({'command': 'create', 'file_text': 'x'}, 'missing_path'),
+                ({'command': 'str_replace', 'old_str': 'a', 'new_str': 'b'},
+                 'missing_path')]:
+            with self.assertRaises(UntranslatableCall) as caught:
+                translate_call('str_replace_editor', arguments)
+            self.assertEqual(caught.exception.reason, reason)
+
+    def test_finish_rejects_unknown_arguments(self):
+        self.assertRefused('finish', {'anything_at_all': [1, 2, 3]},
+                           'unsupported_finish_argument_anything_at_all')
+        self.assertTrue(translate_call('finish', {'message': 'done'})
+                        ['source_message_present'])
+        self.assertFalse(translate_call('finish', {})['source_message_present'])
 
     def test_view_maps_to_read_file_with_and_without_a_range(self):
         whole = translate_call('str_replace_editor',
@@ -78,7 +151,10 @@ class TranslateCallTests(unittest.TestCase):
                                      'view_range': [5, -1]})
         self.assertEqual(open_ended['arguments'], {'filepath': 'pkg/a.py',
                                                    'start_line': 5})
-        self.assertEqual(open_ended['rule'], 'open_ended_view_range_to_whole_file_read')
+        # The emitted call reads from a line, not the whole file, so the rule
+        # name must not claim otherwise: it is the provenance in the histogram.
+        self.assertEqual(open_ended['rule'],
+                         'open_ended_view_range_to_read_file_from_line')
 
     def test_invalid_view_ranges_are_refused(self):
         base = {'command': 'view', 'path': 'a.py'}
@@ -91,7 +167,7 @@ class TranslateCallTests(unittest.TestCase):
         self.assertRefused('str_replace_editor', {**base, 'view_range': [1, -2]},
                            'invalid_view_range_end')
         self.assertRefused('str_replace_editor', {**base, 'concise': True},
-                           'unsupported_view_arguments')
+                           'unsupported_view_argument_concise')
 
     def test_create_maps_to_write_file(self):
         result = translate_call('str_replace_editor',
@@ -102,6 +178,14 @@ class TranslateCallTests(unittest.TestCase):
                                                'content': 'print(1)\n'})
         self.assertRefused('str_replace_editor', {'command': 'create', 'path': 'a.py'},
                            'create_without_file_text')
+        # `create` names a file that does not exist yet, so a snapshot set must
+        # not be applied to it.
+        self.assertEqual(
+            translate_call('str_replace_editor',
+                           {'command': 'create', 'path': '/workspace/new.py',
+                            'file_text': 'x'},
+                           file_paths={'other.py'})['arguments']['filepath'],
+            'new.py')
 
     def test_str_replace_maps_to_edit_file(self):
         result = translate_call('str_replace_editor',
@@ -179,7 +263,13 @@ class TranslateTrajectoryTests(unittest.TestCase):
         self.assertEqual(plan['translated_actions'], 3)
         self.assertEqual(plan['folded_thoughts'], 1)
         self.assertEqual(plan['dropped_trailing_thoughts'], 0)
+        # Assert the actual absence of results, not just the flag that claims it.
         self.assertFalse(plan['results_present'])
+        for action in plan['actions']:
+            self.assertEqual(set(action), {'source_index', 'name', 'arguments',
+                                           'rule', 'source_tool',
+                                           'argument_mapping', 'reasoning'})
+        self.assertNotIn('results', plan)
         self.assertFalse(plan['training_approved'])
         self.assertEqual([action['name'] for action in plan['actions']],
                          ['read_file', 'edit_file', 'run_command'])
@@ -193,6 +283,7 @@ class TranslateTrajectoryTests(unittest.TestCase):
             'think_to_reasoning_channel': 1,
             'view_whole_file_to_read_file': 1,
         })
+        self.assertFalse(plan['snapshot_file_paths_supplied'])
         self.assertNotIn('result', plan['actions'][0])
         self.assertEqual(len(plan['plan_sha256']), 64)
         self.assertEqual(len(plan['source_history_sha256']), 64)
@@ -282,16 +373,22 @@ class AuditTests(unittest.TestCase):
                call('task_tracker', {'command': 'plan'}, 'c1'), response('c1'),
                call('finish', {}, 'c2')]
         broken = [{'role': 'user', 'content': 'go'}, response('ghost')]
+        malformed = [{'role': 'user', 'content': 'go'},
+                     call('str_replace_editor', {'command': 'view'}, 'c1'),
+                     response('c1'), call('finish', {}, 'c2')]
         report = audit_translation([
             {'trajectory_id': 'a', 'messages': good},
             {'trajectory_id': 'b', 'messages': bad},
-            {'trajectory_id': 'c', 'messages': broken}])
-        self.assertEqual(report['rows'], 3)
+            {'trajectory_id': 'c', 'messages': broken},
+            {'trajectory_id': 'd', 'messages': malformed}])
+        self.assertEqual(report['rows'], 4)
         self.assertEqual(report['accepted'], 1)
-        self.assertEqual(report['refused'], 2)
-        self.assertAlmostEqual(report['acceptance_rate'], 1 / 3)
+        self.assertEqual(report['refused'], 3)
+        self.assertAlmostEqual(report['acceptance_rate'], 1 / 4)
+        # A malformed row is one counted refusal, never an aborted screen.
         self.assertEqual(report['refusal_reasons'],
-                         {'no_official_task_tracking_tool': 1,
+                         {'missing_path': 1,
+                          'no_official_task_tracking_tool': 1,
                           'source_history_validation_failed': 1})
         self.assertEqual(report['rules_applied'],
                          {'execute_bash_to_run_command': 1,

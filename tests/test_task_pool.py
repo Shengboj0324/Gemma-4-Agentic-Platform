@@ -70,8 +70,13 @@ class ScreenTests(unittest.TestCase):
         self.assertEqual(report['accepted_license_distribution'], {'MIT': 3})
         self.assertEqual(report['dataset'], 'nebius/SWE-rebench-V2')
         self.assertEqual(report['revision'], REVISION)
+        # These flags are literals; assert the substance they stand for too.
         self.assertFalse(report['rights_cleared'])
         self.assertFalse(report['training_approved'])
+        self.assertEqual({row['instance_id'] for row in report['eligible_tasks']},
+                         {'a__one-1', 'b__two-2', 'a__one-3'})
+        self.assertTrue(all('license_key' in row and 'image_name' in row
+                            for row in report['eligible_tasks']))
 
     def test_placeholder_licence_is_refused_separately_from_a_real_refusal(self):
         rows = [row('a__one-1', 'a/one', license='custom-check-github'),
@@ -224,6 +229,20 @@ class CohortTests(unittest.TestCase):
             {'name': 'train', 'tasks': 2},
             {'name': 'development', 'tasks': 2},
             {'name': 'confirmation', 'tasks': 2}])
+        # Verify disjointness from the assignment itself: the flags in the return
+        # value are literals and would still be True if the check were deleted.
+        by_cohort = {c['name']: set(c['instance_ids']) for c in result['cohorts']}
+        owners = {name: {identity.split('__')[0] for identity in ids}
+                  for name, ids in by_cohort.items()}
+        repositories = {name: {identity.rsplit('-', 1)[0] for identity in ids}
+                        for name, ids in by_cohort.items()}
+        names = sorted(by_cohort)
+        for left in names:
+            for right in names:
+                if left < right:
+                    self.assertEqual(by_cohort[left] & by_cohort[right], set())
+                    self.assertEqual(owners[left] & owners[right], set())
+                    self.assertEqual(repositories[left] & repositories[right], set())
         self.assertTrue(result['repository_disjoint'])
         self.assertTrue(result['owner_disjoint'])
         self.assertTrue(result['owner_indivisible'])

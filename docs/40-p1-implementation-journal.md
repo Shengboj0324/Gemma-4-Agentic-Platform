@@ -13540,7 +13540,84 @@ than silently changing what the agent did.
 CLIs; all 13 staged commands import and respond to `--help` in an isolated
 interpreter with an empty `PYTHONPATH` (54 files, 338,110 bytes).
 
-Local suite: 805 passed, zero skips, Torch enabled, 27.135 seconds, up from 671.
-The 134 new tests are listed with what each pins in document 42. Four evidence
+Local suite: 830 passed, zero skips, Torch enabled, 27.890 seconds, up from 671.
+The 159 new tests are listed with what each pins in document 42. Four evidence
 packages were published to R2 with restore-verified receipts. No GPU training ran
 and no Runpod resource was created, started, stopped or modified.
+
+### Independent adversarial review of the new modules
+
+The seven new modules were handed to an independent reader with the
+authoritative loader and the house conventions, and asked to break them. It
+returned 16 findings. Every one was real. All are fixed with regression tests,
+and the two most serious are worth preserving here because they show what was
+only asserted rather than checked.
+
+`corpus_audit` — the layer whose entire purpose is to establish independently
+that the corpus tree contains the corpus — resolved declared paths as
+`root / reference['path']` with no canonical-path check, no containment check,
+and a symlink test that covered only the final path component. The loader has
+all three. Two confirmed escapes each returned `training_admitted: True` from
+the audit on a corpus `IndexedCorpus` refuses: an evidence path of
+`../planted/ev.json` with the receipt-to-manifest chain re-signed, and an entire
+gate directory moved out of the tree and replaced by a symlink while every
+declared path stayed byte-identical and canonical. The audit now repeats all
+three checks and re-derives the loader's per-kind byte ceilings, which were also
+looser than the loader's. Both escapes are now regression tests that additionally
+assert the loader refuses the same tree, so the two layers are shown to agree
+rather than assumed to.
+
+`openhands_translation` carried two rules that were not semantically justified.
+The source `str_replace_editor` accepts a directory for `view` and lists it,
+while the official `read_file` reads a file, so a listing was being translated
+into a file read. And `execute_bash` documents `C-c` as a control character sent
+to a running process, so `{'command': 'C-c'}` became a literal shell command that
+would run a nonexistent program instead of interrupting one — the module already
+refused `is_input` for exactly the reasoning that applies to `C-c`. Both are now
+refused; the directory case resolves exactly when the caller supplies the pinned
+snapshot's file set and otherwise falls back to a declared suffix heuristic that
+errs toward refusal.
+
+Also fixed: promotion accepted a destination nested inside the source corpus,
+writing the admitted tree and its staging directory into the corpus it promises
+not to edit; `verify_schedule_coverage` never re-derived the schedule's own
+identity, so a receipt could attest coverage for a schedule the iterator refuses
+to run; a failed `restore_corpus` left the rejected tree at the destination and
+blocked every retry with `FileExistsError`; the evidence-to-corpus binding
+checked at promotion was not recorded anywhere, so neither layer could re-derive
+it, which is now fixed by a `reviewed_against_manifest` field on each receipt;
+a missing `path` raised a bare `KeyError` that aborted a whole shard screen
+instead of counting one refusal; `finish` accepted arbitrary arguments; one rule
+name claimed a whole-file read for a call that reads from a line; `execute_bash`
+used one reason code for three distinguishable situations; `padding_overhead` and
+`diversity_limits` raised `ZeroDivisionError` and `IndexError` on empty input and
+allowed duplicate rows to inflate a measured share that `account_tokens` would
+have refused; and a float rate too small to represent was rounded to zero and
+then misreported as nonpositive.
+
+Writing the test for the `reviewed_against_manifest` fix surfaced a further
+defect of my own: a shadowed local variable had been writing the task-alignment
+coverage set into the gate report where the manifest identity belonged.
+
+One vacuous guard was deleted rather than repaired. A symlink-ancestry check ran
+after the path had already been resolved, so it could never fire; adding it
+before resolution rejected ordinary system symlinks such as macOS's
+`/var -> /private/var`. The honest fix was to remove it and document that
+resolving the destination once, before any transport callback runs, is the
+containment mechanism.
+
+Four tests passed for the wrong reason and were rewritten. `repository_disjoint`,
+`owner_disjoint` and `owner_indivisible` are literal `True` in a return value, so
+the cohort test would have passed with the entire disjointness verification loop
+deleted; it now intersects the assignments itself. The receipt-binding test
+tripped an identity check before reaching the binding check it was named for.
+
+Finally, the three new evidence packages were restructured: their publish
+receipts and manifests had been written *inside* the directories they describe,
+which document 21 explicitly warns against. Each now has a sibling
+`-verification` directory holding the manifest, publish receipt, independently
+obtained restore receipt and a `verification.json` from
+`record_transfer_verification`, matching the convention every earlier package
+follows.
+
+Local suite after the fixes: 830 passed, zero skips, Torch enabled.

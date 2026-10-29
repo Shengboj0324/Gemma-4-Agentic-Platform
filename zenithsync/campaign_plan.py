@@ -46,6 +46,11 @@ def _rate(value, name):
         import math
         if not math.isfinite(value):
             raise ValueError(name + ' must be finite')
+        if value > 0 and Fraction(value).limit_denominator(10**9) == 0:
+            # Rounding a positive rate to zero and then calling it nonpositive
+            # would misreport a precision failure as a sign error.
+            raise ValueError(name + ' is too small to represent within 1e-9; '
+                             'pass an exact Fraction instead')
         rate = Fraction(value).limit_denominator(10**9)
     else:
         raise ValueError(name + ' must be an int, float or Fraction')
@@ -66,19 +71,13 @@ def account_tokens(examples, *, target_tokens, basis='supervised_tokens', max_ep
         raise ValueError('Basis must be one of ' + ', '.join(BASES))
     _positive(target_tokens, 'target_tokens')
     _positive(max_epochs, 'max_epochs')
-    if not isinstance(examples, list) or not examples:
-        raise ValueError('Nonempty example metadata required')
-    seen = set()
+    _unique_rows(examples)
     unique_input = unique_supervised = 0
     longest = 0
     for row in examples:
-        if not isinstance(row, dict) or not {'example_id', 'input_tokens',
-                                             'supervised_tokens'} <= set(row):
+        if not {'example_id', 'input_tokens', 'supervised_tokens'} <= set(row):
             raise ValueError('Example metadata requires identity and both token counts')
         name = row['example_id']
-        if not isinstance(name, str) or not name or name in seen:
-            raise ValueError('Unique nonempty example identity required')
-        seen.add(name)
         inputs = _positive(row['input_tokens'], 'input_tokens')
         supervised = _positive(row['supervised_tokens'], 'supervised_tokens')
         if supervised >= inputs:
@@ -121,6 +120,25 @@ def account_tokens(examples, *, target_tokens, basis='supervised_tokens', max_ep
     }
 
 
+def _unique_rows(examples):
+    """Require a nonempty list of uniquely identified rows, as the loader does.
+
+    Every entry point in this module enforces the same precondition, so a
+    duplicated example cannot inflate one measurement while another refuses it.
+    """
+    if not isinstance(examples, list) or not examples:
+        raise ValueError('Nonempty example metadata required')
+    seen = set()
+    for row in examples:
+        if not isinstance(row, dict) or 'example_id' not in row:
+            raise ValueError('Example metadata requires an identity')
+        name = row['example_id']
+        if not isinstance(name, str) or not name or name in seen:
+            raise ValueError('Unique nonempty example identity required')
+        seen.add(name)
+    return examples
+
+
 def padding_overhead(examples, *, batch_width_tokens):
     """Report padding the kernel still processes under right padding to a width.
 
@@ -129,6 +147,7 @@ def padding_overhead(examples, *, batch_width_tokens):
     worst case for the current single-sequence collator.
     """
     _positive(batch_width_tokens, 'batch_width_tokens')
+    _unique_rows(examples)
     rows = []
     padded = real = 0
     for row in examples:
@@ -205,6 +224,7 @@ def diversity_limits(examples, *, basis='supervised_tokens', group_field='reposi
         raise ValueError('Basis must be one of ' + ', '.join(BASES))
     if not isinstance(maximum_share, Fraction) or not 0 < maximum_share <= 1:
         raise ValueError('Maximum share must be an exact Fraction in (0, 1]')
+    _unique_rows(examples)
     totals, counts = {}, {}
     overall = 0
     for row in examples:

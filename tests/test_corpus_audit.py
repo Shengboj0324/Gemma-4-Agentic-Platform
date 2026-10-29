@@ -1,9 +1,11 @@
 """The independent audit must re-derive the same numbers and catch tampering."""
 
 import hashlib
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
+import unittest.mock
 
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.corpus_admission import promote_corpus
@@ -65,7 +67,11 @@ class CorpusAuditTests(unittest.TestCase):
                                                   'confirmation': 0})
         self.assertEqual(report['max_input_tokens'], 3)
         self.assertEqual(report['min_context_margin'], 3)
+        # `training_admitted` is derived, not a literal: it must follow the
+        # status and the resolved gates, so check those too.
         self.assertTrue(report['training_admitted'])
+        self.assertEqual(report['corpus_status'], 'admitted')
+        self.assertTrue(all(report['gates'][gate]['resolved'] for gate in GATES))
         self.assertEqual(report['vocab_size'], 8)
         self.assertEqual(report['pad_token_id'], 0)
         for gate in GATES:
@@ -210,13 +216,159 @@ class CorpusAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(CorpusAuditError, 'output reserve exceeds'):
             self.audit(context_limit=4, output_reserve=2)
 
-    def test_audit_catches_a_receipt_bound_to_another_corpus(self):
+    def test_audit_catches_an_edited_receipt_by_its_identity(self):
+        # Editing a receipt without re-signing the manifest trips the identity
+        # check, not the binding check. The binding check has its own test.
         manifest = load_json(self.root / 'corpus.json')
         reference = manifest['admission']['split_isolation']
         receipt = load_json(self.root / reference['path'])
         receipt['corpus_content_sha256'] = 'f' * 64
         self.rewrite(reference['path'], receipt)
         with self.assertRaisesRegex(CorpusAuditError, 'Identity differs'):
+            self.audit()
+
+    def test_a_file_swapped_between_hashing_and_parsing_is_caught(self):
+        import zenithsync.corpus_audit as audit_module
+        record = load_json(self.root / 'corpus.json')['examples'][0]
+        target = (self.root / record['tokens']['path']).resolve()
+        original = audit_module.load_json
+        swapped = {'swapped': True}
+
+        def swap_then_load(path):
+            value = original(path)
+            if Path(path).resolve() == target:
+                Path(path).write_bytes(canonical_json(swapped))
+            return value
+
+        with unittest.mock.patch.object(audit_module, 'load_json', swap_then_load):
+            with self.assertRaisesRegex(CorpusAuditError, 'changed while being read'):
+                self.audit()
+
+    def test_a_reference_declaring_an_enormous_size_is_refused(self):
+        manifest = load_json(self.root / 'corpus.json')
+        record = manifest['examples'][0]
+        record['tokens']['identity']['size_bytes'] = 1024**4
+        self.rewrite('corpus.json', manifest)
+        sha256 = file_record(self.root / 'corpus.json')['sha256']
+        # The aggregate ceiling fires first, as it does in the loader.
+        with self.assertRaisesRegex(CorpusAuditError, 'aggregate byte ceiling'):
+            audit_corpus(self.root, expected_manifest_sha256=sha256)
+        # Raise the aggregate ceiling and the per-example one still refuses it.
+        with self.assertRaisesRegex(CorpusAuditError, 'Declared size out of bounds'):
+            audit_corpus(self.root, expected_manifest_sha256=sha256,
+                         max_total_bytes=1024**5)
+
+    def test_the_aggregate_byte_ceiling_must_be_positive(self):
+        with self.assertRaisesRegex(CorpusAuditError, 'aggregate byte ceiling'):
+            self.audit(max_total_bytes=0)
+
+    # --- path containment: the audit must not bless bytes outside the tree ----
+
+    def resign(self):
+        """Re-sign receipt identities into the manifest so the chain is valid."""
+        manifest = load_json(self.root / 'corpus.json')
+        for reference in manifest['admission'].values():
+            reference['identity'] = file_record(self.root / reference['path'])
+        self.rewrite('corpus.json', manifest)
+        self.manifest_sha256 = file_record(self.root / 'corpus.json')['sha256']
+        return self.manifest_sha256
+
+    def test_evidence_reached_by_traversal_outside_the_root_is_refused(self):
+        planted = self.work / 'planted'
+        planted.mkdir()
+        gate = 'rights_and_attribution'
+        receipt_path = load_json(self.root / 'corpus.json')['admission'][gate]['path']
+        receipt = load_json(self.root / receipt_path)
+        evidence = receipt['evidence'][0]['path']
+        shutil.move(str(self.root / evidence), str(planted / 'ev.json'))
+        receipt['evidence'][0]['path'] = '../planted/ev.json'
+        receipt['evidence'][0]['identity'] = file_record(planted / 'ev.json')
+        self.rewrite(receipt_path, receipt)
+        self.resign()
+        with self.assertRaisesRegex(CorpusAuditError, 'Non-canonical relative path'):
+            self.audit()
+
+    def test_a_gate_directory_replaced_by_a_symlink_is_refused(self):
+        # Every declared path stays byte-identical and canonical here, so only a
+        # symlink check on the whole chain can catch it.
+        inside = self.root / 'admission' / 'split_isolation'
+        outside = self.work / 'moved-gate'
+        shutil.move(str(inside), str(outside))
+        inside.symlink_to(outside, target_is_directory=True)
+        with self.assertRaisesRegex(CorpusAuditError, 'Symlinked corpus path'):
+            self.audit()
+        # The loader refuses the same tree, so the two layers agree.
+        with self.assertRaisesRegex(ValueError, 'Symlinked corpus paths rejected'):
+            IndexedCorpus(self.root, self.root / 'corpus.json',
+                          expected_manifest_sha256=self.manifest_sha256,
+                          purpose='training')
+
+    def test_an_example_file_replaced_by_a_symlink_is_refused(self):
+        record = load_json(self.root / 'corpus.json')['examples'][0]
+        inside = self.root / record['tokens']['path']
+        outside = self.work / 'moved-tokens.json'
+        shutil.move(str(inside), str(outside))
+        inside.symlink_to(outside)
+        with self.assertRaisesRegex(CorpusAuditError, 'Symlinked corpus path'):
+            self.audit()
+
+    def test_a_symlinked_corpus_root_is_refused(self):
+        link = self.work / 'root-link'
+        link.symlink_to(self.root, target_is_directory=True)
+        with self.assertRaisesRegex(CorpusAuditError, 'must not be a symlink'):
+            audit_corpus(link, expected_manifest_sha256=self.manifest_sha256)
+
+    def test_receipt_and_evidence_ceilings_match_the_loader(self):
+        from zenithsync.corpus_audit import (EVIDENCE_MAX_BYTES, MANIFEST_MAX_BYTES,
+                                             RECEIPT_MAX_BYTES)
+        # The loader reads receipts under 1 MiB and evidence under 16 MiB; a
+        # looser ceiling here would let the audit accept what the loader refuses.
+        self.assertEqual(RECEIPT_MAX_BYTES, 1024**2)
+        self.assertEqual(EVIDENCE_MAX_BYTES, 16 * 1024**2)
+        self.assertEqual(MANIFEST_MAX_BYTES, 16 * 1024**2)
+        source = (Path(__file__).resolve().parents[1]
+                  / 'zenithsync/training_corpus.py').read_text(encoding='utf-8')
+        self.assertIn("_bound_file(root, reference, 1024**2)", source)
+        self.assertIn("_bound_file(root, evidence, 16*1024**2)", source)
+
+    def test_evidence_naming_a_corpus_other_than_the_reviewed_one_is_refused(self):
+        # Promotion checks this binding against the quarantine manifest, which
+        # the admitted tree does not otherwise carry. The receipt records it so
+        # the second layer can re-derive the same check.
+        manifest = load_json(self.root / 'corpus.json')
+        reference = manifest['admission']['split_isolation']
+        receipt = load_json(self.root / reference['path'])
+        self.assertEqual(receipt['reviewed_against_manifest'],
+                         file_record(self.quarantine / 'corpus.json'))
+        evidence = receipt['evidence'][0]['path']
+        document = load_json(self.root / evidence)
+        document['corpus'] = {'sha256': 'c' * 64, 'size_bytes': 7}
+        self.rewrite(evidence, document)
+        receipt['evidence'][0]['identity'] = file_record(self.root / evidence)
+        self.rewrite(reference['path'], receipt)
+        self.resign()
+        with self.assertRaisesRegex(CorpusAuditError,
+                                   'names a corpus other than the one'):
+            self.audit()
+
+    def test_each_gate_report_carries_the_reviewed_manifest(self):
+        report = self.audit()
+        reviewed = file_record(self.quarantine / 'corpus.json')
+        for gate in GATES:
+            self.assertEqual(report['gates'][gate]['reviewed_against_manifest'],
+                             reviewed)
+
+    def test_a_receipt_bound_to_another_corpus_is_refused_by_the_binding_check(self):
+        # Re-sign the chain so the identity check passes and the binding check
+        # is the one that fires; otherwise this test proves nothing about it.
+        manifest = load_json(self.root / 'corpus.json')
+        reference = manifest['admission']['split_isolation']
+        receipt = load_json(self.root / reference['path'])
+        receipt['corpus_content_sha256'] = 'f' * 64
+        self.rewrite(reference['path'], receipt)
+        self.resign()
+        with self.assertRaisesRegex(CorpusAuditError,
+                                   'binds a different corpus content identity'):
             self.audit()
 
     # --- comparison and schedule coverage -------------------------------------
@@ -248,18 +400,52 @@ class CorpusAuditTests(unittest.TestCase):
         self.assertEqual(coverage['supervised_tokens_per_epoch'], 1)
         self.assertEqual(coverage['declared_epoch_allowance'], 4)
         self.assertEqual(coverage['repetition_factor_at_target'], 3.0)
+        # Each negative case is re-signed, so the intended check fires rather
+        # than the identity check that now guards the whole function.
+        foreign = make_schedule(rows, corpus_content_sha256='a' * 64, seed=1,
+                                target_supervised_tokens=1, max_epochs=1,
+                                max_update_supervised_tokens=8)
         with self.assertRaisesRegex(CorpusAuditError, 'another corpus'):
-            verify_schedule_coverage(report, {**schedule,
-                                              'corpus_content_sha256': 'a' * 64})
+            verify_schedule_coverage(report, foreign)
+        ghost = make_schedule(
+            [{'example_id': 'ghost', 'input_tokens': 3, 'supervised_tokens': 1}],
+            corpus_content_sha256=report['corpus_content_sha256'], seed=1,
+            target_supervised_tokens=1, max_epochs=1,
+            max_update_supervised_tokens=8)
         with self.assertRaisesRegex(CorpusAuditError, 'does not cover exactly'):
-            verify_schedule_coverage(report, {**schedule, 'examples': [
-                {'example_id': 'ghost', 'input_tokens': 3, 'supervised_tokens': 1}]})
+            verify_schedule_coverage(report, ghost)
+        miscounted = make_schedule(
+            [{'example_id': 'trace1', 'input_tokens': 3, 'supervised_tokens': 2}],
+            corpus_content_sha256=report['corpus_content_sha256'], seed=1,
+            target_supervised_tokens=1, max_epochs=1,
+            max_update_supervised_tokens=8)
         with self.assertRaisesRegex(CorpusAuditError, 'count differs'):
-            verify_schedule_coverage(report, {**schedule, 'examples': [
-                {'example_id': 'trace1', 'input_tokens': 3, 'supervised_tokens': 2}]})
-        with self.assertRaisesRegex(CorpusAuditError, 'epoch allowance'):
-            verify_schedule_coverage(report, {**schedule, 'max_epochs': 1,
-                                              'target_supervised_tokens': 3})
+            verify_schedule_coverage(report, miscounted)
+
+    def test_schedule_coverage_requires_a_reproducible_schedule_identity(self):
+        report = self.audit()
+        rows = [{key: row[key] for key in ('example_id', 'input_tokens',
+                                           'supervised_tokens')}
+                for row in report['examples_detail']]
+        schedule = make_schedule(rows,
+                                 corpus_content_sha256=report['corpus_content_sha256'],
+                                 seed=1, target_supervised_tokens=1, max_epochs=1,
+                                 max_update_supervised_tokens=8)
+        # A stale digest means the iterator will refuse to run this schedule, so
+        # attesting its coverage would attest coverage for something unrunnable.
+        with self.assertRaisesRegex(CorpusAuditError, 'identity does not match'):
+            verify_schedule_coverage(report, {**schedule, 'seed': 99})
+        with self.assertRaisesRegex(CorpusAuditError, 'field set differs'):
+            verify_schedule_coverage(report, {key: schedule[key] for key in
+                                              ('corpus_content_sha256', 'examples',
+                                               'max_epochs',
+                                               'target_supervised_tokens')})
+        with self.assertRaisesRegex(CorpusAuditError, 'Unsupported schedule schema'):
+            verify_schedule_coverage(report, {**schedule, 'schema_version': 2})
+        # The iterator agrees: it refuses the same stale-digest object.
+        from zenithsync.training_schedule import iter_updates
+        with self.assertRaisesRegex(ValueError, 'Schedule identity changed'):
+            next(iter_updates({**schedule, 'seed': 99}), None)
 
     def test_schedule_coverage_rejects_a_repeated_example_identity(self):
         report = self.audit()
@@ -270,7 +456,9 @@ class CorpusAuditTests(unittest.TestCase):
                                  corpus_content_sha256=report['corpus_content_sha256'],
                                  seed=1, target_supervised_tokens=1, max_epochs=1,
                                  max_update_supervised_tokens=8)
-        with self.assertRaisesRegex(CorpusAuditError, 'repeats an example identity'):
+        # A duplicated identity is unreproducible, so the identity guard reports
+        # it first; `make_schedule` refuses to build such a schedule at all.
+        with self.assertRaisesRegex(CorpusAuditError, 'not reproducible'):
             verify_schedule_coverage(report, {**schedule,
                                               'examples': rows + rows})
 

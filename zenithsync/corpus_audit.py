@@ -14,15 +14,18 @@ learn anything.
 import hashlib
 from pathlib import Path
 
-from .artifacts import canonical_json, load_json
+from .artifacts import canonical_json, load_json, relative_path
 from .training_corpus import GATES
 
 EXAMPLE_FIELDS = {'example_id', 'task_id', 'repository_group', 'leakage_group',
                   'split', 'tokens', 'audit'}
-# Hard ceiling on any single file this audit will read into memory. A reference
-# may declare an enormous size; refusing on the declaration is cheaper than
-# discovering it after the read.
-FILE_MAX_BYTES = 64 * 1024**2
+# Per-kind ceilings, re-derived here to match what the loader enforces rather
+# than imposing one looser number. A reference may declare an enormous size;
+# refusing on the declaration is cheaper than discovering it after the read.
+MANIFEST_MAX_BYTES = 16 * 1024**2
+EXAMPLE_MAX_BYTES = 16 * 1024**2
+RECEIPT_MAX_BYTES = 1024**2
+EVIDENCE_MAX_BYTES = 16 * 1024**2
 SPLITS = ('train', 'development', 'confirmation')
 
 
@@ -43,7 +46,30 @@ def _sha256(path: Path):
     return hasher.hexdigest()
 
 
-def _bound(root: Path, reference, label, *, max_bytes=FILE_MAX_BYTES):
+def _contained(root: Path, name, label):
+    """Resolve a declared relative path inside the corpus root, or refuse it.
+
+    The loader applies three independent checks here: a canonical relative POSIX
+    path, no symlink anywhere in the chain below the root, and a resolved path
+    that stays inside the root. A second layer that omits them would bless bytes
+    from outside the tree it claims to be auditing, so all three are repeated.
+    """
+    try:
+        name = relative_path(name)
+    except ValueError as error:
+        raise CorpusAuditError('Non-canonical relative path: ' + label) from error
+    path = root / name
+    for part in [path, *path.parents]:
+        if part == root.parent:
+            break
+        _require(not part.is_symlink(), 'Symlinked corpus path: ' + label)
+    _require(path.is_file(), 'Not a regular file: ' + label)
+    _require(path.resolve(strict=True).is_relative_to(root),
+             'Corpus path escapes the root: ' + label)
+    return path
+
+
+def _bound(root: Path, reference, label, *, max_bytes):
     if (not isinstance(reference, dict) or set(reference) != {'path', 'identity'}
             or not isinstance(reference['identity'], dict)
             or set(reference['identity']) != {'sha256', 'size_bytes'}):
@@ -51,12 +77,33 @@ def _bound(root: Path, reference, label, *, max_bytes=FILE_MAX_BYTES):
     declared = reference['identity']['size_bytes']
     _require(type(declared) is int and 0 < declared <= max_bytes,
              'Declared size out of bounds: ' + label)
-    path = root / reference['path']
-    _require(path.is_file() and not path.is_symlink(), 'Not a regular file: ' + label)
+    path = _contained(root, reference['path'], label)
     _require(path.stat().st_size == declared, 'Size differs: ' + label)
     actual = {'sha256': _sha256(path), 'size_bytes': path.stat().st_size}
     _require(actual == reference['identity'], 'Identity differs: ' + label)
-    return load_json(path)
+    value = load_json(path)
+    # Rehash after decoding, as the loader does: hashing and parsing are two
+    # separate reads, and a file replaced between them would otherwise be parsed
+    # under a digest it no longer has.
+    after = {'sha256': _sha256(path), 'size_bytes': path.stat().st_size}
+    _require(after == actual, 'File changed while being read: ' + label)
+    return value
+
+
+def _identity(value, label):
+    if (not isinstance(value, dict) or set(value) != {'sha256', 'size_bytes'}
+            or not isinstance(value['sha256'], str)
+            or len(value['sha256']) != 64
+            or any(c not in '0123456789abcdef' for c in value['sha256'])
+            or type(value['size_bytes']) is not int or value['size_bytes'] < 0):
+        raise CorpusAuditError('Exact file identity required: ' + label)
+    return value
+
+
+def _nonempty_string(value, label):
+    if not isinstance(value, str) or not value.strip():
+        raise CorpusAuditError('Nonempty string required: ' + label)
+    return value
 
 
 def _supervised_targets(input_ids, labels):
@@ -76,12 +123,20 @@ def _supervised_targets(input_ids, labels):
 
 
 def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha256=None,
-                 expected_status=None, context_limit=None, output_reserve=0):
+                 expected_status=None, context_limit=None, output_reserve=0,
+                 max_total_bytes=1024**3):
     """Recompute a corpus's accounting, identities and invariants from disk."""
-    root = Path(root).resolve(strict=True)
-    manifest_path = root / 'corpus.json'
+    if type(max_total_bytes) is not int or max_total_bytes <= 0:
+        raise CorpusAuditError('Positive aggregate byte ceiling required')
+    original = Path(root)
+    _require(not original.is_symlink(), 'Corpus root must not be a symlink')
+    root = original.resolve(strict=True)
+    _require(root.is_dir(), 'Corpus root must be a directory')
+    manifest_path = _contained(root, 'corpus.json', 'corpus.json')
     manifest_identity = {'sha256': _sha256(manifest_path),
                          'size_bytes': manifest_path.stat().st_size}
+    _require(manifest_identity['size_bytes'] <= MANIFEST_MAX_BYTES,
+             'Corpus manifest exceeds its byte ceiling')
     _require(manifest_identity['sha256'] == expected_manifest_sha256,
              'Corpus manifest digest differs from the expected value')
     manifest = load_json(manifest_path)
@@ -104,9 +159,11 @@ def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha25
                  'Recomputed content identity differs from the expected value')
 
     assets = manifest['tokenizer_assets']
-    _require(set(assets) == {'chat_template.jinja', 'tokenizer.json',
-                             'tokenizer_config.json'},
+    _require(isinstance(assets, dict) and set(assets) == {
+        'chat_template.jinja', 'tokenizer.json', 'tokenizer_config.json'},
              'Unexpected tokenizer asset set')
+    for asset, value in assets.items():
+        _identity(value, 'tokenizer_assets/' + asset)
 
     records = manifest['examples']
     _require(isinstance(records, list) and records, 'Corpus has no examples')
@@ -116,7 +173,10 @@ def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha25
     vocab = pad = None
     input_total = supervised_total = bytes_total = 0
     for record in records:
-        _require(set(record) == EXAMPLE_FIELDS, 'Unexpected example fields')
+        _require(isinstance(record, dict) and set(record) == EXAMPLE_FIELDS,
+                 'Unexpected example fields')
+        for key in ('example_id', 'task_id', 'repository_group', 'leakage_group'):
+            _nonempty_string(record[key], 'example/' + key)
         name = record['example_id']
         _require(name not in seen_ids, 'Duplicate example identity: ' + str(name))
         seen_ids.add(name)
@@ -125,9 +185,16 @@ def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha25
             path = record[key]['path']
             _require(path not in seen_files, 'Example files alias: ' + path)
             seen_files.add(path)
+            _identity(record[key]['identity'], name + '/' + key)
             bytes_total += record[key]['identity']['size_bytes']
-        candidate = _bound(root, record['tokens'], name + '/tokens')
-        audit = _bound(root, record['audit'], name + '/audit')
+            _require(bytes_total <= max_total_bytes,
+                     'Corpus exceeds its aggregate byte ceiling')
+        candidate = _bound(root, record['tokens'], name + '/tokens',
+                           max_bytes=EXAMPLE_MAX_BYTES)
+        audit = _bound(root, record['audit'], name + '/audit',
+                       max_bytes=EXAMPLE_MAX_BYTES)
+        _require(candidate.get('schema_version') == 1,
+                 'Unsupported token candidate schema: ' + name)
         _require(candidate.get('training_approved') is False,
                  'Token candidate claims training approval: ' + name)
         _require(audit.get('truncated') is False, 'Audit does not deny truncation: ' + name)
@@ -135,6 +202,7 @@ def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha25
         _require(audit.get('token_candidate') == record['tokens']['identity'],
                  'Audit does not bind this token candidate: ' + name)
         for key in ('history', 'tools'):
+            _identity(candidate.get(key), name + '/' + key)
             _require(candidate.get(key) == audit.get(key),
                      'Token and audit ' + key + ' lineage differ: ' + name)
         if vocab is None:
@@ -187,23 +255,40 @@ def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha25
             _require(status == 'quarantine', 'Admitted corpus has an unresolved gate: ' + gate)
             gates[gate] = {'resolved': False}
             continue
-        receipt = _bound(root, reference, 'admission/' + gate)
+        receipt = _bound(root, reference, 'admission/' + gate,
+                         max_bytes=RECEIPT_MAX_BYTES)
         _require(receipt.get('gate') == gate, 'Receipt names a different gate: ' + gate)
         _require(receipt.get('status') == 'passed', 'Receipt is not passed: ' + gate)
         _require(receipt.get('corpus_content_sha256') == content_identity,
                  'Receipt binds a different corpus content identity: ' + gate)
+        # A receipt may record the quarantine manifest its documents were
+        # reviewed against. When present, every document that declares a corpus
+        # must declare that same one, which is the binding promotion checked and
+        # which is otherwise unverifiable from the admitted tree alone.
+        reviewed = receipt.get('reviewed_against_manifest')
+        if reviewed is not None:
+            _identity(reviewed, 'admission/' + gate + '/reviewed_against_manifest')
         primary = receipt.get('evidence')
         _require(isinstance(primary, list) and primary, 'Receipt has no evidence: ' + gate)
         support = receipt.get('supporting_evidence', [])
         _require(isinstance(support, list), 'Invalid supporting evidence list: ' + gate)
         documents = []
         for index, entry in enumerate(primary):
-            documents.append(_bound(root, entry, f'admission/{gate}/evidence/{index}'))
+            label = f'admission/{gate}/evidence/{index}'
+            document = _bound(root, entry, label, max_bytes=EVIDENCE_MAX_BYTES)
+            if reviewed is not None and isinstance(document, dict):
+                for key in ('corpus', 'corpus_manifest'):
+                    if key in document:
+                        _require(document[key] == reviewed,
+                                 'Evidence names a corpus other than the one the '
+                                 'receipt was reviewed against: ' + label)
+            documents.append(document)
         for index, entry in enumerate(support):
-            _bound(root, entry, f'admission/{gate}/support/{index}')
+            _bound(root, entry, f'admission/{gate}/support/{index}',
+                   max_bytes=EVIDENCE_MAX_BYTES)
         if gate == 'task_alignment':
             expected = {(row['task_id'], row['repository_group']) for row in rows}
-            reviewed = set()
+            covered = set()
             for document in documents:
                 _require(document.get('schema_version') == 1,
                          'Task alignment evidence is not version 1')
@@ -219,11 +304,12 @@ def audit_corpus(root: Path, *, expected_manifest_sha256, expected_content_sha25
                              'Task review has no rationale')
                     key = (review['task_id'], review['repository_group'])
                     _require(key in expected, 'Task review names a foreign task')
-                    _require(key not in reviewed, 'Duplicate task review')
-                    reviewed.add(key)
-            _require(reviewed == expected, 'Task alignment review coverage is incomplete')
+                    _require(key not in covered, 'Duplicate task review')
+                    covered.add(key)
+            _require(covered == expected, 'Task alignment review coverage is incomplete')
         gates[gate] = {'resolved': True, 'evidence_documents': len(primary),
-                       'supporting_documents': len(support)}
+                       'supporting_documents': len(support),
+                       'reviewed_against_manifest': reviewed}
 
     final = {'sha256': _sha256(manifest_path), 'size_bytes': manifest_path.stat().st_size}
     _require(final == manifest_identity, 'Corpus manifest changed during the audit')
@@ -272,7 +358,29 @@ def compare_with_loader(audit, loader_summary):
 
 
 def verify_schedule_coverage(audit, schedule):
-    """Check a schedule against the audited corpus without reusing its iterator."""
+    """Check a schedule against the audited corpus without reusing its iterator.
+
+    The schedule's own identity is re-derived first. A schedule whose stored
+    `schedule_sha256` does not match its contents cannot be executed — the
+    iterator refuses it — so attesting its coverage would be attesting coverage
+    for something that will never run.
+    """
+    from .training_schedule import make_schedule
+
+    keys = {'schema_version', 'corpus_content_sha256', 'seed',
+            'target_supervised_tokens', 'max_epochs',
+            'max_update_supervised_tokens', 'examples', 'schedule_sha256'}
+    _require(isinstance(schedule, dict) and set(schedule) == keys,
+             'Schedule field set differs from the contract')
+    _require(schedule['schema_version'] == 1, 'Unsupported schedule schema')
+    try:
+        rebuilt = make_schedule(schedule['examples'], **{
+            key: schedule[key] for key in
+            ('corpus_content_sha256', 'seed', 'target_supervised_tokens',
+             'max_epochs', 'max_update_supervised_tokens')})
+    except ValueError as error:
+        raise CorpusAuditError('Schedule is not reproducible: ' + str(error)) from error
+    _require(rebuilt == schedule, 'Schedule identity does not match its contents')
     _require(schedule.get('corpus_content_sha256') == audit['corpus_content_sha256'],
              'Schedule belongs to another corpus')
     training = {row['example_id']: row for row in audit['examples_detail']
