@@ -13823,3 +13823,44 @@ zero skips" alone would send a reader to an error they could not interpret.
 
 Local suite 932 passed, zero skips on the full stack; 932 collected with 67 skips
 on the standard library alone.
+
+## A content-addressed store throttling itself
+
+The evidence shipment failed twice. The first failure said only
+`S3UploadFailedError`, which named a class and nothing else - not the key, not
+the service error, not whether a retry could help - so the only way to learn
+more was to re-run 6,725 packages blind. Every other CLI here prints
+`{type}: {error}`; this one was the outlier, and fixing it was the whole
+diagnosis. The second failure said what it was: `ClientError
+(ServiceUnavailable)` on GetObject, *"Reduce your rate of simultaneous reads on
+the same object."*
+
+That is not R2 being unreliable. `ArtifactStore.publish` reads back every file of
+every bundle, and content addressing means a file shared by N bundles is one key.
+Evidence trees share files heavily - the same wheels and receipts recur across
+dozens of snapshot directories - so six or eight workers issue that many
+simultaneous GETs on one object. Any worker count above one reproduces it, which
+is why both runs died at comparable depth (5,659 and about 4,900 of 6,725) rather
+than at a particular package.
+
+Two fixes, because either alone leaves the hazard. The client moved from
+botocore's `standard` retry mode with three attempts to `adaptive` with eight:
+standard mode does retry a 503, but it applies no client-side rate limit, which
+is exactly what the service asked for. The connection description records the
+policy, and a test reaches through the wrapper's private client to confirm the
+client really has what the receipt claims - a receipt asserting a retry policy
+the client does not have is worse than no assertion.
+
+The second fix addresses the cause. `ArtifactStore` gained
+`verify_once_per_run`, **off by default**: with it on, a key already read back
+and verified in this store's lifetime is not read again. It is sound only because
+the keys are content-addressed and immutable and the caller holds an exclusive
+lock on the prefix. It also genuinely narrows what a publish establishes - a
+later bundle's result rests on an earlier read in the same run rather than on its
+own - so the caller must ask for it, the shipment CLI records it in the receipt,
+and the receipt's scope line states the narrowing rather than leaving a reader to
+infer it. A read with a target is never skipped, or a restore would silently omit
+a file the manifest promises, and a digest that failed is never recorded clean.
+
+Local suite 941 passed, zero skips on the full stack; 941 collected with 70 skips
+on the standard library alone.

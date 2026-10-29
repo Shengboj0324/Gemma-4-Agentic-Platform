@@ -7,8 +7,8 @@ Corpus072 is now **training-admitted**, its bytes live in R2 rather than on the
 development machine, and the real worker's own `preflight_corpus_run` accepts it.
 A screened public task pool supplies 2,966 tasks across 507 repositories and 439
 owners with a 445-task repository- and owner-disjoint confirmation cohort. The
-local suite is 932 tests with zero skips on the full dependency stack, and 932
-collected and passing with 67 skips on the standard library alone. The rows marked *(superseded October
+local suite is 941 tests with zero skips on the full dependency stack, and 941
+collected and passing with 70 skips on the standard library alone. The rows marked *(superseded October
 29)* below are kept for history; see
 [the training unblock and data-scale cycle](42-training-unblock-and-data-scale.md)
 for what replaced them, what it does not establish, and the measurement work
@@ -32,7 +32,7 @@ time. Historical successes apply only to their recorded inputs and scope.
 
 | Area | Verified result | Limit |
 |---|---|---|
-| Local regression | **932 tests passed** in 26.615 seconds, Torch enabled, zero skips, October 29; the same 932 collect and pass with 67 skips on a stdlib-only Python 3.13.7, and 3.11 or newer is required. The previous [671-test run](../evidence/data/lenskit312-contract-policy-001/local-full-suite.log) is retained as history. | Finite CPU and reduced-model checks do not establish full-model GPU correctness. **The development interpreter has torch 2.14.1, not the worker's pinned 2.10.0, and no `compressed-tensors` at all**, so the Torch-dependent checks passed on a different Torch than the training stack. `scripts/verify_training_runtime.py` exits nonzero on this machine and names both mismatches. |
+| Local regression | **941 tests passed** in 31.534 seconds, Torch enabled, zero skips, October 29; the same 941 collect and pass with 70 skips on a stdlib-only Python 3.13.7, and 3.11 or newer is required. The previous [671-test run](../evidence/data/lenskit312-contract-policy-001/local-full-suite.log) is retained as history. | Finite CPU and reduced-model checks do not establish full-model GPU correctness. **The development interpreter has torch 2.14.1, not the worker's pinned 2.10.0, and no `compressed-tensors` at all**, so the Torch-dependent checks passed on a different Torch than the training stack. `scripts/verify_training_runtime.py` exits nonzero on this machine and names both mismatches. |
 | R2 training readiness | [One command proves it from the bucket alone](../evidence/data/corpus072-admission-001/r2-training-readiness.json): corpus restored and double-verified, the loader offering exactly the audited training set, all three tokenizer assets fetched by content digest, **all 8 model files present (23,297,590,856 bytes, including the 21.7 GiB quantized checkpoint)**, the schedule regenerated to `4664ecf6…`, and the real worker's `preflight_corpus_run` passing. | The data path is complete and self-consistent from the bucket. Not rights clearance, not host capability, not model fit, and no claim about learned performance. The model check is presence-and-size from remote metadata; the 21.7 GiB checkpoint is not re-hashed. |
 | Evidence completeness in R2 | A content-coverage audit found 15,426 local files (~1.03 GiB) whose bytes had no counterpart in the bucket; `scripts/ship_evidence_to_r2.py` publishes each evidence package under its own content-addressed manifest with an index. Credential paths, symlinks and oversized packages are refused whole; `.git`, caches and virtual environments are skipped. | Content presence, not a durability or access-control guarantee. A covered digest means the bytes are in the bucket, not that a manifest references them. |
 | Frozen confirmation cohort | [445 tasks across 105 owners reserved](../evidence/data/confirmation-cohort-freeze-001/receipt.json) under freeze identity `e5b7cf7a…`, bound to the dataset revision, metadata identity, exposure-ledger identity and selection seed taken from the pool's own report. Owners are reserved with their tasks, and freezing refuses an owner spanning a reserved and a training cohort. [The gate](../evidence/data/confirmation-cohort-freeze-001/gate-refusal-receipt.json) caught one reserved task hidden among 200 training candidates and exits 1; a wrong pinned freeze digest exits 4 as `freeze_unusable`. | Establishes that these tasks were reserved **before** any optimisation, which is what makes a later comparison meaningful. Does **not** establish they are unseen: forks, backports, vendored copies and pretraining exposure are undetected, and the exposure ledger used records itself as incomplete. |
@@ -903,9 +903,9 @@ refuses to forecast without one.
 What this does **not** establish: rights clearance on either corpus, the truth of
 any reviewer's conclusion, that the remaining pool is unseen, that peak memory at
 the corpus's longest example (24,366 input tokens) fits an 80 GB card, or any
-learned improvement. The local suite is 932 tests, zero skips, Torch enabled,
-26.615 seconds on the full stack; on a stdlib-only Python 3.13.7 it collects the
-same 932 and passes with 67 skips. Python 3.11 or newer is required: macOS's
+learned improvement. The local suite is 941 tests, zero skips, Torch enabled,
+31.534 seconds on the full stack; on a stdlib-only Python 3.13.7 it collects the
+same 941 and passes with 70 skips. Python 3.11 or newer is required: macOS's
 /usr/bin/python3 is 3.9 and cannot import `zenithsync.contracts` at all. No GPU training ran and no Runpod resource was created, started,
 stopped or modified. Full detail, including the refused OpenHands translation
 rules and the remaining work in order, is in
