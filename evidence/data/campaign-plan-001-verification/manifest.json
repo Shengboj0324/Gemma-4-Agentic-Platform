@@ -1,1 +1,1 @@
-{"files":[{"path":"report.json","sha256":"17b90314c08f46c3ea8f4fe797573dee704c21d8eace9b34132dc90308f8c677","size_bytes":11217}],"kind":"candidate","revision":"002","schema_version":1,"source":"campaign-plan-001"}
+{"files":[{"path":"distribution.json","sha256":"241e2979d4de9b578c5f700febd9c4bb3ade1225e28e319ff5558fecb7752205","size_bytes":7006},{"path":"report.json","sha256":"c71aa5394e98850aaf1e63b62141772d376f5937ec259d85cdbb8fe4c125d7a3","size_bytes":12348}],"kind":"candidate","revision":"003","schema_version":1,"source":"campaign-plan-001"}

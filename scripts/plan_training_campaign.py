@@ -22,7 +22,9 @@ from zenithsync.campaign_plan import (account_tokens, diversity_limits,
 from zenithsync.corpus_audit import audit_corpus
 
 SOURCES = ['scripts/plan_training_campaign.py', 'zenithsync/campaign_plan.py',
-           'zenithsync/corpus_audit.py', 'zenithsync/artifacts.py',
+           'zenithsync/corpus_audit.py', 'zenithsync/training_corpus.py',
+           'zenithsync/training_schedule.py', 'zenithsync/training_batch.py',
+           'zenithsync/splits.py', 'zenithsync/artifacts.py',
            'zenithsync/contracts.py']
 
 
@@ -78,8 +80,38 @@ def main():
     args = parser.parse_args()
     if args.candidates <= 0:
         parser.error('At least one candidate run is required')
-    args.output.mkdir(parents=True, exist_ok=False)
+    if args.target_tokens <= 0:
+        parser.error('--target-tokens must be a positive integer')
+    if args.max_epochs <= 0:
+        parser.error('--max-epochs must be a positive integer')
+    if args.batch_width_tokens is not None and args.batch_width_tokens <= 0:
+        parser.error('--batch-width-tokens must be a positive integer')
+    if not (args.corpus / 'corpus.json').is_file():
+        parser.error('--corpus does not contain a readable corpus.json')
+    # A forecast needs all three inputs. Accepting a price with no measured rate
+    # would silently discard the price and emit a plan with no forecast at all.
+    cost_inputs = {'--measured-tokens-per-second': args.measured_tokens_per_second,
+                   '--measurement-evidence': args.measurement_evidence,
+                   '--hourly-usd': args.hourly_usd}
+    supplied = [name for name, value in cost_inputs.items() if value is not None]
+    if supplied and len(supplied) != len(cost_inputs):
+        missing = sorted(set(cost_inputs) - set(supplied))
+        parser.error('A forecast needs all of ' + ', '.join(sorted(cost_inputs))
+                     + '; missing ' + ', '.join(missing))
+    if not supplied:
+        for name, value in (('--overhead-seconds', args.overhead_seconds),
+                            ('--storage-gib', args.storage_gib),
+                            ('--storage-usd-per-gib-month',
+                             args.storage_usd_per_gib_month),
+                            ('--storage-hours', args.storage_hours)):
+            if value:
+                parser.error(name + ' only affects a forecast, which needs '
+                             '--measured-tokens-per-second, '
+                             '--measurement-evidence and --hourly-usd')
+    if args.output.exists() or args.output.is_symlink():
+        parser.error('--output already exists')
     sources = {name: file_record(ROOT / name) for name in SOURCES}
+    args.output.mkdir(parents=True, exist_ok=False)
 
     audit = audit_corpus(args.corpus, expected_manifest_sha256=args.corpus_sha256)
     selected = [row for row in audit['examples_detail']
@@ -92,17 +124,12 @@ def main():
     diversity = diversity_limits(selected, basis=args.basis,
                                  maximum_share=args.max_group_share)
     padding = (padding_overhead(selected, batch_width_tokens=args.batch_width_tokens)
-               if args.batch_width_tokens else None)
+               if args.batch_width_tokens is not None else None)
     mixture = mixture_plan(args.mixture, total_tokens=args.target_tokens) \
         if args.mixture else None
 
     forecast = forecast_reason = None
     if args.measured_tokens_per_second is not None:
-        missing = [name for name, value in
-                   [('--measurement-evidence', args.measurement_evidence),
-                    ('--hourly-usd', args.hourly_usd)] if value is None]
-        if missing:
-            parser.error('A forecast also requires ' + ', '.join(missing))
         forecast = forecast_campaign(
             processed_input_tokens=accounting['approximate_processed_input_tokens'],
             measured_tokens_per_second=args.measured_tokens_per_second,
@@ -121,6 +148,8 @@ def main():
     if sources != {name: file_record(ROOT / name) for name in SOURCES}:
         raise RuntimeError('Implementation changed during planning')
     report = {'schema_version': 1, 'status': 'campaign_plan_only',
+              'policy_satisfied': (accounting['feasible_within_max_epochs']
+                                   and diversity['policy_satisfied']),
               'timestamp_utc': datetime.now(timezone.utc).isoformat(),
               'sources': sources,
               'corpus': {key: value for key, value in audit.items()
@@ -134,9 +163,17 @@ def main():
               'scope': 'Exposure, diversity and cost arithmetic over this exact corpus. '
                        'It does not establish data sufficiency, learned improvement or '
                        'provider capacity, and it does not stop cloud billing.'}
+    # Sidecar first, then bind it, so an edited sidecar contradicts the report.
+    distribution_path = args.output / 'distribution.json'
+    distribution_path.write_bytes(canonical_json(diversity['distribution']))
+    report['distribution_file'] = file_record(distribution_path)
     (args.output / 'report.json').write_bytes(canonical_json(report))
-    (args.output / 'distribution.json').write_bytes(canonical_json(diversity['distribution']))
+    # A plan whose target is infeasible, or whose concentration breaks the
+    # declared cap, must be visible to a calling script, not only in the JSON.
+    policy_satisfied = (accounting['feasible_within_max_epochs']
+                        and diversity['policy_satisfied'])
     print({'examples': len(selected),
+           'policy_satisfied': policy_satisfied,
            'unique_supervised_tokens': accounting['unique_supervised_tokens'],
            'unique_input_tokens': accounting['unique_input_tokens'],
            'target_tokens': args.target_tokens, 'basis': args.basis,
@@ -152,7 +189,15 @@ def main():
                                      'all_candidates_usd':
                                          forecast['all_candidates_compute_usd']
                                          + forecast['storage_usd']}})
+    raise SystemExit(0 if policy_satisfied else 1)
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as error:
+        print(f'Campaign planning failed ({type(error).__name__}: {error}); '
+              'no report written.', file=sys.stderr)
+        raise SystemExit(1)

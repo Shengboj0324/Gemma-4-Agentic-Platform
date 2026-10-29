@@ -11,6 +11,7 @@ selection record, not rights clearance and not training approval.
 import argparse
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,8 +24,16 @@ SOURCES = ['scripts/build_task_pool.py', 'zenithsync/task_pool.py',
            'zenithsync/artifacts.py', 'zenithsync/contracts.py']
 
 
-def read_jsonl(path: Path, *, max_bytes, max_rows):
+def read_jsonl(path: Path, *, expected_sha256, max_bytes, max_rows):
+    """Read a pinned JSON-lines file, enforcing the digest on the parsed bytes.
+
+    Hashing once and parsing from a second read would leave the pin unenforced
+    on what was actually parsed, so the identity is taken before and rechecked
+    after.
+    """
     identity = file_record(path)
+    if identity['sha256'] != expected_sha256:
+        raise ValueError('Metadata file identity differs from the expected digest')
     if identity['size_bytes'] > max_bytes:
         raise ValueError('Metadata file exceeds the explicit byte ceiling')
     rows = []
@@ -44,14 +53,30 @@ def read_jsonl(path: Path, *, max_bytes, max_rows):
     return rows, identity
 
 
-def exposure_exclusions(path: Path):
-    """Read this project's recorded development exposure ledger."""
+def exposure_exclusions(path: Path, *, expected_sha256, max_bytes=64 * 1024**2):
+    """Read this project's recorded development-exposure ledger, pinned.
+
+    The exclusion list is the single thing that makes a selected pool arguably
+    unseen, so it is the last input that should go unpinned. A stale or
+    truncated ledger excludes fewer repositories and the run still succeeds,
+    which is exactly the failure a digest prevents.
+    """
+    identity = file_record(path)
+    if identity['sha256'] != expected_sha256:
+        raise ValueError('Exposure ledger identity differs from the expected digest')
+    if identity['size_bytes'] > max_bytes:
+        raise ValueError('Exposure ledger exceeds the explicit byte ceiling')
     document = load_json(path)
+    if file_record(path) != identity:
+        raise ValueError('Exposure ledger changed while reading')
     repositories = sorted(document.get('repository_evidence', {}))
-    instances = sorted(document.get('task_evidence', {})
-                       or document.get('task_identifiers', []) or [])
-    return repositories, instances, file_record(path), \
-        bool(document.get('complete_exposure_ledger'))
+    instances = sorted(document.get('task_evidence', {}) or [])
+    return {'repositories': repositories, 'instances': instances,
+            'identity': identity,
+            # These are what make the ledger a lower bound rather than a census.
+            'complete_exposure_ledger': bool(document.get('complete_exposure_ledger')),
+            'receipt_files_read': document.get('receipt_files_read'),
+            'skipped_receipts': document.get('skipped_receipts')}
 
 
 def cohort(text):
@@ -88,6 +113,9 @@ def main():
                         help='Additional licence label to allow; repeatable')
     parser.add_argument('--exposure-ledger', type=Path,
                         help='Recorded development-exposure ledger to exclude')
+    parser.add_argument('--exposure-ledger-sha256',
+                        help='Expected digest of the exposure ledger; required '
+                             'with --exposure-ledger')
     parser.add_argument('--exclude-repository', action='append', default=[])
     parser.add_argument('--exclude-owner', action='append', default=[])
     parser.add_argument('--exclude-instance', action='append', default=[])
@@ -107,31 +135,66 @@ def main():
     parser.add_argument('--max-rows', type=int, default=1000000)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    args.output.mkdir(parents=True, exist_ok=False)
+    # Validate every argument, including cohort mode consistency, before the
+    # output directory is created or 32k rows are screened.
+    if args.seed < 0:
+        parser.error('--seed must be a nonnegative integer')
+    if args.target_tasks <= 0:
+        parser.error('--target-tasks must be a positive integer')
+    if args.max_per_repository <= 0:
+        parser.error('--max-per-repository must be a positive integer')
+    if args.max_bytes <= 0 or args.max_rows <= 0:
+        parser.error('--max-bytes and --max-rows must be positive integers')
+    if (args.exposure_ledger is None) != (args.exposure_ledger_sha256 is None):
+        parser.error('--exposure-ledger and --exposure-ledger-sha256 must be '
+                     'given together')
+    if args.cohort:
+        if len(args.cohort) < 2:
+            parser.error('--cohort needs at least two cohorts')
+        modes = {'share' if 'share' in row else 'tasks' for row in args.cohort}
+        if len(modes) != 1:
+            parser.error('Declare every --cohort by share or every one by count')
+        names = [row['name'] for row in args.cohort]
+        if len(set(names)) != len(names):
+            parser.error('--cohort names must be unique')
+        if modes == {'share'} and sum(row['share'] for row in args.cohort) != 1:
+            parser.error('--cohort shares must sum to exactly one')
+    if not args.metadata.is_file():
+        parser.error('--metadata is not a readable file')
+    if args.output.exists() or args.output.is_symlink():
+        parser.error('--output already exists')
     sources = {name: file_record(ROOT / name) for name in SOURCES}
 
-    identity = file_record(args.metadata)
-    if identity['sha256'] != args.metadata_sha256:
-        raise ValueError('Metadata file identity differs from the expected digest')
-    rows, identity = read_jsonl(args.metadata, max_bytes=args.max_bytes,
-                                max_rows=args.max_rows)
+    rows, identity = read_jsonl(args.metadata,
+                                expected_sha256=args.metadata_sha256,
+                                max_bytes=args.max_bytes, max_rows=args.max_rows)
 
     repositories = list(args.exclude_repository)
     instances = list(args.exclude_instance)
     exposure = None
     if args.exposure_ledger is not None:
-        ledger_repositories, ledger_instances, ledger_identity, complete = \
-            exposure_exclusions(args.exposure_ledger)
-        repositories.extend(ledger_repositories)
-        instances.extend(ledger_instances)
-        exposure = {'ledger': ledger_identity,
-                    'repositories_excluded': len(ledger_repositories),
-                    'instances_excluded': len(ledger_instances),
-                    'complete_exposure_ledger': complete,
+        ledger = exposure_exclusions(
+            args.exposure_ledger, expected_sha256=args.exposure_ledger_sha256)
+        repositories.extend(ledger['repositories'])
+        instances.extend(ledger['instances'])
+        exposure = {'ledger': ledger['identity'],
+                    'repositories_excluded': len(ledger['repositories']),
+                    'instances_excluded': len(ledger['instances']),
+                    'complete_exposure_ledger': ledger['complete_exposure_ledger'],
+                    'receipt_files_read': ledger['receipt_files_read'],
+                    'skipped_receipts': ledger['skipped_receipts'],
                     'limitation': 'A lower bound on exposure. Forks, backports, '
                                   'vendored copies and pretraining exposure are not '
                                   'covered.'}
+    args.output.mkdir(parents=True, exist_ok=False)
+    try:
+        _build(args, sources, rows, identity, repositories, instances, exposure)
+    except BaseException:
+        shutil.rmtree(args.output, ignore_errors=True)
+        raise
 
+
+def _build(args, sources, rows, identity, repositories, instances, exposure):
     allowed = set(PERMISSIVE_LICENSES) | {name.casefold() for name in args.allow_license}
     screened = screen_task_pool(
         rows, dataset=args.dataset, revision=args.revision,
@@ -152,6 +215,14 @@ def main():
     report = {'schema_version': 1, 'status': 'task_pool_screened_and_selected',
               'timestamp_utc': datetime.now(timezone.utc).isoformat(),
               'sources': sources, 'metadata_file': identity,
+              # Recorded so the screening is reproducible: merged counts alone
+              # make a CLI-supplied exclusion unrecoverable.
+              'command_line_exclusions': {
+                  'repositories': sorted(args.exclude_repository),
+                  'owners': sorted(args.exclude_owner),
+                  'instances': sorted(args.exclude_instance)},
+              'byte_policy': {'max_bytes': args.max_bytes,
+                              'max_rows': args.max_rows},
               'screening': {key: value for key, value in screened.items()
                             if key not in ('eligible_tasks', 'refused_tasks')},
               'selection': {key: value for key, value in selection.items()
@@ -162,13 +233,23 @@ def main():
               'scope': 'Metadata eligibility, reproducible selection and declared '
                        'disjoint cohorts. No rights clearance, no replay verification, '
                        'no training approval, and not an unseen-data guarantee.'}
-    (args.output / 'report.json').write_bytes(canonical_json(report))
-    (args.output / 'eligible.json').write_bytes(canonical_json(screened['eligible_tasks']))
-    (args.output / 'refused.json').write_bytes(canonical_json(screened['refused_tasks']))
-    (args.output / 'selection.json').write_bytes(canonical_json(selection['selection']))
+    # Sidecars first, then bound into the report; a report that cannot
+    # contradict an edited sidecar is not evidence about that sidecar.
+    sidecars = {'eligible.json': screened['eligible_tasks'],
+                'refused.json': screened['refused_tasks'],
+                'selection.json': selection['selection']}
     if cohorts is not None:
-        (args.output / 'cohorts.json').write_bytes(canonical_json(cohorts))
-    print({'rows': screened['rows'], 'eligible': screened['accepted'],
+        sidecars['cohorts.json'] = cohorts
+    written = {}
+    for name, payload in sidecars.items():
+        path = args.output / name
+        path.write_bytes(canonical_json(payload))
+        written[name] = file_record(path)
+    report['sidecar_files'] = written
+    (args.output / 'report.json').write_bytes(canonical_json(report))
+    # A shortfall against the target must be visible to a calling script.
+    print({'target_met': selection['target_met'],
+           'rows': screened['rows'], 'eligible': screened['accepted'],
            'refused': screened['refused'],
            'acceptance_rate': round(screened['acceptance_rate'], 4),
            'eligible_repositories': screened['distinct_repositories'],
@@ -181,7 +262,15 @@ def main():
            'shortfall': selection['shortfall'],
            'cohorts': cohorts and [(c['name'], c['tasks'], c['repositories'])
                                    for c in cohorts['cohorts']]})
+    raise SystemExit(0 if selection['target_met'] else 1)
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as error:
+        print(f'Task pool construction failed ({type(error).__name__}: {error}); '
+              'no report written.', file=sys.stderr)
+        raise SystemExit(1)

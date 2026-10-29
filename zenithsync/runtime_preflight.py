@@ -45,15 +45,24 @@ def check_platform(system, python_version):
             'problems': problems, 'satisfied': not problems}
 
 
-def check_packages(installed):
+def check_packages(installed, *, imported=None):
     """Compare installed versions against the pins, ignoring local build tags.
 
     `installed` maps distribution name to version string, with `None` for an
     absent distribution. A local version segment after `+` is stripped before
     comparison, matching what the worker does.
+
+    `installed` comes from distribution metadata, which is not the same thing as
+    the module that will actually import: a stale `*.dist-info` earlier on the
+    path wins. `imported` optionally supplies the version a module reports about
+    itself, and a disagreement is a problem rather than a silent mismatch. The
+    worker reads the same metadata, so this does not create preflight drift — it
+    reveals that the pin claim is about metadata, not about the running code.
     """
     if not isinstance(installed, dict):
         raise ValueError('Installed package mapping required')
+    if imported is not None and not isinstance(imported, dict):
+        raise ValueError('Imported version mapping must be a dict')
     rows, problems = [], []
     for name, pin in sorted(REQUIRED_PACKAGES.items()):
         found = installed.get(name)
@@ -68,8 +77,16 @@ def check_packages(installed):
         satisfied = base == pin
         if not satisfied:
             problems.append(f'{name} is {found}, worker requires {pin}')
-        rows.append({'name': name, 'required': pin, 'found': found,
-                     'compared': base, 'satisfied': satisfied})
+        row = {'name': name, 'required': pin, 'found': found,
+               'compared': base, 'satisfied': satisfied}
+        if imported is not None and name in imported:
+            reported = imported[name]
+            row['imported'] = reported
+            if reported is not None and str(reported).split('+')[0] != base:
+                problems.append(f'{name} metadata says {found} but the imported '
+                                f'module reports {reported}')
+                row['satisfied'] = False
+        rows.append(row)
     extra = sorted(set(installed) - set(REQUIRED_PACKAGES))
     return {'packages': rows, 'unpinned_packages_reported': extra,
             'problems': problems, 'satisfied': not problems}
@@ -118,55 +135,98 @@ def check_sequence_capacity(longest_input_tokens, max_sequence_tokens):
 
 
 def device_report():
-    """Read the actual device state. Import-time failure is itself a finding."""
+    """Read the actual device state, returning a finding rather than raising.
+
+    Every read here can fail on a real host — a driver mismatch, an ECC-disabled
+    card, `CUDA error: unknown error` — and a check that raises produces no
+    receipt at all, which is worse than a failing one. So all of them are
+    guarded and reported.
+    """
+    import os
     import subprocess
     try:
         import torch
     except ImportError as error:
         return {'available': False, 'reason': 'torch_import_failed',
                 'detail': str(error)}
-    if not torch.cuda.is_available():
-        return {'available': False, 'reason': 'cuda_unavailable'}
-    count = torch.cuda.device_count()
-    if count != 1:
-        return {'available': False, 'reason': 'device_count_is_not_one',
-                'device_count': count}
-    free, total = torch.cuda.mem_get_info()
-    report = {'available': True, 'device_count': count,
-              'device_name': torch.cuda.get_device_name(0),
-              'capability': list(torch.cuda.get_device_capability(0)),
-              'free_bytes': int(free), 'total_bytes': int(total)}
-    # The worker refuses to share a device. Finding another process here is
-    # cheaper than finding it after the base weights are allocated.
+    try:
+        if not torch.cuda.is_available():
+            return {'available': False, 'reason': 'cuda_unavailable'}
+        count = torch.cuda.device_count()
+        if count != 1:
+            return {'available': False, 'reason': 'device_count_is_not_one',
+                    'device_count': count}
+        free, total = torch.cuda.mem_get_info()
+        report = {'available': True, 'device_count': count,
+                  'device_name': torch.cuda.get_device_name(0),
+                  'capability': list(torch.cuda.get_device_capability(0)),
+                  'free_bytes': int(free), 'total_bytes': int(total),
+                  'torch_version': str(torch.__version__),
+                  'torch_file': getattr(torch, '__file__', None)}
+    except Exception as error:
+        return {'available': False, 'reason': 'cuda_query_failed',
+                'detail': f'{type(error).__name__}: {error}'}
+    # The worker refuses to share a device, and it makes the same nvidia-smi
+    # query with check=True. A query that cannot run is therefore a failure
+    # here: the worker would die on it after the pod is already billing.
+    report.update(exclusivity_query='nvidia-smi --query-compute-apps=pid')
     try:
         result = subprocess.run(
             ['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader,nounits'],
             check=True, capture_output=True, text=True, timeout=10)
-        pids = [line.strip() for line in result.stdout.splitlines() if line.strip()]
-        report['other_compute_processes'] = pids
-        report['device_exclusive'] = not pids
     except (OSError, subprocess.SubprocessError) as error:
         report['other_compute_processes'] = None
-        report['device_exclusive'] = None
-        report['exclusivity_unknown_because'] = type(error).__name__
+        report['device_exclusive'] = False
+        report['exclusivity_query_failed'] = type(error).__name__
+        return report
+    pids = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    # Reading free memory above initialises CUDA and creates a context, so this
+    # process appears in its own query. The worker excludes its own PID the same
+    # way; counting it would fail a healthy exclusive host.
+    own = str(os.getpid())
+    foreign = [pid for pid in pids if pid != own]
+    report['compute_processes'] = pids
+    report['own_pid'] = own
+    report['other_compute_processes'] = foreign
+    report['device_exclusive'] = not foreign
     return report
 
 
-def summarise(checks):
-    """Collapse named check results into one verdict with every problem kept."""
+def summarise(checks, *, device_checked=True):
+    """Collapse named check results into one verdict with every problem kept.
+
+    A check's own `satisfied` flag is honoured as well as its problem list, so a
+    future check cannot pass by forgetting to describe why it failed.
+
+    `device_checked=False` records that the device was not examined and gives the
+    run its own status, so a host check that skipped the GPU can never be read
+    as a full pass.
+    """
     if not isinstance(checks, dict) or not checks:
         raise ValueError('Nonempty named check results required')
+    if type(device_checked) is not bool:
+        raise ValueError('device_checked must be boolean')
     problems = {}
     for name, result in checks.items():
         if not isinstance(result, dict) or 'problems' not in result:
             raise ValueError('Each check must report a problems list: ' + str(name))
-        if result['problems']:
+        if result.get('satisfied') is False and not result['problems']:
+            problems[name] = ['check reported unsatisfied without a stated problem']
+        elif result['problems']:
             problems[name] = result['problems']
-    return {'schema_version': 1,
-            'status': 'runtime_preflight_passed' if not problems
-                      else 'runtime_preflight_failed',
+    if problems:
+        status = 'runtime_preflight_failed'
+    elif device_checked:
+        status = 'runtime_preflight_passed'
+    else:
+        status = 'runtime_preflight_passed_without_device_checks'
+    return {'schema_version': 1, 'status': status,
             'checks': checks, 'failed_checks': sorted(problems),
             'problems': problems, 'satisfied': not problems,
+            'device_checked': device_checked,
+            'required_free_device_bytes': REQUIRED_FREE_DEVICE_BYTES,
             'scope': "The worker's declared preconditions only. Not peak memory at "
                      'full sequence length, not throughput, not checkpoint '
-                     'durability, and not a cost or duration estimate.'}
+                     'durability, and not a cost or duration estimate.'
+                     + ('' if device_checked else
+                        ' The device was not examined in this run.')}

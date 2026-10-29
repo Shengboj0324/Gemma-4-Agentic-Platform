@@ -9,18 +9,20 @@ claim about data quality, rights or model performance.
 import argparse
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.corpus_audit import (audit_corpus, compare_with_loader,
-                                     verify_schedule_coverage)
+                                     verify_loader_offers, verify_schedule_coverage)
 from zenithsync.training_corpus import IndexedCorpus
 
 SOURCES = ['scripts/verify_admitted_corpus.py', 'zenithsync/corpus_audit.py',
            'zenithsync/training_corpus.py', 'zenithsync/training_schedule.py',
-           'zenithsync/splits.py', 'zenithsync/artifacts.py', 'zenithsync/contracts.py']
+           'zenithsync/training_batch.py', 'zenithsync/splits.py',
+           'zenithsync/artifacts.py', 'zenithsync/contracts.py']
 
 
 def main():
@@ -40,38 +42,39 @@ def main():
     args = parser.parse_args()
     if args.context_limit <= 0 or not 0 <= args.output_reserve < args.context_limit:
         parser.error('Invalid context limit or output reserve')
-    args.output.mkdir(parents=True, exist_ok=False)
+    if args.max_bytes <= 0 or args.max_example_bytes <= 0:
+        parser.error('Byte budgets must be positive integers')
+    if not (args.corpus / 'corpus.json').is_file():
+        parser.error('--corpus does not contain a readable corpus.json')
+    if args.schedule is not None and not args.schedule.is_file():
+        parser.error('--schedule is not a readable file')
+    if args.output.exists() or args.output.is_symlink():
+        parser.error('--output already exists')
     sources = {name: file_record(ROOT / name) for name in SOURCES}
+    args.output.mkdir(parents=True, exist_ok=False)
 
+    try:
+        _verify(args, sources)
+    except BaseException:
+        shutil.rmtree(args.output, ignore_errors=True)
+        raise
+
+
+def _verify(args, sources):
     audit = audit_corpus(args.corpus, expected_manifest_sha256=args.corpus_sha256,
                          expected_content_sha256=args.content_sha256,
                          expected_status=args.expected_status,
                          context_limit=args.context_limit,
-                         output_reserve=args.output_reserve)
+                         output_reserve=args.output_reserve,
+                         max_total_bytes=args.max_bytes)
     corpus = IndexedCorpus(args.corpus, args.corpus / 'corpus.json',
                            expected_manifest_sha256=args.corpus_sha256,
                            purpose=args.purpose, max_total_bytes=args.max_bytes,
                            max_example_bytes=args.max_example_bytes)
     agreement = compare_with_loader(audit, corpus.summary)
 
-    # Fetch every example through the loader and re-check it against the audit.
-    detail = {row['example_id']: row for row in audit['examples_detail']}
-    fetched = 0
-    for metadata in corpus.metadata():
-        row = detail[metadata['example_id']]
-        example = corpus.fetch(metadata['example_id'])
-        if (len(example['input_ids']) != row['input_tokens']
-                or sum(label != -100 for label in example['labels'][1:]) != row['supervised_tokens']
-                or example['task_id'] != row['task_id']
-                or example['split'] != row['split']):
-            raise ValueError('Fetched example differs from the independent audit: '
-                             + metadata['example_id'])
-        fetched += 1
-    expected_fetches = (audit['split_counts']['train'] if args.purpose == 'training'
-                        else audit['examples'])
-    if fetched != expected_fetches or fetched != corpus.summary['returned_examples']:
-        raise ValueError(f'Refetched {fetched} examples; audit expected {expected_fetches} '
-                         f"and the loader reported {corpus.summary['returned_examples']}")
+    fetched = verify_loader_offers(audit, corpus, purpose=args.purpose)
+
     coverage = None
     if args.schedule is not None:
         schedule = load_json(args.schedule)
@@ -80,9 +83,18 @@ def main():
     if sources != {name: file_record(ROOT / name) for name in SOURCES}:
         raise RuntimeError('Implementation changed during verification')
 
+    # Write the sidecar first so the receipt can bind it; a report that cannot
+    # contradict an edited sidecar is not evidence about the sidecar.
+    examples_path = args.output / 'examples.json'
+    examples_path.write_bytes(canonical_json(audit['examples_detail']))
     receipt = {'schema_version': 1, 'status': 'two_layer_corpus_verification_passed',
                'timestamp_utc': datetime.now(timezone.utc).isoformat(),
                'sources': sources, 'purpose': args.purpose,
+               'expected_status': args.expected_status,
+               'content_sha256_bound': args.content_sha256 is not None,
+               'byte_policy': {'max_total_bytes': args.max_bytes,
+                               'max_example_bytes': args.max_example_bytes},
+               'examples_file': file_record(examples_path),
                'context_policy': {'context_limit': args.context_limit,
                                   'output_reserve': args.output_reserve},
                'independent_audit': {key: value for key, value in audit.items()
@@ -95,7 +107,6 @@ def main():
                         'isolation, duplicates, gate bindings and schedule coverage. '
                         'No rights clearance, review-truth or performance claim.'}
     (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
-    (args.output / 'examples.json').write_bytes(canonical_json(audit['examples_detail']))
     print({'status': receipt['status'], 'examples': audit['examples'],
            'unique_tasks': audit['unique_tasks'],
            'repository_groups': audit['repository_groups'],
@@ -111,4 +122,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as error:
+        print(f'Corpus verification failed ({type(error).__name__}: {error}); '
+              'no passing receipt written.', file=sys.stderr)
+        raise SystemExit(1)

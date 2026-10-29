@@ -23,7 +23,8 @@ from zenithsync.r2_client import build_client
 
 SOURCES = ['scripts/stage_corpus_from_r2.py', 'zenithsync/corpus_transport.py',
            'zenithsync/r2_client.py', 'zenithsync/object_store.py',
-           'zenithsync/training_corpus.py', 'zenithsync/artifacts.py',
+           'zenithsync/training_corpus.py', 'zenithsync/splits.py',
+           'zenithsync/training_batch.py', 'zenithsync/artifacts.py',
            'zenithsync/contracts.py']
 
 
@@ -45,10 +46,20 @@ def main():
     parser.add_argument('--max-restore-bytes', type=int, required=True)
     parser.add_argument('--max-bytes', type=int, default=1024**3)
     parser.add_argument('--max-example-bytes', type=int, default=16 * 1024**2)
+    parser.add_argument('--max-manifest-bytes', type=int, default=64 * 1024**2,
+                        help='Byte ceiling for the artifact manifest itself')
     args = parser.parse_args()
+    if args.max_restore_bytes <= 0 or args.max_bytes <= 0:
+        parser.error('Byte budgets must be positive integers')
+    if args.output.exists() or args.output.is_symlink():
+        parser.error('--output already exists')
     manifest_identity = file_record(args.artifact_manifest)
     if manifest_identity['sha256'] != args.artifact_manifest_sha256:
         raise ValueError('Artifact manifest file identity differs from the trusted digest')
+    # Bound this read as corpus manifests and receipts are bounded; it is the
+    # one input that was read with no ceiling at all.
+    if manifest_identity['size_bytes'] > args.max_manifest_bytes:
+        raise ValueError('Artifact manifest exceeds the explicit byte ceiling')
     manifest = validate_manifest(load_json(args.artifact_manifest))
     args.output.mkdir(parents=True, exist_ok=False)
     sources = {name: file_record(ROOT / name) for name in SOURCES}

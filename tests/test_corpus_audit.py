@@ -10,7 +10,8 @@ import unittest.mock
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.corpus_admission import promote_corpus
 from zenithsync.corpus_audit import (CorpusAuditError, audit_corpus,
-                                     compare_with_loader, verify_schedule_coverage)
+                                     compare_with_loader, verify_loader_offers,
+                                     verify_schedule_coverage)
 from zenithsync.training_corpus import GATES, IndexedCorpus
 from zenithsync.training_schedule import make_schedule
 
@@ -370,6 +371,114 @@ class CorpusAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(CorpusAuditError,
                                    'binds a different corpus content identity'):
             self.audit()
+
+    # --- loader-offer agreement: the invariant layer two exists for -----------
+
+    def multi_split_corpus(self):
+        """Admit a 2-train / 1-development corpus with distinct token arrays."""
+        rows = []
+        for index, split in enumerate(('train', 'train', 'development')):
+            candidate = {'schema_version': 1, 'input_ids': [1, 2, 3 + index],
+                         'labels': [-100, -100, 3 + index], 'vocab_size': 8,
+                         'pad_token_id': 0, 'training_approved': False,
+                         'history': {'sha256': 'a' * 64, 'size_bytes': 1},
+                         'tools': {'sha256': 'a' * 64, 'size_bytes': 1}}
+            self.fixture.write(f'tokens{index}.json', candidate)
+            self.fixture.write(f'audit{index}.json', dict(
+                self.fixture.audit,
+                token_candidate=file_record(self.quarantine / f'tokens{index}.json'),
+                input_sha256=self.fixture.hash(candidate['input_ids']),
+                labels_sha256=self.fixture.hash(candidate['labels'])))
+            rows.append({'example_id': f'trace{index}', 'task_id': f'repo-{index}',
+                         'repository_group': f'owner/repo{index}',
+                         'leakage_group': f'repo-{index}', 'split': split,
+                         'tokens': self.fixture.ref(f'tokens{index}.json'),
+                         'audit': self.fixture.ref(f'audit{index}.json')})
+        self.fixture.manifest['examples'] = rows
+        self.fixture.write('corpus.json', self.fixture.manifest)
+        documents = {}
+        for gate in GATES:
+            path = self.work / ('multi-' + gate + '.json')
+            body = {'schema_version': 1, 'synthetic_test_only': True}
+            if gate == 'task_alignment':
+                body['task_reviews'] = [
+                    {'task_id': row['task_id'],
+                     'repository_group': row['repository_group'],
+                     'decision': 'accepted', 'rationale': 'synthetic'}
+                    for row in rows]
+            path.write_bytes(canonical_json(body))
+            documents[gate] = [path]
+        destination = self.work / 'multi-admitted'
+        receipt = promote_corpus(
+            source_root=self.quarantine,
+            source_manifest_sha256=file_record(self.quarantine / 'corpus.json')['sha256'],
+            destination=destination, gate_evidence=documents, reviewer='unit-test')
+        return destination, receipt['destination']['manifest']['sha256']
+
+    def test_a_held_out_example_substituted_into_training_is_refused(self):
+        import zenithsync.training_corpus as loader_module
+        root, sha256 = self.multi_split_corpus()
+        audit = audit_corpus(root, expected_manifest_sha256=sha256)
+        self.assertEqual(audit['split_counts'],
+                         {'train': 2, 'development': 1, 'confirmation': 0})
+        original = loader_module._load_corpus
+
+        def leaking(root_, manifest_path, **kwargs):
+            if kwargs.get('purpose') != 'training':
+                return original(root_, manifest_path, **kwargs)
+            everything = original(root_, manifest_path,
+                                  **{**kwargs, 'purpose': 'inspection'})
+            train = [row for row in everything['examples'] if row['split'] == 'train']
+            held = [row for row in everything['examples']
+                    if row['split'] == 'development']
+            # One-for-one substitution: the count stays right, and each example
+            # still matches its own audit row on every field.
+            everything['examples'] = train[:-1] + held[:1]
+            everything['summary'].update(returned_examples=len(everything['examples']),
+                                         purpose='training', training_admitted=True)
+            return everything
+
+        with unittest.mock.patch.object(loader_module, '_load_corpus', leaking):
+            corpus = IndexedCorpus(root, root / 'corpus.json',
+                                   expected_manifest_sha256=sha256, purpose='training')
+            self.assertEqual(sorted(m['example_id'] for m in corpus.metadata()),
+                             ['trace0', 'trace2'])
+            with self.assertRaisesRegex(CorpusAuditError,
+                                       'differs from the audited training set'):
+                verify_loader_offers(audit, corpus, purpose='training')
+
+    def test_a_clean_training_split_is_accepted_and_counted(self):
+        root, sha256 = self.multi_split_corpus()
+        audit = audit_corpus(root, expected_manifest_sha256=sha256)
+        corpus = IndexedCorpus(root, root / 'corpus.json',
+                               expected_manifest_sha256=sha256, purpose='training')
+        self.assertEqual(verify_loader_offers(audit, corpus, purpose='training'), 2)
+        inspector = IndexedCorpus(root, root / 'corpus.json',
+                                  expected_manifest_sha256=sha256,
+                                  purpose='inspection')
+        self.assertEqual(verify_loader_offers(audit, inspector, purpose='inspection'), 3)
+
+    def test_a_tampered_token_array_is_caught_on_refetch(self):
+        root, sha256 = self.multi_split_corpus()
+        audit = audit_corpus(root, expected_manifest_sha256=sha256)
+        corpus = IndexedCorpus(root, root / 'corpus.json',
+                               expected_manifest_sha256=sha256, purpose='training')
+        # Make the audit's recorded digest disagree with the stored bytes, which
+        # is what the per-example re-hash on refetch exists to notice.
+        for row in audit['examples_detail']:
+            if row['split'] == 'train':
+                row['input_sha256'] = 'd' * 64
+                break
+        with self.assertRaisesRegex(CorpusAuditError, 'differs from the independent'):
+            verify_loader_offers(audit, corpus, purpose='training')
+
+    def test_an_unknown_purpose_is_refused(self):
+        root, sha256 = self.multi_split_corpus()
+        audit = audit_corpus(root, expected_manifest_sha256=sha256)
+        corpus = IndexedCorpus(root, root / 'corpus.json',
+                               expected_manifest_sha256=sha256, purpose='training')
+        with self.assertRaisesRegex(CorpusAuditError, 'Unknown corpus purpose'):
+            verify_loader_offers(audit, corpus, purpose='confirmation')
 
     # --- comparison and schedule coverage -------------------------------------
 

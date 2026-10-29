@@ -357,6 +357,62 @@ def compare_with_loader(audit, loader_summary):
     return {'compared_quantities': len(pairs) + 1, 'disagreements': {}, 'agreed': True}
 
 
+def verify_loader_offers(audit, corpus, *, purpose):
+    """Require the loader to offer exactly the examples the audit allows.
+
+    Comparing each fetched example against its own audit row is not enough: a
+    held-out example substituted into the training set matches itself on every
+    field, and a one-for-one substitution keeps the count right too. So the set
+    of identities the loader offers is compared against the set the audit says
+    belongs to this purpose, every row's split is checked explicitly, and each
+    fetched token array is re-hashed against the digest the audit computed.
+
+    Returns the number of examples refetched and rechecked.
+    """
+    if purpose not in ('inspection', 'training'):
+        raise CorpusAuditError('Unknown corpus purpose: ' + str(purpose))
+    detail = {row['example_id']: row for row in audit['examples_detail']}
+    if purpose == 'training':
+        expected = {name for name, row in detail.items() if row['split'] == 'train'}
+    else:
+        expected = set(detail)
+    offered = [metadata['example_id'] for metadata in corpus.metadata()]
+    if len(offered) != len(set(offered)):
+        raise CorpusAuditError('The loader offered a duplicate example identity')
+    if set(offered) != expected:
+        extra = sorted(set(offered) - expected)
+        missing = sorted(expected - set(offered))
+        raise CorpusAuditError(
+            f'Loader example set differs from the audited {purpose} set: '
+            f'extra={extra}, missing={missing}')
+    fetched = 0
+    for identity in offered:
+        row = detail[identity]
+        if purpose == 'training' and row['split'] != 'train':
+            raise CorpusAuditError(
+                'Loader offered a non-training example for training: ' + identity)
+        example = corpus.fetch(identity)
+        recomputed = hashlib.sha256(canonical_json(example['input_ids'])).hexdigest()
+        if (example['example_id'] != identity
+                or example['task_id'] != row['task_id']
+                or example['split'] != row['split']
+                or len(example['input_ids']) != row['input_tokens']
+                or sum(label != -100 for label in example['labels'][1:])
+                != row['supervised_tokens']
+                or recomputed != row['input_sha256']):
+            raise CorpusAuditError(
+                'Fetched example differs from the independent audit: ' + identity)
+        fetched += 1
+    summary = corpus.summary
+    counts = (audit['split_counts']['train'] if purpose == 'training'
+              else audit['examples'])
+    if fetched != counts or fetched != summary['returned_examples']:
+        raise CorpusAuditError(
+            f'Refetched {fetched} examples; the audit expected {counts} and the '
+            f"loader reported {summary['returned_examples']}")
+    return fetched
+
+
 def verify_schedule_coverage(audit, schedule):
     """Check a schedule against the audited corpus without reusing its iterator.
 

@@ -19,7 +19,8 @@ from zenithsync.r2_client import build_client
 
 SOURCES = ['scripts/publish_corpus_to_r2.py', 'zenithsync/corpus_transport.py',
            'zenithsync/r2_client.py', 'zenithsync/object_store.py',
-           'zenithsync/training_corpus.py', 'zenithsync/artifacts.py',
+           'zenithsync/training_corpus.py', 'zenithsync/splits.py',
+           'zenithsync/training_batch.py', 'zenithsync/artifacts.py',
            'zenithsync/contracts.py']
 
 
@@ -32,11 +33,24 @@ def main():
     parser.add_argument('--expected-status', choices=['quarantine', 'admitted'],
                         required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--prefix', default='quarantine/v1')
+    parser.add_argument('--prefix',
+                        help='Bucket prefix; defaults to quarantine/v1 for a '
+                             'quarantined corpus and artifacts/v1 for an admitted '
+                             'one, since blobs are content-addressed under the '
+                             'prefix and a wrong one re-uploads every object')
     parser.add_argument('--env-file', type=Path)
     parser.add_argument('--max-bytes', type=int, default=1024**3)
     parser.add_argument('--max-example-bytes', type=int, default=16 * 1024**2)
     args = parser.parse_args()
+    if args.prefix is None:
+        args.prefix = ('artifacts/v1' if args.expected_status == 'admitted'
+                       else 'quarantine/v1')
+    if args.max_bytes <= 0 or args.max_example_bytes <= 0:
+        parser.error('Byte budgets must be positive integers')
+    if not (args.corpus / 'corpus.json').is_file():
+        parser.error('--corpus does not contain a readable corpus.json')
+    if args.output.exists() or args.output.is_symlink():
+        parser.error('--output already exists')
     args.output.mkdir(parents=True, exist_ok=False)
     sources = {name: file_record(ROOT / name) for name in SOURCES}
     client, bucket, connection = build_client(env_file=args.env_file)

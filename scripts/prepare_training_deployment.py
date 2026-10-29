@@ -55,6 +55,10 @@ FILES = [
     'scripts/plan_training_campaign.py',
     # The host check the worker's own preconditions mirror; run it first on a pod.
     'zenithsync/runtime_preflight.py', 'scripts/verify_training_runtime.py',
+    # One command that proves, from the bucket alone, that the data path a run
+    # needs is complete — and the shipment tool that keeps the bucket complete.
+    'scripts/verify_r2_training_readiness.py',
+    'zenithsync/evidence_shipment.py', 'scripts/ship_evidence_to_r2.py',
     'requirements/r2-transport.lock.txt',
     'docs/42-training-unblock-and-data-scale.md',
 ]
@@ -85,7 +89,8 @@ def main():
                        'run_corpus_training.py', 'run_corpus_training_worker.py',
                        'stage_corpus_from_r2.py', 'publish_corpus_to_r2.py',
                        'verify_admitted_corpus.py', 'admit_training_corpus.py',
-                       'plan_training_campaign.py', 'verify_training_runtime.py']:
+                       'plan_training_campaign.py', 'verify_training_runtime.py',
+                       'verify_r2_training_readiness.py', 'ship_evidence_to_r2.py']:
             command = [sys.executable, '-I', '-B',
                        str((args.directory / 'scripts' / script).resolve()), '--help']
             result = subprocess.run(command, cwd=isolated, env=env, capture_output=True,
