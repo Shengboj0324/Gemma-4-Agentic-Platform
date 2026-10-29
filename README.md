@@ -176,7 +176,9 @@ Model intake recorded **8 files / 23,297,590,856 bytes / 2,009 tensors**, of
 which **410 are quantized text projections** and 779 unquantized. Reconstructed
 dense weights total **65,364,750,040 bytes (60.88 GiB)** — which is why packed
 on-disk size is not the training footprint. Measured load was 19.63 GiB; one
-serving configuration reported 43.23 GiB KV memory and 47,216 cache tokens.
+serving configuration reported 43.23 GiB available for KV cache and a
+47,216-token cache capacity. Separate device samples read 67,071 and 67,231
+MiB **including serving reservations** — neither is a whole-run peak.
 
 An H100 validation run exposed **repeated Unicode content-fidelity failures** in
 repository context. That is recorded, not papered over: do not describe the
