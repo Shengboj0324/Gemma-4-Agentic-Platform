@@ -58,6 +58,10 @@ FILES = [
     # One command that proves, from the bucket alone, that the data path a run
     # needs is complete — and the shipment tool that keeps the bucket complete.
     'scripts/verify_r2_training_readiness.py',
+    # The bootstrap: a pod clones this bundle and has no evidence/ directory, so
+    # without a way to fetch an artifact manifest by digest it cannot reach the
+    # bucket at all.
+    'scripts/fetch_manifest_from_r2.py',
     'zenithsync/evidence_shipment.py', 'scripts/ship_evidence_to_r2.py',
     'scripts/audit_r2_shipment.py',
     'requirements/r2-transport.lock.txt',
@@ -92,7 +96,7 @@ def main():
                        'verify_admitted_corpus.py', 'admit_training_corpus.py',
                        'plan_training_campaign.py', 'verify_training_runtime.py',
                        'verify_r2_training_readiness.py', 'ship_evidence_to_r2.py',
-                       'audit_r2_shipment.py']:
+                       'fetch_manifest_from_r2.py', 'audit_r2_shipment.py']:
             command = [sys.executable, '-I', '-B',
                        str((args.directory / 'scripts' / script).resolve()), '--help']
             result = subprocess.run(command, cwd=isolated, env=env, capture_output=True,

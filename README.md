@@ -85,21 +85,38 @@ To prove **from the R2 bucket alone** that a training run has everything it need
 training set, tokenizer assets fetched by content digest, all eight model files
 present, the schedule digest reproduced, and the real worker's preflight passing:
 
+Two manifests are the only local inputs, and a fresh clone has neither —
+`evidence/` is deliberately untracked because the bytes live in the bucket. So
+fetch them from the bucket by digest first:
+
+```bash
+python3 scripts/fetch_manifest_from_r2.py --env-file .env --output corpus-manifest \
+  --manifest-sha256 326c9cd0fe69fb5c512513f5d037cbd075ace72670a4192e0eb2b7fee49d5cba
+python3 scripts/fetch_manifest_from_r2.py --env-file .env --output model-manifest \
+  --manifest-sha256 294f52e33ca2a1c055aa189f28966d96e4e65aa3f586a00cfd6f8ab0a0a87853
+```
+
+That yields 115 files / 10,783,215 declared bytes for the corpus and 8 files /
+23,297,590,856 for the model. Then:
+
 ```bash
 python3 scripts/verify_r2_training_readiness.py \
-  --artifact-manifest evidence/data/corpus072-admission-001/r2-artifact-manifest.json \
-  --model-manifest    evidence/p1/model-intake-001/model-manifest.json \
-  --corpus-sha256  <admitted manifest digest> \
+  --artifact-manifest corpus-manifest/artifact-manifest.json \
+  --model-manifest    model-manifest/artifact-manifest.json \
+  --corpus-sha256  2853b558f4bba36e5b2a1bf22ee23c5028a73da06e20d3d94919b23a994ca6fa \
   --content-sha256 c081880c71b9f78ffb4fdcf319d0959e8d7dfcb39878b8ac06f510f2d088f103 \
   --worker-config  configs/p1-corpus-qualification.json \
   --schedule-seed  7401 \
   --schedule-sha256 4664ecf632b35fad11dfa6d9d3e1ff19cfddb352816e99bb8750c8167cd1f06b \
-  --output <new-dir> --prefix artifacts/v1 --env-file .env
+  --output readiness --prefix artifacts/v1 --env-file .env
 ```
 
-Needs R2 credentials in a private `.env` at the repo root. Reads nothing else
-local except those two manifests. The current admitted manifest digest is in
-[docs/39](docs/39-p1-current-readiness.md).
+Needs R2 credentials in a private `.env` at the repo root. The artifact manifest
+and the corpus manifest digest must come from the **same** publication: pair
+`326c9cd0…` with `2853b558…`, never with the superseded `fa984ca3…` — the
+two-digest split below is exactly what invites that mistake. Current digests are
+in [docs/39](docs/39-p1-current-readiness.md). This same sequence is how a Pod
+gets its data: clone, fetch the manifest, stage from the bucket.
 
 ---
 
@@ -435,7 +452,8 @@ configs/        pinned serving/training profiles, deployment file map, Dockerfil
 requirements/   separate locks: serving, evaluator, tokenizer, R2, PEFT supplement.
                 These are NOT one interchangeable environment.
 docs/           43 documents — design, audits, failures, journal.
-evidence/       immutable receipts and manifests. Not every file has an R2 counterpart.
+evidence/       immutable receipts and manifests. Untracked by Git: the bytes
+                live in R2, fetched by digest. Not every file has a counterpart there.
 candidates/     agent.yaml bundles for the restricted ADK schema.
 ```
 
