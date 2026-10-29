@@ -4,7 +4,7 @@ Joint research and execution plan for the Google Gemma 4 Developer Agent Competi
 
 **Adopted direction:** build a complete, trainable Gemma-powered repository engineering agent first, using the competition's supported runtime. Measure its failure profile, train targeted adapters, and add specialist capabilities only when their benefit is demonstrated. The discarded debugging/product hypotheses no longer gate core implementation. Research novelty remains unproved; documents 15–18 are historical evidence, not the current product mandate.
 
-**Status, October 19:** P1 remains incomplete. Corpus072 contains 51 quarantined tasks across 50 declared repository groups, with 954,733 input tokens and 262,593 supervised shifted targets. All four corpus admission gates remain unset; no large training campaign has started. The latest recorded full local regression passed 671 tests with zero skips (not rerun for this documentation update). Earlier H100 inference and a single 24-token training fixture do not establish sustained real-corpus training or learned performance gains. Keep the Pod stopped while admission, independent confirmation, data expansion and runtime qualification remain open.
+**Status, October 29:** P1 remains incomplete, but the admission blocker is closed. **Corpus072 is now training-admitted** (manifest `c37dc07f2e33f2492b12025487ee87c8a9902ccceccdd8ca2a8a954faf40599d`, content identity `c081880c71b9f78ffb4fdcf319d0959e8d7dfcb39878b8ac06f510f2d088f103`): all four gates are bound to recorded review evidence, the corpus lives in R2 rather than on the development machine, and the real worker's own preflight accepts it. Its 51 tasks / 954,733 input tokens / 262,593 supervised targets are still all development-exposed, so a 50M-target run would be 190 repetitions of the same data. A screened public task pool now supplies **2,966 tasks across 507 repositories and 439 owners**, split into repository- and owner-disjoint cohorts including a **445-task confirmation cohort**; those tasks still need environments, replay and their own admission. The full local regression passes **805 tests with zero skips, Torch enabled**. No GPU training has started, no throughput has been measured, and no Runpod resource was created, started, stopped or modified. See [the training unblock and data-scale cycle](docs/42-training-unblock-and-data-scale.md).
 
 **Developer handoff:** [P1 complete developer handoff](docs/41-p1-complete-developer-handoff.md) explains the implementation, mathematics, data, instance/storage history, known failures and remaining work, with code, task and artifact inventories. Also see [current readiness](docs/39-p1-current-readiness.md) and the [implementation journal](docs/40-p1-implementation-journal.md).
 
@@ -12,6 +12,7 @@ Joint research and execution plan for the Google Gemma 4 Developer Agent Competi
 
 | Document | Purpose |
 | --- | --- |
+| [Training unblock and data scale](docs/42-training-unblock-and-data-scale.md) | Corpus admission, R2-resident corpus transport, two-layer verification, the screened public task pool and campaign arithmetic |
 | [Complete P1 developer handoff](docs/41-p1-complete-developer-handoff.md) | Start here for implementation boundaries, evidence inventories, mathematical contracts and remaining acceptance gates |
 | [Current P1 readiness](docs/39-p1-current-readiness.md) | Current evidence, open admission requirements and the next GPU decision |
 | [Pinned public data intake](docs/33-public-data-intake.md) | Acquired shard, measured metadata, conversion gaps and quarantine gates |
@@ -59,11 +60,13 @@ The code track currently allows one submission per day and two final selections.
 
 ## First actions for the next round
 
-1. Complete evidence-backed rights, task-alignment and split review for candidate data; expand beyond the 32 quarantined examples in corpus048.
-2. Preserve reserved evaluation isolation and reject issue/evaluator mismatches before replay admission.
-3. Qualify the exact admitted corpus and worker bundle locally, including restored bytes, labels, schedule and resume state.
-4. Ask the user to restart Runpod only when the next bounded full-model qualification session is ready; measure long-sequence memory and full-model resume before campaign training.
-5. Compare trained candidates against a frozen baseline and held-out evaluation before claiming gains or novelty.
+1. Measure throughput on one bounded GPU run at a realistic sequence length. Nothing in this project measures tokens per second for this configuration; the recorded 67,231 MiB reading came from a 24-token fixture and constrains memory, not speed. The campaign planner refuses to forecast duration or cost without a measured rate.
+2. Measure peak memory at the corpus's longest example, 24,366 input tokens, before committing to an 80 GB card.
+3. Pull environments for the selected public tasks, grade baseline and reference outcomes, and capture native trajectories through the official runtime. Eligibility is not a task.
+4. Complete the rights review on the new pool. Licence labels are screened, not cleared.
+5. Freeze the 445-task confirmation cohort before any optimization touches the train cohort, and record the freeze.
+6. Assemble the replayed trajectories into a new quarantine corpus and admit it through the same four gates on its own evidence. Corpus072's admission says nothing about a successor corpus.
+7. Compare trained candidates against a frozen baseline and that held-out cohort before claiming gains or novelty.
 
 Both submissions remain planned. The earlier reproduction pilot used hosted Codex inference; P1 subsequently used the user's existing Runpod GPU. Full-corpus post-training and competition submission have not started; a synthetic single-update training qualification has run. Competition rule acceptance was confirmed in the authenticated Chrome session on October 7.
 
@@ -74,7 +77,13 @@ python3 -m unittest discover -s tests -v
 python3 -m zenithsync --help
 ```
 
-The original 26-test foundation used Python 3.13.7 and the standard library: [R0 validation](evidence/r0/local-004/receipt.json). The expanded suite passed 81 tests in the qualified tokenizer environment: [P1 validation](evidence/p1/local-006/receipt.json). Optional tokenizer checks require the pinned dependencies; do not interpret skipped checks as verified. These software tests are separate from inference and repair evidence.
+The original 26-test foundation used Python 3.13.7 and the standard library: [R0 validation](evidence/r0/local-004/receipt.json). The expanded suite passed 81 tests in the qualified tokenizer environment: [P1 validation](evidence/p1/local-006/receipt.json). The current suite is 805 tests; run it with the Torch checks explicitly enabled, since a smaller default run is not equivalent:
+
+```sh
+ZENITHSYNC_TEST_TORCH=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 <qualified-python> -m unittest discover -s tests
+```
+
+Optional tokenizer checks require the pinned dependencies; do not interpret skipped checks as verified. These software tests are separate from inference and repair evidence.
 
 The official starter and harness assets are now downloaded into ignored local storage. The unchanged starter compiled with ADK submission 0.2.12 and Google ADK 1.36.1. See the [official contract audit](docs/22-official-contract-audit.md) for source discrepancies, compiler tests and remaining runtime gates.
 

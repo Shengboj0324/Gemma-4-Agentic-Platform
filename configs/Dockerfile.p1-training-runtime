@@ -1,0 +1,88 @@
+# Training runtime for the full-checkpoint Gemma corpus worker.
+#
+# STATUS: PREPARED, NOT BUILT. This file has never been built or run. It has not
+# been pushed to a registry, launched on a pod, or validated against a GPU. Treat
+# it as a reviewed starting point, not a qualified image.
+#
+# Why it exists: scripts/run_corpus_training_worker.py refuses to start unless the
+# host is Linux with Python exactly 3.12 and torch 2.10.0 / transformers 5.13.1 /
+# compressed-tensors 0.15.0.1 / peft 0.21.2. A live read of Runpod's official pod
+# templates on 2026-10-29 found none shipping PyTorch 2.10, and none stating a
+# Python version in its image tag. Upgrading torch in place inside a 2.8 or 2.9
+# template is the dependency fight that pinned, hash-locked installs exist to
+# avoid, so a built image is the honest path.
+#
+# Build and verify, in this order:
+#   docker build -f configs/Dockerfile.p1-training-runtime -t <registry>/zenithsync-training:<tag> .
+#   docker run --rm --gpus all <registry>/zenithsync-training:<tag> \
+#       python3 scripts/verify_training_runtime.py --output /tmp/preflight
+# The second command is the acceptance test: it exits nonzero and names every
+# mismatch, so a wrong Python or an unpinned Torch fails here rather than inside
+# a billed worker. Until it has exited zero on the intended GPU, this image is
+# unqualified.
+#
+# The CUDA base tag below must be checked against the pod's host driver before
+# building. The available Runpod cards reported host CUDA 13.2 on 2026-10-29;
+# a base image newer than the host driver will not run.
+
+FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04
+
+# Ubuntu 24.04 ships Python 3.12 as its system python3. That is asserted below
+# rather than assumed: if the base image changes, the build must fail here, not
+# silently produce a runtime the worker will reject.
+ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        python3 python3-pip python3-venv ca-certificates git \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
+
+# Hash-locked installs only. Each lock file pins exact versions with SHA-256
+# digests, so the resulting environment is reproducible and a substituted wheel
+# fails the build.
+COPY requirements/serving-linux-py312-httpfix.lock.txt /tmp/locks/runtime.lock
+COPY requirements/training-peft-supplement.lock.txt /tmp/locks/peft.lock
+COPY requirements/r2-transport.lock.txt /tmp/locks/r2.lock
+
+RUN python3 -m pip install --break-system-packages --require-hashes \
+        -r /tmp/locks/runtime.lock \
+    && python3 -m pip install --break-system-packages --require-hashes \
+        -r /tmp/locks/peft.lock \
+    && python3 -m pip check
+
+# The R2 transport lock carries no hashes, so it is installed separately and
+# deliberately: boto3 and python-dotenv move artifacts, they do not touch the
+# training numerics. Add hashes to that lock before relying on this image for
+# anything that must be reproducible byte for byte.
+RUN python3 -m pip install --break-system-packages -r /tmp/locks/r2.lock \
+    && python3 -m pip check \
+    && rm -rf /tmp/locks
+
+WORKDIR /workspace/zenithsync
+COPY zenithsync ./zenithsync
+COPY scripts ./scripts
+COPY configs ./configs
+COPY requirements ./requirements
+COPY tests ./tests
+
+# Fail the build if the pinned versions are not what the worker demands. This is
+# the same check verify_training_runtime.py performs, run without a GPU.
+RUN python3 scripts/verify_training_runtime.py --output /tmp/build-preflight --skip-device \
+    && rm -rf /tmp/build-preflight
+
+# Deliberately absent from this image: model weights, corpus bytes, R2
+# credentials and any .env. Weights and corpus are staged onto a volume at run
+# time (scripts/stage_corpus_from_r2.py), and credentials arrive as environment
+# variables or pod secrets. Baking any of them into a layer would publish them.
+ENV HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1 \
+    OMP_NUM_THREADS=4 \
+    MKL_NUM_THREADS=4 \
+    CUBLAS_WORKSPACE_CONFIG=:4096:8
+
+CMD ["python3", "scripts/verify_training_runtime.py", "--output", "/tmp/preflight"]

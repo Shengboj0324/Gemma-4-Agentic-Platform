@@ -1,6 +1,17 @@
 # Current P1 readiness
 
-Updated October 19, 2026. **P1 is incomplete. Keep Runpod stopped.**
+Updated October 29, 2026. **P1 is incomplete. No GPU training has started.**
+
+**October 29 change of state.** The corpus admission blocker is closed:
+Corpus072 is now **training-admitted**, its bytes live in R2 rather than on the
+development machine, and the real worker's own `preflight_corpus_run` accepts it.
+A screened public task pool supplies 2,966 tasks across 507 repositories and 439
+owners with a 445-task repository- and owner-disjoint confirmation cohort. The
+local suite is 805 tests with zero skips. The rows marked *(superseded October
+29)* below are kept for history; see
+[the training unblock and data-scale cycle](42-training-unblock-and-data-scale.md)
+for what replaced them, what it does not establish, and the measurement work
+that must precede any GPU run.
 
 The [complete P1 developer handoff](41-p1-complete-developer-handoff.md) is the
 entry point for a new developer, with code/task/artifact inventories and explicit
@@ -20,7 +31,8 @@ time. Historical successes apply only to their recorded inputs and scope.
 
 | Area | Verified result | Limit |
 |---|---|---|
-| Local regression | [671 tests passed](../evidence/data/lenskit312-contract-policy-001/local-full-suite.log) in 28.042 seconds, Torch enabled, zero skips. Includes explicit issue-contract outcome accounting. | Finite CPU and reduced-model checks do not establish full-model GPU correctness. |
+| Local regression | **805 tests passed** in 27.135 seconds, Torch enabled, zero skips, October 29. The previous [671-test run](../evidence/data/lenskit312-contract-policy-001/local-full-suite.log) is retained as history. | Finite CPU and reduced-model checks do not establish full-model GPU correctness. **The development interpreter has torch 2.14.1, not the worker's pinned 2.10.0, and no `compressed-tensors` at all**, so the Torch-dependent checks passed on a different Torch than the training stack. `scripts/verify_training_runtime.py` exits nonzero on this machine and names both mismatches. |
+| Runtime preflight | `scripts/verify_training_runtime.py` checks the worker's own preconditions — Linux, Python exactly 3.12, the four pinned versions, one exclusive CUDA device, the 70 GiB free-memory floor, and the corpus's longest example against configured capacity — and exits nonzero naming every mismatch. Tests parse those pins out of `run_corpus_training_worker.py` and assert they match, so the two cannot drift. | Preconditions only. Not peak memory at full sequence length, not throughput, not checkpoint durability. No official Runpod template ships the pinned Torch 2.10 / Python 3.12 pair, so `configs/Dockerfile.p1-training-runtime` is prepared — **it has never been built or run** and is unqualified until the preflight exits zero inside it on the intended GPU. |
 | Inference transport | [Real HTTP framing controls](../evidence/p1/inference-framing-001/assessment.md) reproduce five previous failure cases and verify rejection after the fix; three valid framing variants preserve response bodies. Evidence independently restored from R2. | Diagnostic nonstreaming transport only; no new model-generation or streaming qualification. |
 | Evaluation accounting | [JUnit consistency audit](../evidence/p1/junit-accounting-001/report.json) preserves the retained 324-case Requests comparison and rejects eight contradictory aggregate reports. Supplied failure/error/skip counts must match case outcomes. | Existing report reanalysis, not a new repair run or official hidden-grader qualification. |
 | Repaired mypy example | [Fresh replay and token evidence](../evidence/data/mypy47-replacement-001/report.json): readable source correction, 40 calls, 84 messages, 22,634 input tokens and 7,559 supervised targets. Exact final source matches the expanded local controls and all 11 publisher cases. | Reference-informed derivative, not an independent held-out solve. Earlier defects and failed/superseded attempts remain preserved. |
@@ -29,9 +41,12 @@ time. Historical successes apply only to their recorded inputs and scope.
 | Jsons synthetic replacement | [Source-bound admission](../evidence/data/jsons86-synthetic-admission-001/assessment.md): 10 charged calls, 29 messages, 8,118 input tokens, 2,152 supervised targets; exact issue reproduced, 126 finite checks and 19 original tests pass, ten publisher outcomes match. | Assistant-authored and reference-informed; not model performance. Old rejected histories remain preserved. |
 | Emcee replacement candidate | [Fresh capture](../evidence/data/emcee295-synthetic-trajectory-002/assessment.md): nearby tests read before editing, two successful status calls, 21 reference outcomes matched; 8,295 input tokens and 2,279 supervised targets. | Mechanical checks pass; Corpus072 selects the fresh history. Assistant-authored and reference-informed, no training approval. |
 | Context reserve | [Corpus072 recount](../evidence/data/corpus072-integration-001/context-report.json): all 51 fit input plus 8,192 output reserve; minimum margin 210. Jsons margin 16,458. | Context policy only, not measured generation memory or GPU fit. |
-| Split exposure audit | [Corpus072 audit](../evidence/data/corpus072-split-audit-001/assessment.md): 51 train records, 50 case-normalized repository labels, 1,275 issue-text comparisons, no exact/normalized duplicates. PennyLane tasks linked in a separate draft; cross-split control rejects. | Zero unseen confirmation tasks. Low lexical overlap does not prove independence; repository lineage and prospective held-out acquisition remain required. |
+| Split exposure audit | [Corpus072 audit](../evidence/data/corpus072-split-audit-001/assessment.md): 51 train records, 50 case-normalized repository labels, 1,275 issue-text comparisons, no exact/normalized duplicates. PennyLane tasks linked in a separate draft; cross-split control rejects. | Zero unseen confirmation tasks **within Corpus072**; that is why its admission is all-train. A prospective 445-task confirmation cohort now exists in the separate task pool above and is not yet frozen. Low lexical overlap does not prove independence; repository lineage review remains required. |
 | Development exposure inventory | [Receipt-derived exclusions](../evidence/data/confirmation-exposure-001/assessment.md): 2,894 receipts inspected, 108 repository labels and 111 task IDs identified; supporting receipt hashes rechecked. | Conservative lower bound only; acquisition is not proof of viewing, and absence is not proof of unseen status. Prospective confirmation remains unfrozen. |
-| Current corpus | [Corpus072](../evidence/data/corpus072-integration-001/assessment.md): 51 tasks; 954,733 input tokens and 262,593 shifted supervised targets. Only Emcee changed from Corpus071; all other records are identical. Payload independently restored from R2. | Quarantine; all four admission fields null. Zero training-approved tokens. |
+| Current corpus | [Corpus072 admitted](../evidence/data/corpus072-admission-001/admission-receipt.json): 51 tasks; 954,733 input tokens and 262,593 shifted supervised targets; admitted manifest `c37dc07f…`, content identity `c081880c…` unchanged by promotion. All four gates bound to recorded review evidence. Published to and restored from R2; the real worker preflight accepts it. *(Supersedes the October 19 quarantine row.)* | Admission means the gates are resolved and bound, not that rights are cleared, a reviewer's conclusion is true or the GPU will fit the work. All 51 examples are `train` and all are development-exposed, so a 50M-target run is 190 repetitions of the same data. |
+| Two-layer corpus verification | [Independent re-derivation](../evidence/data/corpus072-admission-001/two-layer-verification.json): `zenithsync.corpus_audit` recomputes every digest, count, duplicate check, split-isolation check and gate binding from stored bytes without calling the loader, and the two layers agree on all eight shared quantities. All 51 examples refetched and rechecked; schedule coverage exact; minimum context margin 210 reproduced from a separate code path. | Agreement is evidence of consistent accounting, not that the data is well chosen or that the model will learn anything. |
+| Screened public task pool | [SWE-rebench V2 Python pool](../evidence/data/task-pool-v2-python-001/report.json), dataset revision `10483de0…`, metadata `701f75d5…`: 32,079 rows screened, **4,818 eligible** across 507 repositories and 439 owners; 2,966 selected under ≤12-per-repository and ≤24-per-owner caps; [cohorts](../evidence/data/task-pool-v2-python-001/cohorts.json) train 2,076 / development 445 / **confirmation 445**, repository- and owner-disjoint. | Metadata only; no issue text, source or reference patch read. A licence label is evidence for a rights review, not a clearance — 1,706 placeholder and 348 absent labels were refused. Exposure exclusion is a lower bound, so this is not an unseen-data guarantee. `rights_cleared`, `replay_verified`, `split_frozen` and `training_approved` are all false. |
+| Campaign arithmetic | [50M-target plan](../evidence/data/campaign-plan-001/report.json): repetition factor **190.41×**, 191 whole epochs, ~181,789,499 processed input tokens, largest repository group share 4.87% under the declared 5% cap. | Exposure and cost arithmetic only. No duration or cost figure was produced, because no throughput has been measured for this configuration at a realistic sequence length. |
 | Ingestion | [Corpus072 restored-worker checks](../evidence/data/corpus072-integration-001/corpus072-ingestion-001/report.json): all 42 deployment files match current repository counterparts; local/restored schedules agree; worker rejects quarantine before model access. | No optimizer steps, full-model execution or training admission. |
 | Resume scheduling | [Corpus072: nine planned updates, ten resume boundaries](../evidence/data/corpus072-integration-001/corpus072-ingestion-001/resume-verification.json): every remaining schedule reproduced exactly; ten corrupt counters rejected; all 51 examples appear once with zero target overshoot. | Finite schedule recovery only, not full-model optimizer/checkpoint recovery. |
 | Source provenance | [All 51 Corpus066 source metadata joins](../evidence/data/corpus066-attribution-index-001/report.json); [Dynaconf canonical commit tree](../evidence/data/dynaconf-canonical-lineage-003/report.json) matches its replay snapshot and current history. | The old Dynaconf URL now points to a different mirror. Canonical content verification does not make the URLs equivalent. |
@@ -825,3 +840,67 @@ contextual notice/privacy coverage. Corpus071 remains quarantined; no GPU use.
 
 All 13 source/notice evidence files (39,163 bytes) were R2-published and independently
 restore-verified. The temporary restored duplicate was removed afterward.
+
+
+## October 29 — Corpus admission closed, corpus moved to R2, public task pool screened
+
+[Corpus072 is training-admitted](../evidence/data/corpus072-admission-001/admission-receipt.json).
+Promotion is immutable: the quarantined corpus was never edited. A complete new
+tree was staged from the R2-restored payload, its 103 example files were copied
+with post-copy identity verification, eight reviewer evidence documents were
+copied in, one receipt per gate was written binding the corpus content identity,
+and the result was published only after `IndexedCorpus(purpose='training')`
+accepted it. Admitted manifest `c37dc07f2e33f2492b12025487ee87c8a9902ccceccdd8ca2a8a954faf40599d`;
+content identity `c081880c71b9f78ffb4fdcf319d0959e8d7dfcb39878b8ac06f510f2d088f103`
+unchanged, which is what lets the receipts bind it. The regenerated schedule hash
+`4664ecf632b35fad11dfa6d9d3e1ff19cfddb352816e99bb8750c8167cd1f06b` reproduces the
+previously recorded value exactly, independent corroboration that promotion
+changed no training-relevant byte. `preflight_corpus_run` — the real worker's own
+preflight — accepts the staged tree, the schedule and
+`configs/p1-corpus-qualification.json`.
+
+The live R2 round trip ran in order: restore the quarantined payload (103 files,
+10,578,444 bytes) → promote → publish the admitted corpus (115 files, 10,782,715
+bytes, artifact manifest `2959faedf43b2f0d77bdc0f160085bd2cf863f843d7e0404cc1d20178289014a`)
+→ restore it again with `--purpose training`, loader reporting
+`training_admitted: true`. No corpus bytes were retained on the development
+machine; every step ran in a session scratch directory. Publication uploads
+exactly the file set the corpus manifest reaches, so a stray credential, cache or
+scratch file fails the publish instead of reaching the bucket.
+
+[Two independent verification layers agree](../evidence/data/corpus072-admission-001/two-layer-verification.json).
+`zenithsync.corpus_audit` re-derives every digest, per-example supervised-target
+count, duplicate check, split-isolation check, context margin and gate binding
+from stored bytes without calling the loader, collator or schedule iterator. The
+layers agree on all eight shared quantities, all 51 examples were refetched and
+rechecked, schedule coverage is exactly one-to-one, and the minimum context
+margin of 210 tokens is reproduced from a wholly separate code path.
+
+[A screened public task pool](../evidence/data/task-pool-v2-python-001/report.json)
+addresses the data-scale blocker's CPU half. From the pinned SWE-rebench V2
+projection (revision `10483de0f50fe5da545942705a76c6150171af7f`, metadata
+`701f75d5eed78ffcce6355f6ea4093d63f5c9022188c1d7f018e4d9b5d2b15b4`, 32,079 rows):
+4,818 eligible Python tasks across 507 repositories and 439 owners; refusals were
+24,524 non-Python, 1,706 placeholder licence labels, 466 already development-exposed
+repositories, 348 absent licence fields and 199 repeated repository base commits.
+2,966 were selected under ≤12-per-repository and ≤24-per-owner caps and split into
+[repository- and owner-disjoint cohorts](../evidence/data/task-pool-v2-python-001/cohorts.json):
+train 2,076 (277 repositories), development 445 (112), confirmation 445 (118).
+Owners are the indivisible unit, because a fork, backport or sibling package inside
+one owner is the contamination path that splitting by task misses.
+
+[Campaign arithmetic](../evidence/data/campaign-plan-001/report.json) quantifies why
+that pool matters: 50,000,000 supervised targets against Corpus072's 262,593 is a
+repetition factor of 190.41 over 191 whole epochs and roughly 181,789,499 processed
+input tokens. No duration or cost figure was produced, because no throughput has
+been measured for this configuration at a realistic sequence length; the planner
+refuses to forecast without one.
+
+What this does **not** establish: rights clearance on either corpus, the truth of
+any reviewer's conclusion, that the remaining pool is unseen, that peak memory at
+the corpus's longest example (24,366 input tokens) fits an 80 GB card, or any
+learned improvement. The local suite is 805 tests, zero skips, Torch enabled,
+27.135 seconds. No GPU training ran and no Runpod resource was created, started,
+stopped or modified. Full detail, including the refused OpenHands translation
+rules and the remaining work in order, is in
+[the training unblock and data-scale cycle](42-training-unblock-and-data-scale.md).

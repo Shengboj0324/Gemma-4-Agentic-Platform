@@ -45,6 +45,18 @@ FILES = [
     'requirements/training-peft-supplement.lock.txt',
     'evidence/p1/model-intake-001/model-manifest.json',
     'docs/32-full-checkpoint-gpu-qualification.md',
+    # R2 is the corpus's durable home, so the Pod must be able to stage from it
+    # and independently re-verify what it staged before training on it.
+    'zenithsync/r2_client.py', 'zenithsync/corpus_transport.py',
+    'zenithsync/corpus_audit.py', 'zenithsync/corpus_admission.py',
+    'zenithsync/campaign_plan.py',
+    'scripts/stage_corpus_from_r2.py', 'scripts/publish_corpus_to_r2.py',
+    'scripts/verify_admitted_corpus.py', 'scripts/admit_training_corpus.py',
+    'scripts/plan_training_campaign.py',
+    # The host check the worker's own preconditions mirror; run it first on a pod.
+    'zenithsync/runtime_preflight.py', 'scripts/verify_training_runtime.py',
+    'requirements/r2-transport.lock.txt',
+    'docs/42-training-unblock-and-data-scale.md',
 ]
 
 
@@ -70,7 +82,10 @@ def main():
                        'transfer_artifact.py',
                        'verify_architecture_layout.py',
                        'inspect_training_corpus.py', 'plan_corpus_updates.py',
-                       'run_corpus_training.py', 'run_corpus_training_worker.py']:
+                       'run_corpus_training.py', 'run_corpus_training_worker.py',
+                       'stage_corpus_from_r2.py', 'publish_corpus_to_r2.py',
+                       'verify_admitted_corpus.py', 'admit_training_corpus.py',
+                       'plan_training_campaign.py', 'verify_training_runtime.py']:
             command = [sys.executable, '-I', '-B',
                        str((args.directory / 'scripts' / script).resolve()), '--help']
             result = subprocess.run(command, cwd=isolated, env=env, capture_output=True,

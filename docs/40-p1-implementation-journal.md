@@ -13448,3 +13448,99 @@ README's stale Corpus050/522-test summary was updated and the current readiness
 page linked to the handoff. Latest recorded full regression remains 671 passed,
 zero skips; not rerun for these documentation/inventory changes. No production
 source, corpus payload, cloud resources or private credentials changed.
+
+
+## October 29 — Admission implemented; corpus relocated to R2; public task pool built
+
+Seven new modules and seven new CLIs closed the two blockers that stopped training.
+
+`zenithsync/corpus_admission.py` is the piece that did not previously exist: no
+code could produce an admission gate receipt or promote a corpus, so the four
+gates could only ever stay `null` and the worker could only ever refuse. Promotion
+stages a complete new tree, copies the referenced example files and the reviewer's
+evidence documents with post-copy identity verification, writes one receipt per
+gate bound to the corpus content identity, and renames the staging directory into
+place only after the strict loader accepts the result with `purpose='training'`.
+It refuses an already- or partly-admitted source, evidence that names a different
+corpus, evidence living inside the corpus tree, an oversized or non-object
+evidence document, an incomplete or non-accepted task-alignment review set, and
+evidence mutated between its hash and its copy.
+
+Promotion deliberately cannot reassign a split. Doing so would describe different
+data than the supplied split evidence. Corpus072's split audit records
+`eligible_unseen_confirmation_tasks: 0`, so an all-train admission is the factually
+correct state for it, and the held-out cohort had to come from elsewhere.
+
+One design decision is worth recording because the first attempt failed. The
+loader schema-validates **every** document supplied for the `task_alignment` gate
+and requires each to carry `task_reviews`. The corpus's coverage-control report
+(`alignment-report.json`, which records 51 accepted and 51 leave-one-out controls
+rejected) has no such field, so the first promotion attempt was refused. Reshaping
+that report to pass the schema would have been dishonest. Instead `build_gate_receipt`
+gained a `supporting_evidence` list: documents copied into the bundle and bound by
+hash, kept deliberately out of the list the loader schema-validates. `corpus_transport`
+collects those paths too, so they travel with the bundle rather than becoming
+"extra files" that block publication.
+
+`zenithsync/corpus_transport.py` and `zenithsync/r2_client.py` make R2 the corpus's
+durable home. Transport asserts that the published object set is exactly the paths
+the corpus manifest reaches — a planted `.env` fails the publish, which has a test
+— and that a restored tree is provably the same corpus by manifest digest, content
+identity and admission status before any caller may train on it. The bounded client
+exposes only `get_object`, `put_object`, `head_object` and `upload_file`, so an
+injected client cannot delete, list or reconfigure a bucket.
+
+`zenithsync/corpus_audit.py` is a second verification layer that does not call the
+loader, the collator or the schedule iterator and does not trust their summaries.
+It recomputes digests, per-example supervised-target counts by walking labels,
+token validity against the vocabulary, duplicate token sequences, split isolation
+across task/repository/leakage families, context margin, and every gate binding
+and coverage check. `scripts/verify_admitted_corpus.py` requires both layers to
+agree on eight shared quantities and then refetches every example through the
+loader to recheck it. The minimum context margin of 210 tokens, recorded earlier
+from the integration code path, was reproduced here from wholly separate code.
+
+`zenithsync/task_pool.py` screens pinned public task metadata. On the already-pinned
+SWE-rebench V2 projection it yields 4,818 eligible Python tasks over 507 repositories
+and 439 owners from 32,079 rows, and selects 2,966 under per-repository and
+per-owner caps with repository- and owner-disjoint train/development/confirmation
+cohorts of 2,076 / 445 / 445. Two refusals matter: 1,706 rows carry a placeholder
+licence label such as `custom-check-github`, which is a to-do marker rather than a
+licence and cannot be allowlisted; and 466 rows name a repository this project has
+already inspected during development. A first run returned zero eligible tasks
+because the default language label was `py` while the source spells it `python`;
+the default was corrected rather than the comparison loosened.
+
+`zenithsync/campaign_plan.py` keeps five token quantities apart — unique supervised
+targets, unique inputs, processed inputs, processed supervised and padding — because
+conflating them is how a token budget becomes a false diversity claim. Against
+Corpus072, a 50,000,000-target budget is a repetition factor of 190.41 over 191
+epochs and roughly 181,789,499 processed input tokens. `forecast_campaign` refuses
+to produce a duration or cost without a measured throughput and its evidence; no
+such measurement exists for this configuration at a realistic sequence length, so
+no cost figure was produced.
+
+`zenithsync/openhands_translation.py` records a negative finding as precisely as a
+positive one. It translates OpenHands **actions** into the official nine-tool
+contract under eight named rules and translates **no results at all**, because the
+official tools return structured JSON fields — `exit_code`/`status`/`stdout`/`stderr`
+for `run_command`, `content` plus a line range for `read_file`, a unified diff and
+an occurrence count for `edit_file` — that an OpenHands observation does not
+separate. Re-rendering one into the other would fabricate a runtime result, so
+results must come from executing the translated action in the official runtime,
+which `replay_history` already does. `finish` is not mapped to `submit_patch`:
+signalling completion and capturing a working-tree diff are different acts, so the
+submission stays adapter-authored, as `mini_replay_history` already established.
+`insert`, `undo_edit`, `task_tracker`, interactive stdin writes, an implicit empty
+replacement, a no-op replacement and out-of-workspace paths are all refused with
+stable reason codes, and one untranslatable call fails the whole trajectory rather
+than silently changing what the agent did.
+
+`scripts/prepare_training_deployment.py` was extended to stage the new modules and
+CLIs; all 13 staged commands import and respond to `--help` in an isolated
+interpreter with an empty `PYTHONPATH` (54 files, 338,110 bytes).
+
+Local suite: 805 passed, zero skips, Torch enabled, 27.135 seconds, up from 671.
+The 134 new tests are listed with what each pins in document 42. Four evidence
+packages were published to R2 with restore-verified receipts. No GPU training ran
+and no Runpod resource was created, started, stopped or modified.
