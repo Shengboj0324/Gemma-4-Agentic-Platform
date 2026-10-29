@@ -36,6 +36,17 @@ Promotion is immutable: the quarantined corpus is never edited. A complete new t
 | Files in the admitted bundle | 115 (103 corpus + 4 receipts + 8 evidence copies) |
 | Schedule SHA256 (9 updates, one epoch, zero overshoot) | `4664ecf632b35fad11dfa6d9d3e1ff19cfddb352816e99bb8750c8167cd1f06b` |
 
+**Two digests, and only one of them is stable.** The *content identity* hashes
+only `schema_version`, `tokenizer_assets`, `max_length` and `examples`, so it is
+unchanged by promotion and by anything that happens to the receipts — which is
+exactly what lets a receipt bind it. The *manifest digest* covers the whole
+`corpus.json`, receipts included, so it changes whenever a receipt does. Corpus072
+has been promoted three times during this cycle as the admission tooling was
+corrected, and the manifest digest moved each time while the content identity
+`c081880c…` did not. A reader comparing corpora should compare content
+identities; the manifest digest identifies one particular admitted packaging of
+them.
+
 The content identity is deliberately preserved, which is what lets a receipt bind it: `corpus_content_identity` hashes only `schema_version`, `tokenizer_assets`, `max_length` and `examples`, so adding receipts cannot change what the receipts refer to. The schedule hash reproduces the previously recorded value exactly, which is independent corroboration that promotion changed no training-relevant byte.
 
 ### Gate evidence actually bound
