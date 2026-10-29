@@ -156,6 +156,10 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as error:
-        print(f'Evidence shipment failed ({type(error).__name__}); '
+        # The type alone is not diagnosable: an S3UploadFailedError names the
+        # key and the underlying service error, and without them a failed run
+        # can only be re-run blind. `load_credentials` already guarantees no
+        # credential value reaches an error message.
+        print(f'Evidence shipment failed ({type(error).__name__}: {error}); '
               'no passing receipt written.', file=sys.stderr)
         raise SystemExit(1)
