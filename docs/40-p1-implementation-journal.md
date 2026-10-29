@@ -13749,4 +13749,44 @@ shipment against the same bucket prefix: an `O_EXCL` lock file keyed by bucket
 and prefix, reclaimed when its recorded process is gone, refused by name when it
 is alive. Verified against the live bucket.
 
-Local suite after all of this: 904 passed, zero skips, Torch enabled.
+Local suite after all of this: 932 passed, zero skips, Torch enabled.
+
+### Confirmation cohort frozen and the freeze made enforceable — October 29
+
+Remaining-work item 5 asked for the confirmation cohort to be frozen before any
+optimisation touches the training cohort. A held-out cohort is only held out if
+something later refuses to train on it, so this is two pieces: a record and a
+gate.
+
+`zenithsync/cohort_freeze.py` produces the record. It binds every input the
+selection depended on — dataset, revision, metadata identity, exposure-ledger
+identity and seed — taken from the pool's own report rather than the command
+line, so a freeze cannot name inputs the selection did not actually use. Its
+identity covers the whole body; a test asserts that changing any pinned input,
+the reviewer or the timestamp changes it, and that a tampered record is refused.
+
+Owners are reserved with their tasks. Reserving by task alone would permit
+training on a sibling package of a reserved repository, which is the
+contamination path the cohort split exists to close, so freezing refuses outright
+if an owner appears in both a reserved and a training cohort.
+
+Applied to the real pool: 445 tasks across 105 owners reserved under identity
+`e5b7cf7a116332aeca565024eb00b3ea6ce776491ebd89141f0bc1a858e3ec2c`, leaving
+train (2,076) and development (445) available. The record carries
+`exposure_ledger_complete: false`, because the ledger the selection screened
+against says that of itself, and a freeze that quietly omitted it would overstate
+what the reservation means.
+
+`scripts/check_cohort_freeze.py` is the gate. Against the real cohort it passed
+200 training candidates, caught a single reserved task hidden among 199 of them
+by name, and refused a freeze record whose pinned digest did not match. That last
+case started out reporting `reserved_task_used`, which was wrong: a reservation
+being spent and the freeze itself being unusable are different failures, so it
+now has its own status and its own exit code.
+
+What the freeze establishes is that these tasks were reserved before
+optimisation. What it does not establish is that they are unseen — forks,
+backports, vendored copies and base-model pretraining exposure are all invisible
+here. Those remain open, and the record says so rather than implying otherwise.
+
+Local suite 932 passed, zero skips, Torch enabled.

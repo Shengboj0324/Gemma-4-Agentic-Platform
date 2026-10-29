@@ -15,7 +15,7 @@ Read this together with [the complete P1 developer handoff](41-p1-complete-devel
 | 51 tasks / 50 repository groups, all `train`, no held-out cohort | **2,966** screened public tasks / **507** repositories / **439** owners, split into repository- and owner-disjoint train / development / confirmation cohorts |
 | Token budgets discussed in prose | `zenithsync/campaign_plan.py` computes exposure, padding, mixture and cost exactly, and refuses a forecast without measured throughput |
 | OpenHands trajectories unusable without undeclared tool renaming | `zenithsync/openhands_translation.py` translates actions under named rules and refuses the rest |
-| Local regression: 671 tests | **904 tests, zero skips, Torch enabled** |
+| Local regression: 671 tests | **932 tests, zero skips, Torch enabled** |
 | No way to check a host before the worker billed for the failure | `zenithsync/runtime_preflight.py` + `scripts/verify_training_runtime.py`, with tests that assert the pins match the worker source |
 | New code reviewed only by its author | 35 findings from two independent adversarial reviews, all substantive ones fixed, each with a regression test |
 | No single command proved a run could start from the bucket | `scripts/verify_r2_training_readiness.py` — corpus, both layers, tokenizer assets by digest, all 8 model files, schedule digest, worker preflight |
@@ -245,6 +245,51 @@ That gives a **445-task confirmation cohort, repository-disjoint from training**
 * `split_frozen` is `false`, `rights_cleared` is `false`, `replay_verified` is `false` and `training_approved` is `false` on every artifact in the pool. Nothing in it may train until each becomes true on its own evidence.
 * Eligibility is not a task. Each selected task still needs its environment pulled, its baseline and reference outcomes graded, and a native trajectory captured before it becomes a training example.
 
+## 4a. The confirmation cohort is frozen, and the freeze is enforced
+
+A held-out cohort is only held out if something later refuses to train on it.
+`scripts/freeze_confirmation_cohort.py` writes an immutable record reserving the
+cohort, and `scripts/check_cohort_freeze.py` is the gate that enforces it.
+
+| Quantity | Value |
+|---|---|
+| Freeze identity | `e5b7cf7a116332aeca565024eb00b3ea6ce776491ebd89141f0bc1a858e3ec2c` |
+| Reserved cohort | `confirmation` |
+| Reserved tasks / owners | **445 / 105** |
+| Training cohorts left available | `train` (2,076), `development` (445) |
+| Pinned selection inputs | dataset `nebius/SWE-rebench-V2`, revision `10483de0…`, metadata `701f75d5…`, exposure ledger `4f7aa404…`, seed 7401 |
+| Exposure ledger complete | **false**, recorded in the freeze itself |
+
+The freeze binds every input the selection depended on — dataset, revision,
+metadata identity, exposure-ledger identity and seed — taken from the pool's own
+report rather than from the command line, so the freeze cannot name inputs the
+selection did not use. Its identity covers the whole body, and a test asserts
+that changing any of those inputs, the reviewer or the timestamp changes it.
+
+**Owners are reserved with their tasks.** Reserving by task alone would let a
+sibling package of a reserved repository be trained on, which is exactly the
+contamination path the cohort split exists to close. Freezing refuses outright if
+an owner appears in both a reserved and a training cohort.
+
+Verified against the real 445-task cohort:
+
+| Case | Result |
+|---|---|
+| 200 training candidates | `no_reserved_task_used`, exit 0 |
+| 199 training candidates plus **one** reserved task | `reserved_task_used`, exit 1, naming `airtai__faststream-1926` |
+| Correct candidates, wrong pinned freeze digest | `freeze_unusable`, exit 4 |
+
+The third row is a separate status and exit code on purpose: a reservation being
+spent and the freeze record itself being unusable are different failures, and a
+receipt that called both `reserved_task_used` would misreport the second.
+
+What this establishes: these 445 tasks and their 105 owners were reserved
+**before** any optimisation ran, which is the only thing that makes a later
+comparison against them meaningful. What it does not establish: that they are
+unseen. Forks, backports, vendored copies and base-model pretraining exposure
+are invisible here, and the exposure ledger the selection used says of itself
+that it is incomplete — a fact the freeze record carries rather than omits.
+
 ## 5. OpenHands translation: actions only, by design
 
 The large public trajectory corpora use OpenHands tool semantics. `zenithsync/openhands_translation.py` translates their **actions** into the official nine-tool contract under named rules, and translates **no results at all**.
@@ -302,11 +347,12 @@ Agreement between the layers is evidence of **consistent accounting**. It is not
 
 | `tests/test_evidence_shipment.py` | 30 | Every file lands in exactly one package at any depth; caches and `.git` skipped but the working tree still shipped; credential paths, symlinks, oversized and empty packages each refused whole with their reason; re-shipping reuses every object; a planning run publishes nothing; a 1-worker and a 4-worker run produce identical results including the index digest; the index locates every package; coverage reports exactly what is absent; and a second shipment against the same bucket prefix is refused by name while a stale or unreadable lock is reclaimed rather than blocking forever. |
 | `tests/test_r2_client.py` | 9 | A missing-field error names fields and never values; blank treated as missing; which source supplied each field; the exposed surface is exactly the four declared operations and no destructive one; upload counting exact under eight concurrent threads. |
+| `tests/test_cohort_freeze.py` | 17 | That a freeze is reproducible and its identity covers every input that matters; that a tampered record, a draft one, reserving every cohort or none, an unpinned input, an instance in two cohorts, or an owner spanning a reserved and a training cohort are all refused; and that enforcement catches a reserved task, a sibling of a reserved owner, and a case-differing spelling of either. |
 | `tests/test_repository_hygiene.py` | 10 | That all three layers keeping the live credential file out of Git and out of the bucket still hold: the ignore rules, the object store's manifest refusal, and shipment's package refusal. It also scans every tracked text file for live-secret patterns, requires no tracked file to carry private-key *material* (which keeps the scanner-fixture exemption honest), and refuses a stale or unnecessary exemption. |
 | `tests/test_r2_readiness_helpers.py` | 8 | A blob whose bytes differ, or that is longer or shorter than declared, is refused; the ceiling is checked before any request; presence is confirmed from metadata with no `get_object` at all, so a 21 GiB checkpoint is never streamed by a readiness check. |
 | `tests/test_runtime_preflight.py` | 35 | That the preflight pins are byte-identical to the worker's own (parsed out of `run_corpus_training_worker.py`, so the two cannot drift apart); local build tags stripped before comparison; absent packages, wrong platform, wrong Python, insufficient device memory and an over-capacity example each reported with every problem kept. |
 
-Full local suite: **904 passed, zero skips, Torch tests enabled, 27.076 seconds**, run as
+Full local suite: **932 passed, zero skips, Torch tests enabled, 27.076 seconds**, run as
 `ZENITHSYNC_TEST_TORCH=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 <qualified-python> -m unittest discover -s tests`.
 
 **One caveat on that suite, found by the new preflight.** The development
@@ -565,7 +611,7 @@ This cycle removed the admission blocker and the data-scale blocker's CPU half. 
 3. **Build and qualify the training image.** No official Runpod template ships the pinned Torch 2.10 / Python 3.12 combination. Build `configs/Dockerfile.p1-training-runtime`, check its CUDA base against the pod's host driver, and require `verify_training_runtime.py` to exit zero inside it on the intended GPU.
 4. **Pull environments and replay.** The 2,966 selected tasks need their published images pulled, baseline and reference outcomes graded, and native trajectories captured through the official runtime before any of them becomes a training example.
 5. **Rights review on the new pool.** Licence labels are screened, not cleared. The 348 rows with no licence field and the 1,706 placeholders are correctly withheld; the 4,818 eligible rows still need the review the gate name describes.
-6. **Freeze the confirmation cohort** before any optimization touches the train cohort, and record the freeze.
+6. ~~**Freeze the confirmation cohort**~~ — **done**. The 445-task cohort is frozen under identity `e5b7cf7a…` with its 105 owners reserved alongside it, and `check_cohort_freeze.py` refuses any candidate that would spend it. Run that gate before assembling any corpus from the pool.
 7. **Tokenize, mask and assemble** the replayed trajectories into a new quarantine corpus, then admit it through the same four gates on its own evidence. Corpus072's admission says nothing about a successor corpus.
 8. **Runpod preflight on a fresh budget.** See the compute section of the data-source research report for live account state, including a constraint discovered this cycle: the data centre holding the existing 201 GB network volume no longer offers network volumes, so the volume and GPU data centres must now be chosen together.
 

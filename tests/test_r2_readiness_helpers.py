@@ -76,9 +76,13 @@ class ReadinessHelperTests(unittest.TestCase):
                                    self.identity, max_bytes=10**6)
 
     def test_the_fetch_ceiling_is_checked_before_any_request(self):
+        reads = []
+        self.client.get_object = lambda **kwargs: reads.append(kwargs)
         with self.assertRaisesRegex(ValueError, 'declared fetch ceiling'):
             self.module.fetch_blob(self.client, 'test-bucket', self.store,
                                    self.identity, max_bytes=1)
+        # The point is that no request was made, not merely that it raised.
+        self.assertEqual(reads, [])
 
     # --- check_blob_present ---------------------------------------------------
 

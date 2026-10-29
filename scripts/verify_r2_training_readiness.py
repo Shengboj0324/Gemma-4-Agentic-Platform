@@ -7,7 +7,11 @@ artifact manifest it is given and the credentials, then:
    declared manifest digest, content identity and admission status to match;
 2. runs the independent second audit layer and requires it to agree with the
    training loader on every shared quantity;
-3. refetches every example through the loader and rechecks it against the audit;
+3. requires the loader to offer exactly the audited training set, checks each
+   row's split, and re-hashes every fetched token array — via
+   `corpus_audit.verify_loader_offers`, because comparing each example only
+   against its own audit row passes a held-out example substituted one-for-one
+   into the training set;
 4. fetches each tokenizer asset the corpus manifest binds, by content digest,
    and verifies its bytes — without these the corpus is untrainable;
 5. when given a model manifest, confirms every one of its files is present in
@@ -40,7 +44,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json, validate_manifest
 from zenithsync.corpus_audit import (audit_corpus, compare_with_loader,
-                                     verify_schedule_coverage)
+                                     verify_loader_offers, verify_schedule_coverage)
 from zenithsync.corpus_run import preflight_corpus_run
 from zenithsync.corpus_transport import restore_corpus
 from zenithsync.object_store import ArtifactStore
@@ -113,6 +117,10 @@ def main():
     parser.add_argument('--env-file', type=Path)
     parser.add_argument('--max-restore-bytes', type=int, default=1024**3)
     parser.add_argument('--max-asset-bytes', type=int, default=256 * 1024**2)
+    parser.add_argument('--max-corpus-manifest-bytes', type=int,
+                        default=16 * 1024**2,
+                        help='Byte ceiling for the restored corpus manifest, '
+                             'matching what the audit layer enforces')
     parser.add_argument('--keep', type=Path,
                         help='Keep the restored tree here instead of discarding it')
     args = parser.parse_args()
@@ -146,31 +154,18 @@ def main():
                              output_reserve=args.output_reserve)
         agreement = compare_with_loader(audit, summary)
 
-        detail = {row['example_id']: row for row in audit['examples_detail']}
-        refetched = 0
-        for metadata in corpus.metadata():
-            row = detail[metadata['example_id']]
-            example = corpus.fetch(metadata['example_id'])
-            if (len(example['input_ids']) != row['input_tokens']
-                    or sum(label != -100 for label in example['labels'][1:])
-                    != row['supervised_tokens']
-                    or example['task_id'] != row['task_id']
-                    or example['split'] != row['split']):
-                raise ValueError('Refetched example differs from the audit: '
-                                 + metadata['example_id'])
-            refetched += 1
-        if refetched != audit['split_counts']['train']:
-            raise ValueError('Refetched example count differs from the audited split')
+        refetched = verify_loader_offers(audit, corpus, purpose='training')
 
         # Without the exact tokenizer assets the corpus binds, it cannot train.
-        assets = load_json(root / 'corpus.json')['tokenizer_assets']
-        fetched = {}
-        for name, identity in sorted(assets.items()):
-            fetched[name] = fetch_blob(client, bucket, store, identity,
-                                       max_bytes=args.max_asset_bytes)
-            if fetched[name] != identity:
-                raise ValueError('Tokenizer asset differs from the corpus binding: '
-                                 + name)
+        manifest_path = root / 'corpus.json'
+        if file_record(manifest_path)['size_bytes'] > args.max_corpus_manifest_bytes:
+            raise ValueError('Corpus manifest exceeds the explicit byte ceiling')
+        assets = load_json(manifest_path)['tokenizer_assets']
+        # fetch_blob already raises unless the streamed bytes match this exact
+        # digest and size, so comparing its return to `identity` is not a check.
+        fetched = {name: fetch_blob(client, bucket, store, identity,
+                                    max_bytes=args.max_asset_bytes)
+                   for name, identity in sorted(assets.items())}
 
         model = None
         if args.model_manifest is not None:
@@ -203,8 +198,13 @@ def main():
         rows = [{key: row[key] for key in ('example_id', 'input_tokens',
                                            'supervised_tokens')}
                 for row in audit['examples_detail'] if row['split'] == 'train']
-        target = (args.target_supervised_tokens
-                  or sum(row['supervised_tokens'] for row in rows))
+        # An explicit 0 is a mistake, not a request for the default.
+        if args.target_supervised_tokens is not None:
+            if args.target_supervised_tokens <= 0:
+                raise ValueError('--target-supervised-tokens must be positive')
+            target = args.target_supervised_tokens
+        else:
+            target = sum(row['supervised_tokens'] for row in rows)
         schedule = make_schedule(
             rows, corpus_content_sha256=audit['corpus_content_sha256'],
             seed=args.schedule_seed, target_supervised_tokens=target,
@@ -215,13 +215,18 @@ def main():
                              'value: ' + schedule['schedule_sha256'])
         coverage = verify_schedule_coverage(audit, schedule)
 
-        schedule_path = args.output / 'schedule.json'
-        schedule_path.write_bytes(canonical_json(schedule))
+        # The worker preflight needs the schedule on disk. Write it outside
+        # --output until the run succeeds, so a failed run leaves no file there
+        # that looks like a product.
+        pending = Path(holder.name) / 'schedule.json'
+        pending.write_bytes(canonical_json(schedule))
         preflight_corpus_run(
             corpus_root=root, corpus_sha256=args.corpus_sha256,
-            schedule_path=schedule_path,
-            schedule_sha256=file_record(schedule_path)['sha256'],
+            schedule_path=pending,
+            schedule_sha256=file_record(pending)['sha256'],
             config_path=args.worker_config, config_sha256=config_identity['sha256'])
+        schedule_path = args.output / 'schedule.json'
+        schedule_path.write_bytes(canonical_json(schedule))
 
         if sources != {name: file_record(ROOT / name) for name in SOURCES}:
             raise RuntimeError('Implementation changed during verification')
@@ -242,7 +247,16 @@ def main():
             'schedule': {'seed': args.schedule_seed,
                          'schedule_sha256': schedule['schedule_sha256'],
                          'target_supervised_tokens': target,
-                         'max_epochs': args.max_epochs},
+                         'max_epochs': args.max_epochs,
+                         'max_update_supervised_tokens':
+                             args.max_update_supervised_tokens,
+                         'schedule_file': file_record(schedule_path)},
+            'context_policy': {'context_limit': args.context_limit,
+                               'output_reserve': args.output_reserve},
+            'byte_policy': {'max_restore_bytes': args.max_restore_bytes,
+                            'max_asset_bytes': args.max_asset_bytes,
+                            'max_corpus_manifest_bytes':
+                                args.max_corpus_manifest_bytes},
             'schedule_coverage': coverage,
             'worker_preflight_passed': True,
             'restored_tree_retained': args.keep is not None,

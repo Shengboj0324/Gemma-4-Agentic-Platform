@@ -44,8 +44,11 @@ def main():
                         help='New directory for the index and receipt')
     parser.add_argument('--prefix', default='artifacts/v1')
     parser.add_argument('--env-file', type=Path)
-    parser.add_argument('--max-package-bytes', type=int, default=512 * 1024**2)
-    parser.add_argument('--max-total-bytes', type=int, default=16 * 1024**3)
+    parser.add_argument('--max-package-bytes', type=int, default=512 * 1024**2,
+                        help='Refuse any single package declaring more than this')
+    parser.add_argument('--max-total-bytes', type=int, default=16 * 1024**3,
+                        help='Budget for the whole run across every --tree, not '
+                             'per tree')
     parser.add_argument('--workers', type=int, default=1,
                         help='Publish this many packages concurrently; each '
                              'package keeps its full sequential verify contract')
@@ -81,40 +84,64 @@ def main():
               if not args.plan else contextlib.nullcontext())
     results = []
     with holder:
-      for tree in args.tree:
-        result = ship_tree(store, tree, source_prefix=args.source_prefix,
-                           revision=args.revision, package_depth=args.package_depth,
-                           max_package_bytes=args.max_package_bytes,
-                           max_total_bytes=args.max_total_bytes,
-                           publish=not args.plan, workers=args.workers, log=log)
-        results.append(result)
-        log(f'{result["status"]}: {tree} -> {result["shipped_packages"]} packages, '
-            f'{result["refused_packages"]} refused, '
-            f'{result["uploaded_files"]} uploaded, {result["reused_files"]} reused')
+        # The byte budget is for the whole run, not per tree: passing the same
+        # ceiling to each tree would let N trees ship up to N times it.
+        remaining = args.max_total_bytes
+        for tree in args.tree:
+            result = ship_tree(store, tree, source_prefix=args.source_prefix,
+                               revision=args.revision,
+                               package_depth=args.package_depth,
+                               max_package_bytes=args.max_package_bytes,
+                               max_total_bytes=max(1, remaining),
+                               publish=not args.plan, workers=args.workers, log=log)
+            remaining -= result['planned_bytes']
+            results.append(result)
+            log(f'{result["status"]}: {tree} -> {result["shipped_packages"]} packages, '
+                f'{result["refused_packages"]} refused, '
+                f'{result["uploaded_files"]} uploaded, {result["reused_files"]} reused, '
+                f'{remaining} bytes of budget left')
 
     if sources != {name: file_record(ROOT / name) for name in SOURCES}:
         raise RuntimeError('Implementation changed during shipment')
 
     index = shipment_index(results) if not args.plan else None
+    shipped_total = sum(r['shipped_packages'] for r in results)
+    # Sidecars first, so the receipt can bind them. Numbered by position, since
+    # two --tree values can share a basename and would otherwise overwrite one
+    # file, silently discarding a tree's rows.
+    sidecars = {}
+    for position, result in enumerate(results):
+        name = f'{position:02d}-{Path(result["tree"]).name or "root"}-packages.json'
+        path = args.output / name
+        path.write_bytes(canonical_json(result['packages']))
+        sidecars[name] = {**file_record(path), 'tree': result['tree']}
+    if index is not None:
+        path = args.output / 'index.json'
+        path.write_bytes(canonical_json(index))
+        sidecars['index.json'] = file_record(path)
     receipt = {'schema_version': 1,
-               'status': 'evidence_shipped' if not args.plan else 'evidence_planned',
+               'status': ('evidence_shipped' if not args.plan else 'evidence_planned')
+                         if shipped_total else
+                         ('evidence_shipped_nothing' if not args.plan
+                          else 'evidence_planned_nothing'),
                'timestamp_utc': datetime.now(timezone.utc).isoformat(),
                'sources': sources, 'connection': connection, 'prefix': args.prefix,
                'package_depth': args.package_depth, 'workers': args.workers,
                'exclusive_lock_held': not args.plan,
+               'byte_policy': {'max_package_bytes': args.max_package_bytes,
+                               'max_total_bytes': args.max_total_bytes,
+                               'budget_is_for_the_whole_run': True},
+               'index_sha256': index and index['index_sha256'],
+               'sidecar_files': sidecars,
                'trees': [{key: value for key, value in result.items()
                           if key not in ('packages', 'refused')}
                          for result in results],
                'refused': [row for result in results for row in result['refused']],
-               'scope': 'Per-package content-addressed publication with readback. '
-                        'Not a durability or access-control guarantee, and not a '
+               'scope': 'Per-package content-addressed publication with readback, '
+                        'covering exactly the files classification admitted. Not a '
+                        'durability or access-control guarantee, and not a '
                         'statement that the evidence is correct.'}
     (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
-    for result in results:
-        name = Path(result['tree']).name + '-packages.json'
-        (args.output / name).write_bytes(canonical_json(result['packages']))
-    if index is not None:
-        (args.output / 'index.json').write_bytes(canonical_json(index))
     print({'status': receipt['status'],
            'trees': len(results),
            'packages': sum(r['shipped_packages'] for r in results),
