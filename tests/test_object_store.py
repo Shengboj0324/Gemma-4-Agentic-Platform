@@ -22,8 +22,10 @@ class MemoryClient:
         self.objects = {}
         self.corrupt_upload = False
         self.uploads = 0
+        self.reads = []
 
     def get_object(self, *, Bucket, Key):
+        self.reads.append(Key)
         if Key not in self.objects:
             raise Missing()
         data = self.objects[Key]
@@ -244,3 +246,99 @@ class ObjectStoreTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class VerifyOncePerRunTests(unittest.TestCase):
+    """A hot content-addressed key is what R2 refuses; dedup must be opt-in."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        # Two bundles sharing identical bytes, so they share one blob key.
+        for name in ("one", "two"):
+            tree = self.root / name
+            tree.mkdir()
+            (tree / "shared").write_bytes(b"identical bytes")
+        self.manifests = {
+            name: inventory(self.root / name, kind="fixture",
+                            source="test", revision="1")
+            for name in ("one", "two")}
+        self.client = MemoryClient()
+
+    def shared_key(self):
+        store = ArtifactStore(self.client, "test-bucket")
+        return store.blob_key(self.manifests["one"]["files"][0]["sha256"])
+
+    def test_default_reads_the_shared_key_for_every_bundle(self):
+        store = ArtifactStore(self.client, "test-bucket")
+        for name in ("one", "two"):
+            store.publish(self.root / name, self.manifests[name])
+        key = self.shared_key()
+        # Bundle one: a miss, then a post-upload verify. Bundle two: another
+        # read, because without dedup every bundle rests on its own.
+        self.assertEqual(self.client.reads.count(key), 3)
+
+    def test_opt_in_reads_the_shared_key_once_after_upload(self):
+        store = ArtifactStore(self.client, "test-bucket",
+                              verify_once_per_run=True)
+        for name in ("one", "two"):
+            store.publish(self.root / name, self.manifests[name])
+        key = self.shared_key()
+        self.assertEqual(self.client.reads.count(key), 2)
+        self.assertTrue(store.verify_once_per_run)
+
+    def test_a_separate_store_does_not_inherit_the_verified_set(self):
+        first = ArtifactStore(self.client, "test-bucket",
+                              verify_once_per_run=True)
+        first.publish(self.root / "one", self.manifests["one"])
+        self.client.reads.clear()
+        second = ArtifactStore(self.client, "test-bucket",
+                               verify_once_per_run=True)
+        second.publish(self.root / "two", self.manifests["two"])
+        self.assertIn(self.shared_key(), self.client.reads)
+
+    def test_a_failed_digest_is_never_recorded_as_verified(self):
+        store = ArtifactStore(self.client, "test-bucket",
+                              verify_once_per_run=True)
+        self.client.corrupt_upload = True
+        with self.assertRaises(IntegrityError):
+            store.publish(self.root / "one", self.manifests["one"])
+        # The corrupt object must not be remembered as clean: a second attempt
+        # has to read it again and fail again.
+        self.client.reads.clear()
+        with self.assertRaises(IntegrityError):
+            store.publish(self.root / "one", self.manifests["one"])
+        self.assertIn(self.shared_key(), self.client.reads)
+
+    def test_a_restore_still_transfers_bytes_after_a_verified_publish(self):
+        store = ArtifactStore(self.client, "test-bucket",
+                              verify_once_per_run=True)
+        store.publish(self.root / "one", self.manifests["one"])
+        self.client.reads.clear()
+        destination = self.root / "restored"
+        store.restore(self.manifests["one"], destination, max_bytes=1000)
+        # A read with a target must never be skipped, or the destination would
+        # be missing the file the manifest promises.
+        self.assertIn(self.shared_key(), self.client.reads)
+        verify(destination, self.manifests["one"])
+
+    def test_the_verified_set_is_shared_safely_across_threads(self):
+        import threading
+        store = ArtifactStore(self.client, "test-bucket",
+                              verify_once_per_run=True)
+        store.publish(self.root / "one", self.manifests["one"])
+        errors = []
+
+        def publish():
+            try:
+                store.publish(self.root / "two", self.manifests["two"])
+            except Exception as error:  # pragma: no cover - failure path
+                errors.append(error)
+
+        threads = [threading.Thread(target=publish) for _ in range(8)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        self.assertEqual(errors, [])

@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import shutil
 import tempfile
+import threading
 
 from .artifacts import canonical_json, relative_path, validate_manifest, verify
 from .contracts import digest, natural
@@ -40,18 +41,58 @@ def _snapshot(manifest: object) -> dict:
 
 
 class ArtifactStore:
-    def __init__(self, client, bucket: str, prefix: str = "artifacts/v1"):
+    """Content-addressed publish and restore over an S3-compatible client.
+
+    `verify_once_per_run` narrows what a publish establishes, so it is off by
+    default and the caller must ask for it. With it off, every file of every
+    bundle is read back from the bucket, so each bundle's result rests on its
+    own reads. With it on, a key already read back and verified in this store's
+    lifetime is not read again, and a later bundle's result rests on an earlier
+    read in the same run instead.
+
+    That is sound only because the keys are content-addressed and immutable and
+    the caller holds an exclusive lock on the prefix, and it exists because the
+    alternative is worse: evidence trees share files heavily, so concurrent
+    workers issue simultaneous GETs on one hot object and R2 answers
+    `503 ServiceUnavailable: Reduce your rate of simultaneous reads on the same
+    object`. A caller that turns this on should record that it did.
+    """
+
+    def __init__(self, client, bucket: str, prefix: str = "artifacts/v1", *,
+                 verify_once_per_run: bool = False):
         if not isinstance(bucket, str) or not bucket.strip():
             raise ValueError("bucket is required")
         self.client = client
         self.bucket = bucket
         self.prefix = relative_path(prefix)
+        self.verify_once_per_run = bool(verify_once_per_run)
+        # Shared by every worker thread using this store, so the set needs a
+        # lock of its own.
+        self._verified = set()
+        self._verified_lock = threading.Lock()
+
+    def _already_verified(self, key, record):
+        """True when this exact key, size and digest passed readback already."""
+        if not self.verify_once_per_run:
+            return False
+        with self._verified_lock:
+            return (key, record["sha256"], record["size_bytes"]) in self._verified
+
+    def _record_verified(self, key, record):
+        if not self.verify_once_per_run:
+            return
+        with self._verified_lock:
+            self._verified.add((key, record["sha256"], record["size_bytes"]))
 
     def blob_key(self, sha256: str) -> str:
         digest(sha256)
         return f"{self.prefix}/blobs/sha256/{sha256}"
 
     def _read_verified(self, key: str, record: dict, target=None) -> None:
+        # Only a verification-only read may be skipped. A read with a target
+        # must transfer the bytes, so it always goes to the network.
+        if target is None and self._already_verified(key, record):
+            return
         response = self.client.get_object(Bucket=self.bucket, Key=key)
         body = response["Body"]
         hasher, size = hashlib.sha256(), 0
@@ -69,6 +110,10 @@ class ArtifactStore:
                 raise IntegrityError("remote content digest or size differs")
         finally:
             body.close()
+        # Recorded only after the digest matched, and only for a
+        # verification-only read, so a partial transfer never marks a key clean.
+        if target is None:
+            self._record_verified(key, record)
 
     def publish(self, root: Path, manifest: object) -> dict:
         """Commit a manifest only after all referenced bytes pass readback.

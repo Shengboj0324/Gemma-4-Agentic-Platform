@@ -56,6 +56,14 @@ def main():
                         help='Group and classify without publishing anything')
     parser.add_argument('--quiet', action='store_true',
                         help='Do not log each package as it is published')
+    parser.add_argument('--verify-once-per-run', action='store_true',
+                        help='Read each content-addressed key back once per run '
+                             'instead of once per package that references it. '
+                             'Evidence trees share files heavily, so concurrent '
+                             'workers otherwise issue simultaneous reads on one '
+                             'object and R2 refuses them. This narrows what a '
+                             'later package\'s result rests on, so it is '
+                             'recorded in the receipt.')
     args = parser.parse_args()
     if args.package_depth < 1:
         parser.error('--package-depth must be a positive integer')
@@ -71,7 +79,8 @@ def main():
         client, bucket, connection = build_client(
             env_file=args.env_file,
             max_pool_connections=max(10, 2 * args.workers))
-        store = ArtifactStore(client, bucket, prefix=args.prefix)
+        store = ArtifactStore(client, bucket, prefix=args.prefix,
+                              verify_once_per_run=args.verify_once_per_run)
 
     def log(message):
         if not args.quiet:
@@ -128,6 +137,7 @@ def main():
                'sources': sources, 'connection': connection, 'prefix': args.prefix,
                'package_depth': args.package_depth, 'workers': args.workers,
                'exclusive_lock_held': not args.plan,
+               'verify_once_per_run': args.verify_once_per_run,
                'byte_policy': {'max_package_bytes': args.max_package_bytes,
                                'max_total_bytes': args.max_total_bytes,
                                'budget_is_for_the_whole_run': True},
@@ -137,10 +147,14 @@ def main():
                           if key not in ('packages', 'refused')}
                          for result in results],
                'refused': [row for result in results for row in result['refused']],
-               'scope': 'Per-package content-addressed publication with readback, '
-                        'covering exactly the files classification admitted. Not a '
-                        'durability or access-control guarantee, and not a '
-                        'statement that the evidence is correct.'}
+               'scope': ('Per-package content-addressed publication with readback, '
+                         'covering exactly the files classification admitted. Not a '
+                         'durability or access-control guarantee, and not a '
+                         'statement that the evidence is correct.'
+                         + (' With verify_once_per_run, a key read back once in '
+                            'this run was not read again, so a later package\'s '
+                            'result rests on an earlier read in the same run.'
+                            if args.verify_once_per_run else ''))}
     (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
     print({'status': receipt['status'],
            'trees': len(results),

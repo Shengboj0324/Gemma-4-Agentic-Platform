@@ -109,7 +109,8 @@ class BoundedR2Client:
 
 def build_client(*, env_file=None, environ=None, connect_timeout=15, read_timeout=120,
                  multipart_threshold=16 * 1024**2, multipart_chunksize=64 * 1024**2,
-                 max_concurrency=2, max_pool_connections=None, log=print):
+                 max_concurrency=2, max_pool_connections=None, max_attempts=8,
+                 log=print):
     """Return (bounded client, bucket name, nonsecret connection description).
 
     `max_pool_connections` must cover every thread that will share this client.
@@ -117,9 +118,18 @@ def build_client(*, env_file=None, environ=None, connect_timeout=15, read_timeou
     otherwise block on the connection pool rather than on the network. It
     defaults to the larger of 10 and twice `max_concurrency`.
 
+    Retries are `adaptive` rather than `standard`, with `max_attempts` attempts
+    instead of botocore's three. Content-addressed storage means one object can
+    be read back by many packages at once, and R2 answers that with
+    `503 ServiceUnavailable: Reduce your rate of simultaneous reads on the same
+    object`. Standard mode retries a 503 but applies no client-side rate limit,
+    so three attempts against a hot object failed a 48-minute shipment at 5,659
+    of 6,725 packages. Adaptive mode is botocore's rate limiter for exactly this
+    signal.
+
     The description contains only nonsecret facts — endpoint, bucket, pool size,
-    boto3 version, and which source supplied each credential field — so it is
-    safe to write into a receipt.
+    retry policy, boto3 version, and which source supplied each credential
+    field — so it is safe to write into a receipt.
     """
     import boto3
     from boto3.s3.transfer import TransferConfig
@@ -130,13 +140,16 @@ def build_client(*, env_file=None, environ=None, connect_timeout=15, read_timeou
         max_pool_connections = max(10, 2 * max_concurrency)
     if type(max_pool_connections) is not int or max_pool_connections < 1:
         raise ValueError('max_pool_connections must be a positive integer')
+    if type(max_attempts) is not int or max_attempts < 1:
+        raise ValueError('max_attempts must be a positive integer')
     client = boto3.client(
         's3', endpoint_url=credentials['R2_ENDPOINT_URL'], region_name='auto',
         aws_access_key_id=credentials['R2_ACCESS_KEY_ID'],
         aws_secret_access_key=credentials['R2_SECRET_ACCESS_KEY'],
         config=Config(connect_timeout=connect_timeout, read_timeout=read_timeout,
                       max_pool_connections=max_pool_connections,
-                      retries={'mode': 'standard', 'total_max_attempts': 3}))
+                      retries={'mode': 'adaptive',
+                               'total_max_attempts': max_attempts}))
     transfer = TransferConfig(multipart_threshold=multipart_threshold,
                               multipart_chunksize=multipart_chunksize,
                               max_concurrency=max_concurrency)
@@ -144,6 +157,7 @@ def build_client(*, env_file=None, environ=None, connect_timeout=15, read_timeou
     description = {'endpoint_url': credentials['R2_ENDPOINT_URL'],
                    'bucket': credentials['R2_BUCKET_NAME'], 'region': 'auto',
                    'max_pool_connections': max_pool_connections,
+                   'retry_mode': 'adaptive', 'retry_max_attempts': max_attempts,
                    'operations': list(BoundedR2Client.OPERATIONS),
                    'credential_sources': credentials['sources'],
                    'boto3_version': boto3.__version__}

@@ -135,3 +135,45 @@ class BoundedSurfaceTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+@unittest.skipUnless(importlib.util.find_spec('boto3'), 'boto3 is required')
+class BuildClientRetryTests(unittest.TestCase):
+    """R2 refuses simultaneous reads on one object; the client must back off.
+
+    A content-addressed store makes one key hot by design, and botocore's
+    default three attempts with no client-side rate limit failed a 48-minute
+    shipment at 5,659 of 6,725 packages. Constructing a client makes no network
+    call, so this is checked directly rather than inferred.
+    """
+
+    def build(self, **extra):
+        from zenithsync.r2_client import build_client
+        return build_client(environ=environment(), **extra)
+
+    def test_adaptive_retries_are_configured_with_more_than_the_default(self):
+        client, bucket, description = self.build()
+        # Reaching through the wrapper's private client is what the wrapper's
+        # own docstring warns against, and it is the point here: the
+        # description below goes into a receipt, and a receipt claiming a retry
+        # policy the client does not have is worse than no claim.
+        config = client._client.meta.config
+        self.assertEqual(config.retries['mode'], 'adaptive')
+        self.assertEqual(config.retries['total_max_attempts'], 8)
+        self.assertEqual(config.retries['mode'], description['retry_mode'])
+        self.assertEqual(config.retries['total_max_attempts'],
+                         description['retry_max_attempts'])
+        self.assertEqual(bucket, 'example-bucket')
+
+    def test_the_retry_policy_is_recorded_in_the_connection_description(self):
+        _, _, description = self.build(max_attempts=5)
+        self.assertEqual(description['retry_mode'], 'adaptive')
+        self.assertEqual(description['retry_max_attempts'], 5)
+        # A description goes into a receipt, so it must carry no secret.
+        self.assertNotIn(SECRET, str(description))
+
+    def test_a_nonsensical_attempt_count_is_refused(self):
+        for value in (0, -1, 2.5, '8', True):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, 'max_attempts'):
+                    self.build(max_attempts=value)
