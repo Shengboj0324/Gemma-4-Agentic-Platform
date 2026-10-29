@@ -63,7 +63,7 @@ python3 -m unittest discover -s tests
 python3 -m zenithsync --help
 ```
 
-That collects all **944 tests** and passes, skipping the 70 that need an
+That collects all **953 tests** and passes, skipping the 79 that need an
 optional dependency. Every such test *skips* — a suite that errors instead
 cannot tell you whether your environment or the code is wrong.
 
@@ -391,7 +391,7 @@ refused.
 
 | Area | Evidence |
 |---|---|
-| Local suite | **944 tests, zero skips** with the full dependency stack and Torch enabled, ~28 s; 944 collected and passing with 70 skips on a stdlib-only 3.13 |
+| Local suite | **953 tests, zero skips** with the full dependency stack and Torch enabled, ~29 s; 953 collected and passing with 79 skips on a stdlib-only 3.13 |
 | Official contract | unchanged starter compiles with the nine real bound functions; 25 Linux integration checks with networking disabled, 4 GiB, 2 CPUs |
 | Model intake | 8 files / 23,297,590,856 B / 2,009 tensors; 410 quantized projections verified |
 | Masks | six positive and six rejection fixtures against the real tokenizer |
@@ -444,10 +444,10 @@ refused.
 ```
 zenithsync/     104 modules, ~11.8k lines — contracts, model, masks, training,
                 admission, audit, transport, intake. Core needs no third-party packages.
-scripts/        134 CLIs, ~14.5k lines — every one writes a hash-bound receipt,
+scripts/        135 CLIs, ~14.7k lines — every one writes a hash-bound receipt,
                 refuses an existing --output, and writes nothing on failure.
-tests/          134 modules, ~14.2k lines, 944 tests — zero skips with the
-                full stack, 70 skips with the standard library alone.
+tests/          135 modules, ~14.3k lines, 953 tests — zero skips with the
+                full stack, 79 skips with the standard library alone.
 configs/        pinned serving/training profiles, deployment file map, Dockerfiles.
 requirements/   separate locks: serving, evaluator, tokenizer, R2, PEFT supplement.
                 These are NOT one interchangeable environment.

@@ -13919,3 +13919,38 @@ with exact coverage, and the real worker's preflight accepting the restored tree
 What this does not establish is unchanged: no throughput measured, no sustained
 run, no learned improvement, and the corpus is still 51 all-`train`,
 development-exposed tasks.
+
+### The bucket had no entry point
+
+Writing the README's readiness command found a hole the whole design had been
+sitting on. The bucket is the durable home for data, and the user's constraint is
+that nothing stays local - but every command that *reads* from the bucket needs
+the artifact manifest as a **local file**, and manifests live under `evidence/`,
+which is gitignored on purpose. A fresh clone had no way to get the one file
+needed to reach anything else, and neither would a Pod. The README's command was
+quietly assuming a path that exists only on the machine that published it, and
+the link check passed for exactly that reason.
+
+`scripts/fetch_manifest_from_r2.py` reads one manifest out of
+`{prefix}/manifests/sha256/{digest}.json`. The digest is required rather than
+optional: a fetch that did not name it would accept whatever the bucket serves,
+which is the opposite of what content addressing is for. It is checked against
+the bytes received, the declared length is bounded by the same 16 MiB ceiling the
+loader applies to a manifest on disk, a short or overlong stream is refused, and
+the receipt states that it proves only that this manifest is the one asked for -
+not that the bundle it describes is present, complete or correct.
+
+Verified against the real bucket, not a fixture: both manifests come back
+byte-identical to the retained copies (115 files / 10,783,215 bytes for the
+corpus, 8 files / 23,297,590,856 for the model), and full R2 training readiness
+then passes using only those fetched manifests, with nothing read from
+`evidence/`. That is the first time the bucket-only claim has actually been
+exercised end to end.
+
+One self-inflicted error on the way: `validate_manifest` takes the parsed
+document, and the first version passed it a `Path`, so every fetch failed with
+"invalid manifest fields" - a message that reads like the bucket serving junk
+rather than the caller holding the API wrong.
+
+Local suite 953 passed, zero skips on the full stack; 953 collected with 79 skips
+on the standard library alone.
