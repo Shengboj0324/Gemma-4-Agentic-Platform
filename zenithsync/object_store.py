@@ -5,6 +5,7 @@ Remote bytes are streamed and hashed; ETags are never treated as SHA-256.
 Local destination parents must be owned and free of concurrent writers.
 """
 
+import contextlib
 import errno
 import hashlib
 import json
@@ -70,6 +71,10 @@ class ArtifactStore:
         # lock of its own.
         self._verified = set()
         self._verified_lock = threading.Lock()
+        # One lock per key, created on demand. Never pruned during a run: a
+        # lock removed while a waiter held it would let a second writer in.
+        self._key_locks = {}
+        self._key_locks_guard = threading.Lock()
 
     def _already_verified(self, key, record):
         """True when this exact key, size and digest passed readback already."""
@@ -83,6 +88,28 @@ class ArtifactStore:
             return
         with self._verified_lock:
             self._verified.add((key, record["sha256"], record["size_bytes"]))
+
+    @contextlib.contextmanager
+    def _one_writer_per_key(self, key):
+        """Serialise this store's work on one key, leaving other keys parallel.
+
+        Two bundles holding identical bytes address the same key, so concurrent
+        workers can both miss the readback and then both upload it. R2 answers
+        that with `503 ServiceUnavailable: Reduce your concurrent request rate
+        for the same object`, and retries do not help while the contention
+        continues — the waiters are what cause it. Backing off is the wrong
+        remedy for duplicate work; not doing it twice at once is the right one.
+
+        This changes no guarantee. Each bundle still reads the key back for
+        itself unless `verify_once_per_run` says otherwise; it only stops two
+        workers performing the identical transfer simultaneously.
+        """
+        with self._key_locks_guard:
+            lock = self._key_locks.get(key)
+            if lock is None:
+                lock = self._key_locks[key] = threading.Lock()
+        with lock:
+            yield
 
     def blob_key(self, sha256: str) -> str:
         digest(sha256)
@@ -126,30 +153,37 @@ class ArtifactStore:
         uploaded, reused = 0, 0
         for record in frozen["files"]:
             key = self.blob_key(record["sha256"])
-            try:
-                self._read_verified(key, record)
-            except Exception as exc:
-                if not _missing(exc):
-                    raise
-                self.client.upload_file(str(root / record["path"]), self.bucket, key)
-                self._read_verified(key, record)
-                uploaded += 1
-            else:
-                reused += 1
+            # Read, upload-on-miss and re-read are one unit of work on this key.
+            # Split across workers they become duplicate concurrent writes to a
+            # single object, which the service refuses.
+            with self._one_writer_per_key(key):
+                try:
+                    self._read_verified(key, record)
+                except Exception as exc:
+                    if not _missing(exc):
+                        raise
+                    self.client.upload_file(str(root / record["path"]),
+                                            self.bucket, key)
+                    self._read_verified(key, record)
+                    uploaded += 1
+                else:
+                    reused += 1
         # Detect source drift before publishing the bundle's commit marker.
         verify(root, frozen)
         payload = canonical_json(frozen)
         identity = hashlib.sha256(payload).hexdigest()
         key = f"{self.prefix}/manifests/sha256/{identity}.json"
         record = {"sha256": identity, "size_bytes": len(payload)}
-        try:
-            self._read_verified(key, record)
-        except Exception as exc:
-            if not _missing(exc):
-                raise
-            self.client.put_object(Bucket=self.bucket, Key=key, Body=payload,
-                                   ContentType="application/json")
-            self._read_verified(key, record)
+        # Two bundles with identical content share a manifest key as well.
+        with self._one_writer_per_key(key):
+            try:
+                self._read_verified(key, record)
+            except Exception as exc:
+                if not _missing(exc):
+                    raise
+                self.client.put_object(Bucket=self.bucket, Key=key, Body=payload,
+                                       ContentType="application/json")
+                self._read_verified(key, record)
         return {"manifest_sha256": identity, "manifest_key": key,
                 "uploaded_files": uploaded, "reused_files": reused,
                 "verified_bytes": sum(r["size_bytes"] for r in frozen["files"])}

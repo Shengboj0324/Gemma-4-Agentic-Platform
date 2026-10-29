@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 import shutil
 import tempfile
+import threading
+import time
 import unittest
 from unittest.mock import patch
 
@@ -324,7 +326,6 @@ class VerifyOncePerRunTests(unittest.TestCase):
         verify(destination, self.manifests["one"])
 
     def test_the_verified_set_is_shared_safely_across_threads(self):
-        import threading
         store = ArtifactStore(self.client, "test-bucket",
                               verify_once_per_run=True)
         store.publish(self.root / "one", self.manifests["one"])
@@ -342,3 +343,100 @@ class VerifyOncePerRunTests(unittest.TestCase):
         for thread in threads:
             thread.join()
         self.assertEqual(errors, [])
+
+
+class OneWriterPerKeyTests(unittest.TestCase):
+    """Duplicate bytes share a key; two workers must not write it at once."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        for name in ("one", "two", "three", "four"):
+            tree = self.root / name
+            tree.mkdir()
+            (tree / "shared").write_bytes(b"identical bytes across bundles")
+        self.manifests = {
+            name: inventory(self.root / name, kind="fixture",
+                            source="test", revision="1")
+            for name in ("one", "two", "three", "four")}
+
+    def test_concurrent_bundles_never_write_one_key_simultaneously(self):
+        overlaps = []
+
+        class CountingClient(MemoryClient):
+            def __init__(self):
+                super().__init__()
+                self.active = {}
+                self.guard = threading.Lock()
+
+            def _enter(self, key):
+                with self.guard:
+                    self.active[key] = self.active.get(key, 0) + 1
+                    if self.active[key] > 1:
+                        overlaps.append(key)
+
+            def _leave(self, key):
+                with self.guard:
+                    self.active[key] -= 1
+
+            def upload_file(self, filename, bucket, key):
+                self._enter(key)
+                try:
+                    time.sleep(0.02)
+                    super().upload_file(filename, bucket, key)
+                finally:
+                    self._leave(key)
+
+            def put_object(self, *, Bucket, Key, Body, ContentType):
+                self._enter(Key)
+                try:
+                    time.sleep(0.02)
+                    super().put_object(Bucket=Bucket, Key=Key, Body=Body,
+                                       ContentType=ContentType)
+                finally:
+                    self._leave(Key)
+
+        client = CountingClient()
+        store = ArtifactStore(client, "test-bucket")
+        errors = []
+
+        def publish(name):
+            try:
+                store.publish(self.root / name, self.manifests[name])
+            except Exception as error:  # pragma: no cover - failure path
+                errors.append(error)
+
+        threads = [threading.Thread(target=publish, args=(name,))
+                   for name in self.manifests]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        self.assertEqual(errors, [])
+        self.assertEqual(overlaps, [])
+        # Exactly one worker uploaded the shared blob; the rest reused it.
+        self.assertEqual(client.uploads, 1)
+
+    def test_distinct_keys_are_not_serialised_behind_one_another(self):
+        store = ArtifactStore(MemoryClient(), "test-bucket")
+        first = store._one_writer_per_key("a")
+        with first:
+            # A different key must be available while 'a' is held, or the whole
+            # run would be effectively single-threaded.
+            with store._one_writer_per_key("b"):
+                pass
+
+    def test_an_upload_failure_releases_the_key(self):
+        class FailingClient(MemoryClient):
+            def upload_file(self, filename, bucket, key):
+                raise RuntimeError("upload refused")
+
+        store = ArtifactStore(FailingClient(), "test-bucket")
+        with self.assertRaises(RuntimeError):
+            store.publish(self.root / "one", self.manifests["one"])
+        # The lock must not be held after the failure, or every later bundle
+        # touching this key would block forever instead of reporting an error.
+        key = store.blob_key(self.manifests["one"]["files"][0]["sha256"])
+        with store._one_writer_per_key(key):
+            pass
