@@ -19,6 +19,13 @@ Three refusals are deliberate and are reported rather than worked around:
 Nothing here deletes, overwrites or rewrites a local file. Publication is
 content-addressed, so re-running it re-verifies what is already present instead
 of uploading it again.
+
+An interrupted run is safe to resume. Each package commits its manifest only
+after every blob it names has been read back and verified, so a killed process
+leaves complete published packages plus, at worst, uploaded blobs that no
+manifest references yet. Those are content-addressed and are reused by the next
+run, so resuming costs a presence check per file and no re-upload. There is no
+partially published package and nothing to clean up.
 """
 
 import os

@@ -153,6 +153,15 @@ Shipping is idempotent by construction: publication verifies what the bucket
 already holds by reading it back and uploads only what is genuinely absent. A
 re-run of an already-shipped tree reports every file as reused.
 
+That property was exercised for real rather than assumed. The first full run was
+killed part way through — it exited with no output and wrote no receipt. Because
+each package commits its manifest only after every blob it names has been read
+back and verified, the kill left complete published packages plus, at worst,
+uploaded blobs that no manifest referenced yet; those are content-addressed and
+were reused by the resumed run. There was no partially published package and
+nothing to clean up. The restart was split per tree with its own log, which is
+the shape to use for a long shipment.
+
 Concurrency is per-package. Sequentially the shipment ran at about 2.6 files per
 second, which is hours for a tree this size; `--workers` publishes different
 packages at once while each package keeps its full sequential contract — verify
