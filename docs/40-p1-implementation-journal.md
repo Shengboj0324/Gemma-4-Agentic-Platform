@@ -13864,3 +13864,23 @@ a file the manifest promises, and a digest that failed is never recorded clean.
 
 Local suite 941 passed, zero skips on the full stack; 941 collected with 70 skips
 on the standard library alone.
+
+### The same defect on the write side
+
+The fix above covered readback only, so the next run failed on `PutObject`:
+`blobs/sha256/efc8331d...` refused with *"Reduce your concurrent request rate for
+the same object."* Two bundles holding identical bytes address one key, so
+concurrent workers both miss the readback and then both upload it.
+
+Retries cannot resolve this one, and that is the point worth recording: the
+waiters *are* the contention, so more attempts prolong it. Backing off is the
+wrong remedy for duplicate work; not doing the work twice at once is the right
+one. `publish` now treats read, upload-on-miss and re-read as a single unit per
+key under an on-demand per-key lock. Distinct keys stay parallel, so the run is
+not quietly reduced to one thread, and the manifest key is locked the same way
+because two identical bundles share that too. A failed upload releases the key,
+or every later bundle touching it would block forever instead of reporting the
+error - which is a test, not a hope.
+
+Local suite 944 passed, zero skips on the full stack; 944 collected with 70 skips
+on the standard library alone.
