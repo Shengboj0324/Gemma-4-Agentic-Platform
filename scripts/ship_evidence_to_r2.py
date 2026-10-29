@@ -77,8 +77,8 @@ def main():
     # Two shipments against one prefix would upload the same content-addressed
     # keys, and a readback racing an in-flight overwrite can report an integrity
     # failure that is a false alarm but indistinguishable from a real one.
-    holder = (shipment_lock(bucket, args.prefix) if not args.plan
-              else contextlib.nullcontext())
+    holder = (shipment_lock(bucket, args.prefix, label='ship_evidence_to_r2')
+              if not args.plan else contextlib.nullcontext())
     results = []
     with holder:
       for tree in args.tree:

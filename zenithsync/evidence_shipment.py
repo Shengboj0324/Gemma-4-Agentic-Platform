@@ -65,15 +65,19 @@ class ShipmentLockError(RuntimeError):
 
 
 class shipment_lock:
-    """Exclude a second shipment against the same bucket prefix.
+    """Exclude a second *publisher* against the same bucket prefix.
 
     A context manager holding an `O_EXCL` lock file keyed by bucket and prefix.
     A stale lock whose recorded process is gone is reclaimed, since a killed
-    shipment leaves nothing to clean up; a lock whose process is alive is
+    publisher leaves nothing to clean up; a lock whose process is alive is
     refused, naming the holder.
+
+    Every command that writes to a prefix takes this, not only the bulk
+    shipment: the hazard is two writers of the same content-addressed key, and
+    which command they are does not matter. `label` records what is holding it.
     """
 
-    def __init__(self, bucket, prefix, *, directory=None):
+    def __init__(self, bucket, prefix, *, label='shipment', directory=None):
         import hashlib
         import tempfile
         if not isinstance(bucket, str) or not bucket.strip():
@@ -85,6 +89,7 @@ class shipment_lock:
         self.path = base / ('zenithsync-shipment-' + key + '.lock')
         self.bucket = bucket
         self.prefix = prefix
+        self.label = label if isinstance(label, str) and label.strip() else 'publisher'
         self._descriptor = None
 
     def _holder(self):
@@ -115,10 +120,11 @@ class shipment_lock:
                 holder = self._holder()
                 if holder is not None and self._alive(holder.get('pid')):
                     raise ShipmentLockError(
-                        f'another shipment (pid {holder.get("pid")}, started '
-                        f'{holder.get("started_utc")}) is publishing to '
-                        f'{self.bucket}/{self.prefix}; concurrent runs can trip the '
-                        'integrity guard on a shared content-addressed key')
+                        f'another publisher ({holder.get("label", "unknown")}, pid '
+                        f'{holder.get("pid")}, started {holder.get("started_utc")}) '
+                        f'is writing to {self.bucket}/{self.prefix}; concurrent '
+                        'writers can trip the integrity guard on a shared '
+                        'content-addressed key')
                 if attempt:
                     raise ShipmentLockError('shipment lock could not be reclaimed: '
                                             + str(self.path))
@@ -128,7 +134,7 @@ class shipment_lock:
                 continue
             break
         payload = _json.dumps({'pid': os.getpid(), 'bucket': self.bucket,
-                               'prefix': self.prefix,
+                               'prefix': self.prefix, 'label': self.label,
                                'started_utc': __import__('datetime').datetime.now(
                                    __import__('datetime').timezone.utc).isoformat()})
         with os.fdopen(self._descriptor, 'w') as stream:

@@ -15,7 +15,7 @@ Read this together with [the complete P1 developer handoff](41-p1-complete-devel
 | 51 tasks / 50 repository groups, all `train`, no held-out cohort | **2,966** screened public tasks / **507** repositories / **439** owners, split into repository- and owner-disjoint train / development / confirmation cohorts |
 | Token budgets discussed in prose | `zenithsync/campaign_plan.py` computes exposure, padding, mixture and cost exactly, and refuses a forecast without measured throughput |
 | OpenHands trajectories unusable without undeclared tool renaming | `zenithsync/openhands_translation.py` translates actions under named rules and refuses the rest |
-| Local regression: 671 tests | **902 tests, zero skips, Torch enabled** |
+| Local regression: 671 tests | **904 tests, zero skips, Torch enabled** |
 | No way to check a host before the worker billed for the failure | `zenithsync/runtime_preflight.py` + `scripts/verify_training_runtime.py`, with tests that assert the pins match the worker source |
 | New code reviewed only by its author | 35 findings from two independent adversarial reviews, all substantive ones fixed, each with a regression test |
 | No single command proved a run could start from the bucket | `scripts/verify_r2_training_readiness.py` — corpus, both layers, tokenizer assets by digest, all 8 model files, schedule digest, worker preflight |
@@ -167,11 +167,17 @@ were putting *identical* bytes, so this was a false alarm rather than corruption
 failure, which means it has to be prevented rather than tolerated.
 
 `shipment_lock` now provides that mutual exclusion: an `O_EXCL` lock file keyed by
-bucket and prefix, which the CLI holds for the whole publishing run. A second
-shipment against the same prefix is refused by name, with the holder's PID and
-start time. A lock whose recorded process is gone is reclaimed, since a killed
-shipment leaves nothing to clean up. Verified against the live bucket: one run
-holds the lock and a second exits with `ShipmentLockError` and no receipt.
+bucket and prefix, held for the whole publishing run. A second publisher against
+the same prefix is refused by name, with the holder's label, PID and start time.
+A lock whose recorded process is gone is reclaimed, since a killed publisher
+leaves nothing to clean up, and an unreadable lock is reclaimed rather than
+blocking forever. Verified against the live bucket: one run holds the lock and a
+second exits with `ShipmentLockError` and no receipt.
+
+It applies to **every** command that writes to a prefix, not only the bulk
+shipment — `publish_corpus_to_r2.py` takes it too. The hazard is two writers of
+the same content-addressed key, and which command they are does not matter; a
+test asserts each publisher CLI takes the lock so a future one cannot forget.
 
 The resume property itself held exactly as designed. Each package commits its
 manifest only after every blob it names has been read back and verified, so the
@@ -294,13 +300,13 @@ Agreement between the layers is evidence of **consistent accounting**. It is not
 | `tests/test_task_pool.py` | 22 | Stable reason codes for malformed rows; placeholder licences refused separately and un-allowlistable; each exclusion having its own reason; duplicate instance and repeated base commit; deterministic selection that changes with the seed; owner caps honoured and shortfall reported rather than a cap broken; cohorts repository- and owner-disjoint with whole owners kept together even when that skews a share. |
 | `tests/test_openhands_translation.py` | 24 | Every translation rule and its argument mapping; every refusal reason; thoughts folding onto the next action and a trailing thought dropped rather than attached to an invented one; one untranslatable call failing the whole trajectory; actions after or duplicated terminals refused; determinism. |
 
-| `tests/test_evidence_shipment.py` | 28 | Every file lands in exactly one package at any depth; caches and `.git` skipped but the working tree still shipped; credential paths, symlinks, oversized and empty packages each refused whole with their reason; re-shipping reuses every object; a planning run publishes nothing; a 1-worker and a 4-worker run produce identical results including the index digest; the index locates every package; coverage reports exactly what is absent; and a second shipment against the same bucket prefix is refused by name while a stale or unreadable lock is reclaimed rather than blocking forever. |
+| `tests/test_evidence_shipment.py` | 30 | Every file lands in exactly one package at any depth; caches and `.git` skipped but the working tree still shipped; credential paths, symlinks, oversized and empty packages each refused whole with their reason; re-shipping reuses every object; a planning run publishes nothing; a 1-worker and a 4-worker run produce identical results including the index digest; the index locates every package; coverage reports exactly what is absent; and a second shipment against the same bucket prefix is refused by name while a stale or unreadable lock is reclaimed rather than blocking forever. |
 | `tests/test_r2_client.py` | 9 | A missing-field error names fields and never values; blank treated as missing; which source supplied each field; the exposed surface is exactly the four declared operations and no destructive one; upload counting exact under eight concurrent threads. |
 | `tests/test_repository_hygiene.py` | 10 | That all three layers keeping the live credential file out of Git and out of the bucket still hold: the ignore rules, the object store's manifest refusal, and shipment's package refusal. It also scans every tracked text file for live-secret patterns, requires no tracked file to carry private-key *material* (which keeps the scanner-fixture exemption honest), and refuses a stale or unnecessary exemption. |
 | `tests/test_r2_readiness_helpers.py` | 8 | A blob whose bytes differ, or that is longer or shorter than declared, is refused; the ceiling is checked before any request; presence is confirmed from metadata with no `get_object` at all, so a 21 GiB checkpoint is never streamed by a readiness check. |
 | `tests/test_runtime_preflight.py` | 35 | That the preflight pins are byte-identical to the worker's own (parsed out of `run_corpus_training_worker.py`, so the two cannot drift apart); local build tags stripped before comparison; absent packages, wrong platform, wrong Python, insufficient device memory and an over-capacity example each reported with every problem kept. |
 
-Full local suite: **902 passed, zero skips, Torch tests enabled, 27.076 seconds**, run as
+Full local suite: **904 passed, zero skips, Torch tests enabled, 27.076 seconds**, run as
 `ZENITHSYNC_TEST_TORCH=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 <qualified-python> -m unittest discover -s tests`.
 
 **One caveat on that suite, found by the new preflight.** The development

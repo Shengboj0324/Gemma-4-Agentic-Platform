@@ -151,7 +151,7 @@ class ShipmentLockTests(unittest.TestCase):
                 with self.lock():
                     pass
             message = str(caught.exception)
-            self.assertIn('another shipment', message)
+            self.assertIn('another publisher', message)
             self.assertIn('artifacts/v1', message)
             self.assertIn('integrity guard', message)
         self.assertFalse(held.path.exists())
@@ -187,6 +187,30 @@ class ShipmentLockTests(unittest.TestCase):
             with held:
                 1 / 0
         self.assertFalse(held.path.exists())
+
+    def test_the_holder_label_names_what_is_publishing(self):
+        import json as json_module
+        with self.lock() as held:
+            holder = json_module.loads(held.path.read_text())
+            self.assertEqual(holder['label'], 'shipment')
+            self.assertEqual(holder['bucket'], 'bucket')
+            self.assertEqual(holder['prefix'], 'artifacts/v1')
+        labelled = shipment_lock('bucket', 'artifacts/v1', label='publish_corpus_to_r2',
+                                 directory=self.directory)
+        with labelled:
+            with self.assertRaises(ShipmentLockError) as caught:
+                with self.lock():
+                    pass
+            self.assertIn('publish_corpus_to_r2', str(caught.exception))
+
+    def test_every_publisher_cli_takes_the_lock(self):
+        # The hazard is two writers of one content-addressed key, whichever
+        # command they are, so a new publisher must not forget this.
+        root = Path(__file__).resolve().parents[1]
+        for name in ('scripts/ship_evidence_to_r2.py',
+                     'scripts/publish_corpus_to_r2.py'):
+            source = (root / name).read_text(encoding='utf-8')
+            self.assertIn('shipment_lock(', source, name)
 
     def test_a_blank_bucket_or_prefix_is_refused(self):
         with self.assertRaisesRegex(ValueError, 'Bucket is required'):

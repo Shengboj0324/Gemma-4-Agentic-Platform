@@ -13749,4 +13749,4 @@ shipment against the same bucket prefix: an `O_EXCL` lock file keyed by bucket
 and prefix, reclaimed when its recorded process is gone, refused by name when it
 is alive. Verified against the live bucket.
 
-Local suite after all of this: 902 passed, zero skips, Torch enabled.
+Local suite after all of this: 904 passed, zero skips, Torch enabled.

@@ -14,10 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record
 from zenithsync.corpus_transport import publish_corpus
+from zenithsync.evidence_shipment import shipment_lock
 from zenithsync.object_store import ArtifactStore
 from zenithsync.r2_client import build_client
 
 SOURCES = ['scripts/publish_corpus_to_r2.py', 'zenithsync/corpus_transport.py',
+           'zenithsync/evidence_shipment.py',
            'zenithsync/r2_client.py', 'zenithsync/object_store.py',
            'zenithsync/training_corpus.py', 'zenithsync/splits.py',
            'zenithsync/training_batch.py', 'zenithsync/artifacts.py',
@@ -55,11 +57,16 @@ def main():
     sources = {name: file_record(ROOT / name) for name in SOURCES}
     client, bucket, connection = build_client(env_file=args.env_file)
     store = ArtifactStore(client, bucket, prefix=args.prefix)
-    result = publish_corpus(store, args.corpus, corpus_manifest_sha256=args.corpus_sha256,
-                            source=args.source, revision=args.revision,
-                            expected_status=args.expected_status,
-                            max_total_bytes=args.max_bytes,
-                            max_example_bytes=args.max_example_bytes)
+    # One writer per prefix. Two publishers of the same content-addressed key
+    # can make a readback race an in-flight overwrite, which the object store
+    # reports as an integrity failure indistinguishable from a real one.
+    with shipment_lock(bucket, args.prefix, label='publish_corpus_to_r2'):
+        result = publish_corpus(store, args.corpus,
+                                corpus_manifest_sha256=args.corpus_sha256,
+                                source=args.source, revision=args.revision,
+                                expected_status=args.expected_status,
+                                max_total_bytes=args.max_bytes,
+                                max_example_bytes=args.max_example_bytes)
     if sources != {name: file_record(ROOT / name) for name in SOURCES}:
         raise RuntimeError('Implementation changed during publication')
     (args.output / 'artifact-manifest.json').write_bytes(
@@ -68,6 +75,7 @@ def main():
                'timestamp_utc': datetime.now(timezone.utc).isoformat(),
                'status': result['status'], 'connection': connection,
                'prefix': args.prefix, 'sources': sources,
+               'exclusive_lock_held': True,
                'artifact_manifest_file': file_record(args.output / 'artifact-manifest.json'),
                'corpus_manifest_sha256': result['corpus_manifest_sha256'],
                'corpus_content_sha256': result['corpus_content_sha256'],
