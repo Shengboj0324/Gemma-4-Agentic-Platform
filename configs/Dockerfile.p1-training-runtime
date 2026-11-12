@@ -4,6 +4,14 @@
 # been pushed to a registry, launched on a pod, or validated against a GPU. Treat
 # it as a reviewed starting point, not a qualified image.
 #
+# What *has* been checked, without building: every one of the 61 pins this image
+# installs is present on the package index under the exact digest the lock
+# names, as a cp312 manylinux x86_64 or pure-Python wheel, with no source
+# distributions. torch 2.10.0 resolves to
+# torch-2.10.0-3-cp312-cp312-manylinux_2_28_x86_64.whl. So the pinned stack the
+# worker demands is installable on the target platform; what remains unverified
+# is that the wheels resolve together, import, and run on a GPU.
+#
 # Why it exists: scripts/run_corpus_training_worker.py refuses to start unless the
 # host is Linux with Python exactly 3.12 and torch 2.10.0 / transformers 5.13.1 /
 # compressed-tensors 0.15.0.1 / peft 0.21.2. A live read of Runpod's official pod
@@ -45,14 +53,26 @@ RUN apt-get update \
 # Hash-locked installs only. Each lock file pins exact versions with SHA-256
 # digests, so the resulting environment is reproducible and a substituted wheel
 # fails the build.
-COPY requirements/serving-linux-py312-httpfix.lock.txt /tmp/locks/runtime.lock
-COPY requirements/training-peft-supplement.lock.txt /tmp/locks/peft.lock
+#
+# This installs the TRAINING lock, not the serving one. An index audit of
+# serving-linux-py312-httpfix.lock.txt (scripts/verify_lock_wheels.py) found
+# four pins that would fail --require-hashes here: vllm 0.19.1, whose locked
+# digest matches none of the files the index serves for that version, and
+# adk-eval-core, adk-submission and swegemma, which are competition-private and
+# absent from the public index. A fifth, pydantic-extra-types 2.11.2, is yanked
+# upstream. None of the five is needed to train: runtime_preflight demands torch,
+# transformers, compressed-tensors and peft, and the worker does not serve.
+#
+# requirements/training-linux-py312.lock.txt is the dependency closure of those
+# four roots over the serving lock's own pins, with the serving lock's exact
+# versions and digests copied rather than re-resolved — 61 pins instead of 251,
+# all 61 confirmed present on the index by digest, all wheels and no source
+# builds. Regenerate it with scripts/derive_training_lock.py if a root moves.
+COPY requirements/training-linux-py312.lock.txt /tmp/locks/training.lock
 COPY requirements/r2-transport.lock.txt /tmp/locks/r2.lock
 
 RUN python3 -m pip install --break-system-packages --require-hashes \
-        -r /tmp/locks/runtime.lock \
-    && python3 -m pip install --break-system-packages --require-hashes \
-        -r /tmp/locks/peft.lock \
+        -r /tmp/locks/training.lock \
     && python3 -m pip check
 
 # The R2 transport lock carries no hashes, so it is installed separately and
