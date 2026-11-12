@@ -63,7 +63,7 @@ python3 -m unittest discover -s tests
 python3 -m zenithsync --help
 ```
 
-That collects all **953 tests** and passes, skipping the 79 that need an
+That collects all **1,016 tests** and passes, skipping the 79 that need an
 optional dependency. Every such test *skips* — a suite that errors instead
 cannot tell you whether your environment or the code is wrong.
 
@@ -391,7 +391,7 @@ refused.
 
 | Area | Evidence |
 |---|---|
-| Local suite | **953 tests, zero skips** with the full dependency stack and Torch enabled, ~29 s; 953 collected and passing with 79 skips on a stdlib-only 3.13 |
+| Local suite | **1,016 tests, zero skips** with the full dependency stack and Torch enabled, ~29 s; 1,016 collected and passing with 79 skips on a stdlib-only 3.13 |
 | Official contract | unchanged starter compiles with the nine real bound functions; 25 Linux integration checks with networking disabled, 4 GiB, 2 CPUs |
 | Model intake | 8 files / 23,297,590,856 B / 2,009 tensors; 410 quantized projections verified |
 | Masks | six positive and six rejection fixtures against the real tokenizer |
@@ -414,27 +414,56 @@ refused.
 - **Corpus072 is all `train` and all development-exposed.** A 50M-target run
   would be **190.4 repetitions** of the same 51 tasks — which is exactly why the
   public task pool exists.
-- **Rights are screened, not cleared.** Licence labels are evidence for a review.
+- **Rights are observed, not cleared.** 2,845 of 2,966 pool tasks now have
+  their licence file confirmed at their own pinned commit, and four
+  repositories were caught carrying copyleft text under a permissive label.
+  That still says nothing about vendored third-party code, contributor
+  rights, or whether a given use is permitted.
 - The dev interpreter has **torch 2.14.1**, not the worker's pinned **2.10.0**,
   and no `compressed-tensors`. The Torch tests therefore pass on a *different*
   Torch than the training stack; `scripts/verify_training_runtime.py` exits
   nonzero here and names both mismatches. Closing that gap needs the container,
   because the lock pins Linux wheels.
 - `configs/Dockerfile.p1-training-runtime` **has never been built.** No official
-  Runpod template ships Torch 2.10 with Python 3.12.
+  Runpod template ships Torch 2.10 with Python 3.12. Every pin it installs is
+  now known to exist on the index by digest, which is not the same as the
+  wheels resolving together, importing, or running on a GPU.
 
 ### Next, in order
 
-1. Measure throughput on one bounded GPU run at realistic sequence length.
-2. Measure peak memory at 24,366 input tokens before committing to an 80 GB card.
-3. Build and qualify the training image; require `verify_training_runtime.py` to
-   exit zero inside it on the intended GPU.
-4. Pull environments for the selected tasks, grade baseline/reference outcomes,
-   capture native trajectories. **Eligibility is not a task.**
-5. Complete the rights review on the pool.
-6. Assemble replayed trajectories into a new quarantine corpus and admit it on
+Everything that does not need a GPU is done. See
+[docs/43](docs/43-runpod-training-runbook.md) for the runbook and the two
+findings that came out of doing it.
+
+**Done without a GPU**
+
+- ~~Complete the rights review on the pool.~~ 2,845 of 2,966 tasks confirmed
+  against the licence file at each task's own pinned commit; 121 withheld,
+  including four repositories carrying **copyleft** text under a permissive
+  label. `rights_cleared` stays false — this is observation, not legal
+  clearance.
+- ~~Establish that the training image's pins can be installed.~~ Every one of
+  the 61 pins it now installs is present on the index under the exact locked
+  digest, as a cp312 manylinux or pure-Python wheel, no source builds. Four pins
+  in the old serving lock would have failed the build.
+
+**Needs a GPU, and is waiting on explicit permission**
+
+1. Build and qualify the training image; require `verify_training_runtime.py` to
+   exit zero inside it on a card with ≥70 GiB free. **The competition's L4×4 is
+   an inference constraint; the worker refuses anything under 70 GiB.**
+2. One bounded run measuring throughput *and* peak memory at realistic sequence
+   length. The existing worker already records both — no new measurement code.
+3. Forecast from that measured rate, then decide on a sustained run.
+
+**Needs a Linux host with Docker and disk**
+
+4. Pull environments for the 2,845 rights-confirmed tasks, grade
+   baseline/reference outcomes, capture native trajectories. **Eligibility is not
+   a task.**
+5. Assemble replayed trajectories into a new quarantine corpus and admit it on
    its own evidence. Corpus072's admission says nothing about a successor.
-7. Compare candidates against a frozen baseline and the frozen confirmation
+6. Compare candidates against a frozen baseline and the frozen confirmation
    cohort before claiming anything.
 
 ---
@@ -442,16 +471,16 @@ refused.
 ## Repository layout
 
 ```
-zenithsync/     104 modules, ~11.8k lines — contracts, model, masks, training,
+zenithsync/     106 modules, ~12.3k lines — contracts, model, masks, training,
                 admission, audit, transport, intake. Core needs no third-party packages.
-scripts/        135 CLIs, ~14.7k lines — every one writes a hash-bound receipt,
+scripts/        138 CLIs, ~15.3k lines — every one writes a hash-bound receipt,
                 refuses an existing --output, and writes nothing on failure.
-tests/          135 modules, ~14.3k lines, 953 tests — zero skips with the
+tests/          137 modules, ~14.9k lines, 1,016 tests — zero skips with the
                 full stack, 79 skips with the standard library alone.
 configs/        pinned serving/training profiles, deployment file map, Dockerfiles.
 requirements/   separate locks: serving, evaluator, tokenizer, R2, PEFT supplement.
                 These are NOT one interchangeable environment.
-docs/           43 documents — design, audits, failures, journal.
+docs/           44 documents — design, audits, failures, journal.
 evidence/       immutable receipts and manifests. Untracked by Git: the bytes
                 live in R2, fetched by digest. Not every file has a counterpart there.
 candidates/     agent.yaml bundles for the restricted ADK schema.
@@ -480,14 +509,15 @@ freeze record.
 
 ## Documentation
 
-Start with **[docs/42](docs/42-training-unblock-and-data-scale.md)** for the
-current cycle, then **[docs/41](docs/41-p1-complete-developer-handoff.md)** for
-the full handoff and **[docs/39](docs/39-p1-current-readiness.md)** for live
-status.
+Start with **[docs/43](docs/43-runpod-training-runbook.md)** for what happens
+next and what it is waiting on, then
+**[docs/42](docs/42-training-unblock-and-data-scale.md)** for the last cycle,
+**[docs/41](docs/41-p1-complete-developer-handoff.md)** for the full handoff and
+**[docs/39](docs/39-p1-current-readiness.md)** for live status.
 
 | Area | Documents |
 |---|---|
-| Current cycle and status | [42 training unblock & data scale](docs/42-training-unblock-and-data-scale.md), [41 developer handoff](docs/41-p1-complete-developer-handoff.md), [39 readiness](docs/39-p1-current-readiness.md), [40 implementation journal](docs/40-p1-implementation-journal.md) |
+| Current cycle and status | [43 Runpod runbook & the permission it waits on](docs/43-runpod-training-runbook.md), [42 training unblock & data scale](docs/42-training-unblock-and-data-scale.md), [41 developer handoff](docs/41-p1-complete-developer-handoff.md), [39 readiness](docs/39-p1-current-readiness.md), [40 implementation journal](docs/40-p1-implementation-journal.md) |
 | Architecture and contracts | [19 platform & model handoff](docs/19-agent-platform-and-model-handoff.md), [20 R0 foundation](docs/20-r0-foundation.md), [22 official contract audit](docs/22-official-contract-audit.md) |
 | Training design | [31 training representation](docs/31-training-representation-readiness.md), [32 full-checkpoint GPU qualification](docs/32-full-checkpoint-gpu-qualification.md), [38 corpus integration](docs/38-training-corpus-integration.md) |
 | Data | [23 data requirements](docs/23-data-requirements-and-acquisition-plan.md), [33 public data intake](docs/33-public-data-intake.md), [35 rights & evaluation isolation](docs/35-data-rights-and-evaluation-isolation.md), [37 SWE-rebench adapter](docs/37-swe-rebench-source-adapter.md) |

@@ -13954,3 +13954,120 @@ rather than the caller holding the API wrong.
 
 Local suite 953 passed, zero skips on the full stack; 953 collected with 79 skips
 on the standard library alone.
+
+## Everything that did not need a GPU
+
+Two items remained that could be finished without a billed card, and both
+produced findings rather than confirmations.
+
+### The rights review, and four passes to get it right
+
+`scripts/review_pool_rights.py` fetched the licence file for each of the 2,966
+selected tasks **at that task's own pinned base commit** — per commit rather than
+per repository, because a licence can change and a file observed at one commit
+says nothing about another — hashed the bytes, and compared the text against the
+label the dataset metadata carries. 2,845 confirmed, 121 withheld in five kinds,
+each naming its tasks.
+
+The withheld set is the point. `AgnostiqHQ/covalent` is labelled `Apache-2.0`
+and carries **AGPL-3.0**; `GridTools/gt4py` and `SciTools/cartopy` are labelled
+`BSD-3-Clause` and carry **GPL-3.0**; `sciunto-org/python-bibtexparser` is
+labelled `MIT` and carries **LGPL-3.0**. Training on the pool's labels would have
+put copyleft code into a corpus screened as permissive. Beyond those, 50 tasks
+carry a different permissive family than claimed, 28 have no licence file at the
+pinned commit at all, and 27 match no family or more than one — including
+`cuthbertLab/music21`, whose "licence file" is a 19-byte path pointing somewhere
+else.
+
+Four passes, and each wrong one failed in an instructive way.
+
+The first required `www.apache.org/licenses/license-2.0` for Apache-2.0. The
+canonical file's header line is `http://www.apache.org/licenses/`; the
+`LICENSE-2.0` URL appears only in the appendix boilerplate, which many projects
+strip. That marker would have withheld a large share of the 914 Apache-labelled
+tasks, `PyCQA/bandit` among them. Separately, `boto/botocore` ships only the
+short grant notice pointing at Amazon's own mirror; that file states its own
+licence, so reading it is an observation, not an inference, and it now has its
+own rule.
+
+The second and third passes both mistook GPL for something else, for the same
+underlying reason: **the GNU licences cite each other.** GPL-3.0 section 13
+grants permission to combine with the Affero licence, and its closing advice
+says to use the Lesser GPL for a subroutine library. So a plain GPL-3.0 file
+contains "GNU Affero General Public License" three times and "GNU Lesser General
+Public License" once. Matching on the licence *name* read gt4py and cartopy
+first as AGPL-3.0, then as LGPL-3.0. Only matching the document's own
+**contiguous title line** — the name immediately followed by its version date,
+which `normalise` renders as one string — separated them. The date lines are
+unique: GPL-3.0 is 29 June 2007, AGPL-3.0 is 19 November 2007.
+
+Each of those errors was caught by reading the actual bytes rather than trusting
+the summary. The second one was caught only because the count said AGPL for a
+repository whose header I had already read as GPL, and the numbers disagreeing
+with the file was the signal.
+
+One test had to be corrected rather than the code. Contiguous matching cannot
+separate a heading from a sentence that reproduces the whole title and date, and
+it should not try: a file saying "under the GNU General Public License version 3,
+29 June 2007" is stating its terms. For copyleft the consequence is a withheld
+task, which is the conservative direction.
+
+The review's scope line is explicit about the limit: at each pinned commit the
+repository root carried a licence file whose text is the declared family, and
+those exact bytes were observed and hashed. It says nothing about vendored
+third-party code, contributor rights, patent grants, or whether a given use is
+permitted. `rights_cleared` stays `false`.
+
+The bundle — 583 licence and notice texts, content-addressed, plus the
+observations and summary — is in R2 under manifest
+`41591bbbc2aaf09d0a35d0bb3f1907f40b29903ca8b3e65c86a281a7c674aabb` (587 files,
+3,246,335 bytes), fetchable by digest.
+
+### The image's lock could not have built
+
+The training image has never been built, and its largest single risk was a pin
+that cannot be installed on the target platform at all. A `docker build` finds
+that after a multi-gigabyte download on a billed pod.
+`scripts/verify_lock_wheels.py` finds it from the package index: a pin passes
+only when the index serves a file whose SHA-256 is exactly the locked digest,
+which is what `--require-hashes` demands.
+
+Four pins in `serving-linux-py312-httpfix.lock.txt` would have failed the build.
+`vllm 0.19.1`'s locked digest matches none of the three files the index serves
+for that version. `adk-eval-core`, `adk-submission` and `swegemma` are
+competition-private and absent from the public index — the "three local
+exceptions" the lock's own header mentions, now named. `pydantic-extra-types
+2.11.2` is satisfied but yanked upstream.
+
+The same audit retired the biggest unknown: **the pinned training stack is
+available for the target platform.** `torch 2.10.0` resolves to
+`torch-2.10.0-3-cp312-cp312-manylinux_2_28_x86_64.whl`; transformers 5.13.1,
+compressed-tensors 0.15.0.1 and peft 0.21.2 are pure-Python wheels.
+
+None of the five problem pins is needed to train — `runtime_preflight` demands
+four packages and the worker does not serve — so
+`scripts/derive_training_lock.py` computes the dependency closure of those four
+roots over the serving lock's own pins, copying its versions and digests rather
+than re-resolving, with markers evaluated for Linux x86_64 / CPython 3.12 and no
+extras. A transitive dependency the source lock does not pin is a hard failure,
+not an omission. The result, `requirements/training-linux-py312.lock.txt`, is 61
+pins instead of 251, all 61 confirmed on the index by digest, 27 platform wheels
+and 34 pure, with no source distributions. The Dockerfile installs it.
+
+One self-inflicted error: `validate_manifest` takes the parsed document and the
+first version of the fetch CLI passed it a `Path`, so every fetch failed with
+"invalid manifest fields" — a message that reads like the bucket serving junk
+rather than the caller holding the API wrong.
+
+### What is left needs hardware
+
+Five items remain and none can be finished here: throughput, peak memory at
+24,366 tokens, image qualification on a device, the environment pull for the
+2,845 confirmed tasks, and any comparison against a baseline.
+[The runbook](43-runpod-training-runbook.md) is the plan for the first three,
+written so the billed session is a scripted sequence with stop conditions rather
+than an exploration. It is waiting on explicit permission, which has not been
+given, and no Runpod resource has been created, started, stopped or modified.
+
+Local suite 1,016 passed, zero skips on the full stack; 1,016 collected with 79
+skips on the standard library alone.
