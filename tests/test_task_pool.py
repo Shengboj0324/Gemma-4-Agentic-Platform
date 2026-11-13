@@ -1,6 +1,7 @@
 """Task-pool screening must refuse with reasons and select reproducibly."""
 
 from fractions import Fraction
+import hashlib
 import unittest
 
 from zenithsync.task_pool import (PERMISSIVE_LICENSES, TaskRecordError,
@@ -13,7 +14,9 @@ REVISION = '10483de0f50fe5da545942705a76c6150171af7f'
 def row(instance, repo, *, commit=None, language='python', license='MIT',
         image='docker.io/example/img:1', created='2024-01-01 00:00:00'):
     return {'instance_id': instance, 'repo': repo,
-            'base_commit': commit or ('a' * 39 + str(abs(hash(instance)) % 10)),
+            # Derived with a stable digest: built-in hash() is salted per process,
+            # so ~1 run in 10 gave two rows of one repository the same commit.
+            'base_commit': commit or hashlib.sha1(instance.encode()).hexdigest(),
             'language': language, 'license': license, 'image_name': image,
             'created_at': created}
 
