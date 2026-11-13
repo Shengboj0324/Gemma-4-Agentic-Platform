@@ -8,7 +8,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.run_corpus_training_worker import parser, WORKER_SOURCES
+from scripts.run_corpus_training_worker import build_execution_config, parser
 from scripts.run_p1_training_worker import require_volume
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync.corpus_run import preflight_corpus_run
@@ -30,10 +30,8 @@ def main():
         corpus_root=args.corpus,corpus_sha256=args.corpus_sha256,
         schedule_path=args.schedule,schedule_sha256=args.schedule_sha256,
         config_path=args.config,config_sha256=args.config_sha256)
-    execution_config = {'config_sha256':args.config_sha256,
-        'sources':{name:file_record(ROOT/name) for name in WORKER_SOURCES},
-        'versions':{name:version(name) for name in ('torch','transformers','compressed-tensors','peft')},
-        'adapter':{'rank':4,'alpha':8,'dropout':0.0},'dtype':'bfloat16','attention':'eager'}
+    execution_config = build_execution_config(args.config_sha256,
+        {name:version(name) for name in ('torch','transformers','compressed-tensors','peft')})
     bindings = {'base_manifest_sha256':args.manifest_sha256,'corpus_manifest_sha256':args.corpus_sha256,
         'corpus_content_sha256':corpus.summary['content_sha256'],'schedule_sha256':schedule['schedule_sha256'],
         'worker_config_sha256':hashlib.sha256(canonical_json(execution_config)).hexdigest()}

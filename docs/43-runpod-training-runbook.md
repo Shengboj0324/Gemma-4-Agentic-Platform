@@ -14,6 +14,13 @@ Results are in §9; §§1–8 are the plan as written beforehand and are kept
 unchanged, because a plan rewritten after the fact to match the outcome records
 nothing.
 
+**Update, 2026-11-13 — second session, after the fixes (§10).** The two defects
+§9 found, plus a third the fixes would have hit next, were fixed in code and
+re-measured on the same card class for ≈ $1.31. **The corpus now trains on an
+80 GB A100:** one full update over the schedule's heaviest batch, including the
+24,366-token longest example, completed at a **57.94 GiB** peak, at **96.5 input
+tokens/s**. One epoch forecasts at ~2.9 h and ~$6.31. Two-session spend ≈ $2.63.
+
 ---
 
 ## 1. What still needs a GPU, and why
@@ -284,9 +291,9 @@ load time, consuming 80% of the card before training starts. Keeping the base
 quantized and training only the adapter is the normal shape of this job, and the
 worker currently forbids it.
 
-**Attention runs eager, so memory is quadratic in sequence length.** Nothing in
-the worker sets `attn_implementation`, and transformers selected
-`eager_attention_forward`, which materialises the full `[batch, heads, seq, seq]`
+**Attention runs eager, so memory is quadratic in sequence length.** The worker
+explicitly requested `attn_implementation='eager'` (the setting the small CPU
+fixtures use), so transformers ran `eager_attention_forward`, which materialises the full `[batch, heads, seq, seq]`
 score tensor — 35.39 GiB at this sequence length. An SDPA or flash kernel never
 materialises it. This is the cheaper of the two fixes and should be tried first,
 in a tested commit rather than on a billed pod.
@@ -335,3 +342,99 @@ the schedules and configs, and the log of the refused subset run.
 
 A card larger than 80 GB (H200 at 141 GB, B200 at 180 GB) would also clear it,
 at 1.6–3.6× the hourly rate, and would be buying around a fixable defect.
+
+---
+
+## 10. Second session — the fixes, re-measured (2026-11-13)
+
+Approved by the user ("conduct the fixes"), with a hard rule of **no H200 and at
+most $5/hour**. A100-SXM4-80GB, Secure Cloud, EUR-IS-1, **$2.19/hour**, chosen
+over an H100 SXM at $4.39/hour so the result compares directly with §9. Pod
+`862txic0vjjayy` ran about 36 minutes (≈ $1.31) and was terminated; its 60 GB
+volume `3gcga4b3dc` was deleted. Both deletions were confirmed by fresh list
+reads.
+
+### 10.1 What changed in code (commit `eb8db52`, plus the supervisor fix)
+
+| Defect | Fix | How it is held to the old path |
+|---|---|---|
+| The worker explicitly requested `attn_implementation='eager'` (§9 said nothing set it; that was wrong) | SDPA, with the math and cuDNN backends **disabled**, so a shape no fused kernel takes raises instead of materialising `[b, h, L, L]` | `restrict_attention_kernels` is recorded in the execution identity; an on-GPU probe checks real shapes before the model loads |
+| The QAT checkpoint was decompressed to 60.88 GiB of dense bf16 | `PackedW4Linear` keeps the 410 projections int4-packed and rebuilds one bf16 weight per use, forward and again in backward; nothing dense is stored | dequantization equals compressed-tensors' own unpack + dequantize **bit for bit**; logits and input gradients equal the decompressed model's exactly |
+| Full logits at 24,366 × 262,144 (12.8 GB bf16, 25.5 GB upcast) would have been the next OOM | the loss runs over 1,024-position slices under checkpointing and skips slices with no target | matches transformers' loss to 1e-6, and its gradients |
+| No per-update timing existed, so no rate could be read from a run | each checkpoint record carries `update_seconds` and `input_tokens`, validated by `session_report` | 6 new rejection cases |
+
+PEFT places a new adapter by its base layer's `weight`, or `qweight` when there
+is none; `PackedW4Linear` exposes the packed tensor as `qweight` so adapters
+land on the GPU. A CPU test cannot see a misplaced adapter, so a separate test
+runs on CUDA or MPS.
+
+### 10.2 Attention probe at the real shapes (24,366 tokens, deterministic)
+
+| Layer kind | Heads × dim | Flash | Memory-efficient | Peak extra | Fwd + bwd |
+|---|---|---|---|---|---|
+| Global (10 layers) | 32 × 512, 4 KV heads | refused (dim > 256) | ran | 5.61 GB | 3.34 s |
+| Sliding (50 layers) | 32 × 256, 16 KV heads, window 1,024 | refused (explicit mask) | ran | 4.00 GB | 3.44 s |
+
+Against 35.39 GiB for one eager score tensor. The sliding layers pay full L²
+time despite a 1,024-token window, since the memory-efficient kernel does not
+skip masked blocks. That is the largest remaining speed cost (§10.5).
+
+### 10.3 The measurement
+
+| Quantity | Session 1 (§9) | Session 2 |
+|---|---|---|
+| Base resident after load (allocated) | 64.45 GiB | **19.04 GiB** |
+| Peak allocated by PyTorch | OOM | 55.00 GiB |
+| Peak sampled device-wide | 74.68 GiB, then OOM | **57.94 GiB of 79.25** |
+| Updates completed | 0 | **1** of the 9 in the schedule |
+| Update 1 | — | 5 examples, **110,138** input / 27,814 supervised tokens, lengths 24,366 / 22,706 / 24,332 / 21,053 / 17,681 |
+| Update wall time | — | **1,141.3 s** (forward, backward, step) |
+| Throughput | — | **96.5 input tokens/s** |
+| Token-mean loss | — | 0.795 |
+| Worker / lifecycle | exit 1 | exit 0, 1,294.2 s, no kill escalation |
+
+Update 1 contains the corpus's longest example, so its peak is the worst case
+this corpus can produce on this configuration.
+
+### 10.4 A defect of mine the run exposed
+
+The supervisor (`run_corpus_training.py`) rebuilt the worker's execution identity
+by hand and still said `'attention': 'eager'`. The worker finished correctly and
+exited 0, and the supervisor then rejected it — *"Worker execution identity
+differs from supervisor"* — so no supervisor receipt was written. Both now call
+one `build_execution_config`, and a test asserts the supervisor imports that
+function rather than a copy.
+
+The check was then **replayed** on the bundle fetched back from R2: the recorded
+sources equal commit `eb8db52` file for file, the identity hash binds the
+recorded config, and `validate_session_report` verifies the update and its
+369,336,773-byte checkpoint by identity. Recorded in `posthoc-validation.json`.
+
+Two smaller operational slips: I first scheduled two updates, then saw from the
+probe that a second would cross the supervisor's 40-minute kill before
+`worker.json` was written, and cut it to one. A `pkill -f chain.sh` also matched
+its own shell. Neither touched the measurement; both are in `chain.log`.
+
+### 10.5 Forecast, and what to do next
+
+`forecast_campaign` with the measured rate and measured overheads (113 s fixed
+load, 40 s checkpointing per update): **one epoch of 954,733 tokens ≈ 2.88 h ≈
+$6.31** at $2.19/hour (`epoch-forecast.json`). This leans high: update 1 holds
+the longest sequences, and attention cost is quadratic in length.
+
+1. **A full one-epoch run** on the same card, about $6.31 forecast. Needs an
+   explicit go. It produces an adapter, not evidence of improvement; the first
+   held-out evaluation is what would.
+2. **Windowed attention for the 50 sliding layers.** They compute all 24k × 24k
+   blocks to keep a 1,024-token band. A kernel that skips out-of-window blocks
+   would cut most of the attention time, which dominates this run.
+3. The container image is still unbuilt; both sessions used a virtualenv.
+
+### 10.6 Evidence
+
+R2 manifest `f68599bdd367312f4272a702da2a472df247bae76066bc29748c413a942cf99d`
+(19 files, 369,634,886 bytes, including the update-1 checkpoint), raw bundle
+`artifacts/v1/tmp/measure-session-002/measure-session-002.tar.gz`
+(sha256 `d9e7e82c…`). Retained without the checkpoint at
+[evidence/p1/gpu-measurement-002](../evidence/p1/gpu-measurement-002).
+

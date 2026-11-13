@@ -14117,8 +14117,9 @@ PyTorch, 9.71 GiB reserved but unallocated; zero updates completed.
 
 Two distinct defects, and conflating them would lead to buying the wrong fix.
 
-**Attention runs eager.** Nothing in the worker sets `attn_implementation`, so
-transformers chose `eager_attention_forward`, which materialises the full
+**Attention runs eager.** The worker explicitly requested
+`attn_implementation='eager'`, carried over from the CPU fixtures, so transformers
+ran `eager_attention_forward`, which materialises the full
 `[batch, heads, seq, seq]` score tensor. That is the 35.39 GiB. An SDPA or flash
 kernel never materialises it. Cheapest fix, largest expected effect, and it
 belongs in a tested commit rather than a pod-side hack.
@@ -14174,3 +14175,32 @@ The ordered next steps are in [the runbook](43-runpod-training-runbook.md) §9.6
 No further GPU spend is warranted until the attention kernel and the
 decompression question are settled, because both are fixable in code and renting
 a larger card would be paying to work around a defect.
+
+## Second GPU session: the fixes hold, and the corpus trains on an 80 GB card
+
+The three changes went in as one tested commit (`eb8db52`) before any pod was
+rented: the 4-bit base stays packed and is rebuilt one projection per use,
+attention is SDPA with the quadratic fallback switched off, and the loss runs
+over 1,024-position slices. The packed path is not "close to" the dense one —
+its logits and input gradients are bit-identical on a reduced checkpoint in the
+real compressed-tensors format. That is the property that made it safe to ship
+without a GPU A/B.
+
+Re-measured on an A100-SXM4-80GB at $2.19/hour (the user capped GPUs at $5/hour
+and ruled out the H200). One full update over the heaviest batch, which holds
+the 24,366-token longest example, ran at a 57.94 GiB peak and 96.5 input
+tokens/s. Base load fell from 64.45 GiB to 19.04 GiB. One epoch forecasts at
+about 2.9 hours and $6.31.
+
+I correct one claim from the first entry: nothing "failed to set"
+`attn_implementation`. The worker asked for `eager` explicitly, a setting carried
+over from the CPU fixtures.
+
+And one new mistake. The supervisor kept its own copy of the worker's execution
+identity, which I did not update, so it rejected a run the worker had completed
+correctly. The identity is now built in exactly one place, and the rejected
+validation was replayed against the bundle from R2 and passes. The probe also
+showed the remaining cost clearly: the 50 sliding-window layers pay full
+quadratic attention time for a 1,024-token window. That, not memory, is now the
+thing to fix.
+

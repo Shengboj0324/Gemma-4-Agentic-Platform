@@ -41,6 +41,18 @@ BASE_REPRESENTATION = 'packed_w4_group32_dequantized_per_use'
 ATTENTION_POLICY = {'implementation':'sdpa','math':False,'cudnn':False,'flash':True,'mem_efficient':True}
 LOSS_CHUNK_TOKENS = 1024
 
+def build_execution_config(config_sha256, versions):
+    """The worker identity bound into every checkpoint. The supervisor imports
+    this rather than restating it: a hand-kept copy drifted once, and the
+    supervisor then rejected a run the worker had completed correctly."""
+    return {'config_sha256':config_sha256,
+            'sources':{name:file_record(ROOT/name) for name in WORKER_SOURCES},
+            'versions':versions,'adapter':{'rank':4,'alpha':8,'dropout':0.0},
+            'dtype':'bfloat16','attention':ATTENTION_POLICY,
+            'base_representation':BASE_REPRESENTATION,
+            'loss':{'kind':'chunked_causal','chunk_tokens':LOSS_CHUNK_TOKENS}}
+
+
 def require_architecture_layout(model, manifest, manifest_sha256, output):
     """Require the CPU meta-model descriptor check before allocating GPU weights."""
     command = [sys.executable, '-I', '-B', str(ROOT/'scripts/verify_architecture_layout.py'),
@@ -108,12 +120,8 @@ def main():
     versions = {name: version(name) for name in required}
     if any(versions[name].split('+')[0] != pin for name,pin in required.items()):
         raise ValueError('Training runtime differs from qualified pins')
-    sources = {name:file_record(ROOT/name) for name in WORKER_SOURCES}
-    execution_config = {'config_sha256':args.config_sha256,'sources':sources,'versions':versions,
-                        'adapter':{'rank':4,'alpha':8,'dropout':0.0},
-                        'dtype':'bfloat16','attention':ATTENTION_POLICY,
-                        'base_representation':BASE_REPRESENTATION,
-                        'loss':{'kind':'chunked_causal','chunk_tokens':LOSS_CHUNK_TOKENS}}
+    execution_config = build_execution_config(args.config_sha256, versions)
+    sources = execution_config['sources']
     execution_sha256 = hashlib.sha256(canonical_json(execution_config)).hexdigest()
     args.output.mkdir(parents=True, exist_ok=False)
     try:

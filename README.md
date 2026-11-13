@@ -63,12 +63,12 @@ python3 -m unittest discover -s tests
 python3 -m zenithsync --help
 ```
 
-That collects all **1,016 tests** and passes, skipping the 79 that need an
+That collects all **1,034 tests** and passes, skipping the 92 that need an
 optional dependency. Every such test *skips* — a suite that errors instead
 cannot tell you whether your environment or the code is wrong.
 
-The **zero-skip** run needs torch, transformers, tokenizers, boto3 and
-python-dotenv, plus explicit Torch opt-in, because a smaller default run is not
+The **zero-skip** run needs torch, transformers, compressed-tensors, peft,
+tokenizers, pyarrow, requests, boto3 and python-dotenv, plus explicit Torch opt-in, because a smaller default run is not
 equivalent:
 
 ```bash
@@ -391,11 +391,12 @@ refused.
 
 | Area | Evidence |
 |---|---|
-| Local suite | **1,016 tests, zero skips** with the full dependency stack and Torch enabled, ~29 s; 1,016 collected and passing with 79 skips on a stdlib-only 3.13 |
+| Local suite | **1,034 tests, zero skips** on the pinned training stack (torch 2.10.0, transformers 5.13.1, compressed-tensors 0.15.0.1, peft 0.21.2) with Torch enabled, ~33 s; 92 skips on a stdlib-only 3.13 |
 | Official contract | unchanged starter compiles with the nine real bound functions; 25 Linux integration checks with networking disabled, 4 GiB, 2 CPUs |
 | Model intake | 8 files / 23,297,590,856 B / 2,009 tensors; 410 quantized projections verified |
 | Masks | six positive and six rejection fixtures against the real tokenizer |
-| LoRA on the real checkpoint | one H100 update on a **24-token** fixture, frozen-state and adapter-reload checks |
+| LoRA on the real checkpoint | one H100 update on a **24-token** fixture, frozen-state and adapter-reload checks; and one **full corpus update** on an A100 — 110,138 tokens including the 24,366-token longest example, peak 57.94 GiB of 79.25 |
+| Training throughput | **96.5 input tokens/s** on A100-SXM4-80GB over the schedule's heaviest update; one epoch forecast at ~2.9 h / ~$6.31 |
 | Admitted corpus | Corpus072: 51 tasks / 50 repository groups / 954,733 input / 262,593 supervised targets; four gates bound; content identity `c081880c…` |
 | Two-layer agreement | an independent audit reproduces every quantity, including the 210-token minimum context margin, from separate code |
 | R2 round trip | quarantine → promote → publish → restore with `--purpose training`; worker preflight accepts the staged tree |
@@ -404,15 +405,16 @@ refused.
 
 **What is not**
 
-- **No throughput has ever been measured** for this configuration, and the
-  2026-11-12 session did not change that: zero updates completed. The planner
-  refuses to forecast without a measured rate.
-- **No sustained real-corpus training run.** No 50M-token candidate started.
+- **Throughput is measured on one update only** — the heaviest of nine. The
+  epoch forecast extrapolates it linearly, which overstates cost for the
+  shorter examples (attention is quadratic) and ignores preemption.
+- **No sustained real-corpus training run.** One update of nine has run; no
+  50M-token candidate started.
 - **No learned improvement.** No sound claim of superiority over any other agent.
-- **Peak memory at full sequence length is now measured, and it does not fit.**
-  The first update on the real checkpoint OOMed on an 80 GB A100 asking for
-  35.39 GiB of attention workspace. The corpus runs 7,708 tokens at the shortest
-  and 24,366 at the longest, so no example in it comfortably fits today.
+- **Peak memory fits only after three fixes**, and only on an 80 GB card: the
+  base stays 4-bit packed, attention uses a fused SDPA kernel with the quadratic
+  fallback disabled, and the loss is chunked. Peak is 57.94 GiB at the corpus's
+  longest example. A 48 GB card is not expected to fit and has not been tried.
 - **Corpus072 is all `train` and all development-exposed.** A 50M-target run
   would be **190.4 repetitions** of the same 51 tasks — which is exactly why the
   public task pool exists.
@@ -421,11 +423,9 @@ refused.
   repositories were caught carrying copyleft text under a permissive label.
   That still says nothing about vendored third-party code, contributor
   rights, or whether a given use is permitted.
-- The dev interpreter has **torch 2.14.1**, not the worker's pinned **2.10.0**,
-  and no `compressed-tensors`. The Torch tests therefore pass on a *different*
-  Torch than the training stack; `scripts/verify_training_runtime.py` exits
-  nonzero here and names both mismatches. Closing that gap needs the container,
-  because the lock pins Linux wheels.
+- Locally, the Torch tests now also pass on the **pinned** torch 2.10.0 and
+  compressed-tensors 0.15.0.1 — but as macOS wheels in a scratch virtualenv,
+  not the locked Linux wheels. The Linux stack is qualified only on the pod.
 - `configs/Dockerfile.p1-training-runtime` **has never been built.** No official
   Runpod template ships Torch 2.10 with Python 3.12. Every pin it installs is
   now known to exist on the index by digest, which is not the same as the
@@ -461,21 +461,31 @@ A100-SXM4-80GB pods, both terminated ([docs/43](docs/43-runpod-training-runbook.
   attention score tensor**, with 64.45 GiB already allocated to dense weights and
   4.57 GiB free. Peak observed 74.68 GiB of 79.25.
 
-**Two defects that measurement exposed, to fix before any further GPU spend**
+**Fixed in code, then re-measured** — second session, 2026-11-13, ≈$1.31 on one
+A100-SXM4-80GB at $2.19/hour, terminated ([docs/43](docs/43-runpod-training-runbook.md) §10)
 
-1. **Attention runs eager**, so memory is quadratic in sequence length. Nothing
-   sets `attn_implementation`; an SDPA or flash kernel never materialises the
-   score tensor. Cheapest fix, largest expected effect.
-2. **The worker decompresses the 4-bit QAT checkpoint to dense weights** —
-   64.45 GiB before a single activation — because it rejects packed base
-   parameters outright. That undoes the reason the competition ships a 4-bit
-   checkpoint at all.
+- ~~Attention runs eager.~~ The worker had explicitly requested `eager`. It now
+  uses SDPA with the math and cuDNN backends disabled, so an unsupported shape
+  raises instead of materialising the score tensor. At 24,366 tokens the
+  memory-efficient kernel needs 5.6 GB for a 512-dim global layer.
+- ~~The 4-bit checkpoint is decompressed to dense weights.~~ `PackedW4Linear`
+  keeps all 410 projections packed and rebuilds one bf16 weight per use;
+  logits and input gradients equal the decompressed model's **bit for bit**.
+  Base load fell from 64.45 GiB to 19.0 GiB.
+- ~~The loss would have been the next OOM.~~ Full logits at 24k × 262k are
+  12.8 GB in bf16 before upcasting; the loss now runs over 1,024-position
+  slices under checkpointing.
+- ~~Throughput.~~ **96.5 input tokens/s** over the heaviest update; one epoch
+  forecast at ~2.9 h / ~$6.31.
 
-**Still needs a GPU, after those fixes**
+**Next**
 
-3. Throughput. No update completed, so there is still no measured rate, and
-   `forecast_campaign` still refuses to forecast. A subset run was attempted and
-   correctly refused: a schedule must cover the admitted training split exactly.
+1. A full one-epoch run (9 updates) on the same card, ~$6.31 forecast — needs
+   your go. Its first held-out evaluation is what would turn a loss number into
+   evidence of anything.
+2. Cheaper attention: sliding layers pay full L² inside the memory-efficient
+   kernel despite a 1,024-token window. A windowed kernel would cut most of the
+   per-token cost.
 
 **Needs a Linux host with Docker and disk**
 
@@ -492,12 +502,12 @@ A100-SXM4-80GB pods, both terminated ([docs/43](docs/43-runpod-training-runbook.
 ## Repository layout
 
 ```
-zenithsync/     106 modules, ~12.3k lines — contracts, model, masks, training,
+zenithsync/     108 modules, ~12.3k lines — contracts, model, masks, training,
                 admission, audit, transport, intake. Core needs no third-party packages.
-scripts/        138 CLIs, ~15.3k lines — every one writes a hash-bound receipt,
+scripts/        139 CLIs, ~15.3k lines — every one writes a hash-bound receipt,
                 refuses an existing --output, and writes nothing on failure.
-tests/          137 modules, ~14.9k lines, 1,016 tests — zero skips with the
-                full stack, 79 skips with the standard library alone.
+tests/          140 modules, ~15.4k lines, 1,034 tests — zero skips with the
+                full stack, 92 skips with the standard library alone.
 configs/        pinned serving/training profiles, deployment file map, Dockerfiles.
 requirements/   separate locks: serving, evaluator, tokenizer, R2, PEFT supplement.
                 These are NOT one interchangeable environment.
