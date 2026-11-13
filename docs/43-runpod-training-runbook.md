@@ -1,12 +1,18 @@
-# Runpod training runbook, and the permission it is waiting on
+# Runpod training runbook, and what the first billed session measured
 
-Status as of 2026-11-12: **no Runpod resource has been created, started, stopped
-or modified by this project, and no training has run.** This document is the
-plan for the first billed GPU session, written so that session is a scripted
-sequence with a hard stop rather than an exploration.
+**The session ran on 2026-11-12 and is finished.** Scope approved: build,
+qualify, measure, stop, under a $10 cap. Actual spend **≈ $1.32** on two
+A100-SXM4-80GB pods at $2.19/hour, both terminated, both temporary network
+volumes deleted. Nothing is still billing from this project.
 
-It exists because five of the seven remaining items cannot be completed without
-a GPU, and the user has asked to approve that step explicitly.
+**Headline result: the pinned stack qualifies on the device, and the corpus does
+not fit an 80 GB A100.** The first training update died with
+`torch.OutOfMemoryError` requesting **35.39 GiB for a single attention score
+tensor**, and the cause is identified precisely — see §9.
+
+Results are in §9; §§1–8 are the plan as written beforehand and are kept
+unchanged, because a plan rewritten after the fact to match the outcome records
+nothing.
 
 ---
 
@@ -202,3 +208,130 @@ with Docker and disk.
 Until that permission is given: no pod is created, nothing is billed, and the
 only thing standing between this repository and a first measurement is the
 decision.
+
+---
+
+## 9. What the session actually measured
+
+### 9.1 Phase 1 — the pinned environment qualifies on the device
+
+`requirements/training-linux-py312.lock.txt` installed with `--require-hashes`
+and no failures, on a stock `runpod/pytorch:…-ubuntu2404` pod whose system
+Python is 3.12.3. Installed: torch **2.10.0+cu128**, transformers **5.13.1**,
+compressed-tensors **0.15.0.1**, peft **0.21.2** — every pin matching, imported
+versions included. The index audit's prediction held exactly.
+
+`scripts/verify_training_runtime.py` then exited **0** with
+`device_checked: true`, `satisfied: true` and no failed checks, on an
+A100-SXM4-80GB (capability 8.0, 85,094,825,984 bytes total, 84,649,377,792 free
+at start, against the worker's 75,161,927,680-byte floor).
+
+**What this does and does not establish.** The *environment* is qualified on the
+device. The **container image is still unbuilt**: a Runpod pod offers no
+Docker daemon, so the lock was installed into a virtualenv instead. That checks
+the same package set the Dockerfile's `RUN` line would, on the same base OS and
+interpreter, but it is not a built, pushed, reusable image, and this document
+should not be read as saying otherwise.
+
+### 9.2 Data reached the pod from R2 with nothing read from this machine
+
+The corpus (115 files) and model (8 files, 23,297,590,856 bytes) were fetched by
+**presigned URL** — signatures only, no credential on the pod — and then verified
+on the pod against their manifests with the repository's own `verify()`. The
+model manifest reproduced its published digest
+`294f52e33ca2a1c055aa189f28966d96e4e65aa3f586a00cfd6f8ab0a0a87853` byte for byte,
+confirming `canonical_json` is deterministic across machines.
+
+`verify_admitted_corpus.py` ran on the pod and reproduced the local figures
+exactly: 51 examples, 51 unique tasks, 50 repository groups, 954,733 input and
+262,593 supervised tokens, 24,366-token longest example, 210-token minimum
+margin, `loader_agreement: true`, all four gates resolved. The schedule
+regenerated to `4664ecf6…`, the digest recorded months earlier.
+
+The real checkpoint's architecture also checked out on device: **410 quantized
+projections, 779 unquantized tensors, 2,009 checkpoint tensors, 1,189 logical
+model tensors.**
+
+### 9.3 Phase 2 — peak memory, answered
+
+| Quantity | Value |
+|---|---|
+| Device | A100-SXM4-80GB, 79.25 GiB usable |
+| Peak observed before failure | **80,191,946,752 bytes (74.68 GiB)**, 242 monitor samples |
+| Allocated by PyTorch at failure | 64.45 GiB |
+| Reserved but unallocated | 9.71 GiB |
+| Free at failure | 4.57 GiB |
+| **Failing single allocation** | **35.39 GiB** |
+| Updates completed | **0** — it failed on the first |
+| Session wall time | 285.87 s, `reason: exited`, `returncode: 1` |
+
+The failing frame is the decisive detail:
+
+```
+transformers/models/gemma4/modeling_gemma4.py line 844, in eager_attention_forward
+    attn_weights = torch.matmul(query, key_states.transpose(2, 3)) * scaling
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 35.39 GiB.
+```
+
+Two separate problems, and it matters which is which.
+
+**The worker decompresses the 4-bit checkpoint to dense weights.** 64.45 GiB was
+allocated before any activation, against 60.88 GiB of reconstructed dense
+weights recorded at intake. The worker refuses packed parameters outright
+(`'Offloaded or packed base parameters rejected'`), so the QAT checkpoint's 4-bit
+packing — the entire reason the competition ships that checkpoint — is undone at
+load time, consuming 80% of the card before training starts. Keeping the base
+quantized and training only the adapter is the normal shape of this job, and the
+worker currently forbids it.
+
+**Attention runs eager, so memory is quadratic in sequence length.** Nothing in
+the worker sets `attn_implementation`, and transformers selected
+`eager_attention_forward`, which materialises the full `[batch, heads, seq, seq]`
+score tensor — 35.39 GiB at this sequence length. An SDPA or flash kernel never
+materialises it. This is the cheaper of the two fixes and should be tried first,
+in a tested commit rather than on a billed pod.
+
+Together these bound the configuration hard: ~15 GiB of headroom after dense
+weights, against a corpus whose examples are **7,708 tokens at the shortest,
+19,709 at the median and 24,366 at the longest**. There is no sequence length in
+this corpus that comfortably fits.
+
+### 9.4 Throughput — still not measured, and now for a stated reason
+
+No update completed, so there is no rate. A second run restricted to the two
+examples under 8,192 tokens was attempted and **correctly refused** by
+`preflight_corpus_run`: *"Schedule does not cover the admitted training split
+exactly."* Training on a cherry-picked subset of an admitted corpus is not
+permitted, which is the right answer — measuring throughput on 2 of 51 examples,
+below the corpus minimum, would have produced a number worth less than its
+caveats. Obtaining one legitimately needs either a memory fix or a differently
+admitted corpus.
+
+So `forecast_campaign` still has no measured rate to work from, and still
+refuses to forecast. That position is unchanged, but it is now a consequence of
+a known blocker rather than of never having looked.
+
+### 9.5 Evidence
+
+Published to R2 under manifest
+`c451db62c867509a5462723bdc76301178181064fb55a4b8b05f08b58b65f22b` (15 files,
+161,908 bytes), and retained at
+[evidence/p1/gpu-measurement-001](../evidence/p1/gpu-measurement-001): both
+preflight receipts, the independent audit, the architecture report, the
+242-sample device-memory trace, the full OOM traceback, the lifecycle record,
+the schedules and configs, and the log of the refused subset run.
+
+### 9.6 What to do next, in order
+
+1. **Set `attn_implementation` to a non-materialising kernel** in the worker's
+   model load, with a test, and re-measure. Cheapest change with the largest
+   expected effect.
+2. **Decide whether the worker should accept packed base parameters.** If LoRA
+   training on the QAT checkpoint is the intent, decompressing to dense bf16
+   defeats it; if decompression is deliberate, the card needs to be chosen for
+   60.88 GiB of weights plus activations, which an 80 GB device cannot provide at
+   these sequence lengths.
+3. Only then re-run the bounded measurement, and only then forecast.
+
+A card larger than 80 GB (H200 at 141 GB, B200 at 180 GB) would also clear it,
+at 1.6–3.6× the hourly rate, and would be buying around a fixable defect.

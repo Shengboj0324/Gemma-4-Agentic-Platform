@@ -404,13 +404,15 @@ refused.
 
 **What is not**
 
-- **No throughput has ever been measured** for this configuration. The recorded
-  67,231 MiB device reading came from a **24-token** fixture: it bounds memory,
-  not speed. The planner refuses to forecast without a measured rate.
+- **No throughput has ever been measured** for this configuration, and the
+  2026-11-12 session did not change that: zero updates completed. The planner
+  refuses to forecast without a measured rate.
 - **No sustained real-corpus training run.** No 50M-token candidate started.
 - **No learned improvement.** No sound claim of superiority over any other agent.
-- **Peak memory at full sequence length is unmeasured.** The corpus's longest
-  example is 24,366 input tokens.
+- **Peak memory at full sequence length is now measured, and it does not fit.**
+  The first update on the real checkpoint OOMed on an 80 GB A100 asking for
+  35.39 GiB of attention workspace. The corpus runs 7,708 tokens at the shortest
+  and 24,366 at the longest, so no example in it comfortably fits today.
 - **Corpus072 is all `train` and all development-exposed.** A 50M-target run
   would be **190.4 repetitions** of the same 51 tasks — which is exactly why the
   public task pool exists.
@@ -447,14 +449,33 @@ findings that came out of doing it.
   digest, as a cp312 manylinux or pure-Python wheel, no source builds. Four pins
   in the old serving lock would have failed the build.
 
-**Needs a GPU, and is waiting on explicit permission**
+**Done on a GPU** — one approved session, 2026-11-12, ≈$1.32 on two
+A100-SXM4-80GB pods, both terminated ([docs/43](docs/43-runpod-training-runbook.md) §9)
 
-1. Build and qualify the training image; require `verify_training_runtime.py` to
-   exit zero inside it on a card with ≥70 GiB free. **The competition's L4×4 is
-   an inference constraint; the worker refuses anything under 70 GiB.**
-2. One bounded run measuring throughput *and* peak memory at realistic sequence
-   length. The existing worker already records both — no new measurement code.
-3. Forecast from that measured rate, then decide on a sustained run.
+- ~~Qualify the pinned stack on the device.~~ The 61-pin lock installed with
+  `--require-hashes` and no failures, and `verify_training_runtime.py` exited 0
+  with `device_checked: true`. The **container image is still unbuilt** — a pod
+  has no Docker daemon, so the lock went into a virtualenv instead.
+- ~~Measure peak memory at full sequence length.~~ **It does not fit.** The first
+  update died in `eager_attention_forward` requesting **35.39 GiB for one
+  attention score tensor**, with 64.45 GiB already allocated to dense weights and
+  4.57 GiB free. Peak observed 74.68 GiB of 79.25.
+
+**Two defects that measurement exposed, to fix before any further GPU spend**
+
+1. **Attention runs eager**, so memory is quadratic in sequence length. Nothing
+   sets `attn_implementation`; an SDPA or flash kernel never materialises the
+   score tensor. Cheapest fix, largest expected effect.
+2. **The worker decompresses the 4-bit QAT checkpoint to dense weights** —
+   64.45 GiB before a single activation — because it rejects packed base
+   parameters outright. That undoes the reason the competition ships a 4-bit
+   checkpoint at all.
+
+**Still needs a GPU, after those fixes**
+
+3. Throughput. No update completed, so there is still no measured rate, and
+   `forecast_campaign` still refuses to forecast. A subset run was attempted and
+   correctly refused: a schedule must cover the admitted training split exactly.
 
 **Needs a Linux host with Docker and disk**
 

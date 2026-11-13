@@ -14071,3 +14071,106 @@ given, and no Runpod resource has been created, started, stopped or modified.
 
 Local suite 1,016 passed, zero skips on the full stack; 1,016 collected with 79
 skips on the standard library alone.
+
+## The first billed GPU session, and the two defects it found
+
+Scope was approved explicitly: build, qualify, measure, stop, under a $10 cap.
+Actual spend **≈$1.32** on two A100-SXM4-80GB pods at $2.19/hour. Both
+terminated, both temporary network volumes deleted, nothing left billing.
+
+### What worked, first try
+
+The derived 61-pin lock installed with `--require-hashes` and no failures on a
+stock Ubuntu 24.04 pod whose system Python is 3.12.3 — torch 2.10.0+cu128,
+transformers 5.13.1, compressed-tensors 0.15.0.1, peft 0.21.2, imported versions
+matching. The index audit had predicted exactly this, which is the whole value of
+having run it: the prediction was cheap and it held.
+
+`verify_training_runtime.py` exited 0 with `device_checked: true` on the A100.
+That retires the project's longest-standing unqualified item — though only for
+the *environment*. The **container image is still unbuilt**: a Runpod pod has no
+Docker daemon, so the lock went into a virtualenv. It checks the same package set
+the Dockerfile's RUN line would, on the same base OS and interpreter, and it is
+not a built image. Saying otherwise would be the easiest lie available here.
+
+Corpus and model reached the pod by **presigned URL**, so no R2 credential was
+ever written to the pod or into this session's transcript. Both were then
+verified on the pod against their manifests with the repository's own `verify()`,
+and the model manifest reproduced its published digest `294f52e3…` byte for byte
+— a pleasant confirmation that `canonical_json` is deterministic across machines.
+`verify_admitted_corpus.py` ran on the pod and reproduced every local figure, and
+the schedule regenerated to `4664ecf6…`, the digest recorded months ago.
+
+### What failed, and why it is the useful part
+
+The first training update died:
+
+```
+transformers/models/gemma4/modeling_gemma4.py line 844, in eager_attention_forward
+    attn_weights = torch.matmul(query, key_states.transpose(2, 3)) * scaling
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 35.39 GiB.
+GPU 0 has a total capacity of 79.25 GiB of which 4.57 GiB is free.
+```
+
+Peak observed 74.68 GiB across 242 monitor samples; 64.45 GiB allocated by
+PyTorch, 9.71 GiB reserved but unallocated; zero updates completed.
+
+Two distinct defects, and conflating them would lead to buying the wrong fix.
+
+**Attention runs eager.** Nothing in the worker sets `attn_implementation`, so
+transformers chose `eager_attention_forward`, which materialises the full
+`[batch, heads, seq, seq]` score tensor. That is the 35.39 GiB. An SDPA or flash
+kernel never materialises it. Cheapest fix, largest expected effect, and it
+belongs in a tested commit rather than a pod-side hack.
+
+**The worker decompresses the 4-bit QAT checkpoint to dense weights.** 64.45 GiB
+allocated before a single activation, against 60.88 GiB of reconstructed dense
+weights recorded at intake. The worker rejects packed base parameters outright
+(`'Offloaded or packed base parameters rejected'`), so the 4-bit packing — the
+entire reason the competition ships that checkpoint — is undone at load. Training
+only an adapter over a still-quantized base is the normal shape of this job, and
+the worker currently forbids it. This is an architectural decision to revisit,
+not a tuning knob.
+
+Together they bound the configuration hard: roughly 15 GiB of headroom after
+dense weights, against a corpus whose examples run **7,708 tokens at the
+shortest, 19,709 at the median, 24,366 at the longest**. No example in this
+corpus comfortably fits today.
+
+### The guard that refused the shortcut
+
+Wanting a throughput number, I built a schedule over just the two examples under
+8,192 tokens. `preflight_corpus_run` refused it: *"Schedule does not cover the
+admitted training split exactly."* That is correct and I am glad it is there —
+training on a cherry-picked subset of an admitted corpus is exactly the kind of
+quiet scope change that makes a later number meaningless. The honest consequence
+is that throughput remains unmeasured, now for a stated reason rather than
+through never having looked.
+
+### Two mistakes of mine worth recording
+
+The first pod had no network volume, so `require_volume` refused the output path
+as ephemeral — correctly. I then attached a volume to the *running* second pod,
+which **restarted the container and wiped the 80 GB overlay**, destroying the
+venv and the 22 GB model I had just downloaded. The mount documentation says the
+container disk is ephemeral; I read that as "across stop/start", not "a mount
+change counts". Cost: one re-download, about four minutes.
+
+The second: `require_volume` applies to *every* path the worker is given, not
+just the output. A 10 GB volume for checkpoints was useless when the model,
+corpus, schedule and config all had to live under the same root. The 60 GB
+volume that replaced it is what the run actually needed.
+
+### Evidence
+
+Published to R2 under manifest
+`c451db62c867509a5462723bdc76301178181064fb55a4b8b05f08b58b65f22b` (15 files,
+161,908 bytes) and retained at `evidence/p1/gpu-measurement-001`: both preflight
+receipts, the independent audit, the architecture report, the 242-sample
+device-memory trace, the full OOM traceback, the lifecycle record, the schedules
+and configs, and the log of the refused subset run.
+
+The ordered next steps are in [the runbook](43-runpod-training-runbook.md) §9.6.
+No further GPU spend is warranted until the attention kernel and the
+decompression question are settled, because both are fixable in code and renting
+a larger card would be paying to work around a defect.
