@@ -35,11 +35,8 @@ def _updated_adapter(load_base, batch, target_shapes, rank, alpha, learning_rate
     _stage('initial_base_load_started')
     base = load_base()
     _stage('initial_base_loaded')
-    modules = dict(base.named_modules())
-    for name, shape in target_shapes.items():
-        module = modules.get(name)
-        if not isinstance(module, torch.nn.Linear) or list(module.weight.shape) != list(shape):
-            raise ValueError('Target is absent or has unexpected shape: ' + name)
+    from zenithsync.packed_base import require_projection_targets
+    require_projection_targets(base, target_shapes)
     _stage('adapter_attachment_started')
     model = get_peft_model(base, LoraConfig(
         r=rank, lora_alpha=alpha, lora_dropout=0.0, bias='none',
@@ -54,6 +51,8 @@ def _updated_adapter(load_base, batch, target_shapes, rank, alpha, learning_rate
     count = sum(value.numel() for value in parameters)
     if count != rank * sum(rows + cols for rows, cols in target_shapes.values()):
         raise ValueError('Adapter parameter count violates rank/shape accounting')
+    if len({value.device for value in model.parameters()}) != 1:
+        raise ValueError('Adapter and base parameters must share one device')
     model.config.use_cache = False
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant': False})
     model.train()

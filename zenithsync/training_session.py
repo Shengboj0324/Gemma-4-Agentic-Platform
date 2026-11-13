@@ -82,8 +82,10 @@ def run_training_session(model, optimizer, *, corpus, schedule, bindings, expect
         # Reserve the full per-checkpoint cap before spending an optimizer step.
         if max_session_checkpoint_bytes - stored_bytes < max_checkpoint_bytes:
             reason = 'checkpoint_budget'; break
+        update_started = time.monotonic()
         metrics = train_corpus_update(model, optimizer, corpus, pending,
                                       max_sequence_tokens=max_sequence_tokens)
+        update_seconds = time.monotonic() - update_started
         payload = capture_adapter_checkpoint(model, optimizer, bindings=bindings,
             schedule=schedule, cursor=pending['next_cursor'], expected_frozen=expected_frozen)
         path = output / ('update-' + str(pending['step']).zfill(8) + '.pt')
@@ -92,8 +94,12 @@ def run_training_session(model, optimizer, *, corpus, schedule, bindings, expect
         # Advance the committed cursor only after checkpoint publication returns.
         cursor = dict(pending['next_cursor'])
         stored_bytes += identity['size_bytes']
+        # update_seconds covers forward, backward and the optimizer step only;
+        # checkpoint capture and publication are excluded so it is a training rate.
         checkpoints.append({'path': str(path.resolve()), 'identity': identity,
-                            'cursor': cursor, 'metrics': metrics})
+                            'cursor': cursor, 'metrics': metrics,
+                            'update_seconds': update_seconds,
+                            'input_tokens': pending['input_tokens']})
         pending = next(updates, None)
     return {'status': reason, 'cursor': cursor, 'checkpoints': checkpoints,
             'checkpoint_bytes': stored_bytes, 'elapsed_seconds': time.monotonic() - started}

@@ -25,7 +25,8 @@ class SessionReportTests(unittest.TestCase):
             path.write_bytes(canonical_json(payload))
             self.records.append({'path':str(path),'identity':file_record(path),
                 'cursor':update['next_cursor'],'metrics':{'supervised_tokens':1,
-                'microbatch_supervised_tokens':[1],'token_mean_loss':1.2,'microbatches':1}})
+                'microbatch_supervised_tokens':[1],'token_mean_loss':1.2,'microbatches':1},
+                'update_seconds':0.25,'input_tokens':update['input_tokens']})
         self.report = {'status':'schedule_complete','cursor':self.records[-1]['cursor'],
             'checkpoints':self.records,'checkpoint_bytes':sum(r['identity']['size_bytes'] for r in self.records),
             'elapsed_seconds':1.0}
@@ -50,7 +51,13 @@ class SessionReportTests(unittest.TestCase):
                    lambda r:r['checkpoints'][0]['metrics'].update(supervised_tokens=True),
                    lambda r:r['checkpoints'][0]['metrics'].update(token_mean_loss=float('nan')),
                    lambda r:r['checkpoints'][0]['cursor'].update(completed_updates=True),
-                   lambda r:r['checkpoints'].reverse()]
+                   lambda r:r['checkpoints'].reverse(),
+                   lambda r:r['checkpoints'][0].update(update_seconds=float('nan')),
+                   lambda r:r['checkpoints'][0].update(update_seconds=-1.0),
+                   lambda r:r['checkpoints'][0].update(update_seconds=2.0),
+                   lambda r:r['checkpoints'][0].update(input_tokens=4),
+                   lambda r:r['checkpoints'][0].update(input_tokens=True),
+                   lambda r:r['checkpoints'][0].pop('update_seconds')]
         for change in changes:
             report = copy.deepcopy(self.report);change(report)
             with self.assertRaises(ValueError):self.validate(report)

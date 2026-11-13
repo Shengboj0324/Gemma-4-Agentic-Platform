@@ -70,7 +70,9 @@ def main():
         import torch
         torch.set_num_threads(4)
         torch.set_num_interop_threads(1)
-        from transformers import Gemma4ForConditionalGeneration, CompressedTensorsConfig
+        from transformers import Gemma4ForConditionalGeneration
+        from zenithsync.chunked_loss import install_chunked_causal_loss
+        from zenithsync.packed_base import load_packed_base, restrict_attention_kernels
         if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
             raise ValueError('Exactly one visible CUDA GPU required')
         # Reject other visible compute clients; free-memory admission alone does
@@ -86,6 +88,7 @@ def main():
         torch.manual_seed(7401)
         torch.use_deterministic_algorithms(True)
         torch.backends.cuda.matmul.allow_tf32 = False
+        kernels = restrict_attention_kernels()
         manifest = load_json(args.manifest)
         verify(args.model, manifest)
         config = load_json(args.model / 'config.json')
@@ -99,14 +102,11 @@ def main():
         loads = []
 
         def load_base():
-            model = Gemma4ForConditionalGeneration.from_pretrained(args.model,
-                local_files_only=True, trust_remote_code=False, dtype=torch.bfloat16,
-                quantization_config=CompressedTensorsConfig(run_compressed=False),
-                attn_implementation='eager', device_map={'': 'cuda:0'})
-            if any(value.device.type != 'cuda' for value in model.parameters()):
-                raise ValueError('CPU/meta/offloaded model parameter rejected')
-            if any('weight_packed' in name for name, _ in model.named_parameters()):
-                raise ValueError('Packed parameters remain after decompression')
+            # Packed int4 base, SDPA without the math fallback, chunked loss:
+            # the same memory policy as the corpus worker.
+            model = load_packed_base(Gemma4ForConditionalGeneration, args.model, shapes,
+                                     device='cuda:0')
+            install_chunked_causal_loss(model, chunk_tokens=1024)
             loads.append({'allocated_bytes': torch.cuda.memory_allocated(),
                           'reserved_bytes': torch.cuda.memory_reserved()})
             return model
@@ -118,6 +118,8 @@ def main():
         (args.output / 'worker.json').write_bytes(canonical_json({
             'schema_version': 1, 'status': 'full_checkpoint_one_update_reload_passed',
             'versions': versions, 'mounts': mounts, 'model_manifest': file_record(args.manifest),
+            'attention_kernels': kernels,
+            'base_representation': 'packed_w4_group32_dequantized_per_use',
             'cpu_threads': {'intraop': torch.get_num_threads(), 'interop': torch.get_num_interop_threads()},
             'initial_free_bytes': free, 'device_total_bytes': total, 'load_samples': loads,
             'peak_torch_allocated_bytes': torch.cuda.max_memory_allocated(),

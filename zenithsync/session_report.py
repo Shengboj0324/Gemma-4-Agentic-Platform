@@ -34,10 +34,17 @@ def validate_session_report(report, *, schedule, start_cursor, bindings, checkpo
     cursor = start_cursor
     stored = 0
     for record in records:
-        if not isinstance(record,dict) or set(record) != {'path','identity','cursor','metrics'}:
+        if not isinstance(record,dict) or set(record) != {
+                'path','identity','cursor','metrics','update_seconds','input_tokens'}:
             raise ValueError('Invalid checkpoint record')
+        seconds = record['update_seconds']
+        if (type(seconds) not in (int,float) or not math.isfinite(seconds)
+                or not 0 <= seconds <= elapsed):
+            raise ValueError('Invalid per-update training time')
         if pending is None or canonical_json(record['cursor']) != canonical_json(pending['next_cursor']):
             raise ValueError('Checkpoint cursor skips or repeats scheduled work')
+        if type(record['input_tokens']) is not int or record['input_tokens'] != pending['input_tokens']:
+            raise ValueError('Checkpoint input tokens differ from scheduled update')
         path = Path(record['path'])
         expected_path = root/('update-'+str(pending['step']).zfill(8)+'.pt')
         if path != expected_path or path.is_symlink():

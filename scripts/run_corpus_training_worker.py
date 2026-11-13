@@ -32,8 +32,14 @@ WORKER_SOURCES = [
         'zenithsync/artifacts.py','zenithsync/contracts.py','zenithsync/splits.py',
         'zenithsync/quantized_layout.py','zenithsync/gpu_memory.py',
         'scripts/verify_architecture_layout.py','zenithsync/architecture_layout.py',
-        'zenithsync/model_intake.py',
+        'zenithsync/model_intake.py','zenithsync/packed_base.py','zenithsync/chunked_loss.py',
         'scripts/run_p1_training_worker.py']
+
+# Memory policy, fixed in the execution identity. The first GPU session OOMed on
+# an eager [batch, heads, seq, seq] score tensor over a fully decompressed base.
+BASE_REPRESENTATION = 'packed_w4_group32_dequantized_per_use'
+ATTENTION_POLICY = {'implementation':'sdpa','math':False,'cudnn':False,'flash':True,'mem_efficient':True}
+LOSS_CHUNK_TOKENS = 1024
 
 def require_architecture_layout(model, manifest, manifest_sha256, output):
     """Require the CPU meta-model descriptor check before allocating GPU weights."""
@@ -105,7 +111,9 @@ def main():
     sources = {name:file_record(ROOT/name) for name in WORKER_SOURCES}
     execution_config = {'config_sha256':args.config_sha256,'sources':sources,'versions':versions,
                         'adapter':{'rank':4,'alpha':8,'dropout':0.0},
-                        'dtype':'bfloat16','attention':'eager'}
+                        'dtype':'bfloat16','attention':ATTENTION_POLICY,
+                        'base_representation':BASE_REPRESENTATION,
+                        'loss':{'kind':'chunked_causal','chunk_tokens':LOSS_CHUNK_TOKENS}}
     execution_sha256 = hashlib.sha256(canonical_json(execution_config)).hexdigest()
     args.output.mkdir(parents=True, exist_ok=False)
     try:
@@ -115,8 +123,10 @@ def main():
                           CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='4', MKL_NUM_THREADS='4')
         import numpy as np
         import torch
-        from transformers import Gemma4ForConditionalGeneration, CompressedTensorsConfig
+        from transformers import Gemma4ForConditionalGeneration
+        from zenithsync.chunked_loss import install_chunked_causal_loss
         from zenithsync.gemma_training import attach_training_adapter
+        from zenithsync.packed_base import load_packed_base, restrict_attention_kernels
         from zenithsync.adapter_checkpoint import frozen_state
         from zenithsync.training_session import run_training_session
         from zenithsync.gpu_memory import DeviceMemoryMonitor
@@ -134,6 +144,9 @@ def main():
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.benchmark = False
         torch.backends.cudnn.deterministic = True
+        kernels = restrict_attention_kernels()
+        if {'implementation':'sdpa', **kernels} != ATTENTION_POLICY:
+            raise ValueError('Attention kernel policy differs from execution identity')
         bindings = {'base_manifest_sha256':args.manifest_sha256,
                     'corpus_manifest_sha256':args.corpus_sha256,
                     'corpus_content_sha256':corpus.summary['content_sha256'],
@@ -143,12 +156,10 @@ def main():
             'identity':{'sha256':args.resume_sha256,'size_bytes':args.resume_size}}
         torch.cuda.reset_peak_memory_stats()
         with DeviceMemoryMonitor(args.output/'device-memory.jsonl') as monitor:
-            base = Gemma4ForConditionalGeneration.from_pretrained(args.model,
-                local_files_only=True, trust_remote_code=False, dtype=torch.bfloat16,
-                quantization_config=CompressedTensorsConfig(run_compressed=False),
-                attn_implementation='eager', device_map={'':'cuda:0'})
-            if any(p.device.type != 'cuda' or 'weight_packed' in name for name,p in base.named_parameters()):
-                raise ValueError('Offloaded or packed base parameters rejected')
+            base = load_packed_base(Gemma4ForConditionalGeneration, args.model, shapes, device='cuda:0')
+            base_load = {'allocated_bytes':torch.cuda.memory_allocated(),
+                         'reserved_bytes':torch.cuda.memory_reserved()}
+            install_chunked_causal_loss(base, chunk_tokens=LOSS_CHUNK_TOKENS)
             model = attach_training_adapter(base, shapes)
             frozen = frozen_state(model)
             optimizer = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
@@ -164,7 +175,7 @@ def main():
             'schema_version':1,'status':'corpus_session_returned','session':session,
             'versions':versions,'mounts':mounts,'bindings':bindings,
             'execution_config':execution_config,
-            'architecture_report':architecture,
+            'architecture_report':architecture,'attention_kernels':kernels,'base_load':base_load,
             'initial_free_bytes':free,'device_total_bytes':total,
             'peak_allocated_bytes':torch.cuda.max_memory_allocated(),
             'peak_reserved_bytes':torch.cuda.max_memory_reserved(),'device_memory':monitor.summary(),
