@@ -55,6 +55,34 @@ class ObjectStoreTests(unittest.TestCase):
         self.client = MemoryClient()
         self.store = ArtifactStore(self.client, "test-bucket")
 
+    def test_streamed_publish_equals_whole_tree_publish(self):
+        # put_file + commit_manifest is how data too large to hold locally is
+        # published: each file uploaded, read back, then deletable.
+        from zenithsync.artifacts import file_record
+        records = {r["path"]: r for r in self.manifest["files"]}
+        uploaded = [self.store.put_file(self.source / name, r) for name, r in records.items()]
+        self.assertEqual(uploaded, [True, True])
+        self.assertEqual([self.store.put_file(self.source / name, r) for name, r in records.items()],
+                         [False, False])
+        streamed = self.store.commit_manifest(self.manifest)
+        whole = ArtifactStore(MemoryClient(), "test-bucket").publish(self.source, self.manifest)
+        self.assertEqual(streamed["manifest_sha256"], whole["manifest_sha256"])
+        self.assertEqual(streamed["verified_bytes"], whole["verified_bytes"])
+        restored = self.root / "restored"
+        self.store.restore(self.manifest, restored, max_bytes=1024)
+        verify(restored, self.manifest)
+        self.assertEqual(file_record(restored / "a"), {k: records["a"][k] for k in ("sha256", "size_bytes")})
+
+    def test_commit_manifest_refuses_a_missing_or_corrupt_blob(self):
+        records = {r["path"]: r for r in self.manifest["files"]}
+        self.store.put_file(self.source / "a", records["a"])  # "empty" never uploaded
+        with self.assertRaises(Missing):
+            self.store.commit_manifest(self.manifest)
+        self.assertFalse(any("/manifests/" in key for key in self.client.objects))
+        self.client.corrupt_upload = True
+        with self.assertRaises(IntegrityError):
+            ArtifactStore(self.client, "test-bucket").put_file(self.source / "empty", {**records["empty"], "size_bytes": 1, "sha256": "0" * 64})
+
     def test_roundtrip_and_idempotent_retry(self):
         first = self.store.publish(self.source, self.manifest)
         second = self.store.publish(self.source, self.manifest)

@@ -152,24 +152,50 @@ class ArtifactStore:
         verify(root, frozen)
         uploaded, reused = 0, 0
         for record in frozen["files"]:
-            key = self.blob_key(record["sha256"])
-            # Read, upload-on-miss and re-read are one unit of work on this key.
-            # Split across workers they become duplicate concurrent writes to a
-            # single object, which the service refuses.
-            with self._one_writer_per_key(key):
-                try:
-                    self._read_verified(key, record)
-                except Exception as exc:
-                    if not _missing(exc):
-                        raise
-                    self.client.upload_file(str(root / record["path"]),
-                                            self.bucket, key)
-                    self._read_verified(key, record)
-                    uploaded += 1
-                else:
-                    reused += 1
+            if self.put_file(root / record["path"], record):
+                uploaded += 1
+            else:
+                reused += 1
         # Detect source drift before publishing the bundle's commit marker.
         verify(root, frozen)
+        return {**self._commit(frozen), "uploaded_files": uploaded, "reused_files": reused}
+
+    def put_file(self, path: Path, record: dict) -> bool:
+        """Upload one file to its content address unless it is already there.
+
+        Returns True when bytes were uploaded. Either way the remote object is
+        read back and hashed before this returns. ``record`` must describe the
+        file's bytes; a file that no longer matches fails the readback.
+        """
+        key = self.blob_key(record["sha256"])
+        # Read, upload-on-miss and re-read are one unit of work on this key.
+        # Split across workers they become duplicate concurrent writes to a
+        # single object, which the service refuses.
+        with self._one_writer_per_key(key):
+            try:
+                self._read_verified(key, record)
+            except Exception as exc:
+                if not _missing(exc):
+                    raise
+                self.client.upload_file(str(path), self.bucket, key)
+                self._read_verified(key, record)
+                return True
+            return False
+
+    def commit_manifest(self, manifest: object) -> dict:
+        """Commit a manifest whose files were published one by one.
+
+        For data too large to hold locally at once: each file goes through
+        ``put_file`` and is deleted, then this verifies every referenced blob
+        (a read already verified in this store's run is reused only when
+        ``verify_once_per_run`` is on) and writes the commit marker last.
+        """
+        frozen = _snapshot(manifest)
+        for record in frozen["files"]:
+            self._read_verified(self.blob_key(record["sha256"]), record)
+        return {**self._commit(frozen), "uploaded_files": None, "reused_files": None}
+
+    def _commit(self, frozen: dict) -> dict:
         payload = canonical_json(frozen)
         identity = hashlib.sha256(payload).hexdigest()
         key = f"{self.prefix}/manifests/sha256/{identity}.json"
@@ -185,7 +211,6 @@ class ArtifactStore:
                                        ContentType="application/json")
                 self._read_verified(key, record)
         return {"manifest_sha256": identity, "manifest_key": key,
-                "uploaded_files": uploaded, "reused_files": reused,
                 "verified_bytes": sum(r["size_bytes"] for r in frozen["files"])}
 
     def restore(self, manifest: object, destination: Path, *, max_bytes: int) -> dict:

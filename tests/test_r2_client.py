@@ -149,7 +149,7 @@ class BuildClientRetryTests(unittest.TestCase):
 
     def build(self, **extra):
         from zenithsync.r2_client import build_client
-        return build_client(environ=environment(), **extra)
+        return build_client(environ={**environment(), 'R2_BUCKET_NAME': 'gemma4agenticdata'}, **extra)
 
     def test_adaptive_retries_are_configured_with_more_than_the_default(self):
         client, bucket, description = self.build()
@@ -163,7 +163,7 @@ class BuildClientRetryTests(unittest.TestCase):
         self.assertEqual(config.retries['mode'], description['retry_mode'])
         self.assertEqual(config.retries['total_max_attempts'],
                          description['retry_max_attempts'])
-        self.assertEqual(bucket, 'example-bucket')
+        self.assertEqual(bucket, 'gemma4agenticdata')
 
     def test_the_retry_policy_is_recorded_in_the_connection_description(self):
         _, _, description = self.build(max_attempts=5)
@@ -177,3 +177,14 @@ class BuildClientRetryTests(unittest.TestCase):
             with self.subTest(value=value):
                 with self.assertRaisesRegex(ValueError, 'max_attempts'):
                     self.build(max_attempts=value)
+
+
+class BucketScopeTests(unittest.TestCase):
+    def test_build_client_refuses_any_other_bucket(self):
+        from zenithsync.r2_client import ALLOWED_BUCKET, build_client
+        self.assertEqual(ALLOWED_BUCKET, 'gemma4agenticdata')
+        environ = {'R2_ENDPOINT_URL': 'https://example.invalid', 'R2_BUCKET_NAME': 'another-bucket',
+                   'R2_ACCESS_KEY_ID': 'x', 'R2_SECRET_ACCESS_KEY': 'y'}
+        with self.assertRaisesRegex(ValueError, 'outside this project'):
+            build_client(environ=environ)
+

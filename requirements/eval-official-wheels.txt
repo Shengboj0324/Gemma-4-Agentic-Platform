@@ -1,0 +1,7 @@
+# Official wheelhouse builds that decide harness behaviour; install with
+#   WHEELHOUSE=<dir> pip install --no-deps --require-hashes -r this-file
+# Version changes against the serving lock: {'vllm': {'lock': '0.19.1', 'wheelhouse': '0.19.1'}, 'swegemma': {'lock': '0.2.10', 'wheelhouse': '0.2.11'}, 'adk-eval-core': {'lock': '0.1.0', 'wheelhouse': '0.1.0'}, 'adk-submission': {'lock': '0.2.13', 'wheelhouse': '0.2.13'}}
+vllm @ file://${WHEELHOUSE}/vllm-0.19.1-cp38-abi3-manylinux_2_31_x86_64.whl --hash=sha256:73c69bafca24fbdad44690c44d6c6446514351e6f3cc9a6057cba05e66051310
+swegemma @ file://${WHEELHOUSE}/swegemma-0.2.11-py3-none-any.whl --hash=sha256:9ad876581f3acde8ec3c369858f0834e2b9f41a3cffce3ca42f09cb090aea9d3
+adk-eval-core @ file://${WHEELHOUSE}/adk_eval_core-0.1.0-py3-none-any.whl --hash=sha256:e614e1b2fe8d886a634871e4c57f9887e1cc66e8c27300f8503a43c6e3ca82f3
+adk-submission @ file://${WHEELHOUSE}/adk_submission-0.2.13-py3-none-any.whl --hash=sha256:f156f0bd84580ccb9334726d114d7a5481f16d3a6e2887cc4d276ced0ef8d99d

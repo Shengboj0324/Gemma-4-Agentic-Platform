@@ -24,6 +24,10 @@ that in its connection description.
 import threading
 import time
 
+# The credential in .env is account-wide; this project may touch one bucket.
+# Enforced here, where every network client is built, not left to convention.
+ALLOWED_BUCKET = 'gemma4agenticdata'
+
 REQUIRED = ('R2_ENDPOINT_URL', 'R2_BUCKET_NAME', 'R2_ACCESS_KEY_ID',
             'R2_SECRET_ACCESS_KEY')
 # Field names safe to name in an error or a receipt. Values never are.
@@ -131,11 +135,14 @@ def build_client(*, env_file=None, environ=None, connect_timeout=15, read_timeou
     retry policy, boto3 version, and which source supplied each credential
     field — so it is safe to write into a receipt.
     """
+    credentials = load_credentials(env_file=env_file, environ=environ)
+    if credentials['R2_BUCKET_NAME'] != ALLOWED_BUCKET:
+        raise ValueError('R2 bucket outside this project\'s scope: only '
+                         + ALLOWED_BUCKET + ' may be used')
     import boto3
     from boto3.s3.transfer import TransferConfig
     from botocore.config import Config
 
-    credentials = load_credentials(env_file=env_file, environ=environ)
     if max_pool_connections is None:
         max_pool_connections = max(10, 2 * max_concurrency)
     if type(max_pool_connections) is not int or max_pool_connections < 1:
