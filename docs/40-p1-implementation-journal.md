@@ -14204,3 +14204,30 @@ showed the remaining cost clearly: the 50 sliding-window layers pay full
 quadratic attention time for a 1,024-token window. That, not memory, is now the
 thing to fix.
 
+## Third GPU session: one full epoch, after two runs taught me about the volume
+
+Windowed attention went in first and was held to dense masked attention at
+float64 precision before any pod existed. On the A100 a sliding layer dropped
+from 3.42 s to 0.16 s at full length, with the same deterministic kernel.
+
+The epoch then failed twice, neither time because of the model. The GPU memory
+sampler treated one slow `nvidia-smi` as fatal and quietly stopped; I stopped
+that run six minutes in rather than train into a worker that would fail after
+its last update. The second run died saving update 3: the network volume
+published the new checkpoint's ctime a second late, in the middle of the
+integrity re-hash. Both fixes keep the checks strict — the sampler still fails
+on ten consecutive misses, and a ctime-only change is re-read after a settle
+but must still end stable. Neither relaxes anything that indicates a content
+change.
+
+The third run trained all 9 updates in 3,067 s, 311 tokens/s, peak 57.89 GiB,
+every checkpoint verified by the supervisor. The sampler logged exactly one
+timeout in 3,367 reads, which is the fault that ended the first run, now
+counted instead of fatal.
+
+Training loss fell from ~0.8 to ~0.5 over the epoch, each on examples not yet
+trained on. I do not read that as capability: it is 51 tasks, the batches
+differ, and nothing has been evaluated on held-out work. The exported adapter is
+in R2 by digest and reloads to identical logits in the round-trip test. The next
+real question is the evaluation, not more training.
+

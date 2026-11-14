@@ -14,6 +14,13 @@ Results are in §9; §§1–8 are the plan as written beforehand and are kept
 unchanged, because a plan rewritten after the fact to match the outcome records
 nothing.
 
+**Update, 2026-11-14 — third session: one full epoch (§11).** Sliding-window
+layers now do window-sized work (21× faster per layer), and the whole 51-example
+corpus trained in **1.0 hour** on the same A100: 9 of 9 updates, 311 tokens/s,
+every checkpoint verified, adapter exported to PEFT format. ≈ $4.40 including
+two aborted attempts that exposed infrastructure defects. Three-session spend
+≈ $7.03.
+
 **Update, 2026-11-13 — second session, after the fixes (§10).** The two defects
 §9 found, plus a third the fixes would have hit next, were fixed in code and
 re-measured on the same card class for ≈ $1.31. **The corpus now trains on an
@@ -437,4 +444,99 @@ R2 manifest `f68599bdd367312f4272a702da2a472df247bae76066bc29748c413a942cf99d`
 `artifacts/v1/tmp/measure-session-002/measure-session-002.tar.gz`
 (sha256 `d9e7e82c…`). Retained without the checkpoint at
 [evidence/p1/gpu-measurement-002](../evidence/p1/gpu-measurement-002).
+
+---
+
+## 11. Third session — windowed attention and one full epoch (2026-11-14)
+
+The user chose to fix attention before training (option 3 of the card
+analysis) and authorised the run to start without a further ask, at **at most
+$5/hour** and never an H200. A100-SXM4-80GB, Secure Cloud, EUR-IS-1,
+**$2.19/hour**. Pod `95gn8ihxo0drkc` ran ≈ 2.0 h (≈ $4.40) and was terminated;
+volume `2tgf6k9ee5` deleted; both confirmed gone by fresh list reads.
+
+### 11.1 Windowed attention (commit `b4e1bf3`)
+
+A sliding layer's queries are split into blocks of exactly the window (1,024).
+Under transformers' rule `0 <= q - kv < window`, block *i* sees only key blocks
+*i-1* and *i*, so every block becomes one batch row of a single fused SDPA call
+over 2 × 1,024 keys with a fixed band mask. Work falls from seq² to seq × 2w.
+Global layers still go through transformers' own SDPA. No mask function is
+registered, so transformers never builds a `[seq, seq]` mask; padded batches are
+refused at the loss entry point.
+
+| Check | Result |
+|---|---|
+| vs dense masked SDPA, float64, lengths below/at/off window multiples | values and q/k/v gradients equal to 1e-12 |
+| full model vs transformers' SDPA, float64 | logits, loss, input gradients equal to 1e-10 |
+| packed base, bf16, vs SDPA | gradients 0.68% apart, cosine 0.99998 (transformers' own eager vs SDPA: 8.9%, 0.996) |
+| GPU, 24,366 tokens, deterministic | **0.161 s** vs 3.416 s per sliding layer forward+backward, same kernel |
+
+### 11.2 The epoch, and the two runs that did not finish
+
+| Attempt | Commit | Outcome |
+|---|---|---|
+| 1 | `b4e1bf3` | stopped by me at ~6 min: the GPU-memory sampler thread died on one failed `nvidia-smi` read at 252 s and would have failed the worker *after* its last update, losing `worker.json` |
+| 2 | `fdb0bf0` (sampler counts transient read failures) | failed saving update 3: the MooseFS volume published the new file's ctime one second late, mid-hash; updates 1–2 valid but superseded |
+| 3 | `fb2d51c` (ctime-only changes re-read after a 1 s settle, still required to end stable) | **complete** |
+
+Attempt 3, one epoch of Corpus072 under schedule `4664ecf6…`:
+
+| Update | Input tokens | Supervised | Examples | Loss | Seconds | Tokens/s |
+|---|---|---|---|---|---|---|
+| 1 | 110,138 | 27,814 | 5 | 0.796 | 370.9 | 297 |
+| 2 | 85,800 | 28,391 | 5 | 0.832 | 266.0 | 323 |
+| 3 | 106,203 | 30,964 | 6 | 0.893 | 333.1 | 319 |
+| 4 | 108,870 | 31,854 | 6 | 0.771 | 352.2 | 309 |
+| 5 | 134,092 | 32,578 | 8 | 0.718 | 416.0 | 322 |
+| 6 | 142,352 | 30,575 | 7 | 0.660 | 463.8 | 307 |
+| 7 | 108,476 | 29,788 | 6 | 0.564 | 348.4 | 311 |
+| 8 | 80,678 | 26,245 | 4 | 0.487 | 265.3 | 304 |
+| 9 | 78,124 | 24,384 | 4 | 0.506 | 251.3 | 311 |
+| **Total** | **954,733** | **262,593** | **51** | | **3,067.0** | **311** |
+
+- Supervisor receipt: `schedule_complete`, 9 verified updates, 3,324,030,957
+  checkpoint bytes. Lifecycle 3,599 s, exit 0, no kill.
+- Memory: 19.04 GiB after load; 54.64 GiB peak allocated; **57.89 GiB** peak
+  sampled of 79.25. The sampler recorded exactly one `TimeoutExpired` in 3,367
+  reads, the same fault that ended attempt 1.
+- Update 1 took 370.9 s against 1,141.3 s in §10: **3.1×** on the same batch.
+- The epoch cost ≈ $2.19 of compute against the $6.31 forecast in §10.
+
+**What the loss does and does not say.** In one epoch every example is seen
+once, so each update's loss is on examples the adapter had not yet trained on.
+It fell from ~0.8 to ~0.5. But each update holds *different* examples of
+different difficulty, the corpus is 51 tasks, and no held-out evaluation has
+run. This is a training trace, not a quality result.
+
+### 11.3 The adapter
+
+`scripts/export_adapter_checkpoint.py` (commit `fb2d51c`) converted the
+update-9 checkpoint (`b21dd850…`, 369,336,773 bytes) into a standard PEFT
+directory on the pod: 820 tensors, 30,607,360 parameters, config equal to the
+training one field by field. Its round trip on the reduced model reloads to
+identical logits. Stored in R2 by digest:
+
+- `adapter_model.safetensors` — `962349d6…`, 122,550,560 bytes
+- `adapter_config.json` — `d3ecd6c6…`, 24,096 bytes
+
+Both were verified in R2 by streaming SHA-256.
+
+### 11.4 Evidence
+
+- Full bundle (all 9 checkpoints, adapter, receipts):
+  `artifacts/v1/tmp/training-epoch-001/attempt-3.tar`, 3,447,408,640 bytes,
+  sha256 `19c69ec7…`, stream-verified in R2 before the pod was terminated.
+- Attempt 2's bundle (its two checkpoints, the probe and preflight receipts):
+  `artifacts/v1/tmp/training-epoch-001/training-epoch-001.tar`.
+- Receipts only, R2 manifest
+  `297d1ea8d578e739c50b562d1dc9d933bd24a7985322f62f19a920e096a1922b`
+  (27 files), retained at
+  [evidence/p1/training-epoch-001](../evidence/p1/training-epoch-001) with
+  `epoch-summary.json`.
+
+### 11.5 Next
+
+Serve the adapter beside the base model and evaluate both on held-out tasks.
+Until then, nothing about quality is known.
 

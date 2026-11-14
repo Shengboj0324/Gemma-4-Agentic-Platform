@@ -63,7 +63,7 @@ python3 -m unittest discover -s tests
 python3 -m zenithsync --help
 ```
 
-That collects all **1,034 tests** and passes, skipping the 92 that need an
+That collects all **1,052 tests** and passes, skipping the 104 that need an
 optional dependency. Every such test *skips* — a suite that errors instead
 cannot tell you whether your environment or the code is wrong.
 
@@ -391,12 +391,13 @@ refused.
 
 | Area | Evidence |
 |---|---|
-| Local suite | **1,034 tests, zero skips** on the pinned training stack (torch 2.10.0, transformers 5.13.1, compressed-tensors 0.15.0.1, peft 0.21.2) with Torch enabled, ~33 s; 92 skips on a stdlib-only 3.13 |
+| Local suite | **1,052 tests, zero skips** on the pinned training stack (torch 2.10.0, transformers 5.13.1, compressed-tensors 0.15.0.1, peft 0.21.2) with Torch enabled, ~40 s; 104 skips on a stdlib-only 3.13 |
 | Official contract | unchanged starter compiles with the nine real bound functions; 25 Linux integration checks with networking disabled, 4 GiB, 2 CPUs |
 | Model intake | 8 files / 23,297,590,856 B / 2,009 tensors; 410 quantized projections verified |
 | Masks | six positive and six rejection fixtures against the real tokenizer |
 | LoRA on the real checkpoint | one H100 update on a **24-token** fixture, frozen-state and adapter-reload checks; and one **full corpus update** on an A100 — 110,138 tokens including the 24,366-token longest example, peak 57.94 GiB of 79.25 |
-| Training throughput | **96.5 input tokens/s** on A100-SXM4-80GB over the schedule's heaviest update; one epoch forecast at ~2.9 h / ~$6.31 |
+| **One full training epoch** | all 9 updates over Corpus072 (954,733 tokens) on one A100-SXM4-80GB in **1.0 h**, `schedule_complete`, every checkpoint verified by the supervisor; **311 input tokens/s** (3.2× the pre-windowing rate); peak 57.89 GiB of 79.25 |
+| Trained adapter | exported as a standard PEFT LoRA (820 tensors, 30,607,360 parameters), stored in R2 by digest; the exporter's round trip reloads to identical logits |
 | Admitted corpus | Corpus072: 51 tasks / 50 repository groups / 954,733 input / 262,593 supervised targets; four gates bound; content identity `c081880c…` |
 | Two-layer agreement | an independent audit reproduces every quantity, including the 210-token minimum context margin, from separate code |
 | R2 round trip | quarantine → promote → publish → restore with `--purpose training`; worker preflight accepts the staged tree |
@@ -405,12 +406,12 @@ refused.
 
 **What is not**
 
-- **Throughput is measured on one update only** — the heaviest of nine. The
-  epoch forecast extrapolates it linearly, which overstates cost for the
-  shorter examples (attention is quadratic) and ignores preemption.
-- **No sustained real-corpus training run.** One update of nine has run; no
-  50M-token candidate started.
-- **No learned improvement.** No sound claim of superiority over any other agent.
+- **One epoch over 51 examples is not a capability claim.** Training loss fell
+  from 0.80 on the first update to 0.49–0.51 on the last two, each on examples
+  seen for the first time — but they are different examples, and no held-out
+  evaluation has run. The adapter has not been served or scored.
+- **No learned improvement is established.** No sound claim of superiority over
+  any other agent, or over the base model.
 - **Peak memory fits only after three fixes**, and only on an 80 GB card: the
   base stays 4-bit packed, attention uses a fused SDPA kernel with the quadratic
   fallback disabled, and the loss is chunked. Peak is 57.94 GiB at the corpus's
@@ -478,14 +479,23 @@ A100-SXM4-80GB at $2.19/hour, terminated ([docs/43](docs/43-runpod-training-runb
 - ~~Throughput.~~ **96.5 input tokens/s** over the heaviest update; one epoch
   forecast at ~2.9 h / ~$6.31.
 
+**Windowed attention, then one full epoch** — third session, 2026-11-14,
+≈$4.40 on one A100-SXM4-80GB at $2.19/hour, terminated
+([docs/43](docs/43-runpod-training-runbook.md) §11)
+
+- ~~Sliding layers pay full L².~~ They now attend in window-sized blocks with
+  the same fused kernel: **0.161 s against 3.416 s** per layer at 24,366 tokens.
+  Equal to dense masked attention to 1e-12 in float64.
+- ~~One epoch.~~ 9 of 9 updates in 3,067 s of training (1.0 h with load and
+  checkpoints), 311 tokens/s, adapter exported. Two infrastructure defects
+  surfaced and were fixed first: a GPU memory sampler that died on one slow
+  `nvidia-smi` read, and a checkpoint integrity check tripped by the network
+  volume publishing ctime late.
+
 **Next**
 
-1. A full one-epoch run (9 updates) on the same card, ~$6.31 forecast — needs
-   your go. Its first held-out evaluation is what would turn a loss number into
-   evidence of anything.
-2. Cheaper attention: sliding layers pay full L² inside the memory-efficient
-   kernel despite a 1,024-token window. A windowed kernel would cut most of the
-   per-token cost.
+1. Serve the adapter and evaluate it against the base model on held-out tasks.
+   Nothing about quality is known until that runs.
 
 **Needs a Linux host with Docker and disk**
 
@@ -502,12 +512,12 @@ A100-SXM4-80GB at $2.19/hour, terminated ([docs/43](docs/43-runpod-training-runb
 ## Repository layout
 
 ```
-zenithsync/     108 modules, ~12.3k lines — contracts, model, masks, training,
+zenithsync/     110 modules, ~13.0k lines — contracts, model, masks, training,
                 admission, audit, transport, intake. Core needs no third-party packages.
-scripts/        139 CLIs, ~15.3k lines — every one writes a hash-bound receipt,
+scripts/        140 CLIs, ~15.5k lines — every one writes a hash-bound receipt,
                 refuses an existing --output, and writes nothing on failure.
-tests/          140 modules, ~15.4k lines, 1,034 tests — zero skips with the
-                full stack, 92 skips with the standard library alone.
+tests/          143 modules, ~15.9k lines, 1,052 tests — zero skips with the
+                full stack, 104 skips with the standard library alone.
 configs/        pinned serving/training profiles, deployment file map, Dockerfiles.
 requirements/   separate locks: serving, evaluator, tokenizer, R2, PEFT supplement.
                 These are NOT one interchangeable environment.
