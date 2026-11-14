@@ -116,7 +116,8 @@ def worker(args):
     record = {'candidate': args.name, 'resolved': result.resolved, 'total': result.total,
               'resolution_rate': result.resolution_rate, 'seconds': time.monotonic() - started,
               'adapters': sorted(manifest.adapters), 'declared_model': alias,
-              'registry': {name: getattr(registry.get(name), 'model', None) for name in registry}}
+              'registry': {name: getattr(registry.get(name), 'model', None)
+                           for name in (alias, *sorted(manifest.adapters))}}
     (Path(args.results_dir) / 'worker.json').write_bytes(canonical_json(record))
     print(json.dumps(record), flush=True)
 
