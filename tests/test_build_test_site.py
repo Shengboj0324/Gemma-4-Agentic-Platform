@@ -3,7 +3,9 @@ import unittest
 
 from packaging.tags import Tag
 
-from scripts.build_test_site import select_wheels
+import tempfile
+
+from scripts.build_test_site import dockerfile_modules, select_wheels
 
 
 class SelectWheelsTests(unittest.TestCase):
@@ -20,6 +22,17 @@ class SelectWheelsTests(unittest.TestCase):
         self.assertEqual(chosen, ['pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.whl',
                                   'pytest-9.1.1-py3-none-any.whl',
                                   'sqlalchemy-2.0.52-cp312-cp312-manylinux_2_17_x86_64.whl'])
+
+
+    def test_only_modules_copied_into_site_packages_are_taken_from_the_dockerfile(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / 'Dockerfile.sandbox').write_text(
+                'FROM python:3.13-slim\n'
+                'COPY imp.py /usr/local/lib/python3.13/site-packages/imp.py\n'
+                'COPY telnetlib.py /usr/local/lib/python3.13/site-packages/telnetlib.py\n'
+                'COPY wheels/ /wheels/\n')
+            self.assertEqual([p.name for p in dockerfile_modules(d)], ['imp.py', 'telnetlib.py'])
 
 
 if __name__ == '__main__':
