@@ -79,7 +79,8 @@ def _outcome(rows, tid):
     if row.get('agent_patch_size'):
         return {'resolved': False, 'class': 'patch_failed_verification'}
     error = str(row.get('error') or '')
-    if 'budget' in error.lower():
+    # 'Agent exceeded turns budget (40 turns)', 'Agent exceeded session timeout (10 min)'
+    if error.startswith('Agent exceeded'):
         return {'resolved': False, 'class': 'budget_exhausted_no_patch'}
     if error:
         return {'resolved': False, 'class': 'error'}

@@ -406,10 +406,16 @@ refused.
 
 **What is not**
 
-- **One epoch over 51 examples is not a capability claim.** Training loss fell
-  from 0.80 on the first update to 0.49–0.51 on the last two, each on examples
-  seen for the first time — but they are different examples, and no held-out
-  evaluation has run. The adapter has not been served or scored.
+- **The adapter does not measurably help on held-out tasks.** Served next to
+  the base through the official vLLM launcher and scored by the official
+  harness on 49 frozen tasks of the official development set (repositories
+  absent from training), the **base resolved 15/49 and the adapter 13/49**:
+  2 adapter-only and 4 base-only resolutions, exact McNemar p = 0.69, Δ −4.1
+  points (95% bootstrap −14.3 to +6.1). This is not equivalence, but it is not
+  a gain either ([docs/44](docs/44-held-out-evaluation-runbook.md)).
+- **The adapter costs time.** Its agents averaged about 18.6 s per model call
+  against 12.2 s, from longer outputs and LoRA serving overhead, and ran out
+  of the 10-minute budget without a patch twice as often (8 vs 4).
 - **No learned improvement is established.** No sound claim of superiority over
   any other agent, or over the base model.
 - **Peak memory fits only after three fixes**, and only on an 80 GB card: the
@@ -492,10 +498,27 @@ A100-SXM4-80GB at $2.19/hour, terminated ([docs/43](docs/43-runpod-training-runb
   `nvidia-smi` read, and a checkpoint integrity check tripped by the network
   volume publishing ctime late.
 
+**Held-out evaluation** — fourth session, 2026-11-14, ≈$11.90 on one
+A100-SXM4-80GB at $2.19/hour, pod and volume deleted
+([docs/44](docs/44-held-out-evaluation-runbook.md))
+
+- ~~Serve the adapter and evaluate it on held-out tasks.~~ LoRA serving was
+  qualified first: the adapter is listed, it changes greedy output, and both
+  sides parse tool calls. Then the official harness ran both candidates on 49
+  tasks, air-gapped and as a non-root user, with data re-verified after the
+  run: base 15/49, adapter 13/49.
+- The verifier was qualified before the scored run: gold patches resolve
+  29/49 and empty patches 2/49. The first full run was invalid (no pytest in
+  the sandbox) and was discarded.
+
 **Next**
 
-1. Serve the adapter and evaluate it against the base model on held-out tasks.
-   Nothing about quality is known until that runs.
+1. Train on far more than 51 tasks before evaluating again. The same frozen
+   cohort and procedure (docs/44) can be reused, and the 80-task holdout is
+   still untouched.
+2. Check the adapter's per-call latency against the base before spending a
+   full evaluation, because under a wall-clock budget slower serving alone
+   costs resolutions.
 
 **Needs a Linux host with Docker and disk**
 

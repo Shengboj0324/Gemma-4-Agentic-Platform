@@ -63,9 +63,10 @@ class CompareTests(unittest.TestCase):
         budget = 'Agent exceeded turns budget (40 turns)'
         base = {'t1': row('t1', False, error=budget, agent_patch_size=0),
                 't2': row('t2', False, error=budget, agent_patch_size=3207),
-                't3': row('t3', False, error='sandbox crashed', agent_patch_size=0)}
-        result = compare(['t1', 't2', 't3'], base, base, repos={t: 'r/x' for t in base})
-        self.assertEqual(result['base']['outcomes'], {'budget_exhausted_no_patch': 1,
+                't3': row('t3', False, error='sandbox crashed', agent_patch_size=0),
+                't4': row('t4', False, error='Agent exceeded session timeout (10 min)', agent_patch_size=0)}
+        result = compare(['t1', 't2', 't3', 't4'], base, base, repos={t: 'r/x' for t in base})
+        self.assertEqual(result['base']['outcomes'], {'budget_exhausted_no_patch': 2,
                                                       'patch_failed_verification': 1, 'error': 1})
 
     def test_results_outside_the_cohort_are_refused(self):

@@ -14231,3 +14231,47 @@ differ, and nothing has been evaluated on held-out work. The exported adapter is
 in R2 by digest and reloads to identical logits in the round-trip test. The next
 real question is the evaluation, not more training.
 
+
+## Fourth GPU session: the adapter served and scored on held-out tasks
+
+The question after the epoch was whether the adapter does anything on work it
+has never seen. The answer is no measurable improvement: **base 15/49,
+adapter 13/49** on the frozen pilot+development cohort of the official
+development set (fastapi, rich, requests; none in the training corpus). The
+exact McNemar p is 0.69 and the bootstrap interval runs from −14.3 to +6.1
+points. The adapter won 2 tasks the base lost and lost 4 the base won. I read
+this as "not shown to help, possibly slightly worse", not as equivalence.
+
+Most of the session went into making that number trustworthy. Each item below
+came from a real failure.
+
+- **Kaggle bulk download.** kagglesdk's bulk call follows its redirect and
+  would have buffered the 22 GB archive in memory. It now stops at the
+  redirect.
+- **Air gap.** Runpod refuses `unshare`, so the namespace air gap became a
+  preloaded egress guard. It was then hardened twice: Docker's resolver
+  listens on 127.0.0.11, and an agent running as root could have deleted the
+  guard. Agents now run as a non-root user against read-only data that is
+  re-verified after the run.
+- **Lost receipt.** `VllmServer.stop()` deletes its log, which cost one
+  qualification receipt.
+- **Registry import.** The registry helper I had coded against does not exist
+  in swegemma 0.2.11. The worker now uses the server's own
+  `create_model_registry`.
+- **Invalid first full run.** The first full run looked like 0/40 on both
+  sides. It was invalid: the subprocess sandbox expects the host interpreter
+  to provide pytest and the repositories' packages, and ours had none. I
+  stopped it and built a test environment that mirrors the official sandbox
+  image. Before running agents again, I qualified the verifier with gold and
+  empty patches: 29/49 gold patches resolve and 2/49 empty ones do.
+- **Verifier ceiling.** 16 of the 20 gold failures come from packages
+  (`inline_snapshot`, pytest-httpbin) that the official image does not have
+  either, so about 29 tasks is the ceiling here. Every resolution in the run
+  fell inside that pre-registered subset.
+
+One finding matters for what to do next. The adapter's agents took 40% longer
+per task, partly from longer outputs and partly from LoRA serving overhead,
+so it hit the 10-minute wall clock twice as often. Under a wall-clock budget,
+an adapter has to earn back its serving cost before it can show a gain. The
+next adapter needs either more and broader data than 51 tasks in one epoch,
+or a demonstrated per-call speed parity check before evaluation.

@@ -183,3 +183,53 @@ fastapi_14463 fastapi_14786 fastapi_14794 fastapi_14986 fastapi_15800
 requests_7309 requests_7315 rich_2943 rich_3006 rich_3052 rich_3278 rich_3506
 rich_3518 rich_3535 rich_3777 rich_3882 rich_3894 rich_3930 rich_3935
 rich_3938 rich_3942 rich_3944 rich_4075 rich_4077
+
+## Result: `full-2`, 2026-11-14 06:36–08:34 UTC
+
+Both candidates were served concurrently from one vLLM server, with 4 agents
+each, on all 49 cohort tasks. Every task produced a row on both sides and both
+workers exited 0. The air gap held after the run (`network_isolation_after`
+shows the external address unreachable and no DNS). The data and candidates
+were byte-identical afterwards.
+
+| | resolved / 49 | Wilson 95% | resolved / 29 gold-qualified |
+|---|---|---|---|
+| base | **15** (30.6%) | 19.5–44.5% | 15 (51.7%) |
+| adapter (`main_lora`, epoch 1) | **13** (26.5%) | 16.2–40.3% | 13 (44.8%) |
+
+- **Paired:** both solved 11, only the base solved 4 (`fastapi_14419`,
+  `rich_3052`, `rich_3278`, `rich_4075`), only the adapter solved 2
+  (`rich_3777`, `rich_3882`), neither solved 32.
+- **Effect:** Δ = −4.1 points, seeded bootstrap 95% −14.3 to +6.1, exact
+  McNemar p = 0.69. On the gold subset Δ = −6.9 points (−24.1 to +10.3).
+- **By repository** (base / adapter): rich 8/7 of 19, fastapi 5/4 of 25,
+  requests 2/2 of 5.
+- **Consistency:** every resolution on either side is inside the gold-qualified
+  subset that was fixed before the run.
+- **Interpretation:** the adapter is not shown to help. The point estimate is
+  slightly worse, the interval comfortably includes zero, and 49 tasks from
+  three repositories cannot support a broader claim either way. A
+  non-significant difference is not equivalence.
+- **Time budget:** the adapter's agents were slower. Median task time was
+  594 s against 426 s, about 18.6 s per model call against 12.2 s. Completion
+  tokens per call were higher (mean 313 vs 248, +26%), which explains only
+  part of that, so the rest is LoRA serving overhead. The adapter therefore
+  ran out of the 10-minute wall clock without a patch twice as often (8 vs 4).
+  The scorer serves adapters the same way, so this is a real cost of the
+  approach, not an artefact.
+- **Leakage audit:** no agent command or trace references `tasks.jsonl`,
+  `/opt/eval-data`, the run directories or the R2 data. Paths outside the
+  sandbox appear only in tracebacks: the test site's pytest, and
+  `/root/venv` packages that agents' code imported.
+- **Caveat on the test environment:** with `append` order, packages already in
+  the evaluator's own environment (vLLM's starlette, pydantic and others) take
+  precedence over the task wheels inside sandboxes. The official image has
+  only pytest, its pinned plugins and the task wheels.
+
+Evidence is in R2. The package `evidence/p1/held-out-eval-001` (manifest
+`1184e02d…`, 21 files) holds the receipts, comparisons, task results,
+verifier and LoRA qualification, and the pod scripts. The full archive
+`artifacts/v1/tmp/eval-2026-11-14/runs.tar` (sha256 `f3c8ba3d…`, 26.1 MB) holds
+every run's traces, task logs, test outputs and patches. The pod (A100-SXM4-80GB,
+$2.19/h, 03:22–08:47 UTC, ≈ $11.90) and its volume were deleted, and both
+deletions were confirmed with fresh reads.
