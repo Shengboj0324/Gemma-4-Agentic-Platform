@@ -41,11 +41,25 @@ class DeviceMemoryMonitor:
 
     Sampled maxima are lower bounds on actual peaks. They include other GPU
     clients and driver allocations and are not attributed to the worker alone.
-    A read failure prevents successful monitor completion, but does not replace
+
+    The first and final reads must succeed. A background read that fails —
+    nvidia-smi timing out under load, or printing an unavailable value — is
+    counted and reported, not fatal, unless ``max_consecutive_failures`` fail in
+    a row: one slow read once silently stopped all sampling for the rest of a
+    run and would have failed the worker after its last update. A change of GPU
+    identity or capacity is always fatal. A monitoring failure never replaces
     an exception already raised by the training worker. Partial JSONL persists.
     """
 
-    def __init__(self, path):
+    _TRANSIENT = (OSError, subprocess.SubprocessError, ValueError)
+
+    def __init__(self, path, *, max_consecutive_failures=10):
+        if type(max_consecutive_failures) is not int or max_consecutive_failures < 1:
+            raise ValueError('Positive integer failure tolerance required')
+        self.max_consecutive_failures = max_consecutive_failures
+        self._failed_reads = 0
+        self._max_consecutive = 0
+        self._failure_types = {}
         self.path = path
         self._stop = threading.Event()
         self._error = None
@@ -56,8 +70,8 @@ class DeviceMemoryMonitor:
         self._maxima = {}
         self._start = None
 
-    def _sample(self):
-        devices = read_device_memory()
+    def _sample(self, devices=None):
+        devices = read_device_memory() if devices is None else devices
         identities = {key: row['total_bytes'] for key, row in devices.items()}
         if self._devices is not None and identities != self._devices:
             raise ValueError('GPU identities or capacities changed during monitoring')
@@ -70,9 +84,22 @@ class DeviceMemoryMonitor:
             self._maxima[key] = max(self._maxima.get(key, 0), row['used_bytes'])
 
     def _run(self):
+        consecutive = 0
         try:
             while not self._stop.wait(1.0):
-                self._sample()
+                try:
+                    devices = read_device_memory()
+                except self._TRANSIENT as error:
+                    consecutive += 1
+                    self._failed_reads += 1
+                    self._max_consecutive = max(self._max_consecutive, consecutive)
+                    name = type(error).__name__
+                    self._failure_types[name] = self._failure_types.get(name, 0) + 1
+                    if consecutive >= self.max_consecutive_failures:
+                        raise RuntimeError('GPU memory reads failed persistently') from error
+                    continue
+                consecutive = 0
+                self._sample(devices)
         except BaseException as error:
             self._error = error
             self._stop.set()
@@ -114,5 +141,8 @@ class DeviceMemoryMonitor:
         if self._thread is None or self._thread.is_alive() or self._error is not None:
             raise RuntimeError('Completed successful monitoring required')
         return {'samples': self._samples, 'sampled_max_used_bytes': dict(self._maxima),
+                'failed_reads': self._failed_reads,
+                'max_consecutive_failed_reads': self._max_consecutive,
+                'failed_read_types': dict(self._failure_types),
                 'device_total_bytes': dict(self._devices),
                 'scope': 'All nvidia-smi GPUs; sampled maxima, not continuous peaks or worker-only memory'}
