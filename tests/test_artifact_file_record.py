@@ -24,7 +24,10 @@ class ArtifactFileRecordTests(unittest.TestCase):
             fields = ('st_dev', 'st_ino', 'st_size', 'st_mtime_ns', 'st_ctime_ns')
             after = SimpleNamespace(**{name: getattr(before, name) for name in fields})
             after.st_ctime_ns += 1
-            with patch('zenithsync.artifacts.os.fstat', side_effect=[before, after]):
+            # A ctime that keeps moving is still rejected, with the diagnostic.
+            # (A single late ctime is retried after a settle: test_ctime_settle.)
+            with patch('zenithsync.artifacts.os.fstat', side_effect=[before, after] * 3), \
+                    patch('time.sleep'):
                 with self.assertRaisesRegex(ValueError, 'st_ctime_ns'):
                     file_record(path)
 

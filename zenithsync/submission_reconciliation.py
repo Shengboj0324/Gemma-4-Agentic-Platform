@@ -11,7 +11,8 @@ import subprocess
 import inspect
 import shlex
 
-from .artifacts import file_record
+from .artifacts import (CTIME_SETTLE_ATTEMPTS, CTIME_SETTLE_SECONDS, CtimeOnlyChange,
+                        _file_record_once, file_record)
 
 
 def scratch_cleanup_command(*, python, scratch_paths, repository='/workspace'):
@@ -33,6 +34,10 @@ def scratch_cleanup_command(*, python, scratch_paths, repository='/workspace'):
     code = (
         'from pathlib import Path, PurePosixPath\n'
         'import hashlib, json, os, re, stat, subprocess\n'
+        # file_record's ctime-settle retry needs its helpers inlined too.
+        + f'CTIME_SETTLE_ATTEMPTS = {CTIME_SETTLE_ATTEMPTS!r}\nCTIME_SETTLE_SECONDS = {CTIME_SETTLE_SECONDS!r}\n'
+        + inspect.getsource(CtimeOnlyChange) + '\n'
+        + inspect.getsource(_file_record_once) + '\n'
         + inspect.getsource(file_record) + '\n'
         + inspect.getsource(plan_scratch_cleanup) + '\n'
         + f'root = Path({repository!r})\n'

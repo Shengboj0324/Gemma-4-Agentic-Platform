@@ -42,7 +42,30 @@ def canonical_json(value: object) -> bytes:
                        separators=(",", ":")) + "\n").encode("utf-8")
 
 
+# Network filesystems (Runpod's MooseFS volumes among them) can publish a file's
+# ctime a second or so after the write that caused it. A read that sees *only*
+# ctime move is re-done after a short settle; it must eventually be stable.
+# Size, mtime, inode or device changing is never retried.
+CTIME_SETTLE_ATTEMPTS = 3
+CTIME_SETTLE_SECONDS = 1.0
+
+
+class CtimeOnlyChange(ValueError):
+    """The only stat field that moved during a read was st_ctime_ns."""
+
+
 def file_record(path: Path) -> dict:
+    import time
+    for attempt in range(CTIME_SETTLE_ATTEMPTS):
+        try:
+            return _file_record_once(path)
+        except CtimeOnlyChange:
+            if attempt + 1 == CTIME_SETTLE_ATTEMPTS:
+                raise
+            time.sleep(CTIME_SETTLE_SECONDS)
+
+
+def _file_record_once(path: Path) -> dict:
     before = path.lstat()
     if not stat.S_ISREG(before.st_mode):
         raise ValueError(f"not a regular file: {path.name}")
@@ -67,8 +90,9 @@ def file_record(path: Path) -> dict:
         details = {"changed": changed, "read_bytes": size,
                    "flags_before": getattr(before, "st_flags", None),
                    "flags_after": getattr(after, "st_flags", None)}
-        raise ValueError("file changed during inventory: " + path.name + "; "
-                         + json.dumps(details, sort_keys=True))
+        error = CtimeOnlyChange if set(changed) == {"st_ctime_ns"} and size == before.st_size else ValueError
+        raise error("file changed during inventory: " + path.name + "; "
+                    + json.dumps(details, sort_keys=True))
     return {"size_bytes": size, "sha256": hasher.hexdigest()}
 
 

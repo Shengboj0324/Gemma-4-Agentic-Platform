@@ -66,6 +66,9 @@ class PackedBaseTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         import torch
+        # Global torch state: saved here and restored in tearDownClass, because a
+        # leaked determinism flag broke a later fresh-process resume test.
+        cls._saved_torch = (torch.get_num_threads(), torch.are_deterministic_algorithms_enabled())
         torch.set_num_threads(1)
         torch.use_deterministic_algorithms(True)
         cls.tmp = tempfile.TemporaryDirectory()
@@ -76,6 +79,10 @@ class PackedBaseTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+        import torch
+        threads, deterministic = cls._saved_torch
+        torch.set_num_threads(threads)
+        torch.use_deterministic_algorithms(deterministic)
         cls.tmp.cleanup()
 
     def dense(self, attention='eager'):

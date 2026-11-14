@@ -9,7 +9,7 @@ from pathlib import Path
 import stat
 import tempfile
 
-from .artifacts import file_record
+from .artifacts import CTIME_SETTLE_ATTEMPTS, CTIME_SETTLE_SECONDS, CtimeOnlyChange, file_record
 from .contracts import digest
 
 
@@ -74,7 +74,20 @@ def load_checkpoint(path: Path, *, expected_identity, max_bytes):
 
     Serialized bytes are bounded, not tensor allocations for hostile files.
     weights_only reduces deserialization exposure; it is not a resource sandbox.
+    A read during which only ctime moved is repeated after a short settle (see
+    ``artifacts.CTIME_SETTLE_ATTEMPTS``); any other change fails at once.
     """
+    import time
+    for attempt in range(CTIME_SETTLE_ATTEMPTS):
+        try:
+            return _load_checkpoint_once(path, expected_identity=expected_identity, max_bytes=max_bytes)
+        except CtimeOnlyChange:
+            if attempt + 1 == CTIME_SETTLE_ATTEMPTS:
+                raise
+            time.sleep(CTIME_SETTLE_SECONDS)
+
+
+def _load_checkpoint_once(path: Path, *, expected_identity, max_bytes):
     import torch
     _budget(max_bytes)
     _directory(path.parent)
@@ -97,8 +110,9 @@ def load_checkpoint(path: Path, *, expected_identity, max_bytes):
         stream.seek(0)
         payload = torch.load(stream, map_location='cpu', weights_only=True)
         after = os.fstat(stream.fileno())
-        signature = lambda value: (value.st_dev, value.st_ino, value.st_size,
-                                   value.st_mtime_ns, value.st_ctime_ns)
+        signature = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns)
         if signature(before) != signature(after):
             raise ValueError('Checkpoint changed while reading')
+        if before.st_ctime_ns != after.st_ctime_ns:
+            raise CtimeOnlyChange('Checkpoint ctime changed while reading')
     return payload
