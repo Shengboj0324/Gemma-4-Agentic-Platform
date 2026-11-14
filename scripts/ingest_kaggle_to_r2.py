@@ -40,13 +40,38 @@ def list_files(api, *, competition=None, dataset=None):
             return rows
 
 
+REDIRECTS = (301, 302, 303, 307, 308)
+
+
+def redirect_target(session, prepared, settings):
+    """Send `prepared` without following redirects or reading the body; return Location."""
+    settings = {**settings, 'stream': True}
+    response = session.send(prepared, allow_redirects=False, timeout=60, **settings)
+    try:
+        location = response.headers.get('Location')
+        if response.status_code not in REDIRECTS or not location:
+            raise ValueError(f'Expected a redirect to the archive, got HTTP {response.status_code}')
+        return location
+    finally:
+        response.close()
+
+
 def bulk_url(api, competition):
-    """One API call: the signed URL of the archive of every competition file."""
+    """One API call: the signed URL of the archive of every competition file.
+
+    kagglesdk's `download_data_files` follows the redirect without streaming, so
+    it reads the whole archive (22 GB here) into memory before returning. This
+    sends the same request but stops at the redirect.
+    """
     from kagglesdk.competitions.types.competition_api_service import ApiDownloadDataFilesRequest
     with api.build_kaggle_client() as kaggle:
+        http = kaggle.competitions.competition_api_client._client
+        http._init_session()
         request = ApiDownloadDataFilesRequest()
         request.competition_name = competition
-        return kaggle.competitions.competition_api_client.download_data_files(request).url
+        prepared = http._prepare_request('competitions.CompetitionApiService', 'ApiDownloadDataFiles', request)
+        settings = http._session.merge_environment_settings(prepared.url, {}, None, None, None)
+        return redirect_target(http._session, prepared, settings)
 
 
 def main():
