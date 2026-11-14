@@ -35,6 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record, load_json
 from zenithsync import netns
+from zenithsync.server_log import stop_keeping_log
 from zenithsync.official_split import require_cohort
 
 MODEL_ALIAS = 'gemma-4-31b-it-qat-w4a16-ct'
@@ -182,11 +183,11 @@ def orchestrate(args, isolation):
         for _, process, _ in workers:
             if process.poll() is None:
                 process.kill()
-        server.stop()
-        log_text = Path(server.log_path).read_text(errors='replace')
-        (args.results_root / 'vllm-server.log').write_text(log_text)
-        receipt['finished_utc'] = datetime.now(timezone.utc).isoformat()
-        (args.results_root / 'receipt.json').write_bytes(canonical_json(receipt))
+        try:
+            stop_keeping_log(server, args.results_root / 'vllm-server.log')
+        finally:
+            receipt['finished_utc'] = datetime.now(timezone.utc).isoformat()
+            (args.results_root / 'receipt.json').write_bytes(canonical_json(receipt))
     if receipt['status'] != 'completed':
         raise SystemExit(1)
 

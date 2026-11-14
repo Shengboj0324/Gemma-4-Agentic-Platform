@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from zenithsync.artifacts import canonical_json, file_record
 from zenithsync import netns
+from zenithsync.server_log import stop_keeping_log
 
 TOOL = {'type': 'function', 'function': {
     'name': 'read_file', 'description': 'Read a file from the repository.',
@@ -104,13 +105,12 @@ def main():
         receipt['error'] = f'{type(error).__name__}: {error}'
         raise
     finally:
-        server.stop()
-        log = Path(server.log_path).read_text(errors='replace')
-        (args.output / 'vllm-server.log').write_text(log)
-        receipt['finished_utc'] = datetime.now(timezone.utc).isoformat()
-        (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
-    print(json.dumps({'status': receipt['status'], 'adapter_changes_output': receipt.get('adapter_changes_output'),
-                      'tool_calls_parsed': receipt.get('tool_calls_parsed')}))
+        try:
+            stop_keeping_log(server, args.output / 'vllm-server.log')
+        finally:
+            receipt['finished_utc'] = datetime.now(timezone.utc).isoformat()
+            (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
+            print(canonical_json(receipt).decode())
     if receipt['status'] != 'lora_serving_qualified':
         raise SystemExit(1)
 
