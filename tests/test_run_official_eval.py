@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.run_official_eval import candidate_budget, kv_capacity
+from scripts.run_official_eval import candidate_budget, declared_model, kv_capacity
 from zenithsync import netns
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,6 +64,20 @@ class NetnsTests(unittest.TestCase):
         with patch.dict('os.environ', {netns.MARKER: '1'}), patch('os.execv') as execv:
             netns.reexec_isolated(['x'])
         execv.assert_not_called()
+
+
+
+class DeclaredModelTests(unittest.TestCase):
+    def test_one_allowed_model_with_or_without_provider_prefix(self):
+        for declared in ({'gemma-4-31b-it-qat-w4a16-ct'}, {'openai/gemma-4-31b-it-qat-w4a16-ct'},
+                         {'hosted_vllm/gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-31b-it-qat-w4a16-ct'}):
+            self.assertEqual(declared_model('x', lambda _: declared), 'gemma-4-31b-it-qat-w4a16-ct')
+
+    def test_several_or_unlisted_models_are_refused(self):
+        for declared in (set(), {'gemma-4-31b-it'},
+                         {'gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct'}):
+            with self.assertRaises(ValueError):
+                declared_model('x', lambda _: declared)
 
 
 if __name__ == '__main__':

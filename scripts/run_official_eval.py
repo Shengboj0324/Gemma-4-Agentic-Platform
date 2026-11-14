@@ -2,8 +2,9 @@
 
 Mirrors the competition's own path rather than reimplementing it: the official
 `adk_submission.VllmServer` serves the base model with every candidate's LoRA
-adapters (rank rounded by the official rule), `swegemma`'s
-`setup_gemma_model_registry` routes each agent to its adapter, and `swegemma`'s
+adapters (rank rounded by the official rule), the model registry is built by
+the server's own `create_model_registry` as the scoring runtime does (declared
+model alias and adapter names bound to `openai/<served model>`), and `swegemma`'s
 `Evaluator` runs Phase 1 (agent) and Phase 2 (hidden-test verification) in the
 subprocess sandbox the Kaggle runtime uses where Docker is absent.
 
@@ -63,20 +64,44 @@ def candidate_budget(candidate: Path):
     return evaluation
 
 
+ALLOWED_MODEL_NAMES = ('gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct',
+                       'gemma-4-e4b-it-qat-w4a16-ct', 'gemma-4-e2b-it-qat-w4a16-ct')
+
+
+def declared_model(candidate_dir, discover):
+    """The submission's single declared base model (the official single-base-model rule)."""
+    models = {m.split('/', 1)[1] if m.startswith(('openai/', 'google/', 'hosted_vllm/', 'custom/')) else m
+              for m in discover(candidate_dir)}
+    if len(models) != 1 or next(iter(models)) not in ALLOWED_MODEL_NAMES:
+        raise ValueError(f'Submission must declare exactly one allowed base model, got {sorted(models)}')
+    return next(iter(models))
+
+
+def official_registry(api_base, served_model, manifest, alias):
+    """Build the model registry the way the scoring runtime does: the running server's
+    `create_model_registry`, binding the declared alias and adapter names to openai/<served>."""
+    from urllib.parse import urlparse
+    from adk_submission.server import VllmConfig, VllmServer
+    endpoint = urlparse(api_base)
+    handle = VllmServer(VllmConfig(model=served_model, host=endpoint.hostname, port=endpoint.port,
+                                   enable_lora=bool(manifest.adapters), max_loras=max(1, len(manifest.adapters))),
+                        adapter_manifest=manifest)
+    if handle.base_url.rstrip('/') != api_base.rstrip('/'):
+        raise ValueError(f'Registry endpoint {handle.base_url} differs from server {api_base}')
+    return handle.create_model_registry(aliases=alias, model_prefix='openai/', api_key='EMPTY')
+
+
 def worker(args):
     """One candidate's Evaluator run against the already-running server."""
-    from adk_submission.discovery import discover_adapters
-    from adk_submission.resolvers.generation import install_litellm_reasoning_patch
+    from adk_submission.discovery import discover_adapters, discover_declared_models
     from swegemma.config import EvalConfig
     from swegemma.evaluate import Evaluator
-    from swegemma.models.registry import setup_gemma_model_registry
     from zenithsync.harness_context import competition_context_configs
     netns.isolate(args.isolation)
-    install_litellm_reasoning_patch()
     manifest = discover_adapters(args.candidate_dir)
-    registry = setup_gemma_model_registry(api_base=args.api_base, api_key='EMPTY',
-                                          served_model=args.served_model,
-                                          adapter_manifest=manifest, backend='vllm')
+    alias = declared_model(args.candidate_dir, discover_declared_models)
+    # create_model_registry installs the LiteLLM reasoning patch itself.
+    registry = official_registry(args.api_base, args.served_model, manifest, alias)
     task_ids = json.loads(Path(args.task_ids_file).read_text())
     config = EvalConfig(tasks_path=args.tasks, snapshots_dir=args.data_root / 'snapshots',
                         results_dir=args.results_dir, submission_dir=args.candidate_dir,
@@ -90,7 +115,8 @@ def worker(args):
     result = asyncio.run(Evaluator(config).run())
     record = {'candidate': args.name, 'resolved': result.resolved, 'total': result.total,
               'resolution_rate': result.resolution_rate, 'seconds': time.monotonic() - started,
-              'adapters': sorted(manifest.adapters)}
+              'adapters': sorted(manifest.adapters), 'declared_model': alias,
+              'registry': {name: getattr(registry.get(name), 'model', None) for name in registry}}
     (Path(args.results_dir) / 'worker.json').write_bytes(canonical_json(record))
     print(json.dumps(record), flush=True)
 
