@@ -3,8 +3,9 @@
    For hosts where a network namespace cannot be created (a container whose
    seccomp profile refuses unshare). Wraps the libc calls that name a peer:
    connect, sendto, sendmsg, sendmmsg; and socket, to refuse raw and packet
-   sockets. Any IPv4 peer outside 127/8 and any IPv6 peer other than ::1 or a
-   v4-mapped 127/8 address fails with ENETUNREACH. Unix and netlink sockets are
+   sockets. Any peer other than 127.0.0.1, ::1 or ::ffff:127.0.0.1 fails with
+   ENETUNREACH — not all of 127/8, because container runtimes put a forwarding
+   DNS resolver on loopback (Docker: 127.0.0.11). Unix and netlink sockets are
    local and pass. glibc's resolver connects through an internal symbol this
    cannot see, so the installer also points resolv.conf at a dead loopback
    address. Not covered: statically linked binaries and raw syscalls. */
@@ -14,6 +15,7 @@
 #include <errno.h>
 #include <netinet/in.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <sys/socket.h>
 
 static int peer_allowed(const struct sockaddr *addr, socklen_t len) {
@@ -27,13 +29,16 @@ static int peer_allowed(const struct sockaddr *addr, socklen_t len) {
     case AF_INET: {
         if (len < (socklen_t)sizeof(struct sockaddr_in)) return 0;
         const struct sockaddr_in *in = (const struct sockaddr_in *)addr;
-        return (ntohl(in->sin_addr.s_addr) >> 24) == 127;
+        return ntohl(in->sin_addr.s_addr) == INADDR_LOOPBACK;
     }
     case AF_INET6: {
         if (len < (socklen_t)sizeof(struct sockaddr_in6)) return 0;
         const struct sockaddr_in6 *in6 = (const struct sockaddr_in6 *)addr;
         if (IN6_IS_ADDR_LOOPBACK(&in6->sin6_addr)) return 1;
-        if (IN6_IS_ADDR_V4MAPPED(&in6->sin6_addr)) return in6->sin6_addr.s6_addr[12] == 127;
+        if (IN6_IS_ADDR_V4MAPPED(&in6->sin6_addr)) {
+            const uint8_t *b = in6->sin6_addr.s6_addr;
+            return b[12] == 127 && b[13] == 0 && b[14] == 0 && b[15] == 1;
+        }
         return 0;
     }
     default:

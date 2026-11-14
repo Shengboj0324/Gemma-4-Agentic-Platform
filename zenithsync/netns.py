@@ -14,10 +14,14 @@ CAP_SYS_ADMIN, as on Runpod). There the `egress-guard` mode is used instead: a
 small library in /etc/ld.so.preload — read by the dynamic loader for every
 process, whatever its environment — refuses any non-loopback peer, and the
 resolver is pointed at a dead loopback address. It is installed by root before
-the run (scripts/egress_guard.py) and checked, never installed, here: the
-current process must have it mapped, and a fresh `env -i` process — Python and,
-when present, curl — must fail to reach the internet. It is weaker than a
-namespace (static binaries and raw syscalls pass); receipts say which mode ran.
+the run (scripts/egress_guard.py) and checked, never installed, here. The check
+requires: a non-root user that cannot write the preload list, resolver config,
+library or install record (an agent's commands run as this user, and could
+otherwise remove the guard); the library mapped into this process; no answer
+from a DNS query sent straight to each resolver the host had before; and a
+fresh `env -i` process — Python and, when present, curl — unable to reach the
+internet. It is weaker than a namespace (static binaries and raw syscalls
+pass); receipts say which mode ran.
 """
 import errno
 import fcntl
@@ -35,6 +39,8 @@ MODES = ('netns', 'egress-guard')
 GUARD_SOURCE = Path(__file__).with_name('egress_guard.c')
 GUARD_NAME = 'libzenithsync_egress_guard.so'
 PRELOAD = Path('/etc/ld.so.preload')
+GUARD_DIR = Path('/usr/local/lib/zenithsync')
+STATE = Path('/etc/zenithsync-egress-guard.json')
 RESOLV = Path('/etc/resolv.conf')
 DEAD_RESOLVER = 'nameserver 127.0.0.9\noptions timeout:1 attempts:1\n'
 SIOCGIFFLAGS = 0x8913
@@ -101,7 +107,7 @@ def build_guard(directory, cc='cc'):
     return library
 
 
-def install_guard(library, state, *, preload=PRELOAD, resolv=RESOLV):
+def install_guard(library, state=STATE, *, preload=PRELOAD, resolv=RESOLV):
     """Preload `library` system-wide and blackhole DNS; save what it replaced to `state`."""
     library, state, preload, resolv = (Path(p) for p in (library, state, preload, resolv))
     if state.exists():
@@ -115,7 +121,7 @@ def install_guard(library, state, *, preload=PRELOAD, resolv=RESOLV):
     return saved
 
 
-def remove_guard(state, *, preload=PRELOAD, resolv=RESOLV):
+def remove_guard(state=STATE, *, preload=PRELOAD, resolv=RESOLV):
     """Restore exactly what install_guard replaced."""
     state, preload, resolv = Path(state), Path(preload), Path(resolv)
     saved = json.loads(state.read_text())
@@ -154,11 +160,46 @@ def probe_fresh_process(run=subprocess.run):
     return evidence
 
 
-def require_guard():
-    """Fail unless the egress guard is active here and in a fresh, environment-free process."""
+def nameservers(resolv_text):
+    return [line.split()[1] for line in (resolv_text or '').splitlines()
+            if line.split()[:1] == ['nameserver'] and len(line.split()) > 1]
+
+
+def dns_answers(server, name='github.com', timeout=2.0):
+    """Send one A query for `name` straight to `server`:53; True if any reply arrives."""
+    query = struct.pack('>HHHHHH', 0x5a17, 0x0100, 1, 0, 0, 0)
+    query += b''.join(bytes([len(part)]) + part.encode() for part in name.split('.')) + b'\0'
+    query += struct.pack('>HH', 1, 1)
+    family = socket.AF_INET6 if ':' in server else socket.AF_INET
+    with socket.socket(family, socket.SOCK_DGRAM) as sock:
+        sock.settimeout(timeout)
+        try:
+            sock.sendto(query, (server, 53))
+            sock.recvfrom(512)
+            return True
+        except OSError:
+            return False
+
+
+def require_guard(state=STATE, *, preload=PRELOAD, resolv=RESOLV):
+    """Fail unless the egress guard holds here, cannot be undone from here, and holds
+    in a fresh, environment-free process."""
+    if os.geteuid() == 0:
+        raise RuntimeError('Egress-guard mode must run as a non-root user: root could remove the guard')
     if not guard_loaded():
         raise RuntimeError('Egress guard is not loaded in this process; install it first')
+    saved = json.loads(Path(state).read_text())
+    guarded = [Path(preload), Path(resolv), Path(saved['library']), Path(saved['library']).parent, Path(state)]
+    writable = [str(p) for p in guarded if os.access(p, os.W_OK)]
+    if writable:
+        raise RuntimeError(f'Guard files are writable by this user: {writable}')
     evidence = require_isolation()
+    servers = sorted(set(nameservers(saved['resolv'])) | {'127.0.0.11'})
+    answered = [s for s in servers if dns_answers(s)]
+    if answered:
+        raise RuntimeError(f'Resolvers answered a direct query: {answered}')
+    evidence['direct_dns_refused'] = servers
+    evidence['uid'] = os.geteuid()
     fresh = probe_fresh_process()
     python = fresh['python']
     if not python['guard_loaded'] or python['external_reachable'] or python['dns_resolves']:

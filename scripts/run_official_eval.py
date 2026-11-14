@@ -172,6 +172,12 @@ def orchestrate(args, isolation):
             log.close()
         receipt['worker_exit'] = codes
         receipt['status'] = 'completed' if all(c == 0 for c in codes.values()) else 'worker_failed'
+        # The air gap must still hold after every agent command has run.
+        try:
+            receipt['network_isolation_after'] = netns.isolate(args.isolation)
+        except Exception as error:
+            receipt['network_isolation_after'] = {'error': f'{type(error).__name__}: {error}'}
+            receipt['status'] = 'isolation_lost'
     finally:
         for _, process, _ in workers:
             if process.poll() is None:
