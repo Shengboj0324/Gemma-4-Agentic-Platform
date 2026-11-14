@@ -64,6 +64,22 @@ def candidate_budget(candidate: Path):
     return evaluation
 
 
+def use_test_site(path, order='append'):
+    """Expose a test-time site-packages (scripts/build_test_site.py) to subprocess sandboxes,
+    which inherit every site-packages directory on this process's path through a .pth file."""
+    if path is None:
+        return
+    path = str(Path(path).resolve())
+    if 'site-packages' not in path or not Path(path).is_dir():
+        raise ValueError(f'Not a site-packages directory: {path}')
+    if path in sys.path:
+        sys.path.remove(path)
+    if order == 'prepend':
+        sys.path.insert(0, path)
+    else:
+        sys.path.append(path)
+
+
 ALLOWED_MODEL_NAMES = ('gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct',
                        'gemma-4-e4b-it-qat-w4a16-ct', 'gemma-4-e2b-it-qat-w4a16-ct')
 
@@ -98,6 +114,7 @@ def worker(args):
     from swegemma.evaluate import Evaluator
     from zenithsync.harness_context import competition_context_configs
     netns.isolate(args.isolation)
+    use_test_site(args.test_site, args.test_site_order)
     manifest = discover_adapters(args.candidate_dir)
     alias = declared_model(args.candidate_dir, discover_declared_models)
     # create_model_registry installs the LiteLLM reasoning patch itself.
@@ -170,6 +187,9 @@ def orchestrate(args, isolation):
                    'one A100-SXM4-80GB, tensor_parallel_size 1 (official: 4x L4, tp 4)',
                    'subprocess sandbox without per-container 4 GiB / 2 vCPU limits',
                    'candidates evaluated concurrently against one server']}
+    receipt['test_site'] = ({'path': str(args.test_site), 'order': args.test_site_order,
+                             'record': file_record(args.test_site.parent / 'test-site.json')}
+                            if args.test_site else None)
     if isolation['mode'] == 'egress-guard':
         receipt['deviations_from_scoring_machine'].append(
             'air gap by preloaded loopback-only egress guard (host refuses unshare), not a network namespace')
@@ -187,7 +207,10 @@ def orchestrate(args, isolation):
                        '--served-model', str(args.model), '--tasks', str(args.tasks),
                        '--data-root', str(args.data_root), '--results-dir', str(out),
                        '--task-ids-file', str(args.results_root / 'task_ids.json'),
-                       '--concurrency', str(args.concurrency), '--isolation', args.isolation]
+                       '--concurrency', str(args.concurrency), '--isolation', args.isolation,
+                       '--test-site-order', args.test_site_order]
+            if args.test_site:
+                command += ['--test-site', str(args.test_site)]
             workers.append((name, subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT), log))
         deadline = time.monotonic() + args.max_hours * 3600
         codes = {}
@@ -242,6 +265,8 @@ def main():
     parser.add_argument('--startup-timeout', type=int, default=1200)
     parser.add_argument('--max-hours', type=float, default=4.0)
     parser.add_argument('--isolation', choices=netns.MODES, required=True)
+    parser.add_argument('--test-site', type=Path, help='site-packages from scripts/build_test_site.py')
+    parser.add_argument('--test-site-order', choices=('append', 'prepend'), default='append')
     args = parser.parse_args()
     if args.worker:
         worker(args)

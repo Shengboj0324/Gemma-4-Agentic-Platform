@@ -6,7 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.run_official_eval import candidate_budget, declared_model, kv_capacity
+from scripts.run_official_eval import candidate_budget, declared_model, kv_capacity, use_test_site
+import sys
 from zenithsync import netns
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,6 +79,33 @@ class DeclaredModelTests(unittest.TestCase):
                          {'gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct'}):
             with self.assertRaises(ValueError):
                 declared_model('x', lambda _: declared)
+
+
+
+class TestSiteTests(unittest.TestCase):
+    def test_site_is_appended_or_prepended_once(self):
+        with tempfile.TemporaryDirectory() as d:
+            site = Path(d) / 'site-packages'
+            site.mkdir()
+            original = list(sys.path)
+            try:
+                use_test_site(site, 'append')
+                use_test_site(site, 'append')
+                self.assertEqual(sys.path[-1], str(site.resolve()))
+                self.assertEqual(sys.path.count(str(site.resolve())), 1)
+                use_test_site(site, 'prepend')
+                self.assertEqual(sys.path[0], str(site.resolve()))
+                self.assertEqual(sys.path.count(str(site.resolve())), 1)
+            finally:
+                sys.path[:] = original
+
+    def test_only_an_existing_site_packages_directory_is_accepted(self):
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(ValueError):
+                use_test_site(Path(d), 'append')
+            with self.assertRaises(ValueError):
+                use_test_site(Path(d) / 'site-packages', 'append')
+        use_test_site(None)
 
 
 if __name__ == '__main__':
