@@ -7,7 +7,7 @@ import zipfile
 
 from tests.test_object_store import MemoryClient
 from zenithsync.artifacts import validate_manifest
-from zenithsync.kaggle_ingest import ingest, materialise, normalise_listing
+from zenithsync.kaggle_ingest import fetch_with_retries, ingest, materialise, normalise_listing, retryable
 from zenithsync.object_store import ArtifactStore
 
 
@@ -90,6 +90,88 @@ class KaggleIngestTests(unittest.TestCase):
         with zipfile.ZipFile(directory / 'real.zip', 'w') as archive:
             archive.writestr('inner', b'x')
         self.assertEqual(materialise(directory, 'real.zip'), directory / 'real.zip')
+
+
+
+class Response:
+    def __init__(self, status):
+        self.status_code = status
+
+
+class HTTPError(Exception):
+    def __init__(self, status):
+        super().__init__(f'{status} error')
+        self.response = Response(status)
+
+
+class RetryTests(unittest.TestCase):
+    def test_rate_limits_are_retried_with_backoff_and_partial_files_cleared(self):
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            calls, sleeps = [], []
+            def fetch(path, target):
+                calls.append(sorted(p.name for p in target.iterdir()))
+                (target / 'partial').write_bytes(b'x')
+                if len(calls) < 3:
+                    raise HTTPError(429)
+            fetch_with_retries(fetch, 'f', directory, sleep=sleeps.append)
+            self.assertEqual(calls, [[], [], []])  # each attempt starts clean
+            self.assertEqual(sleeps, [2.0, 4.0])
+
+    def test_permanent_errors_and_exhaustion_propagate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            def forbidden(path, target):
+                raise HTTPError(403)
+            with self.assertRaises(HTTPError):
+                fetch_with_retries(forbidden, 'f', Path(directory), sleep=lambda s: None)
+            attempts = []
+            def always_busy(path, target):
+                attempts.append(1)
+                raise HTTPError(503)
+            with self.assertRaises(HTTPError):
+                fetch_with_retries(always_busy, 'f', Path(directory), attempts=4, sleep=lambda s: None)
+            self.assertEqual(len(attempts), 4)
+        self.assertTrue(retryable(ConnectionError()))
+        self.assertFalse(retryable(ValueError()))
+
+
+
+class ZipIngestTests(unittest.TestCase):
+    def test_archive_ingest_resumes_from_the_journal_without_refetching(self):
+        import io as _io
+        from zenithsync.kaggle_ingest import Journal, ingest_zip
+        buffer = _io.BytesIO()
+        with zipfile.ZipFile(buffer, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
+            for name, data in FILES.items():
+                archive.writestr(name, data)
+        listing = [{'path': p, 'size_bytes': len(b)} for p, b in FILES.items()]
+        opened = []
+        def open_archive():
+            opened.append(1)
+            return zipfile.ZipFile(_io.BytesIO(buffer.getvalue()))
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            client = MemoryClient()
+            store = ArtifactStore(client, 'b')
+            journal = Journal(directory / 'journal.jsonl')
+            records, uploaded = ingest_zip(listing[:2], open_archive, store, directory, journal=journal,
+                                           workers=2, log=lambda _: None)
+            self.assertEqual(uploaded, 2)
+            resumed = Journal(directory / 'journal.jsonl')
+            self.assertEqual(len(resumed.records), 2)
+            uploads_before = client.uploads
+            records, uploaded = ingest_zip(listing, open_archive, store, directory, journal=resumed,
+                                           workers=2, log=lambda _: None)
+            self.assertEqual((uploaded, client.uploads - uploads_before), (1, 1))  # only the new file
+            self.assertEqual([r['path'] for r in records], sorted(FILES))
+            self.assertEqual(sorted(p.name for p in directory.iterdir()), ['journal.jsonl'])
+            manifest = validate_manifest({'schema_version': 1, 'kind': 'harness', 'source': 's',
+                                          'revision': 'r', 'files': records})
+            store.commit_manifest(manifest)
+            bad = [dict(listing[0], size_bytes=listing[0]['size_bytes'] + 1)]
+            with self.assertRaisesRegex(ValueError, 'differs'):
+                ingest_zip(bad, open_archive, store, directory, journal=Journal(directory / 'j2.jsonl'),
+                           workers=1, log=lambda _: None)
 
 
 if __name__ == '__main__':

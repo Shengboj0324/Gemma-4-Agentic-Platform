@@ -137,6 +137,7 @@ def orchestrate(args):
                'split_freeze_sha256': split['freeze_sha256'], 'task_ids': len(task_ids),
                'candidates': {n: str(d) for n, d in candidates.items()}, 'lora_modules': lora_modules,
                'server_cmd': server.build_cmd(), 'concurrency_per_candidate': args.concurrency,
+               'sandbox_setup': file_record(args.data_root / 'sandbox' / 'setup.py'),
                'script': file_record(Path(__file__)),
                'deviations_from_scoring_machine': [
                    'one A100-SXM4-80GB, tensor_parallel_size 1 (official: 4x L4, tp 4)',
@@ -218,6 +219,11 @@ def main():
     # Offline everywhere: no hub lookups, telemetry or remote cost maps.
     os.environ.update(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1',
                       DO_NOT_TRACK='1', LITELLM_LOCAL_MODEL_COST_MAP='True', OTEL_SDK_DISABLED='true')
+    # The harness finds the official sandbox bootstrap (sandbox/setup.py) through this.
+    setup = args.data_root / 'sandbox' / 'setup.py'
+    if not setup.is_file():
+        raise FileNotFoundError(setup)
+    os.environ['KAGGLE_SANDBOX_DIR'] = str(args.data_root / 'sandbox')
     netns.reexec_isolated()
     orchestrate(args)
 
