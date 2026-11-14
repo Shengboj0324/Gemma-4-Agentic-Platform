@@ -41,7 +41,8 @@ class CompareTests(unittest.TestCase):
     def test_denominator_never_shrinks_and_outcomes_are_classified(self):
         cohort = ['a1', 'a2', 'a3', 'a4', 'b1']
         repos = {t: 'r/' + t[0] for t in cohort}
-        base = {'a1': row('a1', True), 'a2': row('a2', False), 'a3': row('a3', False, error='timeout'),
+        base = {'a1': row('a1', True), 'a2': row('a2', False),
+                'a3': row('a3', False, error='timeout', agent_patch_size=0),
                 'b1': row('b1', False, agent_patch_size=0)}
         cand = {'a1': row('a1', True), 'a2': row('a2', True), 'a3': row('a3', False),
                 'a4': row('a4', True)}
@@ -57,6 +58,15 @@ class CompareTests(unittest.TestCase):
         self.assertEqual(result['paired']['exact_mcnemar_p'], 0.5)
         self.assertEqual(result['by_repository']['r/a'], {'tasks': 4, 'base_resolved': 1, 'candidate_resolved': 3})
         self.assertEqual(result['base']['results_present'], 4)
+
+    def test_a_verified_patch_decides_the_class_even_after_the_budget_ran_out(self):
+        budget = 'Agent exceeded turns budget (40 turns)'
+        base = {'t1': row('t1', False, error=budget, agent_patch_size=0),
+                't2': row('t2', False, error=budget, agent_patch_size=3207),
+                't3': row('t3', False, error='sandbox crashed', agent_patch_size=0)}
+        result = compare(['t1', 't2', 't3'], base, base, repos={t: 'r/x' for t in base})
+        self.assertEqual(result['base']['outcomes'], {'budget_exhausted_no_patch': 1,
+                                                      'patch_failed_verification': 1, 'error': 1})
 
     def test_results_outside_the_cohort_are_refused(self):
         with self.assertRaisesRegex(ValueError, 'outside the frozen cohort'):

@@ -69,16 +69,21 @@ def bootstrap_difference(pairs, *, seed, resamples=10000):
 
 
 def _outcome(rows, tid):
+    """Classify one task. A patch is verified even when the agent ran out of
+    budget, so the patch decides the class; the error is kept alongside it."""
     row = rows.get(tid)
     if row is None:
         return {'resolved': False, 'class': 'missing_result'}
     if row['resolved']:
         return {'resolved': True, 'class': 'resolved'}
-    if row.get('error'):
+    if row.get('agent_patch_size'):
+        return {'resolved': False, 'class': 'patch_failed_verification'}
+    error = str(row.get('error') or '')
+    if 'budget' in error.lower():
+        return {'resolved': False, 'class': 'budget_exhausted_no_patch'}
+    if error:
         return {'resolved': False, 'class': 'error'}
-    if not row.get('agent_patch_size'):
-        return {'resolved': False, 'class': 'no_patch'}
-    return {'resolved': False, 'class': 'patch_failed_verification'}
+    return {'resolved': False, 'class': 'no_patch'}
 
 
 def _resources(rows, ids):
