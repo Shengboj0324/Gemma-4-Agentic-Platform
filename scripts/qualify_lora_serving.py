@@ -2,8 +2,8 @@
 
 Starts `adk_submission.VllmServer` exactly as the scoring harness configures it
 (Gemma 4 tool and reasoning parsers, 32,768 context, adapters discovered from
-the submission and rank rounded by the official rule), inside the loopback-only
-namespace. Then: the adapter must be listed by /v1/models; the same greedy
+the submission and rank rounded by the official rule), air-gapped to loopback
+(`--isolation`, see zenithsync/netns.py). Then: the adapter must be listed by /v1/models; the same greedy
 requests — one plain, one requiring a tool call — go to the base model and to
 the adapter; the adapter's outputs must differ (a LoRA that changes nothing was
 not applied) and both must parse. Writes receipt.json and the server log.
@@ -55,13 +55,13 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-tokens', type=int, default=512)
     parser.add_argument('--gpu-memory-utilization', type=float, default=0.90)
+    parser.add_argument('--isolation', choices=netns.MODES, required=True)
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
-    os.environ.update(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1', DO_NOT_TRACK='1')
-    netns.reexec_isolated()
-    netns.bring_loopback_up()
-    isolation = netns.require_isolation()
+    os.environ.update(VLLM_HOST_IP='127.0.0.1', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1',
+                      VLLM_NO_USAGE_STATS='1', DO_NOT_TRACK='1')
+    isolation = netns.isolate(args.isolation)
     import requests
     from adk_submission.discovery import discover_adapters
     from adk_submission.server import VllmConfig, VllmServer

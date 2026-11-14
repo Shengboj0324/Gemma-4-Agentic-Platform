@@ -9,9 +9,10 @@ subprocess sandbox the Kaggle runtime uses where Docker is absent.
 
 Candidates run *concurrently* against one server at equal concurrency, so a
 paired comparison sees the same load. The whole process tree — server included
-— runs in a fresh network namespace with only loopback (see
-`zenithsync/netns.py`), matching the official air gap; isolation is probed and
-recorded before anything starts. Only tasks in the frozen split's pilot and
+— is air-gapped to loopback, matching the official runtime: in a fresh network
+namespace (`--isolation netns`) or, where the host refuses unshare, under the
+preloaded egress guard (`--isolation egress-guard`); see `zenithsync/netns.py`.
+Isolation is probed and recorded, with its mode, before anything starts. Only tasks in the frozen split's pilot and
 development roles may be used; the holdout is refused.
 
 Differences from the scoring machine, recorded in the receipt: one A100 with
@@ -69,7 +70,7 @@ def worker(args):
     from swegemma.evaluate import Evaluator
     from swegemma.models.registry import setup_gemma_model_registry
     from zenithsync.harness_context import competition_context_configs
-    netns.require_isolation()
+    netns.isolate(args.isolation)
     install_litellm_reasoning_patch()
     manifest = discover_adapters(args.candidate_dir)
     registry = setup_gemma_model_registry(api_base=args.api_base, api_key='EMPTY',
@@ -101,9 +102,7 @@ def kv_capacity(log_text):
                                             'factor': float(concurrency[-1][1])} if concurrency else None)}
 
 
-def orchestrate(args):
-    netns.bring_loopback_up()
-    isolation = netns.require_isolation()
+def orchestrate(args, isolation):
     split = load_json(args.split)
     if file_record(args.split)['sha256'] != args.split_sha256:
         raise ValueError('Split file differs from its independently supplied identity')
@@ -143,6 +142,9 @@ def orchestrate(args):
                    'one A100-SXM4-80GB, tensor_parallel_size 1 (official: 4x L4, tp 4)',
                    'subprocess sandbox without per-container 4 GiB / 2 vCPU limits',
                    'candidates evaluated concurrently against one server']}
+    if isolation['mode'] == 'egress-guard':
+        receipt['deviations_from_scoring_machine'].append(
+            'air gap by preloaded loopback-only egress guard (host refuses unshare), not a network namespace')
     workers = []
     server_started = time.monotonic()
     try:
@@ -157,7 +159,7 @@ def orchestrate(args):
                        '--served-model', str(args.model), '--tasks', str(args.tasks),
                        '--data-root', str(args.data_root), '--results-dir', str(out),
                        '--task-ids-file', str(args.results_root / 'task_ids.json'),
-                       '--concurrency', str(args.concurrency)]
+                       '--concurrency', str(args.concurrency), '--isolation', args.isolation]
             workers.append((name, subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT), log))
         deadline = time.monotonic() + args.max_hours * 3600
         codes = {}
@@ -205,6 +207,7 @@ def main():
     parser.add_argument('--gpu-memory-utilization', type=float, default=0.90)
     parser.add_argument('--startup-timeout', type=int, default=1200)
     parser.add_argument('--max-hours', type=float, default=4.0)
+    parser.add_argument('--isolation', choices=netns.MODES, required=True)
     args = parser.parse_args()
     if args.worker:
         worker(args)
@@ -216,16 +219,16 @@ def main():
         parser.error('At least one candidate and positive concurrency required')
     if args.results_root.exists():
         raise FileExistsError(args.results_root)
-    # Offline everywhere: no hub lookups, telemetry or remote cost maps.
-    os.environ.update(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1',
+    # Offline everywhere: no hub lookups, telemetry or remote cost maps. vLLM's
+    # rendezvous otherwise uses the host's external address, which the air gap refuses.
+    os.environ.update(VLLM_HOST_IP='127.0.0.1', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1',
                       DO_NOT_TRACK='1', LITELLM_LOCAL_MODEL_COST_MAP='True', OTEL_SDK_DISABLED='true')
     # The harness finds the official sandbox bootstrap (sandbox/setup.py) through this.
     setup = args.data_root / 'sandbox' / 'setup.py'
     if not setup.is_file():
         raise FileNotFoundError(setup)
     os.environ['KAGGLE_SANDBOX_DIR'] = str(args.data_root / 'sandbox')
-    netns.reexec_isolated()
-    orchestrate(args)
+    orchestrate(args, netns.isolate(args.isolation))
 
 
 if __name__ == '__main__':
