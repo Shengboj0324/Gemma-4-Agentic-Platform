@@ -14,11 +14,12 @@ class ExecutionIdentityTests(unittest.TestCase):
 
     def test_identity_carries_the_memory_policy(self):
         identity = worker.build_execution_config('a' * 64, {'torch': '2.10.0'})
-        self.assertEqual(identity['attention'], {'implementation': 'sdpa', 'math': False,
+        self.assertEqual(identity['attention'], {'implementation': 'zenithsync_sdpa_windowed', 'math': False,
                                                  'cudnn': False, 'flash': True, 'mem_efficient': True})
         self.assertEqual(identity['base_representation'], 'packed_w4_group32_dequantized_per_use')
         self.assertEqual(identity['loss'], {'kind': 'chunked_causal', 'chunk_tokens': 1024})
-        for name in ('zenithsync/packed_base.py', 'zenithsync/chunked_loss.py'):
+        for name in ('zenithsync/packed_base.py', 'zenithsync/chunked_loss.py',
+                     'zenithsync/windowed_attention.py'):
             self.assertIn(name, identity['sources'])
 
 

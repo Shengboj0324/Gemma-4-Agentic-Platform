@@ -13,7 +13,8 @@ density of transformers' mask for kernel selection and memory, and makes no
 claim about Gemma's exact window semantics.
 
 Exit status 0 only if the workers' policy (flash or memory-efficient) ran for
-every layer kind. Writes ``receipt.json`` under a new ``--output``.
+every layer kind, and the windowed sliding path ran too. Writes ``receipt.json``
+under a new ``--output``.
 """
 import argparse
 import json
@@ -43,14 +44,15 @@ def layer_shapes(config):
     return kinds
 
 
-def run_case(torch, shape, length, backends):
+def run_case(torch, shape, length, backends, windowed=False):
     from torch.nn.attention import sdpa_kernel
+    from zenithsync.windowed_attention import windowed_attention
     generator = torch.Generator(device='cuda').manual_seed(7401)
     size = (1, shape['heads'], length, shape['head_dim'])
     q, k, v = (torch.randn(size, device='cuda', dtype=torch.bfloat16, generator=generator)
                .requires_grad_(True) for _ in range(3))
     mask = None
-    if shape['window'] is not None:
+    if shape['window'] is not None and not windowed:
         positions = torch.arange(length, device='cuda')
         delta = positions[:, None] - positions[None, :]
         mask = ((delta >= 0) & (delta < shape['window']))[None, None]
@@ -60,8 +62,11 @@ def run_case(torch, shape, length, backends):
     started = time.monotonic()
     try:
         with sdpa_kernel(backends):
-            out = torch.nn.functional.scaled_dot_product_attention(
-                q, k, v, attn_mask=mask, is_causal=mask is None, scale=1.0)
+            if windowed:
+                out = windowed_attention(q, k, v, window=shape['window'], scale=1.0)
+            else:
+                out = torch.nn.functional.scaled_dot_product_attention(
+                    q, k, v, attn_mask=mask, is_causal=mask is None, scale=1.0)
             out.backward(torch.ones_like(out))
         torch.cuda.synchronize()
         result = {'status': 'ran', 'seconds': time.monotonic() - started,
@@ -99,7 +104,14 @@ def main():
     results = {kind: {'shape': shape, **{name: run_case(torch, shape, args.sequence_tokens, backends)
                                          for name, backends in candidates.items()}}
                for kind, shape in shapes.items()}
+    if 'sliding_attention' in results:
+        # The workers' path for sliding layers: window-sized blocks, same kernels.
+        results['sliding_attention']['windowed'] = run_case(
+            torch, shapes['sliding_attention'], args.sequence_tokens, candidates['policy'], windowed=True)
     passed = all(row['policy']['status'] == 'ran' and row['policy']['finite'] for row in results.values())
+    if 'sliding_attention' in results:
+        windowed = results['sliding_attention']['windowed']
+        passed = passed and windowed['status'] == 'ran' and windowed['finite']
     receipt = {'schema_version': 1, 'status': 'passed' if passed else 'failed',
                'device': torch.cuda.get_device_name(0), 'capability': list(torch.cuda.get_device_capability(0)),
                'torch': torch.__version__, 'sequence_tokens': args.sequence_tokens,
@@ -107,7 +119,9 @@ def main():
                'config': file_record(args.config), 'results': results,
                'scope': 'Isolated SDPA forward and backward at real head shapes; not a model run'}
     (args.output / 'receipt.json').write_bytes(canonical_json(receipt))
-    print(json.dumps({kind: {name: row[name]['status'] for name in candidates} for kind, row in results.items()}))
+    print(json.dumps({kind: {name: [value['status'], round(value.get('seconds') or 0, 3)]
+                             for name, value in row.items() if name != 'shape'}
+                      for kind, row in results.items()}))
     raise SystemExit(0 if passed else 1)
 
 

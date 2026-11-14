@@ -220,15 +220,25 @@ def restrict_attention_kernels():
     return flags
 
 
-def load_packed_base(model_class, model_dir, target_shapes, *, device):
-    """Load the compressed checkpoint packed, swap in PackedW4Linear, verify."""
+def load_packed_base(model_class, model_dir, target_shapes, *, device,
+                     attn_implementation=ATTENTION_IMPLEMENTATION):
+    """Load the compressed checkpoint packed, swap in PackedW4Linear, verify.
+
+    ``attn_implementation`` is 'sdpa' or the windowed implementation from
+    ``zenithsync.windowed_attention``; nothing else is qualified.
+    """
     import torch
     from transformers import CompressedTensorsConfig
+    from . import windowed_attention
+    if attn_implementation == windowed_attention.IMPLEMENTATION:
+        windowed_attention.register()
+    elif attn_implementation != 'sdpa':
+        raise ValueError('Unqualified attention implementation: ' + str(attn_implementation))
     base = model_class.from_pretrained(model_dir, local_files_only=True, trust_remote_code=False,
         dtype=torch.bfloat16, quantization_config=CompressedTensorsConfig(run_compressed=True),
-        attn_implementation=ATTENTION_IMPLEMENTATION, device_map={'': device})
+        attn_implementation=attn_implementation, device_map={'': device})
     pack_quantized_projections(base, target_shapes)
-    if base.config._attn_implementation != ATTENTION_IMPLEMENTATION:
+    if base.config._attn_implementation != attn_implementation:
         raise ValueError('Attention implementation differs from the requested kernel')
     if any(value.device.type != torch.device(device).type for value in base.parameters()):
         raise ValueError('CPU/meta/offloaded model parameter rejected')

@@ -105,7 +105,7 @@ def main():
             # Packed int4 base, SDPA without the math fallback, chunked loss:
             # the same memory policy as the corpus worker.
             model = load_packed_base(Gemma4ForConditionalGeneration, args.model, shapes,
-                                     device='cuda:0')
+                                     device='cuda:0', attn_implementation='zenithsync_sdpa_windowed')
             install_chunked_causal_loss(model, chunk_tokens=1024)
             loads.append({'allocated_bytes': torch.cuda.memory_allocated(),
                           'reserved_bytes': torch.cuda.memory_reserved()})

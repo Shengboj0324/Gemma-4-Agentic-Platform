@@ -33,12 +33,16 @@ WORKER_SOURCES = [
         'zenithsync/quantized_layout.py','zenithsync/gpu_memory.py',
         'scripts/verify_architecture_layout.py','zenithsync/architecture_layout.py',
         'zenithsync/model_intake.py','zenithsync/packed_base.py','zenithsync/chunked_loss.py',
+        'zenithsync/windowed_attention.py',
         'scripts/run_p1_training_worker.py']
 
 # Memory policy, fixed in the execution identity. The first GPU session OOMed on
 # an eager [batch, heads, seq, seq] score tensor over a fully decompressed base.
 BASE_REPRESENTATION = 'packed_w4_group32_dequantized_per_use'
-ATTENTION_POLICY = {'implementation':'sdpa','math':False,'cudnn':False,'flash':True,'mem_efficient':True}
+# Sliding layers use window-sized blocks (zenithsync/windowed_attention.py); global
+# layers use transformers' SDPA. Math and cuDNN SDPA stay disabled for both.
+ATTENTION_POLICY = {'implementation':'zenithsync_sdpa_windowed','math':False,'cudnn':False,
+                    'flash':True,'mem_efficient':True}
 LOSS_CHUNK_TOKENS = 1024
 
 def build_execution_config(config_sha256, versions):
@@ -153,7 +157,7 @@ def main():
         torch.backends.cudnn.benchmark = False
         torch.backends.cudnn.deterministic = True
         kernels = restrict_attention_kernels()
-        if {'implementation':'sdpa', **kernels} != ATTENTION_POLICY:
+        if {'implementation':ATTENTION_POLICY['implementation'], **kernels} != ATTENTION_POLICY:
             raise ValueError('Attention kernel policy differs from execution identity')
         bindings = {'base_manifest_sha256':args.manifest_sha256,
                     'corpus_manifest_sha256':args.corpus_sha256,
@@ -164,7 +168,8 @@ def main():
             'identity':{'sha256':args.resume_sha256,'size_bytes':args.resume_size}}
         torch.cuda.reset_peak_memory_stats()
         with DeviceMemoryMonitor(args.output/'device-memory.jsonl') as monitor:
-            base = load_packed_base(Gemma4ForConditionalGeneration, args.model, shapes, device='cuda:0')
+            base = load_packed_base(Gemma4ForConditionalGeneration, args.model, shapes, device='cuda:0',
+                                    attn_implementation=ATTENTION_POLICY['implementation'])
             base_load = {'allocated_bytes':torch.cuda.memory_allocated(),
                          'reserved_bytes':torch.cuda.memory_reserved()}
             install_chunked_causal_loss(base, chunk_tokens=LOSS_CHUNK_TOKENS)

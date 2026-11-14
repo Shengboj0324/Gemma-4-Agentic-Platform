@@ -18,6 +18,8 @@ in the compute dtype, float32 cross entropy, mean over ``labels[:, 1:] != -100``
 own loss and gradients.
 """
 
+from .windowed_attention import IMPLEMENTATION as WINDOWED
+
 DEFAULT_CHUNK_TOKENS = 1024
 _ALLOWED = frozenset({'input_ids', 'attention_mask', 'labels'})
 
@@ -77,6 +79,12 @@ def install_chunked_causal_loss(base, *, chunk_tokens=DEFAULT_CHUNK_TOKENS):
     def forward(**kwargs):
         if set(kwargs) - _ALLOWED or 'input_ids' not in kwargs:
             raise ValueError('Chunked-loss forward accepts only input_ids, attention_mask and labels')
+        mask = kwargs.get('attention_mask')
+        if (base.config._attn_implementation == WINDOWED and mask is not None
+                and not bool((mask == 1).all().item())):
+            # The windowed implementation builds no padding mask; refuse rather
+            # than rely on padding being right-sided.
+            raise ValueError('Padded batches are not supported with windowed attention')
         labels = kwargs.get('labels')
         if labels is None:
             return original(**kwargs)
