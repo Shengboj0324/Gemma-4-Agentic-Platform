@@ -15,9 +15,11 @@ class HTTPRangeReader(io.RawIOBase):
     """Seekable, read-only view of a URL that honours `Range: bytes=a-b`."""
 
     def __init__(self, url, *, session=None, block=8 * 1024 * 1024, timeout=120):
-        import requests
+        if session is None:
+            import requests
+            session = requests.Session()
         self.url = url
-        self.session = session or requests.Session()
+        self.session = session
         self.block = block
         self.timeout = timeout
         self.position = 0
