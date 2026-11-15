@@ -195,5 +195,7 @@ trajectories are generated natively:
 | 11-15 08:30 | Owner approved the first submission: the screening winner with the runtime-safe budget, name ZenithSync24 only, technical text | approved |
 | 11-15 08:35 | Local evaluation now passes the official limits and generation constraints, `bfloat16`, and `max_lora_rank` from detected ranks (`3406dc2`); the screening pulls this before starting | done |
 | 11-15 08:40 | Packager: candidate to private notebook, deterministic `submission.zip` with its sha256 checked inside the notebook (`cfa3001`) | done |
+| 11-15 08:58 | Checked: the official GenerationConstraints only bound max_output_tokens and thinking_budget (≤ 32,768) and supply defaults (16,384 / 4,096) when unset. Every candidate sets both, so omitting the constraints earlier changed no result. The submission limits (3 GiB, extensions .json/.yaml/.yml/.py/.safetensors/.txt/.md) apply to packaging | done |
+| 11-15 09:00 | Owner granted standing autonomy for Kaggle submissions (best-only, ZenithSync24, technical text), with a status update every 10 min during long jobs (memory `kaggle-submission-autonomy`) | in force |
 | 11-15 08:50 | Owner: submit the screening winner when screening completes (~12:00 UTC / 04:00 PST), not the base now. A base 8-minute package was built (zip sha256 `aae035bd…`, README removed) and not submitted | held |
 | 11-15 08:20 | Chain on pod: A1 verify (prepend), A2 re-grade ×2, C1 latency bench, then screen-1 (base, workflow, sample, sample_oursampling; 49 tasks; 3 agents each, concurrently) | running |
