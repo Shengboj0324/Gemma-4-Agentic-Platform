@@ -19,17 +19,27 @@ from zenithsync.artifacts import load_json, validate_manifest
 from zenithsync.r2_client import ALLOWED_BUCKET, load_credentials
 
 
-def build_script(entries, presign):
-    """entries: [(name, manifest, dest)] -> shell script text (curl, retries, size check)."""
-    lines = ['#!/bin/sh', 'set -e']
+def build_script(entries, presign, parallel=8):
+    """entries: [(name, manifest, dest)] -> shell script text.
+
+    Files are fetched `parallel` at a time (a single R2 connection was
+    throttled to ~1.5 MB/s on one pod), each with curl retries and an exact
+    size check. Any failed file marks the batch; the script exits non-zero
+    after the batch rather than continuing.
+    """
+    if parallel < 1:
+        raise ValueError('parallel must be at least 1')
+    lines = ['#!/bin/sh', 'set -e', 'FAIL="${TMPDIR:-/tmp}/fetch-failed-$$"', 'rm -f "$FAIL"',
+             'check() { [ ! -e "$FAIL" ] || { echo "fetch failed" >&2; rm -f "$FAIL"; exit 1; }; }']
     for name, manifest, dest in entries:
-        for row in manifest['files']:
-            target = f"{dest}/{row['path']}"
-            url = presign(row['sha256'])
-            lines.append(f'mkdir -p "$(dirname {shlex.quote(target)})" && '
-                         f'curl -fsSL --retry 5 --retry-delay 3 -o {shlex.quote(target)} {shlex.quote(url)} && '
-                         f'test "$(stat -c %s {shlex.quote(target)})" = "{row["size_bytes"]}"')
-        lines.append(f'echo "{name}: {len(manifest["files"])} files"')
+        for index, row in enumerate(manifest['files']):
+            target = shlex.quote(f"{dest}/{row['path']}")
+            url = shlex.quote(presign(row['sha256']))
+            lines.append(f'( mkdir -p "$(dirname {target})" && curl -fsSL --retry 5 --retry-delay 3 -o {target} {url} && '
+                         f'test "$(wc -c < {target} | tr -d " ")" = "{row["size_bytes"]}" ) || touch "$FAIL" &')
+            if (index + 1) % parallel == 0:
+                lines += ['wait', 'check']
+        lines += ['wait', 'check', f'echo "{name}: {len(manifest["files"])} files"']
     lines.append('echo FETCH_DONE')
     return '\n'.join(lines) + '\n'
 
