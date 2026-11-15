@@ -1,0 +1,170 @@
+# 45 — Campaign plan to the final deadline (written 2026-11-15)
+
+The working plan from the first held-out result to the final submission. Each
+track lists what it does, the exact implementation, its gate, its cost and its
+status. Status is updated in place, and results are appended to
+`40-p1-implementation-journal.md`.
+
+## 0. Facts the plan rests on
+
+| Fact | Value | Source |
+|---|---|---|
+| Final deadline | 2026-12-02 23:59 UTC (17 days from writing) | `kaggle competitions list` |
+| Entry / team-merger deadline | 2026-11-25 | competition overview (docs/01) |
+| Submissions | **1 per day** (about 17 left) | rules (docs/01) |
+| Hidden test | ~120 tasks from private repositories | data page (docs/01) |
+| Scoring machine | 4×L4 (96 GB total), tensor parallel 4, offline | overview, HARNESS_README |
+| Execution allowance | 12 h aggregate including setup | overview (docs/01) |
+| Per-task budget | set by the submission's `eval_config.yaml`: `max_time_minutes`, `max_tool_calls`, `max_turns` (scorer defaults 60 min / 100 / 500) | HARNESS_README §7.1 |
+| Leaderboard on 2026-11-15 | top **0.29**; ~14 teams at 0.24; 5,773 teams; steps of ~0.02 (one task in ~120) | `kaggle competitions leaderboard` |
+| Our submissions | **none** | `kaggle competitions submissions` |
+| Our local result (49 dev tasks, A100) | base agent **15/49 = 0.306**; epoch-1 adapter 13/49 | docs/44 |
+| Local verifier ceiling | gold patches resolve 29/49 under the official image's packages | docs/44 |
+
+Local scores are not leaderboard scores. The tasks differ (public dev repos
+against private hidden repos), the hardware differs (A100 TP1 against 4×L4
+TP4, which changes per-call latency and so how far a wall-clock budget goes),
+and the sample is small. The first submission is the only calibration we can
+get.
+
+## 1. What failed, and what each failure implies
+
+Measured on `full-2` (docs/44), 98 agent runs:
+
+| Failure | Base | Adapter | Lever |
+|---|---|---|---|
+| Patch produced but failed hidden tests | 30 | 28 | agent workflow: reproduce, then fix, then verify against the issue; test-patch awareness |
+| Budget exhausted without a patch | 4 | 8 | budget sizing; earlier `submit_patch`; latency |
+| Unsolvable here (gold fails) | 20 tasks | 20 tasks | none, because the official image lacks the packages |
+| Adapter slower per call | — | +52% | LoRA serving cost (track C) and output length |
+
+A top placement needs roughly 0.29 or more on the hidden set, about 35 of ~120
+tasks. The levers in order of expected value per day:
+
+1. **Budget to fit 12 h.** The whole hidden set must finish in time. Per-task
+   wall clock × tasks ÷ concurrency must stay under about 11 h on 4×L4. Our
+   current 10 min / 40 calls is self-imposed and probably leaves both time
+   and resolutions unused.
+2. **Agent workflow and prompts** (instruction text, tool policy, sub-agents
+   allowed by the YAML compiler), aimed at the 30 failed patches.
+3. **Generation settings** that the YAML allows (temperature, thinking
+   budget, max output tokens), aimed at long reasoning turns.
+4. **LoRA trained on many verified trajectories** (track D). This is the
+   slowest lever, and only worth it if it beats 1–3.
+
+## 2. Tracks, run in parallel
+
+### Track A — measurement fidelity (in progress, pod `clju4klkb0n6tn`)
+
+- A1. Verifier qualification with the task wheels **prepended**, closer to
+  the official image, where the task wheels are the only packages: gold and
+  empty patches on all 49 tasks. Gate: gold ≥ 29/49 and empty ≤ 2/49, both
+  explained. `scripts/qualify_verifier.py --test-site-order prepend`.
+- A2. Re-grade `full-2`'s saved patches under both orders
+  (`scripts/rescore_patches.py`). The `append` run must reproduce 15/13
+  exactly, which validates the re-grader. The `prepend` run gives the
+  corrected result.
+- A3. Adopt the order with the higher gold resolution as the default for every
+  later evaluation, and record it in each receipt (`test_site`).
+- A4. **Scoring-hardware fidelity.** Run every decision evaluation on
+  **4×L4 with tensor parallelism 4**, which matches the scorer's per-call
+  latency. Runpod L4 is about $0.43/h per GPU, so about $1.7/h for four,
+  under the cap. `run_official_eval.py` currently hardcodes
+  `tensor_parallel_size=1`; add `--tensor-parallel-size` and record it in the
+  receipt deviations. Gate: the base agent's per-call latency and resolved
+  count on 4×L4 are measured before any budget decision is made.
+
+### Track B — agent design and budget (highest expected value)
+
+- B1. Failure taxonomy over the 98 traces in the run archive: per task, did
+  the agent reproduce the bug, find the right file, edit it, run a test, how
+  many calls went where (reads, greps, pip attempts, test runs), and where
+  the time went. Output: `evidence/p1/failure-taxonomy-001/`, one row per
+  run, plus totals. CPU only, run on the pod now.
+- B2. Candidate variants, each a submission directory differing from the
+  base in one declared way (`build_eval_candidates.py` generalised to a
+  declared diff):
+  1. Budget: 20 min / 80 calls; 30 min / 100 calls, sized against A4's
+     latency and the 12 h limit with ~120 tasks.
+  2. Instructions aimed at B1's top failure modes, for example: write a
+     reproduction under `/tmp` first, never `pip install`, run the test
+     closest to the change, submit before 80% of the budget.
+  3. Generation settings (temperature, max output tokens).
+- B3. Screening: evaluate **all variants concurrently against one server**.
+  The orchestrator already takes N candidates, and the A100's KV cache holds
+  10 concurrent 32k contexts. Run them on the **pilot** role (20 tasks), with
+  every result paired against the base under the same load.
+- B4. Confirmation: the best one or two variants on the **development** role
+  (29 tasks) on 4×L4. Gate to submit: better than the base on development, by
+  paired difference, with no regression in budget exhaustion. The holdout
+  (80 tasks) stays untouched for the final choice between the last two
+  candidates.
+
+### Track C — adapter serving cost (in progress, same pod)
+
+- C1. `scripts/bench_lora_latency.py`: base against full / attention-only /
+  MLP-only subsets of the real adapter, identical unique ~6k-token prompts,
+  256 fixed output tokens, concurrency 1/4/8.
+- C2. Decide the target-module set for track D from the measured time to
+  first token and decode ratios. Gate: a trained adapter is only evaluated if
+  its serving ratio is ≤ 1.10 at concurrency 4. Add this check to the
+  evaluation runbook as a pre-flight.
+
+### Track D — data engine for rejection-sampled fine-tuning
+
+The adapter only helps if it learns from many verified trajectories in the
+exact official harness format. There is no Docker on Runpod, so the
+trajectories are generated natively:
+
+- D1. Converter: SWE-rebench-V2 train-cohort tasks (2,076, repository- and
+  owner-disjoint from the frozen confirmation cohort and from the four dev
+  repositories; licences confirmed for 2,845 of 2,966 in the pool) to
+  swegemma tasks. That means a `tasks.jsonl` row (`instance_id`, `repo`,
+  `base_commit`, `patch`, `test_patch`, `problem_statement`), a snapshot
+  `.tgz` built by `git fast-export` up to `base_commit` (no future history,
+  the official rule), and an offline wheel set per repository from its pinned
+  requirements at that commit (`pip download` while online, before the guard).
+  The cohort-freeze gate (`check_cohort_freeze.py`) runs before anything is
+  built.
+- D2. Per-repository test site (`build_test_site.py` with that repository's
+  wheels) and gold/empty verification per task (`qualify_verifier.py`). Keep
+  only tasks where the gold patch resolves and the empty patch does not.
+  CPU pod.
+- D3. Pilot: the base agent (the best variant from B, once known) on 100–200
+  qualified tasks, on GPU, with the official harness, recording traces.
+  Measure the yield: resolved trajectories per GPU-hour, and resolved
+  trajectories per task. Gate to scale: an estimate of how many GPU-hours buy
+  ≥ 1,000 resolved trajectories, reported before spending them.
+- D4. Corpus: resolved traces to training examples in the exact chat format
+  the harness sends (the trace already holds the requests), with the existing
+  masking/admission gates. The four admission gates run on the new corpus's
+  own evidence.
+- D5. Train with the target-module set from C2, then evaluate exactly as in
+  docs/44 (pilot, then development), paired against the best non-LoRA
+  variant from B, not against the original base.
+
+### Track E — submissions (each needs the account owner's go-ahead)
+
+- E1. **Calibration: submit the current base agent** (`evidence/p1/base-agent-001/submission.zip`)
+  to get a real leaderboard score. Every later decision depends on how local
+  scores map to it.
+- E2. One submission per day after that: only a variant that passed B4 (or
+  D5).
+- E3. Before Nov 25: confirm the team and entry state.
+- E4. Final selection: the two best by local development score and public
+  leaderboard score, decided on the untouched holdout.
+
+## 3. Cost guardrails
+
+- ≤ $5/h per pod at all times, never H200. Pods are terminated when idle, and
+  every deletion is confirmed with a fresh read.
+- Planned spend: A ≈ $3 (running); A4 ≈ $2 per 4×L4 evaluation; B ≈ $4–6 per
+  screening round (pilot, all variants concurrently); D1–D2 CPU ≈ $1–3; D3
+  pilot ≈ $3–5; D scale-up is reported first (estimated $40–60).
+
+## 4. Status log
+
+| When (UTC) | Item | State |
+|---|---|---|
+| 11-15 07:14 | Pod `clju4klkb0n6tn` (A100, $2.19/h) for A1–A2, B1, C1 | running |
+| 11-15 07:40 | Plan written; leaderboard read (top 0.29); no submission yet | done |
