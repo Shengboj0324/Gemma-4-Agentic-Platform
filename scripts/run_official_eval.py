@@ -80,6 +80,18 @@ def use_test_site(path, order='append'):
         sys.path.append(path)
 
 
+def gpu_description():
+    """'4x NVIDIA L4' from nvidia-smi, or 'unknown GPU'."""
+    import collections
+    try:
+        names = subprocess.run(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'], capture_output=True,
+                               text=True, timeout=30, check=True).stdout.split('\n')
+    except (OSError, subprocess.SubprocessError):
+        return 'unknown GPU'
+    counts = collections.Counter(n.strip() for n in names if n.strip())
+    return ', '.join(f'{c}x {n}' for n, c in sorted(counts.items())) or 'unknown GPU'
+
+
 ALLOWED_MODEL_NAMES = ('gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct',
                        'gemma-4-e4b-it-qat-w4a16-ct', 'gemma-4-e2b-it-qat-w4a16-ct')
 
@@ -174,7 +186,7 @@ def orchestrate(args, isolation):
                         reasoning_parser='gemma4', max_model_len=32768,
                         gpu_memory_utilization=args.gpu_memory_utilization,
                         enable_lora=bool(lora_modules), max_loras=max(1, len(lora_modules)),
-                        startup_timeout=args.startup_timeout, tensor_parallel_size=1)
+                        startup_timeout=args.startup_timeout, tensor_parallel_size=args.tensor_parallel_size)
     server = VllmServer(config, lora_modules=lora_modules)
     receipt = {'schema_version': 1, 'status': 'started', 'started_utc': datetime.now(timezone.utc).isoformat(),
                'network_isolation': isolation, 'versions': versions(), 'split': file_record(args.split),
@@ -184,7 +196,7 @@ def orchestrate(args, isolation):
                'sandbox_setup': file_record(args.data_root / 'sandbox' / 'setup.py'),
                'script': file_record(Path(__file__)),
                'deviations_from_scoring_machine': [
-                   'one A100-SXM4-80GB, tensor_parallel_size 1 (official: 4x L4, tp 4)',
+                   f'{gpu_description()}, tensor_parallel_size {args.tensor_parallel_size} (official: 4x L4, tp 4)',
                    'subprocess sandbox without per-container 4 GiB / 2 vCPU limits',
                    'candidates evaluated concurrently against one server']}
     receipt['test_site'] = ({'path': str(args.test_site), 'order': args.test_site_order,
@@ -262,6 +274,7 @@ def main():
     parser.add_argument('--results-root', type=Path)
     parser.add_argument('--port', type=int, default=8000)
     parser.add_argument('--gpu-memory-utilization', type=float, default=0.90)
+    parser.add_argument('--tensor-parallel-size', type=int, default=1, help='4 matches the scorer\'s 4x L4')
     parser.add_argument('--startup-timeout', type=int, default=1200)
     parser.add_argument('--max-hours', type=float, default=4.0)
     parser.add_argument('--isolation', choices=netns.MODES, required=True)
