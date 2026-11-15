@@ -8,6 +8,9 @@ median task duration. Reported alongside, not used to rank, because they are
 checks rather than goals:
 
 - the exact McNemar p and discordant pairs against the reference;
+- paired task durations against the reference: median difference, tasks
+  faster/slower by more than 5 s, and a two-sided sign test. An unpaired
+  median gap can come from capped runs alone, so speed claims need this;
 - resolved count per repository, and whether the candidate is worse than the
   reference in any repository;
 - patches touching test files, which the harness strips and which are a
@@ -61,6 +64,23 @@ def candidate_summary(results_dir, cap_minutes, setup_seconds, hidden_tasks):
                   'patches_touching_tests': test_edits}
 
 
+def sign_test(wins, losses):
+    """Two-sided exact sign test p-value."""
+    import math
+    n, k = wins + losses, min(wins, losses)
+    if n == 0:
+        return 1.0
+    return min(1.0, 2 * sum(math.comb(n, i) for i in range(k + 1)) / 2 ** n)
+
+
+def paired_durations(rows, ref, tolerance=5.0):
+    diffs = [(rows[t].get('duration_seconds') or 0.0) - (ref[t].get('duration_seconds') or 0.0) for t in ref]
+    faster = sum(1 for d in diffs if d < -tolerance)
+    slower = sum(1 for d in diffs if d > tolerance)
+    return {'median_difference_s': statistics.median(diffs) if diffs else None, 'faster': faster,
+            'slower': slower, 'sign_test_p': sign_test(faster, slower)}
+
+
 def rank(summaries):
     return sorted(summaries, key=lambda n: (-summaries[n]['resolved'], summaries[n]['budget_exhausted_no_patch'],
                                             summaries[n]['median_duration_s'] or 0))
@@ -96,7 +116,8 @@ def main():
                              < summaries[args.reference]['resolved_by_repo'].get(repo, 0))
         summaries[name]['vs_reference'] = {'candidate_only': b, 'reference_only': c,
                                            'exact_mcnemar_p': exact_mcnemar(b, c) if b + c else 1.0,
-                                           'worse_in_repositories': worse_repos}
+                                           'worse_in_repositories': worse_repos,
+                                           'paired_durations': paired_durations(rows[name], ref)}
     order = rank(summaries)
     best = order[0]
     winner = best if summaries[best]['resolved'] >= summaries[args.reference]['resolved'] else args.reference
@@ -109,7 +130,9 @@ def main():
         print(f"{name:22s} resolved {s['resolved']:2d}/{s['tasks']}  vs ref +{s['vs_reference']['candidate_only']}"
               f"/-{s['vs_reference']['reference_only']} p={s['vs_reference']['exact_mcnemar_p']:.3f}  "
               f"out-of-budget {s['budget_exhausted_no_patch']}  median {s['median_duration_s']:.0f}s  "
-              f"12h-proj {s['projected_sequential_hours']:.1f}h  test-edits {len(s['patches_touching_tests'])}")
+              f"12h-proj {s['projected_sequential_hours']:.1f}h  test-edits {len(s['patches_touching_tests'])}  "
+              f"paired-time {s['vs_reference']['paired_durations']['median_difference_s']:+.0f}s "
+              f"(p={s['vs_reference']['paired_durations']['sign_test_p']:.2f})")
     print('winner:', winner)
 
 
