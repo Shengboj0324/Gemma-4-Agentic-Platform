@@ -173,4 +173,6 @@ trajectories are generated natively:
 | 11-15 08:05 | B1 failure taxonomy (base, 49 runs): resolved runs ran a test 67% / submitted 87% / first edit at call 6; failed-patch runs 13% / 33% / 10.5; out-of-budget runs first edit at call 37; graph tools ~0.1–0.3 calls per run, so D skips graph construction | done |
 | 11-15 08:10 | Scorer concurrency is not configurable and not documented; `eval_config.yaml` sets only the four budget keys. Budgets stay at the current scale until the calibration submission shows where the time goes | open |
 | 11-15 08:15 | Official sample prompt (fix within 8–10 turns, targeted test, immediate submit; temp 0.2, think 4096) added as a screening candidate | done |
+| 11-15 07:40 pod | A1: task wheels first (`prepend`) resolve gold 22/49 against 29/49 for `append`; the 7 lost tasks are all fastapi (newest starlette wheel). `append` stays the default, chosen by the screening job's own rule | done |
+| 11-15 07:40 pod | A2 crashed: `--results` parsed as a path (`edf9735` fixes it); the job's `| tail -1` hid the exit code. A2 is dropped: re-grading under the rejected order has no decision value | fixed, dropped |
 | 11-15 08:20 | Chain on pod: A1 verify (prepend), A2 re-grade ×2, C1 latency bench, then screen-1 (base, workflow, sample, sample_oursampling; 49 tasks; 3 agents each, concurrently) | running |
