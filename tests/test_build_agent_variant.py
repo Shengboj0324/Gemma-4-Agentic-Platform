@@ -9,7 +9,7 @@ from scripts.build_agent_variant import build, set_dotted
 def base_tree(root):
     (root / 'configs').mkdir(parents=True)
     (root / 'prompts').mkdir()
-    (root / 'agent.yaml').write_text('name: a\n')
+    (root / 'agent.yaml').write_text('name: a\ntools:\n  - run_command\n  - get_code_neighbors\ninstruction: !include prompts/system.md\n')
     (root / 'eval_config.yaml').write_text('evaluation:\n  max_time_minutes: 10\n  max_tool_calls: 40\n')
     (root / 'configs' / 'sampling.yaml').write_text('temperature: 0.0\nthinking_config:\n  thinking_budget: 2048\n')
     (root / 'prompts' / 'system.md').write_text('Base prompt.\n')
@@ -55,6 +55,18 @@ class BuildAgentVariantTests(unittest.TestCase):
                           addendum=None, prompt_file=prompt)
         self.assertEqual(differing, ['prompts/system.md'])
         self.assertEqual((self.root / 'v/prompts/system.md').read_text(), 'Replacement prompt.\n')
+
+    def test_tools_are_dropped_by_exact_line(self):
+        differing = build(self.root / 'base', self.root / 'v', eval_changes={}, sampling_changes={},
+                          addendum=None, drop_tools=['get_code_neighbors'])
+        self.assertEqual(differing, ['agent.yaml'])
+        text = (self.root / 'v/agent.yaml').read_text()
+        self.assertNotIn('get_code_neighbors', text)
+        self.assertIn('  - run_command', text)
+        self.assertIn('!include prompts/system.md', text)
+        with self.assertRaisesRegex(ValueError, 'exactly once'):
+            build(self.root / 'base', self.root / 'v2', eval_changes={}, sampling_changes={},
+                  addendum=None, drop_tools=['search_similar_code'])
 
     def test_dotted_assignment_refuses_a_scalar_parent(self):
         with self.assertRaises(ValueError):

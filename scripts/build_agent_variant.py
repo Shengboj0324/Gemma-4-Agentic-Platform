@@ -4,7 +4,9 @@ Each variant changes some of: `eval_config.yaml` budget keys (`--eval KEY=VALUE`
 KEY in evaluation.*), sampling keys (`--sampling KEY=VALUE`, dotted for nested
 keys such as thinking_config.thinking_budget), the system prompt replaced
 (`--prompt-file FILE`) and/or an instruction addendum appended to it
-(`--prompt-addendum FILE`). Everything else is
+(`--prompt-addendum FILE`), and harness tools removed from the root
+agent's tool list (`--drop-tool NAME`; agent.yaml uses `!include` tags, so
+the edit is on the exact `  - NAME` line, which must occur once). Everything else is
 copied byte for byte. Then the output is compared with the base, and the build
 is refused unless the differing paths are exactly the declared ones. The
 variant's declaration is written to `variant.json` beside, not inside, the
@@ -49,7 +51,7 @@ def tree(root):
     return {str(p.relative_to(root)): p.read_bytes() for p in sorted(root.rglob('*')) if p.is_file()}
 
 
-def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file=None):
+def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file=None, drop_tools=()):
     import yaml
     if output.exists():
         raise FileExistsError(output)
@@ -87,6 +89,16 @@ def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file
         prompt = output / 'prompts' / 'system.md'
         prompt.write_text(prompt.read_text().rstrip('\n') + '\n\n' + text + '\n')
         declared.add('prompts/system.md')
+    if drop_tools:
+        agent = output / 'agent.yaml'
+        lines = agent.read_text().split('\n')
+        for tool in drop_tools:
+            hits = [i for i, line in enumerate(lines) if line.strip() == f'- {tool}']
+            if len(hits) != 1:
+                raise ValueError(f'Tool {tool!r} must appear exactly once in agent.yaml, found {len(hits)}')
+            del lines[hits[0]]
+        agent.write_text('\n'.join(lines))
+        declared.add('agent.yaml')
     before, after = tree(base), tree(output)
     if set(before) != set(after):
         raise ValueError('Variant added or removed files')
@@ -104,16 +116,18 @@ def main():
     parser.add_argument('--sampling', action='append', default=[], help='sampling KEY=VALUE (dotted)')
     parser.add_argument('--prompt-file', type=Path, help='replaces prompts/system.md')
     parser.add_argument('--prompt-addendum', type=Path)
+    parser.add_argument('--drop-tool', action='append', default=[])
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     eval_changes = parse_assignments(args.eval)
     sampling_changes = parse_assignments(args.sampling)
     differing = build(args.base, args.output, eval_changes=eval_changes, sampling_changes=sampling_changes,
-                      addendum=args.prompt_addendum, prompt_file=args.prompt_file)
+                      addendum=args.prompt_addendum, prompt_file=args.prompt_file, drop_tools=args.drop_tool)
     record = {'schema_version': 1, 'name': args.name, 'base': str(args.base), 'eval': eval_changes,
               'sampling': sampling_changes, 'differing_paths': differing,
               'prompt_addendum': file_record(args.prompt_addendum) if args.prompt_addendum else None,
               'prompt_file': file_record(args.prompt_file) if args.prompt_file else None,
+              'dropped_tools': args.drop_tool,
               'files': {p: file_record(args.output / p) for p in differing}}
     (args.output.parent / f'{args.output.name}.variant.json').write_bytes(canonical_json(record))
     print(json.dumps({'name': args.name, 'differing_paths': differing}))
