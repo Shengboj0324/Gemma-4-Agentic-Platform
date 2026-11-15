@@ -70,7 +70,7 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
-    os.environ['KAGGLE_SANDBOX_DIR'] = str(args.data_root / 'sandbox')
+    os.environ.update(KAGGLE_SANDBOX_DIR=str(args.data_root / 'sandbox'), LITELLM_LOCAL_MODEL_COST_MAP='True')
     isolation = netns.isolate(args.isolation)
     use_test_site(args.test_site, args.test_site_order)
     from swegemma.evaluate import Evaluator
