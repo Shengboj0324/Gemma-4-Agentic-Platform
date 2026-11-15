@@ -48,6 +48,14 @@ class BuildAgentVariantTests(unittest.TestCase):
             build(self.root / 'base', self.root / 'v3', eval_changes={'max_time_minutes': 10},
                   sampling_changes={}, addendum=None)
 
+    def test_prompt_file_replaces_the_system_prompt(self):
+        prompt = self.root / 'p.md'
+        prompt.write_text('Replacement prompt.\n')
+        differing = build(self.root / 'base', self.root / 'v', eval_changes={}, sampling_changes={},
+                          addendum=None, prompt_file=prompt)
+        self.assertEqual(differing, ['prompts/system.md'])
+        self.assertEqual((self.root / 'v/prompts/system.md').read_text(), 'Replacement prompt.\n')
+
     def test_dotted_assignment_refuses_a_scalar_parent(self):
         with self.assertRaises(ValueError):
             set_dotted({'temperature': 0.0}, 'temperature.x', 1)

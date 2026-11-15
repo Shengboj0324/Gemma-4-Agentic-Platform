@@ -2,8 +2,9 @@
 
 Each variant changes some of: `eval_config.yaml` budget keys (`--eval KEY=VALUE`,
 KEY in evaluation.*), sampling keys (`--sampling KEY=VALUE`, dotted for nested
-keys such as thinking_config.thinking_budget), and an instruction addendum
-appended to the system prompt (`--prompt-addendum FILE`). Everything else is
+keys such as thinking_config.thinking_budget), the system prompt replaced
+(`--prompt-file FILE`) and/or an instruction addendum appended to it
+(`--prompt-addendum FILE`). Everything else is
 copied byte for byte. Then the output is compared with the base, and the build
 is refused unless the differing paths are exactly the declared ones. The
 variant's declaration is written to `variant.json` beside, not inside, the
@@ -48,7 +49,7 @@ def tree(root):
     return {str(p.relative_to(root)): p.read_bytes() for p in sorted(root.rglob('*')) if p.is_file()}
 
 
-def build(base, output, *, eval_changes, sampling_changes, addendum):
+def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file=None):
     import yaml
     if output.exists():
         raise FileExistsError(output)
@@ -73,6 +74,12 @@ def build(base, output, *, eval_changes, sampling_changes, addendum):
             set_dotted(sampling, key, value)
         path.write_text(yaml.safe_dump(sampling, sort_keys=False))
         declared.add('configs/sampling.yaml')
+    if prompt_file is not None:
+        text = prompt_file.read_text().strip()
+        if not text:
+            raise ValueError('Empty prompt file')
+        (output / 'prompts' / 'system.md').write_text(text + '\n')
+        declared.add('prompts/system.md')
     if addendum is not None:
         text = addendum.read_text().strip()
         if not text:
@@ -95,16 +102,18 @@ def main():
     parser.add_argument('--name', required=True)
     parser.add_argument('--eval', action='append', default=[], help='evaluation KEY=VALUE')
     parser.add_argument('--sampling', action='append', default=[], help='sampling KEY=VALUE (dotted)')
+    parser.add_argument('--prompt-file', type=Path, help='replaces prompts/system.md')
     parser.add_argument('--prompt-addendum', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     eval_changes = parse_assignments(args.eval)
     sampling_changes = parse_assignments(args.sampling)
     differing = build(args.base, args.output, eval_changes=eval_changes, sampling_changes=sampling_changes,
-                      addendum=args.prompt_addendum)
+                      addendum=args.prompt_addendum, prompt_file=args.prompt_file)
     record = {'schema_version': 1, 'name': args.name, 'base': str(args.base), 'eval': eval_changes,
               'sampling': sampling_changes, 'differing_paths': differing,
               'prompt_addendum': file_record(args.prompt_addendum) if args.prompt_addendum else None,
+              'prompt_file': file_record(args.prompt_file) if args.prompt_file else None,
               'files': {p: file_record(args.output / p) for p in differing}}
     (args.output.parent / f'{args.output.name}.variant.json').write_bytes(canonical_json(record))
     print(json.dumps({'name': args.name, 'differing_paths': differing}))
