@@ -9,7 +9,7 @@ from scripts.build_agent_variant import build, set_dotted
 def base_tree(root):
     (root / 'configs').mkdir(parents=True)
     (root / 'prompts').mkdir()
-    (root / 'agent.yaml').write_text('name: a\ntools:\n  - run_command\n  - get_code_neighbors\ninstruction: !include prompts/system.md\n')
+    (root / 'agent.yaml').write_text('name: a\nmodel: gemma-4-31b-it-qat-w4a16-ct\ntools:\n  - run_command\n  - get_code_neighbors\ninstruction: !include prompts/system.md\n')
     (root / 'eval_config.yaml').write_text('evaluation:\n  max_time_minutes: 10\n  max_tool_calls: 40\n')
     (root / 'configs' / 'sampling.yaml').write_text('temperature: 0.0\nthinking_config:\n  thinking_budget: 2048\n')
     (root / 'prompts' / 'system.md').write_text('Base prompt.\n')
@@ -67,6 +67,15 @@ class BuildAgentVariantTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'exactly once'):
             build(self.root / 'base', self.root / 'v2', eval_changes={}, sampling_changes={},
                   addendum=None, drop_tools=['search_similar_code'])
+
+    def test_model_is_replaced_and_restricted_to_allowed_models(self):
+        differing = build(self.root / 'base', self.root / 'v', eval_changes={}, sampling_changes={},
+                          addendum=None, model='gemma-4-e4b-it-qat-w4a16-ct')
+        self.assertEqual(differing, ['agent.yaml'])
+        self.assertIn('model: gemma-4-e4b-it-qat-w4a16-ct\n', (self.root / 'v/agent.yaml').read_text())
+        with self.assertRaisesRegex(ValueError, 'allowed'):
+            build(self.root / 'base', self.root / 'v2', eval_changes={}, sampling_changes={},
+                  addendum=None, model='gemma-4-27b-it')
 
     def test_dotted_assignment_refuses_a_scalar_parent(self):
         with self.assertRaises(ValueError):

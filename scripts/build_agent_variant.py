@@ -6,7 +6,9 @@ keys such as thinking_config.thinking_budget), the system prompt replaced
 (`--prompt-file FILE`) and/or an instruction addendum appended to it
 (`--prompt-addendum FILE`), and harness tools removed from the root
 agent's tool list (`--drop-tool NAME`; agent.yaml uses `!include` tags, so
-the edit is on the exact `  - NAME` line, which must occur once). Everything else is
+the edit is on the exact `  - NAME` line, which must occur once), and the
+declared base model replaced (`--model NAME`, one of the competition's
+allowed models; the `model:` line must occur once). Everything else is
 copied byte for byte. Then the output is compared with the base, and the build
 is refused unless the differing paths are exactly the declared ones. The
 variant's declaration is written to `variant.json` beside, not inside, the
@@ -51,7 +53,7 @@ def tree(root):
     return {str(p.relative_to(root)): p.read_bytes() for p in sorted(root.rglob('*')) if p.is_file()}
 
 
-def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file=None, drop_tools=()):
+def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file=None, drop_tools=(), model=None):
     import yaml
     if output.exists():
         raise FileExistsError(output)
@@ -99,6 +101,19 @@ def build(base, output, *, eval_changes, sampling_changes, addendum, prompt_file
             del lines[hits[0]]
         agent.write_text('\n'.join(lines))
         declared.add('agent.yaml')
+    if model is not None:
+        allowed = {'gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct',
+                   'gemma-4-e4b-it-qat-w4a16-ct', 'gemma-4-e2b-it-qat-w4a16-ct'}
+        if model not in allowed:
+            raise ValueError(f'Not an allowed competition model: {model}')
+        agent = output / 'agent.yaml'
+        lines = agent.read_text().split('\n')
+        hits = [i for i, line in enumerate(lines) if line.startswith('model:')]
+        if len(hits) != 1:
+            raise ValueError(f'agent.yaml must have exactly one top-level model line, found {len(hits)}')
+        lines[hits[0]] = f'model: {model}'
+        agent.write_text('\n'.join(lines))
+        declared.add('agent.yaml')
     before, after = tree(base), tree(output)
     if set(before) != set(after):
         raise ValueError('Variant added or removed files')
@@ -117,17 +132,18 @@ def main():
     parser.add_argument('--prompt-file', type=Path, help='replaces prompts/system.md')
     parser.add_argument('--prompt-addendum', type=Path)
     parser.add_argument('--drop-tool', action='append', default=[])
+    parser.add_argument('--model', help='replace the declared base model')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     eval_changes = parse_assignments(args.eval)
     sampling_changes = parse_assignments(args.sampling)
     differing = build(args.base, args.output, eval_changes=eval_changes, sampling_changes=sampling_changes,
-                      addendum=args.prompt_addendum, prompt_file=args.prompt_file, drop_tools=args.drop_tool)
+                      addendum=args.prompt_addendum, prompt_file=args.prompt_file, drop_tools=args.drop_tool, model=args.model)
     record = {'schema_version': 1, 'name': args.name, 'base': str(args.base), 'eval': eval_changes,
               'sampling': sampling_changes, 'differing_paths': differing,
               'prompt_addendum': file_record(args.prompt_addendum) if args.prompt_addendum else None,
               'prompt_file': file_record(args.prompt_file) if args.prompt_file else None,
-              'dropped_tools': args.drop_tool,
+              'dropped_tools': args.drop_tool, 'model': args.model,
               'files': {p: file_record(args.output / p) for p in differing}}
     (args.output.parent / f'{args.output.name}.variant.json').write_bytes(canonical_json(record))
     print(json.dumps({'name': args.name, 'differing_paths': differing}))
