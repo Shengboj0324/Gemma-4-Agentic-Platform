@@ -168,3 +168,9 @@ trajectories are generated natively:
 |---|---|---|
 | 11-15 07:14 | Pod `clju4klkb0n6tn` (A100, $2.19/h) for A1–A2, B1, C1 | running |
 | 11-15 07:40 | Plan written; leaderboard read (top 0.29); no submission yet | done |
+| 11-15 07:55 | Single R2 connection throttled to ~1.5 MB/s; fetch now 8 files at a time (`5b088e9`) | fixed |
+| 11-15 08:00 | 4×L4 out of stock on Runpod secure cloud (L40/L40S too); A4 blocked, re-check daily | blocked |
+| 11-15 08:05 | B1 failure taxonomy (base, 49 runs): resolved runs ran a test 67% / submitted 87% / first edit at call 6; failed-patch runs 13% / 33% / 10.5; out-of-budget runs first edit at call 37; graph tools ~0.1–0.3 calls per run, so D skips graph construction | done |
+| 11-15 08:10 | Scorer concurrency is not configurable and not documented; `eval_config.yaml` sets only the four budget keys. Budgets stay at the current scale until the calibration submission shows where the time goes | open |
+| 11-15 08:15 | Official sample prompt (fix within 8–10 turns, targeted test, immediate submit; temp 0.2, think 4096) added as a screening candidate | done |
+| 11-15 08:20 | Chain on pod: A1 verify (prepend), A2 re-grade ×2, C1 latency bench, then screen-1 (base, workflow, sample, sample_oursampling; 49 tasks; 3 agents each, concurrently) | running |
