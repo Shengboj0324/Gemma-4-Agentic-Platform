@@ -27,14 +27,14 @@ def config_for(args, results_dir, task_ids, *, skip_agent_patch):
     from adk_submission.discovery import discover_adapters
     from swegemma.config import EvalConfig
     from zenithsync.harness_context import competition_context_configs
-    from scripts.run_official_eval import candidate_budget
+    from scripts.run_official_eval import candidate_budget, scorer_limits
     return EvalConfig(tasks_path=args.tasks, snapshots_dir=args.data_root / 'snapshots',
                       results_dir=results_dir, submission_dir=args.submission, models=ModelRegistry(),
                       sandbox='subprocess', wheels_dir=args.data_root / 'wheels',
                       graph_dir=str(args.data_root / 'graphs'), embeddings_dir=str(args.data_root / 'embeddings'),
                       task_ids=task_ids, concurrency=args.concurrency, display_mode='quiet',
                       adapter_manifest=discover_adapters(args.submission), skip_agent_patch=skip_agent_patch,
-                      **competition_context_configs(), **candidate_budget(args.submission))
+                      **competition_context_configs(), **scorer_limits(), **candidate_budget(args.submission))
 
 
 def gold_evaluator():

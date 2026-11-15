@@ -114,7 +114,9 @@ def main():
     concurrencies = args.concurrency or [1, 4, 8]
     os.environ.update(VLLM_HOST_IP='127.0.0.1', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1',
                       VLLM_NO_USAGE_STATS='1', DO_NOT_TRACK='1')
+    from adk_submission.discovery import discover_adapters
     from adk_submission.server import VllmConfig, VllmServer
+    from scripts.run_official_eval import lora_rank
     args.output.mkdir(parents=True)
     variants = {}
     for name, projections in GROUPS.items():
@@ -122,7 +124,8 @@ def main():
         variants[name] = {'projections': projections, 'tensors': tensors, 'modules': modules}
     server = VllmServer(VllmConfig(model=str(args.model), tool_call_parser='gemma4', reasoning_parser='gemma4',
                                    max_model_len=32768, gpu_memory_utilization=0.90, enable_lora=True,
-                                   max_loras=len(GROUPS), startup_timeout=1500),
+                                   max_loras=len(GROUPS), startup_timeout=1500, dtype='bfloat16',
+                                   max_lora_rank=lora_rank([discover_adapters(args.adapter_dir.parent.parent)])),
                         lora_modules={n: str(args.output / 'adapters' / n) for n in GROUPS})
     receipt = {'schema_version': 1, 'started_utc': datetime.now(timezone.utc).isoformat(),
                'server_cmd': server.build_cmd(), 'variants': variants, 'concurrency': concurrencies,

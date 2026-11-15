@@ -58,7 +58,7 @@ def candidate_budget(candidate: Path):
     import yaml
     path = candidate / 'eval_config.yaml'
     evaluation = yaml.safe_load(path.read_text())['evaluation'] if path.exists() else {}
-    keys = {'timeout_seconds', 'max_tool_calls', 'max_time_minutes', 'max_turns'}
+    keys = {'timeout_seconds', 'max_tool_calls', 'max_time_minutes', 'max_turns', 'verification_timeout_seconds'}
     if set(evaluation) - keys:
         raise ValueError('Unexpected eval_config.yaml keys: ' + str(set(evaluation) - keys))
     return evaluation
@@ -90,6 +90,21 @@ def gpu_description():
         return 'unknown GPU'
     counts = collections.Counter(n.strip() for n in names if n.strip())
     return ', '.join(f'{c}x {n}' for n, c in sorted(counts.items())) or 'unknown GPU'
+
+
+def scorer_limits():
+    """The submission limits and generation constraints the official runtime passes to
+    EvalConfig (the competition's getting-started notebook: build_submission_limits())."""
+    from swegemma.config import build_submission_limits
+    limits, generation_constraints = build_submission_limits()
+    return {'limits': limits, 'generation_constraints': generation_constraints}
+
+
+def lora_rank(manifests):
+    """max_lora_rank as the official runtime sets it: the largest detected rank, else 128."""
+    ranks = [r for m in manifests for info in m.adapters.values()
+             if (r := getattr(info, 'rank', None)) is not None and r > 0]
+    return max(ranks) if ranks else 128
 
 
 ALLOWED_MODEL_NAMES = ('gemma-4-31b-it-qat-w4a16-ct', 'gemma-4-12b-it-qat-w4a16-ct',
@@ -138,7 +153,7 @@ def worker(args):
                         graph_dir=str(args.data_root / 'graphs'),
                         embeddings_dir=str(args.data_root / 'embeddings'),
                         task_ids=task_ids, concurrency=args.concurrency, display_mode='quiet',
-                        adapter_manifest=manifest, **competition_context_configs(),
+                        adapter_manifest=manifest, **competition_context_configs(), **scorer_limits(),
                         **candidate_budget(args.candidate_dir))
     started = time.monotonic()
     result = asyncio.run(Evaluator(config).run())
@@ -174,8 +189,10 @@ def orchestrate(args, isolation):
     from adk_submission.discovery import discover_adapters
     from adk_submission.server import VllmConfig, VllmServer
     lora_modules = {}
+    manifests = []
     for name, directory in candidates.items():
-        for adapter, info in discover_adapters(directory).adapters.items():
+        manifests.append(discover_adapters(directory))
+        for adapter, info in manifests[-1].adapters.items():
             if adapter in lora_modules:
                 raise ValueError('Adapter name used by two candidates: ' + adapter)
             # VllmServer resolves a weight-file path to its checkpoint directory itself.
@@ -186,6 +203,7 @@ def orchestrate(args, isolation):
                         reasoning_parser='gemma4', max_model_len=32768,
                         gpu_memory_utilization=args.gpu_memory_utilization,
                         enable_lora=bool(lora_modules), max_loras=max(1, len(lora_modules)),
+                        max_lora_rank=lora_rank(manifests), dtype='bfloat16',
                         startup_timeout=args.startup_timeout, tensor_parallel_size=args.tensor_parallel_size)
     server = VllmServer(config, lora_modules=lora_modules)
     receipt = {'schema_version': 1, 'status': 'started', 'started_utc': datetime.now(timezone.utc).isoformat(),

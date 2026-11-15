@@ -6,7 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.run_official_eval import candidate_budget, declared_model, kv_capacity, use_test_site
+from scripts.run_official_eval import candidate_budget, declared_model, kv_capacity, lora_rank, use_test_site
+from types import SimpleNamespace
 import sys
 from zenithsync import netns
 
@@ -106,6 +107,14 @@ class TestSiteTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 use_test_site(Path(d) / 'site-packages', 'append')
         use_test_site(None)
+
+
+
+class LoraRankTests(unittest.TestCase):
+    def test_largest_detected_rank_else_the_official_default(self):
+        manifest = lambda *ranks: SimpleNamespace(adapters={f'a{i}': SimpleNamespace(rank=r) for i, r in enumerate(ranks)})
+        self.assertEqual(lora_rank([manifest(4), manifest(16, None)]), 16)
+        self.assertEqual(lora_rank([manifest(), manifest(None, 0)]), 128)
 
 
 if __name__ == '__main__':
