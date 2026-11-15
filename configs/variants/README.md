@@ -5,3 +5,8 @@ Prompt addenda for agent variants (`scripts/build_agent_variant.py --prompt-adde
   ones in 13%; resolved runs submitted explicitly in 87% of cases and failed
   ones in 33%; runs that ran out of budget made their first edit at call 37.
   These are correlations; the variant is screened against the base, paired.
+- `callplan-v1.md`: a hard call schedule (edit by call 12, stop exploring at
+  call 25, final `git status`/`git diff` and `submit_patch`). It targets the
+  taxonomy's late first edit (call 37 in out-of-budget runs) and the rarity of
+  explicit submission in failed runs. The schedule idea is common in public
+  competition notebooks; the text here is our own.
