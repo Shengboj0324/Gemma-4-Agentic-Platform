@@ -27,6 +27,23 @@ TP4, which changes per-call latency and so how far a wall-clock budget goes),
 and the sample is small. The first submission is the only calibration we can
 get.
 
+### Submission facts (2026-11-15, owner-confirmed)
+
+| Fact | Value | Source |
+|---|---|---|
+| Account | `michealjiang`, display name **ZenithSync24**; confirmed by the owner | `kaggle config view`, profile page |
+| Route | a private notebook writes `submission.zip`; that notebook version is submitted (`kaggle competitions submit -k michealjiang/<slug> -v <n> -f submission.zip`) | starter notebook, CLI |
+| Text on submissions | the owner's name (ZenithSync24) only, technical language only | owner instruction |
+| Limits | 1 per day to Dec 2; **2 final selections** | rules (docs/11) |
+| Runtime rule | "12 hours to submit patches for all tasks, inclusive of sandbox setup time, excluding patch validation" | overview page |
+| Official loop | the starter evaluates tasks **sequentially** and passes `build_submission_limits()` limits and generation constraints, `bfloat16`, `max_lora_rank` = largest detected rank | starter notebook |
+| Public evidence | 8 min / 28 calls / 240 s / 80 turns scored 0.22 and completed; lowering those limits scored 0.13 | public notebooks (flexonafft, honghanhhh) |
+| Small-model bonus | $10,000 for the best E2B/E4B entry, which must be one of the two final selections | overview page |
+
+The first submission therefore uses **8 minutes per task**. That value has
+public evidence of both completing and scoring, whereas the ~5 minutes
+considered first was shown publicly to cost score.
+
 ## 1. What failed, and what each failure implies
 
 Measured on `full-2` (docs/44), 98 agent runs:
@@ -175,4 +192,7 @@ trajectories are generated natively:
 | 11-15 08:15 | Official sample prompt (fix within 8–10 turns, targeted test, immediate submit; temp 0.2, think 4096) added as a screening candidate | done |
 | 11-15 07:40 pod | A1: task wheels first (`prepend`) resolve gold 22/49 against 29/49 for `append`; the 7 lost tasks are all fastapi (newest starlette wheel). `append` stays the default, chosen by the screening job's own rule | done |
 | 11-15 07:40 pod | A2 crashed: `--results` parsed as a path (`edf9735` fixes it); the job's `| tail -1` hid the exit code. A2 is dropped: re-grading under the rejected order has no decision value | fixed, dropped |
+| 11-15 08:30 | Owner approved the first submission: the screening winner with the runtime-safe budget, name ZenithSync24 only, technical text | approved |
+| 11-15 08:35 | Local evaluation now passes the official limits and generation constraints, `bfloat16`, and `max_lora_rank` from detected ranks (`3406dc2`); the screening pulls this before starting | done |
+| 11-15 08:40 | Packager: candidate to private notebook, deterministic `submission.zip` with its sha256 checked inside the notebook (`cfa3001`) | done |
 | 11-15 08:20 | Chain on pod: A1 verify (prepend), A2 re-grade ×2, C1 latency bench, then screen-1 (base, workflow, sample, sample_oursampling; 49 tasks; 3 agents each, concurrently) | running |
