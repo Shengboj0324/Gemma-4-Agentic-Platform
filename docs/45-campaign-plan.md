@@ -160,6 +160,24 @@ trajectories are generated natively:
   docs/44 (pilot, then development), paired against the best non-LoRA
   variant from B, not against the original base.
 
+### Track F — small-model bonus ($10,000, best E2B/E4B entry)
+
+- Public small-model leaderboard (host notebook, 2026-11-15): top **0.12**, a
+  large cluster at 0.10, against 0.29 on the main board. It is far less
+  contested.
+- An E2B/E4B entry must be one of our **two final selections**. The plan:
+  final selection 1 is the best 31B configuration, and selection 2 is the
+  best E4B configuration if it leads or is near the top of the small-model
+  board.
+- F1. Weights: E4B `model.safetensors` is 11.5 GB (8 files). A pod fetches
+  them through signed per-file URLs (`scripts/kaggle_model_urls.py`, no
+  credential on the pod), computes digests, uploads to R2 by digest (presigned
+  PUT), and they are verified locally by a streamed read.
+- F2. Screen the 31B winners' agent designs on E4B (same harness, 49 tasks);
+  E4B is faster per call, so budgets may differ.
+- F3. Submit the best E4B configuration once it beats the small-model board's
+  visible top on local evidence.
+
 ### Track E — submissions (each needs the account owner's go-ahead)
 
 - E1. **Calibration: submit the current base agent** (`evidence/p1/base-agent-001/submission.zip`)
