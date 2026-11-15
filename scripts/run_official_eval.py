@@ -178,8 +178,11 @@ def orchestrate(args, isolation):
     split = load_json(args.split)
     if file_record(args.split)['sha256'] != args.split_sha256:
         raise ValueError('Split file differs from its independently supplied identity')
-    cohort = split['roles']['pilot'] + split['roles']['development']
-    task_ids = require_cohort(split, args.task_id or cohort)
+    roles = tuple(r.strip() for r in args.roles.split(',') if r.strip())
+    if 'holdout' in roles and not (args.holdout_justification or '').strip():
+        raise ValueError('The holdout may be used only with a recorded --holdout-justification')
+    cohort = [t for role in roles for t in split['roles'][role]]
+    task_ids = require_cohort(split, args.task_id or cohort, allowed=roles)
     tasks = {json.loads(l)['instance_id'] for l in args.tasks.read_text().splitlines() if l.strip()}
     if set(task_ids) - tasks:
         raise ValueError('Cohort tasks absent from tasks.jsonl')
@@ -208,6 +211,7 @@ def orchestrate(args, isolation):
     server = VllmServer(config, lora_modules=lora_modules)
     receipt = {'schema_version': 1, 'status': 'started', 'started_utc': datetime.now(timezone.utc).isoformat(),
                'network_isolation': isolation, 'versions': versions(), 'split': file_record(args.split),
+               'roles': list(roles), 'holdout_justification': args.holdout_justification,
                'split_freeze_sha256': split['freeze_sha256'], 'task_ids': len(task_ids),
                'candidates': {n: str(d) for n, d in candidates.items()}, 'lora_modules': lora_modules,
                'server_cmd': server.build_cmd(), 'concurrency_per_candidate': args.concurrency,
@@ -298,6 +302,8 @@ def main():
     parser.add_argument('--isolation', choices=netns.MODES, required=True)
     parser.add_argument('--test-site', type=Path, help='site-packages from scripts/build_test_site.py')
     parser.add_argument('--test-site-order', choices=('append', 'prepend'), default='append')
+    parser.add_argument('--roles', default='pilot,development', help='split roles to evaluate')
+    parser.add_argument('--holdout-justification', help='required to include the holdout; recorded')
     args = parser.parse_args()
     if args.worker:
         worker(args)
