@@ -54,7 +54,7 @@ def replay_evaluator(attempts):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--results', type=Path, action='append', required=True, help='NAME=DIR')
+    parser.add_argument('--results', action='append', required=True, help='NAME=DIR')
     parser.add_argument('--tasks', type=Path, required=True)
     parser.add_argument('--data-root', type=Path, required=True)
     parser.add_argument('--submission', type=Path, required=True)
