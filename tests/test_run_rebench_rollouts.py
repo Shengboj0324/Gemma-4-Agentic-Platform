@@ -42,5 +42,15 @@ class PackTests(unittest.TestCase):
             self.assertEqual([(p.name, ids) for p, ids in packs_with_work(d, skip)], [('a', ['a2'])])
 
 
+    def test_retry_pass_skips_only_resolved(self):
+        with tempfile.TemporaryDirectory() as d:
+            old = Path(d, 'old', 'a', 'results')
+            old.mkdir(parents=True)
+            (old / 'task_results.jsonl').write_text(json.dumps({'instance_id': 'a1', 'resolved': True}) + '\n'
+                                                    + json.dumps({'instance_id': 'a2', 'resolved': False}) + '\n')
+            self.assertEqual(finished_ids([Path(d, 'old')], resolved_only=True), {'a1'})
+            self.assertEqual(finished_ids([Path(d, 'old')]), {'a1', 'a2'})
+
+
 if __name__ == '__main__':
     unittest.main()

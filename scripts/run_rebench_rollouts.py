@@ -29,12 +29,13 @@ from zenithsync import netns
 from zenithsync.server_log import stop_keeping_log
 
 
-def finished_ids(roots):
-    """Task ids with a recorded result under earlier results roots (<root>/<pack>/results/task_results.jsonl)."""
+def finished_ids(roots, resolved_only=False):
+    """Task ids with a recorded (or, with resolved_only, a resolved) result under earlier results roots."""
     done = set()
     for root in roots:
         for path in Path(root).glob('*/results/task_results.jsonl'):
-            done |= {json.loads(l)['instance_id'] for l in path.read_text().splitlines() if l.strip()}
+            rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+            done |= {r['instance_id'] for r in rows if r.get('resolved') or not resolved_only}
     return done
 
 
@@ -70,6 +71,8 @@ def main():
     parser.add_argument('--isolation', choices=netns.MODES, required=True)
     parser.add_argument('--skip-done-from', type=Path, action='append', default=[],
                         help='earlier results root; tasks with a result there are not run again')
+    parser.add_argument('--skip-resolved-from', type=Path, action='append', default=[],
+                        help='earlier results root; tasks resolved there are not run again (retry pass)')
     args = parser.parse_args()
     name, candidate = args.candidate.split('=', 1)
     # As run_official_eval.main: offline everywhere, loopback rendezvous for vLLM. Workers inherit this;
@@ -77,7 +80,7 @@ def main():
     os.environ.update(VLLM_HOST_IP='127.0.0.1', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1',
                       DO_NOT_TRACK='1', LITELLM_LOCAL_MODEL_COST_MAP='True', OTEL_SDK_DISABLED='true')
     isolation = netns.isolate(args.isolation)
-    skip = finished_ids(args.skip_done_from)
+    skip = finished_ids(args.skip_done_from) | finished_ids(args.skip_resolved_from, resolved_only=True)
     work = packs_with_work(args.packs, skip)
     args.results_root.mkdir(parents=True, exist_ok=False)
     from adk_submission.server import VllmConfig, VllmServer
@@ -88,7 +91,8 @@ def main():
     receipt = {'schema_version': 1, 'status': 'started', 'started_utc': datetime.now(timezone.utc).isoformat(),
                'network_isolation': isolation, 'candidate': {'name': name, 'directory': candidate},
                'packs': {p.name: ids for p, ids in work}, 'skipped_done': len(skip),
-               'skip_done_from': [str(r) for r in args.skip_done_from], 'tasks': sum(len(i) for _, i in work),
+               'skip_done_from': [str(r) for r in args.skip_done_from],
+               'skip_resolved_from': [str(r) for r in args.skip_resolved_from], 'tasks': sum(len(i) for _, i in work),
                'concurrency_per_worker': args.concurrency, 'parallel_workers': args.parallel,
                'test_site_order': 'append (sandbox precedence by the site shim)', 'server_cmd': server.build_cmd(),
                'script': file_record(Path(__file__)), 'workers': {}}
