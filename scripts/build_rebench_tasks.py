@@ -68,6 +68,11 @@ for name in sys.argv[2:]:
         if not found and (os.path.isdir(os.path.join(tree, 'src', top))
                           or os.path.isfile(os.path.join(tree, 'src', top + '.py'))):
             dirs.add('src')
+# Installers that record no top-level names (hatch editable: only a .pth): a src/ layout is still src/.
+src = os.path.join(tree, 'src')
+if not dirs and os.path.isdir(src) and any(
+        os.path.isfile(os.path.join(src, e, '__init__.py')) or e.endswith('.py') for e in os.listdir(src)):
+    dirs.add('src')
 print(json.dumps({'code_files': [c for c in code if not c.startswith('..')], 'package_dirs': sorted(dirs)}))
 '''
 WORKSPACE_PTH = ("import os, sys; [sys.path.insert(0, os.path.join(p, d)) for p in "
