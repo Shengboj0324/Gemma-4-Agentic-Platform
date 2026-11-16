@@ -39,6 +39,53 @@ ROOT = Path(__file__).resolve().parents[1]
 SKIP = re.compile(r'^\s*(apt-get|apt |sudo |curl |wget |conda |mamba |rustup|export DEBIAN|source |\. )')
 IMAGE_PACKAGES = ['pytest', 'pytest-timeout==2.1.0', 'typer', 'pdm-backend', 'setuptools', 'wheel',
                   'poetry-core', 'hatchling', 'flit-core', 'editables']
+# Run with the build venv's interpreter: argv = tree, distribution names. Prints the site-relative files
+# that are code copies or import hooks (to delete; .dist-info kept) and each top-level package's
+# directory relative to the tree (where /workspace must be searched).
+OWN_LAYOUT = r'''
+import importlib.metadata as m, importlib.util, json, os, sys
+tree = os.path.realpath(sys.argv[1]); code, dirs = [], set()
+for name in sys.argv[2:]:
+    dist = m.distribution(name)
+    for f in dist.files or []:
+        if '.dist-info' not in str(f) and '.egg-info' not in str(f):
+            code.append(str(f))
+    tops = (dist.read_text('top_level.txt') or '').split()
+    if not tops:
+        tops = sorted({str(f).split('/')[0].removesuffix('.py') for f in dist.files or []
+                       if '/' in str(f) or str(f).endswith('.py')} - {'..'})
+    for top in tops:
+        try:
+            spec = importlib.util.find_spec(top)
+        except (ImportError, ValueError):
+            continue
+        where = (list(spec.submodule_search_locations or []) or [spec.origin]) if spec else []
+        found = False
+        for loc in where:
+            loc = os.path.realpath(loc or '')
+            if loc.startswith(tree + os.sep):
+                dirs.add(os.path.relpath(os.path.dirname(loc), tree)); found = True
+        if not found and (os.path.isdir(os.path.join(tree, 'src', top))
+                          or os.path.isfile(os.path.join(tree, 'src', top + '.py'))):
+            dirs.add('src')
+print(json.dumps({'code_files': [c for c in code if not c.startswith('..')], 'package_dirs': sorted(dirs)}))
+'''
+WORKSPACE_PTH = ("import os, sys; [sys.path.insert(0, os.path.join(p, d)) for p in "
+                 "os.environ.get('PYTHONPATH', '').split(os.pathsep) if p for d in {dirs} "
+                 "if os.path.isdir(os.path.join(p, d))]")
+# Ubuntu's stdlib sitecustomize imports `apport_python_hook` from sys.path and calls install(). In the
+# local subprocess sandbox the test site is on sys.path by then (as a plain path from swegemma's
+# _host_env.pth, so its own .pth files are never processed). This shim processes them, as a real
+# site-packages directory would be: that is what makes the workspace mapping above take effect.
+# Local data-generation plumbing only; nothing of it reaches a submission.
+APPORT_SHIM = '''\"\"\"Test-site shim written by scripts/build_rebench_tasks.py (local harness only).\"\"\"
+import os
+import site
+
+
+def install():
+    site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+'''
 ROW_KEYS = ('instance_id', 'repo', 'base_commit', 'patch', 'test_patch', 'problem_statement', 'created_at')
 
 
@@ -143,18 +190,38 @@ def build_site(source, commit, install, out_dir, work, python):
                       if str((d.get('direct_url') or {}).get('url', '')).startswith(f'file://{tree}')})
     except (ValueError, KeyError, subprocess.TimeoutExpired):
         log.append({'cmd': 'pip inspect', 'exit': 'unparsed'})
-    for name in own:
-        log.append(run([pip, 'uninstall', '-y', name]))
+    # swegemma's subprocess sandbox skips the editable install the Docker scorer performs and only puts
+    # /workspace on PYTHONPATH. Reproduce what the editable install provides instead: keep the
+    # distribution's metadata (importlib.metadata lookups), delete its code copies and import hooks, and
+    # map each top-level package's directory (e.g. src/) onto whatever /workspace is at run time.
+    layout = {'own': own, 'package_dirs': [], 'deleted_files': 0}
+    if own:
+        probe = subprocess.run([str(venv / 'bin' / 'python'), '-c', OWN_LAYOUT, str(tree), *own],
+                               capture_output=True, text=True, timeout=300)
+        try:
+            layout.update(json.loads(probe.stdout))
+        except ValueError:
+            log.append({'cmd': 'own-layout probe', 'exit': probe.returncode, 'tail': probe.stderr[-1500:]})
     site = next((venv / 'lib').glob('python3*/site-packages'))
     target = out_dir / 'site' / 'site-packages'
     shutil.rmtree(target.parent, ignore_errors=True)
     shutil.copytree(site, target, symlinks=True)
-    for pth in target.glob('__editable__*'):
+    for rel in layout.get('code_files', []):
+        path = target / rel
+        if path.is_file() or path.is_symlink():
+            path.unlink()
+            layout['deleted_files'] += 1
+    for pth in list(target.glob('__editable__*')) + list(target.glob('*.egg-link')):
         pth.unlink()
+    dirs = sorted(d for d in layout.get('package_dirs', []) if d not in ('', '.'))
+    if dirs:
+        (target / 'zz_rebench_workspace.pth').write_text(WORKSPACE_PTH.format(dirs=repr(dirs)) + '\n')
+    (target / 'apport_python_hook.py').write_text(APPORT_SHIM)
+    layout.pop('code_files', None)
     log.append(run(['git', '-C', str(source), 'worktree', 'remove', '--force', str(tree)]))
     shutil.rmtree(venv, ignore_errors=True)
     failed = [s for s in log if s['exit'] not in (0, 'skipped')]
-    return {'removed_own': own, 'failed_commands': len(failed), 'log': log}
+    return {'own_layout': layout, 'failed_commands': len(failed), 'log': log}
 
 
 def main():
