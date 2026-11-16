@@ -25,6 +25,11 @@ from scripts.r2_handoff import check_key, client
 from zenithsync.r2_client import ALLOWED_BUCKET
 
 COHORTS = ROOT / 'evidence/data/task-pool-v2-python-001/cohorts.json'
+# The official development repositories (fastapi, rich, requests, httpx: our dev, screen and holdout
+# tasks). The pool's exposure ledger predates them, so textualize/rich reached the train cohort; packs
+# of these repositories are never handed to rollouts or training.
+EXCLUDED = frozenset({'textualize__rich', 'willmcgugan__rich', 'fastapi__fastapi', 'tiangolo__fastapi',
+                      'psf__requests', 'kennethreitz__requests', 'encode__httpx'})
 
 
 def slugs(cohort):
@@ -67,7 +72,7 @@ def main():
     if args.command == 'gets':
         expiry = int(args.hours * 3600)
         rows = [json.loads(l) for l in args.shipped.read_text().splitlines() if l.strip()]
-        shipped = {r['slug']: r for r in rows if r.get('status') == 'shipped'}
+        shipped = {r['slug']: r for r in rows if r.get('status') == 'shipped' and r['slug'] not in EXCLUDED}
         packs = {slug: {'url': s3.generate_presigned_url('get_object', Params={
                             'Bucket': ALLOWED_BUCKET, 'Key': prefix + slug + '.tar'}, ExpiresIn=expiry),
                         'size': r['size'], 'md5': r['md5']} for slug, r in sorted(shipped.items())}
