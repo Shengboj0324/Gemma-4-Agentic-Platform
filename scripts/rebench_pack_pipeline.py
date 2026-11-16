@@ -54,9 +54,16 @@ def prune_pack(pack, keep):
     return len(rows), len(kept)
 
 
-def archive(pack, out):
+SINGLE_PUT_LIMIT = 4_800_000_000  # R2 refuses a single PUT over 5 GiB; stay clear of it
+
+
+def archive(pack, out, limit=SINGLE_PUT_LIMIT):
+    """Plain tar; gzip (level 1) when the plain archive would exceed a single PUT. `tar xf` detects either."""
     with tarfile.open(out, 'w') as tar:
         tar.add(pack, arcname=pack.name)
+    if out.stat().st_size > limit:
+        with tarfile.open(out, 'w:gz', compresslevel=1) as tar:
+            tar.add(pack, arcname=pack.name)
     sha, md5, size = hashlib.sha256(), hashlib.md5(), 0
     with open(out, 'rb') as handle:
         for block in iter(lambda: handle.read(1 << 20), b''):
@@ -173,7 +180,10 @@ def main():
                 if kept:
                     tar_path = args.output / f'{slug}.tar'
                     sha, md5, size = archive(pack, tar_path)
-                    status, etag = put(tar_path, uploads[slug], size)
+                    if size > 5 * 1024 ** 3:
+                        status, etag = None, 'too_large_for_single_put'
+                    else:
+                        status, etag = put(tar_path, uploads[slug], size)
                     record.update(sha256=sha, md5=md5, size=size, http=status, etag=etag,
                                   status='shipped' if status == 200 and etag == md5 else 'upload_failed')
                     tar_path.unlink()

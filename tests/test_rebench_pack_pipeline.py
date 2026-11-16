@@ -37,5 +37,19 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual((sha, md5, size), (hashlib.sha256(data).hexdigest(), hashlib.md5(data).hexdigest(), len(data)))
 
 
+    def test_archive_falls_back_to_gzip_over_the_put_limit(self):
+        import tarfile
+        with tempfile.TemporaryDirectory() as d:
+            pack = Path(d, 'o__r')
+            pack.mkdir()
+            (pack / 'f').write_text('a' * 100000)
+            out = Path(d, 'o__r.tar')
+            sha, md5, size = archive(pack, out, limit=1000)
+            self.assertLess(size, 100000)
+            with tarfile.open(out) as tar:  # auto-detects gzip
+                self.assertEqual(tar.extractfile('o__r/f').read(), b'a' * 100000)
+            self.assertEqual(hashlib.md5(out.read_bytes()).hexdigest(), md5)
+
+
 if __name__ == '__main__':
     unittest.main()
