@@ -4,8 +4,9 @@ Each repository pack (from `build_rebench_tasks.py`) carries its own snapshots a
 own test site, so each needs its own swegemma worker; starting a vLLM server per
 repository would cost 10+ minutes each. This starts the official `VllmServer` once and
 runs `run_official_eval.py --worker` per pack against it, at most --parallel at a
-time, each with that pack's test site **prepended** (the task's dependencies must win
-over the evaluating interpreter's own packages; see docs/45, track D).
+time, each with that pack's test site appended for the host process; inside the sandbox the
+site's shim (`build_rebench_tasks.APPORT_SHIM`) moves it ahead of every other site-packages, so
+the task's dependencies win there without old packages breaking the host (docs/45, track D).
 
 Only task ids listed in a pack's `qualified.json` (gold resolves, empty does not) are
 run. The whole tree is air-gapped exactly as in `run_official_eval.py`, and the
@@ -70,7 +71,7 @@ def main():
                'network_isolation': isolation, 'candidate': {'name': name, 'directory': candidate},
                'packs': {p.name: ids for p, ids in work}, 'tasks': sum(len(i) for _, i in work),
                'concurrency_per_worker': args.concurrency, 'parallel_workers': args.parallel,
-               'test_site_order': 'prepend', 'server_cmd': server.build_cmd(),
+               'test_site_order': 'append (sandbox precedence by the site shim)', 'server_cmd': server.build_cmd(),
                'script': file_record(Path(__file__)), 'workers': {}}
     deadline = time.monotonic() + args.max_hours * 3600
     running = []
@@ -92,7 +93,7 @@ def main():
                            '--data-root', str(pack), '--results-dir', str(out / 'results'),
                            '--task-ids-file', str(out / 'task_ids.json'), '--concurrency', str(args.concurrency),
                            '--isolation', args.isolation, '--test-site', str(pack / 'site' / 'site-packages'),
-                           '--test-site-order', 'prepend']
+                           '--test-site-order', 'append']
                 running.append((pack, subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT), log,
                                 time.monotonic()))
             if time.monotonic() >= deadline:

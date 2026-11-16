@@ -86,10 +86,18 @@ WORKSPACE_PTH = ("import os, sys; [sys.path.insert(0, os.path.join(p, d)) for p 
 APPORT_SHIM = '''\"\"\"Test-site shim written by scripts/build_rebench_tasks.py (local harness only).\"\"\"
 import os
 import site
+import sys
 
 
 def install():
-    site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+    here = os.path.dirname(os.path.abspath(__file__))
+    site.addsitedir(here)
+    # Sandbox-only precedence: the task's dependencies before every other site-packages directory
+    # (after the stdlib and /workspace), while the evaluating host process keeps its own order.
+    if here in sys.path:
+        sys.path.remove(here)
+    first = next((i for i, p in enumerate(sys.path) if 'site-packages' in p), len(sys.path))
+    sys.path.insert(first, here)
 '''
 ROW_KEYS = ('instance_id', 'repo', 'base_commit', 'patch', 'test_patch', 'problem_statement', 'created_at')
 
