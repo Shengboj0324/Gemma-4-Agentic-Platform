@@ -100,6 +100,7 @@ def install():
     sys.path.insert(first, here)
 '''
 SLOW_SNAPSHOT_SECONDS = 120
+SNAPSHOT_TIMEOUT = 900  # one fast-export longer than this ends the repository's conversion
 SLOW_REPO_TASKS = 4
 ROW_KEYS = ('instance_id', 'repo', 'base_commit', 'patch', 'test_patch', 'problem_statement', 'created_at')
 
@@ -141,11 +142,20 @@ def snapshot(source, commit, dest_tgz, work):
     steps.append(run(['git', 'init', '-q', '-b', 'main', str(new)]))
     export = subprocess.Popen(['git', '-C', str(source), 'fast-export', '--reencode=yes', '--signed-tags=strip',
                                '--tag-of-filtered-object=drop', 'export_ref'], stdout=subprocess.PIPE)
-    imp = subprocess.run(['git', '-C', str(new), 'fast-import', '--quiet'], stdin=export.stdout,
-                         capture_output=True, text=True)
-    export.wait()
+    imp = subprocess.Popen(['git', '-C', str(new), 'fast-import', '--quiet'], stdin=export.stdout,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    export.stdout.close()
+    try:
+        _, err = imp.communicate(timeout=SNAPSHOT_TIMEOUT)
+        export.wait(timeout=60)
+    except subprocess.TimeoutExpired:
+        export.kill()
+        imp.kill()
+        export.wait()
+        imp.wait()
+        return {'ok': False, 'timed_out': True, 'steps': steps}
     steps.append({'cmd': 'fast-export | fast-import', 'exit': export.returncode or imp.returncode,
-                  'tail': imp.stderr[-800:]})
+                  'tail': (err or '')[-800:]})
     steps.append(run(['git', '-C', str(new), 'branch', '-f', 'main', 'export_ref']))
     steps.append(run(['git', '-C', str(new), 'checkout', '-q', '-f', 'main']))
     head = run(['git', '-C', str(new), 'rev-parse', 'HEAD'])
@@ -299,7 +309,10 @@ def main():
             record['tasks'][task['instance_id']] = {'snapshot': snap}
             if snap['ok']:
                 good.append(task)
-            if index == 0 and snap['seconds'] > SLOW_SNAPSHOT_SECONDS and len(queue) > SLOW_REPO_TASKS:
+            if index == 0 and snap.get('timed_out'):
+                record['skipped_history_timeout'] = SNAPSHOT_TIMEOUT
+                queue[1:] = []
+            elif index == 0 and snap['seconds'] > SLOW_SNAPSHOT_SECONDS and len(queue) > SLOW_REPO_TASKS:
                 record['capped_slow_history'] = {'first_snapshot_seconds': snap['seconds'], 'kept': SLOW_REPO_TASKS,
                                                  'dropped': [t['instance_id'] for t in queue[SLOW_REPO_TASKS:]]}
                 queue[SLOW_REPO_TASKS:] = []
