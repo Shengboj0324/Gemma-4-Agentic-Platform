@@ -99,6 +99,8 @@ def install():
     first = next((i for i, p in enumerate(sys.path) if 'site-packages' in p), len(sys.path))
     sys.path.insert(first, here)
 '''
+SLOW_SNAPSHOT_SECONDS = 120
+SLOW_REPO_TASKS = 4
 ROW_KEYS = ('instance_id', 'repo', 'base_commit', 'patch', 'test_patch', 'problem_statement', 'created_at')
 
 
@@ -287,11 +289,21 @@ def main():
             print(json.dumps({'repo': repo, 'clone': 'failed'}), flush=True)
             continue
         good = []
-        for task in tasks:
+        # Newest first: a repository whose history makes one snapshot slow (each is a full fast-export)
+        # keeps only its SLOW_REPO_TASKS newest tasks, so one repository cannot stall a whole batch.
+        queue = list(reversed(tasks))
+        for index, task in enumerate(queue):
+            started = time.monotonic()
             snap = snapshot(source, task['base_commit'], out / 'snapshots' / f"{task['instance_id']}.tgz", work)
+            snap['seconds'] = round(time.monotonic() - started, 1)
             record['tasks'][task['instance_id']] = {'snapshot': snap}
             if snap['ok']:
                 good.append(task)
+            if index == 0 and snap['seconds'] > SLOW_SNAPSHOT_SECONDS and len(queue) > SLOW_REPO_TASKS:
+                record['capped_slow_history'] = {'first_snapshot_seconds': snap['seconds'], 'kept': SLOW_REPO_TASKS,
+                                                 'dropped': [t['instance_id'] for t in queue[SLOW_REPO_TASKS:]]}
+                queue[SLOW_REPO_TASKS:] = []
+        good.sort(key=lambda t: t['created_at'])
         if good:
             newest = good[-1]
             record['site'] = build_site(source, newest['base_commit'], newest['install_config'].get('install') or [],
