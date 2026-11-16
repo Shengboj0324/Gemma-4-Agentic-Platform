@@ -4,6 +4,9 @@
       one presigned PUT per repository of the cohort (slug = lower-case instance id
       without its number), for key artifacts/v1/<run-key>/<slug>.tar; the map is uploaded
       to a random tmp key and only a presigned GET for it is printed.
+  gets SHIPPED_JSONL --run-key ... [--hours 24]
+      presigned GETs for every shipped pack, uploaded as one tmp map {slug: {url, size, md5}};
+      only a presigned GET for the map is printed (a rollout pod fetches and checks them).
   check SHIPPED_JSONL --run-key ...
       HEAD every shipped pack and require its size and ETag (= md5 of a single PUT) to
       match what the pod recorded. Prints a summary; exit 1 on any mismatch.
@@ -37,6 +40,10 @@ def main():
     u.add_argument('--cohort', choices=('train', 'development'), required=True)
     u.add_argument('--run-key', required=True)
     u.add_argument('--hours', type=float, default=36)
+    g = sub.add_parser('gets')
+    g.add_argument('shipped', type=Path)
+    g.add_argument('--run-key', required=True)
+    g.add_argument('--hours', type=float, default=24)
     c = sub.add_parser('check')
     c.add_argument('shipped', type=Path)
     c.add_argument('--run-key', required=True)
@@ -56,6 +63,20 @@ def main():
         get = s3.generate_presigned_url('get_object', Params={'Bucket': ALLOWED_BUCKET, 'Key': tmp},
                                         ExpiresIn=expiry)
         print(json.dumps({'packs': len(urls), 'uploads_url': get}))
+        return
+    if args.command == 'gets':
+        expiry = int(args.hours * 3600)
+        rows = [json.loads(l) for l in args.shipped.read_text().splitlines() if l.strip()]
+        shipped = {r['slug']: r for r in rows if r.get('status') == 'shipped'}
+        packs = {slug: {'url': s3.generate_presigned_url('get_object', Params={
+                            'Bucket': ALLOWED_BUCKET, 'Key': prefix + slug + '.tar'}, ExpiresIn=expiry),
+                        'size': r['size'], 'md5': r['md5']} for slug, r in sorted(shipped.items())}
+        tmp = f'artifacts/v1/tmp/{secrets.token_hex(16)}/packs.json'
+        check_key(tmp)
+        s3.put_object(Bucket=ALLOWED_BUCKET, Key=tmp, Body=json.dumps(packs).encode())
+        print(json.dumps({'packs': len(packs), 'bytes': sum(p['size'] for p in packs.values()),
+                          'packs_url': s3.generate_presigned_url('get_object', Params={
+                              'Bucket': ALLOWED_BUCKET, 'Key': tmp}, ExpiresIn=expiry)}))
         return
     bad, ok, total = [], 0, 0
     for line in args.shipped.read_text().splitlines():
