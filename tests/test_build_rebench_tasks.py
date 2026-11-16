@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.build_rebench_tasks import SKIP, select, snapshot
+from scripts.build_rebench_tasks import SKIP, build_requires, select, snapshot
 
 
 def git(*args, cwd):
@@ -58,6 +58,18 @@ class SelectionTests(unittest.TestCase):
         for command in ('pip install -q -e .[test]', 'git submodule update --init --recursive',
                         "sed -i 's/a/b/' pyproject.toml"):
             self.assertFalse(SKIP.search(command), command)
+
+
+class BuildRequiresTests(unittest.TestCase):
+    def test_reads_pep518_requires_and_tolerates_absence(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(build_requires(d), [])
+            Path(d, 'pyproject.toml').write_text('[build-system]\nrequires = ["hatchling", "hatch-vcs"]\n')
+            self.assertEqual(build_requires(d), ['hatchling', 'hatch-vcs'])
+            Path(d, 'pyproject.toml').write_text('[project]\nname = "x"\n')
+            self.assertEqual(build_requires(d), [])
+            Path(d, 'pyproject.toml').write_text('not toml [')
+            self.assertEqual(build_requires(d), [])
 
 
 if __name__ == '__main__':

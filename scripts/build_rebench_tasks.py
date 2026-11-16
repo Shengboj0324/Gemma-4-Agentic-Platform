@@ -100,6 +100,17 @@ def snapshot(source, commit, dest_tgz, work):
             'size_bytes': dest_tgz.stat().st_size, 'head': head['tail'].strip()}
 
 
+def build_requires(tree):
+    """PEP 518 `[build-system].requires` of the checked-out tree, or [] when absent or unreadable."""
+    import tomllib
+    path = Path(tree) / 'pyproject.toml'
+    try:
+        requires = tomllib.loads(path.read_text())['build-system']['requires']
+    except (OSError, KeyError, ValueError, TypeError):
+        return []
+    return [r for r in requires if isinstance(r, str) and r.strip()] if isinstance(requires, list) else []
+
+
 def build_site(source, commit, install, out_dir, work, python):
     """Install the task's dependencies into a venv, drop the repository itself, keep site-packages."""
     tree = work / 'tree'
@@ -118,6 +129,11 @@ def build_site(source, commit, install, out_dir, work, python):
             continue
         log.append(run(command, cwd=tree, env=env, shell=True, timeout=2400))
     log.append(run([pip, 'install', '-q', *IMAGE_PACKAGES], timeout=900))
+    # swegemma installs /workspace with --no-build-isolation, so the build backend's own requirements
+    # (hatch-vcs, setuptools-scm, ...) must already be in the site, or the package is not importable.
+    requires = build_requires(tree)
+    if requires:
+        log.append(run([pip, 'install', '-q', *requires], timeout=900))
     # The repository's own distribution, editable or copied, would shadow /workspace: find it by its
     # PEP 610 direct_url pointing at the build tree, and remove it.
     own = []
