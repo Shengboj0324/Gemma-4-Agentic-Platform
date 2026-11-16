@@ -29,8 +29,17 @@ from zenithsync import netns
 from zenithsync.server_log import stop_keeping_log
 
 
-def packs_with_work(root):
-    """[(pack_dir, [task ids])] for packs whose qualified.json lists at least one task."""
+def finished_ids(roots):
+    """Task ids with a recorded result under earlier results roots (<root>/<pack>/results/task_results.jsonl)."""
+    done = set()
+    for root in roots:
+        for path in Path(root).glob('*/results/task_results.jsonl'):
+            done |= {json.loads(l)['instance_id'] for l in path.read_text().splitlines() if l.strip()}
+    return done
+
+
+def packs_with_work(root, skip=frozenset()):
+    """[(pack_dir, [task ids])] for packs whose qualified.json lists at least one task not in `skip`."""
     out = []
     for pack in sorted(p for p in Path(root).iterdir() if p.is_dir()):
         q = pack / 'qualified.json'
@@ -40,6 +49,7 @@ def packs_with_work(root):
         tasks = {json.loads(l)['instance_id'] for l in (pack / 'tasks.jsonl').read_text().splitlines() if l.strip()}
         if set(ids) - tasks:
             raise ValueError(f'{pack.name}: qualified ids absent from tasks.jsonl')
+        ids = [i for i in ids if i not in skip]
         if ids:
             out.append((pack, sorted(ids)))
     return out
@@ -58,6 +68,8 @@ def main():
     parser.add_argument('--startup-timeout', type=int, default=1200)
     parser.add_argument('--max-hours', type=float, default=6.0)
     parser.add_argument('--isolation', choices=netns.MODES, required=True)
+    parser.add_argument('--skip-done-from', type=Path, action='append', default=[],
+                        help='earlier results root; tasks with a result there are not run again')
     args = parser.parse_args()
     name, candidate = args.candidate.split('=', 1)
     # As run_official_eval.main: offline everywhere, loopback rendezvous for vLLM. Workers inherit this;
@@ -65,7 +77,8 @@ def main():
     os.environ.update(VLLM_HOST_IP='127.0.0.1', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1',
                       DO_NOT_TRACK='1', LITELLM_LOCAL_MODEL_COST_MAP='True', OTEL_SDK_DISABLED='true')
     isolation = netns.isolate(args.isolation)
-    work = packs_with_work(args.packs)
+    skip = finished_ids(args.skip_done_from)
+    work = packs_with_work(args.packs, skip)
     args.results_root.mkdir(parents=True, exist_ok=False)
     from adk_submission.server import VllmConfig, VllmServer
     config = VllmConfig(model=str(args.model), port=args.port, tool_call_parser='gemma4', reasoning_parser='gemma4',
@@ -74,7 +87,8 @@ def main():
     server = VllmServer(config)
     receipt = {'schema_version': 1, 'status': 'started', 'started_utc': datetime.now(timezone.utc).isoformat(),
                'network_isolation': isolation, 'candidate': {'name': name, 'directory': candidate},
-               'packs': {p.name: ids for p, ids in work}, 'tasks': sum(len(i) for _, i in work),
+               'packs': {p.name: ids for p, ids in work}, 'skipped_done': len(skip),
+               'skip_done_from': [str(r) for r in args.skip_done_from], 'tasks': sum(len(i) for _, i in work),
                'concurrency_per_worker': args.concurrency, 'parallel_workers': args.parallel,
                'test_site_order': 'append (sandbox precedence by the site shim)', 'server_cmd': server.build_cmd(),
                'script': file_record(Path(__file__)), 'workers': {}}
