@@ -1,6 +1,7 @@
 """Build the two submissions compared on held-out tasks: base and base+adapter.
 
-Both start from candidates/p1-base, verified against its manifest. The adapter
+Both start from a base submission (default candidates/p1-base, verified against its manifest;
+`--base-dir` pairs any other base, e.g. v2). The adapter
 submission differs in exactly two ways: adapters/main_lora/ holds the exported
 PEFT adapter (checked against its export receipt), and the root agent declares
 `adapter: main_lora`. Everything else — prompt, tools, sampling, budgets — is
@@ -69,12 +70,22 @@ def main():
     parser.add_argument('--adapter-dir', type=Path, required=True)
     parser.add_argument('--adapter-receipt', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--base-dir', type=Path, default=ROOT / 'candidates/p1-base',
+                        help='base submission to pair with (default: the P1 base)')
+    parser.add_argument('--base-manifest', type=Path,
+                        help='manifest the base must match (default: the P1 base manifest; with --base-dir and no '
+                             'manifest, the base is inventoried as given and that inventory is recorded)')
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
     receipt = load_json(args.adapter_receipt)
-    manifests, differing = build(ROOT / 'candidates/p1-base', load_json(ROOT / 'evidence/p1/base-agent-001/manifest.json'),
-                                 args.adapter_dir, receipt, args.output)
+    if args.base_manifest is not None:
+        base_manifest = load_json(args.base_manifest)
+    elif args.base_dir == ROOT / 'candidates/p1-base':
+        base_manifest = load_json(ROOT / 'evidence/p1/base-agent-001/manifest.json')
+    else:
+        base_manifest = inventory(args.base_dir, kind='candidate', source='zenithsync', revision='base')
+    manifests, differing = build(args.base_dir, base_manifest, args.adapter_dir, receipt, args.output)
     for name, manifest in manifests.items():
         (args.output / f'{name}-manifest.json').write_bytes(canonical_json(manifest))
     record = {'schema_version': 1, 'status': 'eval_candidates_built', 'adapter_name': ADAPTER,
