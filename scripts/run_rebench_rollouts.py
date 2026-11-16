@@ -16,6 +16,7 @@ exit code and resolved count.
 import argparse
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -59,6 +60,10 @@ def main():
     parser.add_argument('--isolation', choices=netns.MODES, required=True)
     args = parser.parse_args()
     name, candidate = args.candidate.split('=', 1)
+    # As run_official_eval.main: offline everywhere, loopback rendezvous for vLLM. Workers inherit this;
+    # each also gets its own pack's sandbox bootstrap (KAGGLE_SANDBOX_DIR) below.
+    os.environ.update(VLLM_HOST_IP='127.0.0.1', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', VLLM_NO_USAGE_STATS='1',
+                      DO_NOT_TRACK='1', LITELLM_LOCAL_MODEL_COST_MAP='True', OTEL_SDK_DISABLED='true')
     isolation = netns.isolate(args.isolation)
     work = packs_with_work(args.packs)
     args.results_root.mkdir(parents=True, exist_ok=False)
@@ -94,7 +99,10 @@ def main():
                            '--task-ids-file', str(out / 'task_ids.json'), '--concurrency', str(args.concurrency),
                            '--isolation', args.isolation, '--test-site', str(pack / 'site' / 'site-packages'),
                            '--test-site-order', 'append']
-                running.append((pack, subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT), log,
+                if not (pack / 'sandbox' / 'setup.py').is_file():
+                    raise FileNotFoundError(pack / 'sandbox' / 'setup.py')
+                env = dict(os.environ, KAGGLE_SANDBOX_DIR=str(pack / 'sandbox'))
+                running.append((pack, subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, env=env), log,
                                 time.monotonic()))
             if time.monotonic() >= deadline:
                 queue = []
