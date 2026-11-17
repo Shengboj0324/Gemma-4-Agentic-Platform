@@ -3,7 +3,10 @@
 Reads the worker's worker.json, the schedule, and the PEFT export, and FAILS (exit 1) unless:
 
   session      worker status `corpus_session_returned`, session status `schedule_complete`,
-               and exactly one checkpoint per scheduled update
+               and exactly one checkpoint per scheduled update. A run resumed from a checkpoint
+               (--prior-worker-json, in order) is checked as one chain: every session returned with
+               the same bindings and execution config, each resumed session's first checkpoint is
+               exactly one update after the previous session's last (cursor), and the counts add up
   identity     the final checkpoint's file matches its recorded sha256 and size; the export
                receipt names that checkpoint; every exported file matches the receipt
   loss         every update's loss is finite; the mean loss of the last third of updates is
@@ -49,6 +52,35 @@ def thirds(values):
     return sum(values[:third]) / third, sum(values[-third:]) / third
 
 
+def chain_sessions(workers):
+    """Concatenate the checkpoints of a resumed run; return (checkpoints, problems)."""
+    problems, checkpoints = [], []
+    for index, worker in enumerate(workers):
+        session = worker.get('session', {})
+        if worker.get('status') != 'corpus_session_returned':
+            problems.append(f'session {index}: worker status {worker.get("status")}')
+        if index < len(workers) - 1 and session.get('status') == 'schedule_complete':
+            problems.append(f'session {index}: schedule already complete before a resumed session')
+        if worker.get('bindings') != workers[-1].get('bindings'):
+            problems.append(f'session {index}: bindings differ from the final session')
+        if worker.get('execution_config') != workers[-1].get('execution_config'):
+            problems.append(f'session {index}: execution config differs from the final session')
+        current = session.get('checkpoints', [])
+        if not current:
+            problems.append(f'session {index}: no checkpoints')
+            continue
+        if checkpoints:
+            before = checkpoints[-1]['cursor']['completed_updates']
+            after = current[0]['cursor']['completed_updates']
+            if after != before + 1:
+                problems.append(f'session {index}: resumes at update {after}, previous ended at {before}')
+        steps = [c['cursor']['completed_updates'] for c in current]
+        if steps != list(range(steps[0], steps[0] + len(steps))):
+            problems.append(f'session {index}: checkpoint cursors not consecutive')
+        checkpoints.extend(current)
+    return checkpoints, problems
+
+
 def check_adapter(export_dir, expected_rank, expected_alpha):
     from safetensors.torch import load_file
     import torch
@@ -69,7 +101,9 @@ def check_adapter(export_dir, expected_rank, expected_alpha):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--worker-json', type=Path, required=True)
+    parser.add_argument('--worker-json', type=Path, required=True, help='final session')
+    parser.add_argument('--prior-worker-json', type=Path, action='append', default=[],
+                        help='earlier sessions of a resumed run, in order')
     parser.add_argument('--schedule', type=Path, required=True)
     parser.add_argument('--export-dir', type=Path, required=True)
     parser.add_argument('--expected-updates', type=int, help='scheduled updates (overrides reading the schedule)')
@@ -78,19 +112,22 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     worker = json.loads(args.worker_json.read_text())
+    workers = [json.loads(p.read_text()) for p in args.prior_worker_json] + [worker]
     schedule = json.loads(args.schedule.read_text())
     session = worker.get('session', {})
-    checkpoints = session.get('checkpoints', [])
+    checkpoints, chain_problems = chain_sessions(workers)
     scheduled = args.expected_updates if args.expected_updates is not None else schedule.get('updates')
     if not isinstance(scheduled, int):
         scheduled = len(scheduled) if isinstance(scheduled, list) else schedule.get('completed_updates')
     verdict = {'checks': {}}
     checks = verdict['checks']
     checks['session'] = {'worker_status': worker.get('status'), 'session_status': session.get('status'),
+                         'sessions': len(workers), 'chain_problems': chain_problems,
                          'checkpoints': len(checkpoints), 'scheduled_updates': scheduled,
                          'ok': (worker.get('status') == 'corpus_session_returned'
-                                and session.get('status') == 'schedule_complete'
-                                and scheduled is not None and len(checkpoints) == scheduled)}
+                                and session.get('status') == 'schedule_complete' and not chain_problems
+                                and scheduled is not None and len(checkpoints) == scheduled
+                                and checkpoints[-1]['cursor']['completed_updates'] == scheduled)}
     final = checkpoints[-1] if checkpoints else None
     receipt = json.loads((args.export_dir / 'receipt.json').read_text())
     identity_ok = bool(final) and Path(final['path']).exists() and \
