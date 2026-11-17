@@ -333,3 +333,9 @@ Timeline (UTC; each date is a target, the gates decide):
 | 11-15 09:00 | Owner granted standing autonomy for Kaggle submissions (best-only, ZenithSync24, technical text), with a status update every 10 min during long jobs (memory `kaggle-submission-autonomy`) | in force |
 | 11-15 08:50 | Owner: submit the screening winner when screening completes (~12:00 UTC / 04:00 PST), not the base now. A base 8-minute package was built (zip sha256 `aae035bd…`, README removed) and not submitted | held |
 | 11-15 08:20 | Chain on pod: A1 verify (prepend), A2 re-grade ×2, C1 latency bench, then screen-1 (base, workflow, sample, sample_oursampling; 49 tasks; 3 agents each, concurrently) | running |
+
+### 11-17 02:00 UTC — submissions and G5 progress
+- E4B v1 public score: **0.06** (vs 31B v1 0.17). E4B track dropped as a submission candidate.
+- 11-17 slot → **31B v2** (callplan_nograph) submitted 01:57 UTC, zip sha256 `49282ef9…` (matches recorded v2 digest; member digests agent.yaml 4f48dc18, sampling 5cbfd223, eval_config 404b197b, system.md 1fb83636). PENDING.
+- G5 (v2 vs v2+adapter-002, 129 official dev tasks, concurrency 3): started ~01:42; at 01:59 7/129 each (v2 0, v2lora 1); ~1 task/min → ETA ~06:00. Decision rule unchanged (pre-registered 11-16 23:40).
+- Round-2 dev pipeline: 38 repos processed, 15 packs shipped, 47 qualified tasks.
