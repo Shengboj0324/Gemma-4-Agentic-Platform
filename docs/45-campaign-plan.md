@@ -183,6 +183,34 @@ trajectories are generated natively:
   the time cap) does not apply: E4B uses about a fifth of its 8-minute budget.
   Its first gate is the E4B v1 public score (submitted 11-16).
 
+### Round protocol and timeline (owner request 11-17: timeline, stricter verification, steady progress)
+
+Every fine-tuning round passes these gates in order; a failed gate stops the round, is logged, and is
+fixed before anything downstream spends GPU time.
+
+| Gate | What must hold | Tool |
+|---|---|---|
+| G0 data | packs gold/empty-qualified; R2 copies verified by HEAD (size + md5) | `rebench_pack_pipeline.py`, `presign_pack_uploads.py check` |
+| G1 trajectories | resolved by swegemma under the egress guard; air gap held after the run; archive verified | `run_rebench_rollouts.py` receipt |
+| G2 corpus | tokenization exact (pinned template), no truncation, alignment screen, freeze gate, two-layer verification, admission | `audit_replay_history_tokens.py`, `screen_task_alignment.py`, `admit_training_corpus.py` |
+| G3 round | session complete (one checkpoint per update), checkpoint and export identities, loss falls (last third < first third), memory, adapter finite and non-zero | `verify_training_round.py` (`e0ba31b`, `ff75ea7`) |
+| G4 serving | official VllmServer lists the adapter; greedy outputs differ from the base and both parse | `qualify_lora_serving.py` |
+| G5 evaluation | paired, same server, 129 official development tasks, pre-registered rule, air gap, data/candidates unchanged | `run_official_eval.py`, `select_candidate.py` |
+| G6 submission | package `validate_directory` with the official limits; notebook output zip digest = local package digest; only then submit | notebook builder, download check |
+
+Timeline (UTC; each date is a target, the gates decide):
+
+| When | Step |
+|---|---|
+| 11-17 01:00 | train-002 ends → G3 → G4 → G5 (v2 vs v2+adapter-002, ~4 h) |
+| 11-17 ~05:30 | G5 decision by the pre-registered rule; archive; delete the pod after verification |
+| 11-17 (E4B score, then each score) | submit the best G5-supported configuration (v2, or v2+adapter if it passed) |
+| 11-17–18 | round 2 data: rollouts on the 445-task development cohort (converted like the train cohort; never the confirmation cohort) with the best agent; more tasks per GPU-hour via fewer agents per GPU if contention dominates |
+| 11-18 | E4B adapter trained on the same corpus (distillation from 31B trajectories); G3–G5 on E4B |
+| 11-19–20 | train-003 on the merged corpus; G3–G5 |
+| 11-21–30 | repeat rounds while each one improves G5; submit after every score |
+| 12-01 | final selection: best 31B and best E4B by G5 evidence and public scores |
+
 ### Track E — submissions (each needs the account owner's go-ahead)
 
 - E1. **Calibration: submit the current base agent** (`evidence/p1/base-agent-001/submission.zip`)
