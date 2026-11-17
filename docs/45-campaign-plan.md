@@ -344,3 +344,10 @@ Timeline (UTC; each date is a target, the gates decide):
 - D1/D2 (development cohort) complete: 112 repos → **58 packs, 135 qualified tasks**, 22,765,935,428 B. All 58 verified in R2 by HEAD (size + md5 ETag), 0 mismatches. Pod logs `runs/2026-11-17/rebench-packs-dev/pod-logs.tar` md5 d9daf505, verified by GET. CPU pod deleted.
 - D3 round 2 (rollouts-dev1): A100 SXM pod `3ueoyvhxguqcpi` ($2.19/h; total $4.88/h with the G5 pod), v2 at 20-min cap (v2r) over the 135 tasks, egress guard, archive → `runs/2026-11-17/rollouts-dev1.tar`. Started with v2 rather than waiting for G5 (≈3 h saved); the G5 decision still governs whether the next round's sampler and submission use the adapter.
 - Session interruption at ~02:45 (local Claude process restart only): pods unaffected; Kaggle poll re-armed.
+
+### 11-17 05:20 UTC — round-2 rollouts complete; D4 round 2 running
+- rollouts-dev1: **135 development-cohort tasks, 42 resolved (31.1%)**, 0 harness errors, guard held, rc=0. Archive `runs/2026-11-17/rollouts-dev1.tar` 19,752,960 B md5 `71090099…` (sha256 146a1165…), verified by HEAD.
+- Pre-flight of the D4 script against R2 (stream-read, nothing stored locally): all six round-1 archives unpack to `rollouts-*/<pack>/results/`; all 135 corpus-001 tasks are present among 165 resolved round-1 trajectories.
+- Launcher defect caught before it fired: the env file held presigned URLs unquoted (`&` split them); rewritten quoted, lengths checked (394/397), relaunched. No work lost.
+- D4 round 2 (same pod): 204 histories written (3 refused: system step after start; 2 duplicates). Tokenization: 12 examples over the 32,768-token cap are refused (no truncation) and drop out of the screen.
+- Screen now admits train + development cohorts (`fd05f48`, `--allowed-cohort`; confirmation is refused at argument parsing). Development-cohort licences: 441/445 confirmed.
