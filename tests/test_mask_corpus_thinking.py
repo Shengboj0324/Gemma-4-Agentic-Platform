@@ -59,6 +59,29 @@ class MaskThinkingTests(unittest.TestCase):
         self.assertEqual(out[1:9], [IGNORE] * 8)
         self.assertEqual(out[9:], [3, 14])
 
+    def test_keep_markers_masks_only_the_content(self):
+        # <|channel> thought\n look \n <channel|> <|tool_call> ...
+        ids = [13, 1, 10, 11, 12, 2, 3, 14, 13, 1, 10, 11, 12, 2, 3, 14]
+        out, blocks, masked, _ = mask_thinking(ids, supervised(ids, 1), keep_markers=True, **KW)
+        self.assertEqual((blocks, masked), (2, 4))
+        self.assertEqual(out[1:8], [1, 10, IGNORE, IGNORE, 2, 3, 14])    # opener + 'thought\n' and closer kept
+        self.assertEqual(out[9:16], [1, 10, IGNORE, IGNORE, 2, 3, 14])
+
+    def test_keep_markers_with_inner_opener_and_malformed_opener(self):
+        ids = [13, 1, 10, 13, 1, 10, 11, 12, 2, 3, 14]
+        nested = []
+        out, blocks, masked, _ = mask_thinking(ids, supervised(ids, 1), keep_markers=True, nested=nested, **KW)
+        self.assertEqual((blocks, masked, nested), (1, 5, [1]))
+        self.assertEqual(out[1:3] + out[8:], [1, 10, 2, 3, 14])
+        self.assertEqual(out[3:8], [IGNORE] * 5)                          # the inner opener is content
+        TEXT[15] = 'though'
+        try:
+            bad = [1, 15, 11, 12, 2, 3]
+            with self.assertRaises(ValueError):
+                mask_thinking(bad, list(bad), keep_markers=True, **KW)
+        finally:
+            del TEXT[15]
+
     def test_length_mismatch(self):
         with self.assertRaises(ValueError):
             mask_thinking([1, 2], [1], **KW)

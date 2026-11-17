@@ -26,10 +26,16 @@ from zenithsync.artifacts import canonical_json, file_record, load_json
 
 OPEN, CLOSE, CALL = '<|channel>', '<channel|>', '<|tool_call>'
 IGNORE = -100
+KIND = {False: 'thinking_blocks_unsupervised', True: 'thinking_content_unsupervised_markers_supervised'}
 
 
-def mask_thinking(input_ids, labels, *, open_id, close_id, call_id, decode, nested=None):
+def mask_thinking(input_ids, labels, *, open_id, close_id, call_id, decode, nested=None, keep_markers=False):
     """Return (new_labels, blocks, masked_tokens, unsupervised_opens) or raise ValueError.
+
+    keep_markers=False masks each whole block, opener and closer included (round 4: the adapter then
+    stopped opening thinking blocks at all). keep_markers=True masks only the thinking content and
+    keeps the opener (`<|channel>thought`) and the closer (`<channel|>`) supervised, so the decisions
+    to think and to stop thinking are still trained (round 5).
 
     A recorded thinking text can itself contain the literal `<|channel>` marker (seen in 2 of 177
     rollout trajectories: a stray byte, then `<|channel>thought\\n`, inside the model's own
@@ -68,13 +74,26 @@ def mask_thinking(input_ids, labels, *, open_id, close_id, call_id, decode, nest
             raise ValueError(f'block at {i} is not a native thinking block')
         if j + 1 >= len(input_ids) or input_ids[j + 1] != call_id or labels[j + 1] == IGNORE:
             raise ValueError(f'block at {i} is not followed by a supervised tool call')
-        for k in range(i, j + 1):
+        start, stop = i, j + 1
+        if keep_markers:
+            # keep the decision points supervised: the opener tokens that render '<|channel>thought'
+            # (and its newline when it is a token of its own) and the closing '<channel|>' token
+            k = max(n for n in range(1, min(8, j - i) + 1) if (OPEN + 'thought\n').startswith(decode(input_ids[i:i + n])))
+            if not decode(input_ids[i:i + k]).startswith(OPEN + 'thought'):
+                raise ValueError(f'block at {i}: opener tokens do not render {OPEN}thought')
+            start, stop = i + k, j
+            if start >= stop:
+                raise ValueError(f'block at {i} has no thinking content')
+        for k in range(start, stop):
             out[k] = IGNORE
         blocks += 1
-        masked += j + 1 - i
+        masked += stop - start
         i = j + 1
     remaining = [t for t, label in zip(input_ids, out) if label != IGNORE]
-    if open_id in remaining or close_id in remaining:
+    if keep_markers:
+        if remaining.count(open_id) != blocks or remaining.count(close_id) != blocks:
+            raise ValueError('supervised channel markers differ from one opener and one closer per block')
+    elif open_id in remaining or close_id in remaining:
         raise ValueError('a channel marker is still supervised')
     changed = [k for k, (a, b) in enumerate(zip(labels, out)) if a != b]
     if len(changed) != masked or any(out[k] != IGNORE for k in changed):
@@ -89,6 +108,8 @@ def main():
     p.add_argument('--tokenizer', type=Path, required=True, help="the corpus's tokenizer.json")
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--max-bytes', type=int, default=4 * 1024**3)
+    p.add_argument('--keep-markers', action='store_true',
+                   help='mask only the thinking content; keep the opener and closer supervised (round 5)')
     args = p.parse_args()
     from tokenizers import Tokenizer
     from zenithsync.training_batch import collate_training_examples
@@ -117,7 +138,8 @@ def main():
         nested = []
         labels, blocks, masked, unsupervised = mask_thinking(
             candidate['input_ids'], candidate['labels'], open_id=ids[OPEN], close_id=ids[CLOSE],
-            call_id=ids[CALL], decode=decode, nested=nested)
+            call_id=ids[CALL], decode=decode, nested=nested,
+            keep_markers=args.keep_markers)
         if blocks == 0:
             raise ValueError('No thinking block in ' + record['example_id'])
         new = {**candidate, 'labels': labels}
@@ -134,7 +156,7 @@ def main():
                   'labels_sha256': hashlib.sha256(canonical_json(labels)).hexdigest(),
                   'supervised_tokens': check['supervised_tokens'],
                   'token_candidate': file_record(out / 'tokens.json'),
-                  'label_transform': {'script': file_record(Path(__file__)), 'kind': 'thinking_blocks_unsupervised',
+                  'label_transform': {'script': file_record(Path(__file__)), 'kind': KIND[args.keep_markers],
                                       'source_corpus': file_record(corpus_json),
                                       'source_token_candidate': record['tokens']['identity'],
                                       'source_labels_sha256': audit['labels_sha256'],
@@ -142,7 +164,7 @@ def main():
                                       'thinking_blocks': blocks, 'masked_tokens': masked,
                                       'blocks_with_inner_openers': len(nested),
                                       'unsupervised_channel_opens': unsupervised},
-                  'scope': audit['scope'] + '; thinking blocks then removed from the labels (input ids unchanged)'}
+                  'scope': audit['scope'] + '; ' + KIND[args.keep_markers].replace('_', ' ') + ' (input ids unchanged)'}
         if report['input_sha256'] != hashlib.sha256(canonical_json(new['input_ids'])).hexdigest():
             raise ValueError('Input ids changed in ' + record['example_id'])
         (out / 'report.json').write_bytes(canonical_json(report))
@@ -157,7 +179,7 @@ def main():
                'supervised_before': sum(r['supervised_before'] for r in rows),
                'supervised_after': sum(r['supervised_after'] for r in rows),
                'source_corpus': file_record(corpus_json), 'source_summary': corpus.summary,
-               'special_token_ids': ids, 'script': file_record(Path(__file__)), 'rows': rows}
+               'special_token_ids': ids, 'kind': KIND[args.keep_markers], 'script': file_record(Path(__file__)), 'rows': rows}
     (args.output / 'summary.json').write_bytes(canonical_json(summary))
     print(json.dumps({k: v for k, v in summary.items() if k not in ('rows', 'source_summary')}))
 
