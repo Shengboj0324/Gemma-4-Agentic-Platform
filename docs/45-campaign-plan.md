@@ -352,7 +352,8 @@ Timeline (UTC; each date is a target, the gates decide):
 - D4 round 2 (same pod): 204 histories written (3 refused: system step after start; 2 duplicates). Tokenization: 12 examples over the 32,768-token cap are refused (no truncation) and drop out of the screen.
 - Screen now admits train + development cohorts (`fd05f48`, `--allowed-cohort`; confirmation is refused at argument parsing). Development-cohort licences: 441/445 confirmed.
 
-### 11-17 05:40 UTC — corpus rebench-train-002 admitted; round 3 queued; adapter-003 rule pre-registered
+### 11-17 05:30 UTC — corpus rebench-train-002 admitted; round 3 queued; adapter-003 rule pre-registered
+(Timestamp corrected from 05:40: the entry was committed at ~05:30 UTC per `date -u`; `r3.sh`'s holdout justification cites it as "11-17 05:40".)
 - D4 round 2 complete: 204 histories → 185 tokenized (19 refused over the 32,768-token cap, no truncation) → screen 177 accepted / 8 rejected (copyleft, indeterminate licence, no shared source file) → **177 examples, 142 train + 35 development cohort, 99 repository groups**, 3,148,163 input / 1,119,886 supervised tokens, max input 32,763. Freeze gate `no_reserved_task_used`; two-layer verification passed; admitted (manifest `89c8e4c9…`, content `6715a0b0…`). Schedule `b35852be…`: **39 updates**, one epoch, seed 7402. Archive `runs/2026-11-17/corpus-rebench-train-002.tar` 35,635,200 B md5 `7b39a2b1…`, verified by HEAD.
 - Credential screen flagged 2 examples; both inspected (value masked): `getmoto__moto-6810` matches AWS's public documentation placeholder key (`AKIAIO…MPLE`), `slackapi__python-slack-sdk-908` matches `headers={'Authorization': aiohttp…auth` (code passing an aiohttp BasicAuth helper, no literal). Both false positives; kept.
 - Rollout pod logs `runs/2026-11-17/rollouts-dev1-pod-logs.tar` md5 `32e36f85…` verified by HEAD; **A100 pod `3ueoyvhxguqcpi` deleted** (404 confirmed; ≈ 2.5 h × $2.19 ≈ $5.5).
