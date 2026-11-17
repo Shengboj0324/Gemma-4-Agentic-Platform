@@ -339,3 +339,8 @@ Timeline (UTC; each date is a target, the gates decide):
 - 11-17 slot → **31B v2** (callplan_nograph) submitted 01:57 UTC, zip sha256 `49282ef9…` (matches recorded v2 digest; member digests agent.yaml 4f48dc18, sampling 5cbfd223, eval_config 404b197b, system.md 1fb83636). PENDING.
 - G5 (v2 vs v2+adapter-002, 129 official dev tasks, concurrency 3): started ~01:42; at 01:59 7/129 each (v2 0, v2lora 1); ~1 task/min → ETA ~06:00. Decision rule unchanged (pre-registered 11-16 23:40).
 - Round-2 dev pipeline: 38 repos processed, 15 packs shipped, 47 qualified tasks.
+
+### 11-17 02:55 UTC — dev cohort packs verified; round-2 rollouts started
+- D1/D2 (development cohort) complete: 112 repos → **58 packs, 135 qualified tasks**, 22,765,935,428 B. All 58 verified in R2 by HEAD (size + md5 ETag), 0 mismatches. Pod logs `runs/2026-11-17/rebench-packs-dev/pod-logs.tar` md5 d9daf505, verified by GET. CPU pod deleted.
+- D3 round 2 (rollouts-dev1): A100 SXM pod `3ueoyvhxguqcpi` ($2.19/h; total $4.88/h with the G5 pod), v2 at 20-min cap (v2r) over the 135 tasks, egress guard, archive → `runs/2026-11-17/rollouts-dev1.tar`. Started with v2 rather than waiting for G5 (≈3 h saved); the G5 decision still governs whether the next round's sampler and submission use the adapter.
+- Session interruption at ~02:45 (local Claude process restart only): pods unaffected; Kaggle poll re-armed.
