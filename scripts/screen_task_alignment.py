@@ -12,7 +12,8 @@ reject from measured facts only, and writes:
 Accept only if all hold:
   licence     the pool licence review outcome is `confirmed` (copyleft, mismatch, absent and
               indeterminate tasks are excluded)
-  cohort      the task is in the train cohort and not in the frozen confirmation cohort
+  cohort      the task is in an allowed cohort (--allowed-cohort, default `train`; round 2 adds
+              `development`); the frozen confirmation cohort is never allowed
   resolved    swegemma's verifier resolved the agent's own patch (hidden reference tests)
   no tests    the agent's patch edits no test file or test configuration
   located     the patch edits at least one non-test file that the reference patch edits
@@ -52,9 +53,15 @@ def patch_files(patch):
     return files
 
 
-def decide(facts):
+NEVER_ALLOWED = frozenset({'confirmation'})
+
+
+def decide(facts, allowed=('train',)):
+    if NEVER_ALLOWED & set(allowed):
+        raise ValueError(f'cohorts {sorted(NEVER_ALLOWED)} can never be used for training')
     checks = [('licence', facts['licence'] == 'confirmed', f"licence review outcome {facts['licence']}"),
-              ('cohort', facts['cohort'] == 'train', f"cohort {facts['cohort']}"),
+              ('cohort', facts['cohort'] in allowed and facts['cohort'] not in NEVER_ALLOWED,
+               f"cohort {facts['cohort']}"),
               ('resolved', facts['resolved'] is True, 'verifier did not resolve the patch'),
               ('no tests', not facts['agent_test_files'], f"edits test files {facts['agent_test_files']}"),
               ('located', bool(facts['shared_source_files']), 'no source file in common with the reference'),
@@ -71,7 +78,7 @@ def rationale(facts):
             f"{facts['agent_lines']} changed lines, none of them tests, and shares "
             f"{', '.join(facts['shared_source_files'])} with the reference patch "
             f"({facts['reference_lines']} changed lines). Licence {facts['licence']} by the pool review; "
-            f"train cohort. This accepts location and verified-behaviour alignment only, not universal "
+            f"{facts['cohort']} cohort. This accepts location and verified-behaviour alignment only, not universal "
             f"correctness or equivalence to the reference.")
 
 
@@ -83,9 +90,14 @@ def main():
     parser.add_argument('--observations', type=Path,
                         default=ROOT / 'evidence/data/pool-licence-review-001/observations.json')
     parser.add_argument('--cohorts', type=Path, default=ROOT / 'evidence/data/task-pool-v2-python-001/cohorts.json')
+    parser.add_argument('--allowed-cohort', action='append', default=None,
+                        help='cohort whose tasks may be accepted (repeatable; default train; never confirmation)')
     parser.add_argument('--candidate-prefix', default='', help='prefix of candidate_directory in selection rows')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    allowed = tuple(args.allowed_cohort or ('train',))
+    if NEVER_ALLOWED & set(allowed):
+        parser.error(f'cohorts {sorted(NEVER_ALLOWED)} can never be used for training')
     import pyarrow.parquet as pq
     observations = {o['instance_id']: o for o in json.loads(args.observations.read_text())}
     cohort_of = {}
@@ -115,7 +127,7 @@ def main():
                  'shared_source_files': sorted(f for f in agent if f in reference and not TEST_PATH.search(f)),
                  'tokenized': (directory / 'tokens.json').exists(),
                  'patch': file_record(patch_path) if patch_path and patch_path.exists() else None}
-        decision, reason = decide(facts)
+        decision, reason = decide(facts, allowed)
         group = observation.get('repository_group', iid.rsplit('-', 1)[0])
         screen.append({'task_id': iid, 'repository_group': group, 'decision': decision, 'reason': reason, **facts})
         if decision == 'accepted':

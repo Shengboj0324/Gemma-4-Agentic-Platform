@@ -40,6 +40,15 @@ class ScreenTests(unittest.TestCase):
                          {'agent_lines': 500}, {'tokenized': False}):
             self.assertEqual(decide(facts(**override))[0], 'rejected', override)
 
+    def test_development_cohort_only_when_allowed(self):
+        self.assertEqual(decide(facts(cohort='development'))[0], 'rejected')
+        self.assertEqual(decide(facts(cohort='development'), ('train', 'development')), ('accepted', None))
+        self.assertEqual(decide(facts(cohort='none'), ('train', 'development'))[0], 'rejected')
+
+    def test_confirmation_cohort_can_never_be_allowed(self):
+        with self.assertRaises(ValueError):
+            decide(facts(cohort='confirmation'), ('train', 'confirmation'))
+
 
 if __name__ == '__main__':
     unittest.main()
