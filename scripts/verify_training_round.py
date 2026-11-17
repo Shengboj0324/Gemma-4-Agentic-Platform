@@ -72,6 +72,7 @@ def main():
     parser.add_argument('--worker-json', type=Path, required=True)
     parser.add_argument('--schedule', type=Path, required=True)
     parser.add_argument('--export-dir', type=Path, required=True)
+    parser.add_argument('--expected-updates', type=int, help='scheduled updates (overrides reading the schedule)')
     parser.add_argument('--expected-rank', type=int, default=4)
     parser.add_argument('--expected-alpha', type=int, default=8)
     parser.add_argument('--output', type=Path, required=True)
@@ -80,7 +81,7 @@ def main():
     schedule = json.loads(args.schedule.read_text())
     session = worker.get('session', {})
     checkpoints = session.get('checkpoints', [])
-    scheduled = schedule.get('updates')
+    scheduled = args.expected_updates if args.expected_updates is not None else schedule.get('updates')
     if not isinstance(scheduled, int):
         scheduled = len(scheduled) if isinstance(scheduled, list) else schedule.get('completed_updates')
     verdict = {'checks': {}}
