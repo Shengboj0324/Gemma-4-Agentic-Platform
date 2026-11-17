@@ -50,6 +50,15 @@ class MaskThinkingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'supervised tool call'):
             mask_thinking(ids, unsup_call, **KW)
 
+    def test_inner_opener_inside_recorded_thinking_is_masked_with_its_block(self):
+        # the recorded thinking text itself contains '<|channel>thought\n' (seen in 2 of 177 trajectories)
+        ids = [13, 1, 10, 13, 1, 10, 11, 12, 2, 3, 14]
+        nested = []
+        out, blocks, masked, _ = mask_thinking(ids, supervised(ids, 1), nested=nested, **KW)
+        self.assertEqual((blocks, masked, nested), (1, 8, [1]))
+        self.assertEqual(out[1:9], [IGNORE] * 8)
+        self.assertEqual(out[9:], [3, 14])
+
     def test_length_mismatch(self):
         with self.assertRaises(ValueError):
             mask_thinking([1, 2], [1], **KW)

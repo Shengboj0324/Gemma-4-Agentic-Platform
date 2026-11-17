@@ -28,8 +28,15 @@ OPEN, CLOSE, CALL = '<|channel>', '<channel|>', '<|tool_call>'
 IGNORE = -100
 
 
-def mask_thinking(input_ids, labels, *, open_id, close_id, call_id, decode):
-    """Return (new_labels, blocks, masked_tokens, unsupervised_opens) or raise ValueError."""
+def mask_thinking(input_ids, labels, *, open_id, close_id, call_id, decode, nested=None):
+    """Return (new_labels, blocks, masked_tokens, unsupervised_opens) or raise ValueError.
+
+    A recorded thinking text can itself contain the literal `<|channel>` marker (seen in 2 of 177
+    rollout trajectories: a stray byte, then `<|channel>thought\\n`, inside the model's own
+    thinking). The template renders that text inside the block, so the block holds an inner
+    opener; it is still thinking text up to the block's single `<channel|>`, and is masked as part
+    of the block. Inner openers are counted in `nested` (a list) when given.
+    """
     if len(input_ids) != len(labels):
         raise ValueError('ids and labels differ in length')
     out = list(labels)
@@ -49,8 +56,11 @@ def mask_thinking(input_ids, labels, *, open_id, close_id, call_id, decode):
             j = input_ids.index(close_id, i + 1)
         except ValueError:
             raise ValueError(f'unclosed thinking block at {i}') from None
-        if open_id in input_ids[i + 1:j]:
+        inner = input_ids[i + 1:j].count(open_id)
+        if inner and nested is None:
             raise ValueError(f'nested {OPEN} in block at {i}')
+        if inner:
+            nested.append(inner)
         if any(labels[k] != input_ids[k] for k in range(i, j + 1)):
             raise ValueError(f'thinking block at {i} is not fully supervised')
         text = decode(input_ids[i:j + 1])
@@ -104,9 +114,10 @@ def main():
             raise ValueError('Corpus file changed: ' + record['example_id'])
         candidate = load_json(src_tokens)
         audit = load_json(src_audit)
+        nested = []
         labels, blocks, masked, unsupervised = mask_thinking(
             candidate['input_ids'], candidate['labels'], open_id=ids[OPEN], close_id=ids[CLOSE],
-            call_id=ids[CALL], decode=decode)
+            call_id=ids[CALL], decode=decode, nested=nested)
         if blocks == 0:
             raise ValueError('No thinking block in ' + record['example_id'])
         new = {**candidate, 'labels': labels}
@@ -129,6 +140,7 @@ def main():
                                       'source_labels_sha256': audit['labels_sha256'],
                                       'source_supervised_tokens': before,
                                       'thinking_blocks': blocks, 'masked_tokens': masked,
+                                      'blocks_with_inner_openers': len(nested),
                                       'unsupervised_channel_opens': unsupervised},
                   'scope': audit['scope'] + '; thinking blocks then removed from the labels (input ids unchanged)'}
         if report['input_sha256'] != hashlib.sha256(canonical_json(new['input_ids'])).hexdigest():
@@ -136,11 +148,12 @@ def main():
         (out / 'report.json').write_bytes(canonical_json(report))
         selection.append({k: record[k] for k in ('example_id', 'task_id', 'repository_group', 'leakage_group', 'split')}
                          | {'candidate_directory': key})
-        rows.append({'example_id': record['example_id'], 'blocks': blocks, 'masked': masked,
+        rows.append({'example_id': record['example_id'], 'blocks': blocks, 'masked': masked, 'inner_openers': len(nested),
                      'supervised_before': before, 'supervised_after': check['supervised_tokens']})
     (args.output / 'selection.json').write_bytes(canonical_json(selection))
     summary = {'examples': len(rows), 'thinking_blocks': sum(r['blocks'] for r in rows),
                'masked_tokens': sum(r['masked'] for r in rows),
+               'blocks_with_inner_openers': sum(r['inner_openers'] for r in rows),
                'supervised_before': sum(r['supervised_before'] for r in rows),
                'supervised_after': sum(r['supervised_after'] for r in rows),
                'source_corpus': file_record(corpus_json), 'source_summary': corpus.summary,
