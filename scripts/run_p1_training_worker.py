@@ -22,7 +22,16 @@ from zenithsync.training_pilot import qualify_adapter
 from zenithsync.gpu_memory import DeviceMemoryMonitor
 
 
-def require_volume(path, volume_root):
+EPHEMERAL_ACK = 'outputs-archived-off-pod'
+
+
+def require_volume(path, volume_root, *, allow_ephemeral=False):
+    """The path must lie on the filesystem mounted exactly at volume_root.
+
+    Ephemeral filesystems (overlay/tmpfs/ramfs) are refused unless allow_ephemeral: a caller
+    that archives every output off the pod straight after the session may accept losing an
+    interrupted session; the returned record then says so (`ephemeral_acknowledged`).
+    """
     root = volume_root.resolve(strict=True)
     resolved = path.resolve()
     if not resolved.is_relative_to(root):
@@ -37,7 +46,9 @@ def require_volume(path, volume_root):
     if len(mounts) != 1 or mounts[0]['target'] != str(root):
         raise ValueError('Path does not use the required mounted filesystem')
     if mounts[0]['fstype'] in ['overlay', 'tmpfs', 'ramfs']:
-        raise ValueError('Ephemeral filesystem rejected')
+        if not allow_ephemeral:
+            raise ValueError('Ephemeral filesystem rejected')
+        return {**mounts[0], 'ephemeral_acknowledged': EPHEMERAL_ACK}
     return mounts[0]
 
 

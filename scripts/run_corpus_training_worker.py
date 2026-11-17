@@ -15,7 +15,7 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.run_p1_training_worker import require_volume
+from scripts.run_p1_training_worker import EPHEMERAL_ACK, require_volume
 from zenithsync.artifacts import canonical_json, file_record, load_json, verify
 from zenithsync.corpus_run import preflight_corpus_run
 from zenithsync.quantized_layout import expected_projections
@@ -84,6 +84,9 @@ def parser():
     for name in ('manifest', 'corpus', 'schedule', 'config'):
         result.add_argument('--'+name+'-sha256', required=True)
     result.add_argument('--volume-root', type=Path, default=Path('/workspace'))
+    result.add_argument('--ephemeral-volume-ack', choices=[EPHEMERAL_ACK],
+                        help='Accept an ephemeral (overlay) volume root; only for runs that archive every '
+                             'output off the pod right after the session. Recorded in the mount records.')
     result.add_argument('--resume', type=Path)
     result.add_argument('--resume-sha256')
     result.add_argument('--resume-size', type=int)
@@ -106,7 +109,8 @@ def main():
         raise ValueError('Pinned Linux Python 3.12 runtime required')
     locations = {name: getattr(args, name) for name in ('model','manifest','corpus','schedule','config','output')}
     if args.resume is not None:locations['resume'] = args.resume
-    mounts = {name: require_volume(path, args.volume_root) for name, path in locations.items()}
+    mounts = {name: require_volume(path, args.volume_root, allow_ephemeral=args.ephemeral_volume_ack is not None)
+              for name, path in locations.items()}
     if file_record(args.manifest)['sha256'] != args.manifest_sha256:
         raise ValueError('Model manifest identity differs')
     manifest = load_json(args.manifest)

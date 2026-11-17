@@ -47,7 +47,7 @@ def main():
         start_cursor = payload['cursor']
         next(iter_updates(schedule,resume=start_cursor),None)
         del payload
-    require_volume(args.output,args.volume_root)
+    require_volume(args.output,args.volume_root,allow_ephemeral=args.ephemeral_volume_ack is not None)
     args.output.mkdir(parents=True,exist_ok=False)
     worker_output = args.output/'worker'
     command = [sys.executable,str(ROOT/'scripts/run_corpus_training_worker.py')]
