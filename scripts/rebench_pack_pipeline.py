@@ -91,6 +91,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--parquet', type=Path, required=True)
     parser.add_argument('--repos-file', type=Path, required=True, help='JSON list of owner/name, in order')
+    parser.add_argument('--cohort', choices=('train', 'development'), default='train')
     parser.add_argument('--uploads', type=Path, required=True, help='JSON {slug: presigned PUT url}')
     parser.add_argument('--submission', type=Path, required=True)
     parser.add_argument('--sandbox-dir', type=Path, required=True, help='<devset>/sandbox')
@@ -123,7 +124,8 @@ def main():
         log(phase='build', batch=start // args.batch, repos=len(batch))
         only = [x for r in batch for x in ('--only-repo', r)]
         procs = [subprocess.Popen([args.build_python, str(ROOT / 'scripts' / 'build_rebench_tasks.py'),
-                                   '--parquet', str(args.parquet), *only, '--shard', f'{k}/{args.build_procs}',
+                                   '--parquet', str(args.parquet), '--cohort', args.cohort, *only,
+                                   '--shard', f'{k}/{args.build_procs}',
                                    '--python', '/usr/bin/python3', '--output', str(packs_root)],
                                   stdout=open(args.output / f'build-{start}-{k}.log', 'w'), stderr=subprocess.STDOUT)
                  for k in range(args.build_procs)]
