@@ -36,14 +36,17 @@ PROMPTS = [
 
 def chat(base_url, model, prompt, max_tokens):
     import requests
-    body = {'model': model, 'messages': prompt['messages'], 'temperature': 0.0, 'max_tokens': max_tokens}
+    body = {'model': model, 'messages': prompt['messages'], 'temperature': 0.0, 'max_tokens': max_tokens,
+            'logprobs': True, 'top_logprobs': 1}
     if prompt['tools']:
         body['tools'] = prompt['tools']
     started = time.monotonic()
     response = requests.post(base_url.rstrip('/') + '/chat/completions', json=body, timeout=600)
     response.raise_for_status()
-    message = response.json()['choices'][0]['message']
-    return {'seconds': time.monotonic() - started, 'content': message.get('content'),
+    choice = response.json()['choices'][0]
+    message = choice['message']
+    logprobs = [round(item['logprob'], 6) for item in ((choice.get('logprobs') or {}).get('content') or [])]
+    return {'seconds': time.monotonic() - started, 'content': message.get('content'), 'logprobs': logprobs,
             'reasoning': message.get('reasoning_content') or message.get('reasoning'),
             'tool_calls': [{'name': c['function']['name'], 'arguments': c['function']['arguments']}
                            for c in message.get('tool_calls') or []]}
@@ -93,6 +96,8 @@ def main():
             results[prompt['name']] = {'base': chat(server.base_url, str(args.model), prompt, args.max_tokens),
                                        'adapter': chat(server.base_url, adapter, prompt, args.max_tokens)}
         receipt['results'] = results
+        # Greedy text can coincide on easy prompts even when the adapter is applied (11-17: identical
+        # text, logprob deltas up to 0.93 on agent prompts). Token logprobs are the applied-or-not signal.
         differs = {name: r['base'] != {**r['adapter'], 'seconds': r['base']['seconds']}
                    for name, r in results.items()}
         receipt['adapter_changes_output'] = differs
