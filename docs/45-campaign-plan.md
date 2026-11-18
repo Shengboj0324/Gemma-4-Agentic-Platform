@@ -535,3 +535,41 @@ Timeline (UTC; each date is a target, the gates decide):
 - **Round 11 result (lora-eval-11, 129 + 129 rows, 0 infrastructure errors, behaviour gate passed 0.0 % / 2.9 %):** v2 **34**, v6 **35** (v6-only 5, v2-only 4, net +1); budget-exhausted-without-patch 6 vs 7; time 0.971× (36,167 vs 37,253 s); **path traversal 90 → 0**; edit/write calls 795 vs 769 (mandatory-missing 77 vs 132). Non-inferiority rule: (1) 35 ≥ 34 pass; (2) 7 ≤ 9 pass; (3) the automated marker flags one v6 patch (`requests_6757` adds `test_change.txt`, a scratch text file at the repository root, not a test file; task unresolved in both arms) → judged not a test-file edit on manual inspection, recorded as a flag; (4) 0.971 ≤ 1.05 pass; (5) 0 ≤ 10 pass. **v6 is non-inferior and replaces v2 as the base configuration** (no detectable gain; removes 90 refused calls per run). Side effect to watch: scratch files now land in /workspace and enter the patch (scorer strips test-like paths). Archive `runs/2026-11-18/lora-eval-11.tar` 41,912,320 B md5 `ad3df8fd…`, HEAD-verified; pod `1rrxuyxnjl3lz7` deleted. v2 run 12 = 34.
 - Submission for the 11-19 slot (if the 11-18 v2 submission has finished scoring): **v6** (pre-built package `nb-v6`, zip `0b0102ee…`), as a non-inferior replacement of v2.
 - 20:00 v6 notebook pushed (`michealjiang/zenithsync24-agent-v6` v1, private, no GPU/internet); Kaggle output zip sha256 `0b0102ee…` = local build. Scheduled submission (scratchpad `submit_v6.sh`): from 00:00:30 UTC 11-19, submit v6 once when no submission is pending and none exists for 11-19; otherwise retry every 5 min until 23:00.
+
+### 11-18 20:15 UTC — local grader fidelity fix, pending pod validation
+- **Diagnosis** (official `docker/Dockerfile.sandbox`, `sandbox/setup.py`, swegemma 0.2.10 `container_setup.py` / `sandbox/subprocess.py`):
+  - **Scorer imports.** Per sandbox the scorer runs `pip install --no-index --no-build-isolation --no-deps -e /workspace` twice (`install_editable_package`, then again inside `setup.py`), streams the deduplicated wheels into site-packages, and has `setup.py --fast-path` write `workspace_paths.pth` (= `/workspace` + every non-hidden top-level directory, `src/` included). So the workspace copy of the task package is the one imported. Our subprocess sandbox skips all three (both functions return early for `SubprocessManager`). It sets only `PYTHONPATH=<workspace>` and lists the host site-packages (evaluator venv first, test site last) in `_host_env.pth`. Root-layout repos (fastapi, rich) still import from the workspace. **`src/` layouts (requests, and httpx_3672) do not:** the evaluator venv's `requests` 2.34.2 (and the test site's copy of it) wins. Gold patches were invisible and empty patches could pass.
+  - **Pygments.** No Dockerfile pins it. The image gets it only through `pip install typer` (typer → rich → pygments, unpinned; current typer also pulls pydantic and therefore typing-inspection), then the harness overwrites it with the highest wheel, **2.21.0**. The devset also ships 2.20.0. Our sandboxes import the evaluator venv's 2.21.0 (same version). Measured on the PyPI wheels: 2.21.0 recoloured monokai `Name.Builtin` `#f8f8f2` → `#a6e22e` (rich_4079 expects `248;248;242` on `print`). 2.19.0 began emitting `Token.Text.Whitespace` instead of `Token.Text` for spaces in Python code (the `0;0;0` vs `187;187;187` drift in rich_3064/3130/3469). No single version satisfies every rich task. Each passes with the release current when its tests were written.
+  - **Test deps.** inline_snapshot (plus asttokens and executing) and dirty_equals are in neither the Dockerfiles nor the 124 wheels. typing_inspection is not in the wheels either, but the evaluator venv already provides 0.4.4 (a pydantic 2.14 dependency).
+- **Fix** (opt-in, local harness only; agent configuration, official wheels and harness code unchanged):
+  - `scripts/build_test_site.py --fidelity-lock requirements/test-site-fidelity.json --fidelity-wheels DIR` installs 19 sha256-pinned PyPI wheels, each into `_fidelity/<name>-<version>`. It also installs `zenithsync/test_site_shim.py` as `apport_python_hook.py`, which Ubuntu's sitecustomize runs at every sandbox interpreter start; the build refuses an interpreter where it would not run.
+  - Inside sandboxes only, the shim puts `<workspace>/src` right after the workspace (the editable-install equivalent) and appends the `workspace_paths.pth` directories.
+  - It also activates the pins ahead of every site-packages. Pygments for every workspace is the minor series current at the base commit's committer date (parent of `_swegemma_baseline`): 2.15.1 / 2.16.1 / 2.17.2 / 2.18.0 / 2.19.2 / 2.20.0 / 2.21.0. For fastapi workspaces only: inline-snapshot by date (0.29.4 … 0.34.2), dirty-equals by date (0.9.0 / 0.10.0 / 0.11), asttokens 3.0.1, executing 2.2.1 and typing-inspection 0.4.4. Restricting these to fastapi keeps inline_snapshot's pytest plugin (which imports rich) away from rich workspaces.
+  - Host-process order stays `append`. starlette and pydantic still come from the evaluator venv, a known remaining deviation.
+  - The agent sandbox (container A) sees the same imports, as on the scorer. Results on the fixed site are therefore **not paired with earlier runs**; v6 needs a new baseline on it.
+  - Not fixed: the `httpbin` fixture (pytest-httpbin is absent everywhere). requests tasks graded on `tests/test_requests.py` (9 of 13) stay gold-failing until it is added.
+- **Pod validation: gold-vs-empty census on all 129 tasks, before any gate uses the site.** `qualify_verifier.py` gained `--all-tasks` and `--compare FIXED CONTROL`. Run on the next eval pod after its `[venv]` and test-site steps, with the network still open for the downloads. `$D $E $PY $AS $RUNS` and the pytest-timeout wheel are as in the round scripts; `--submission` is any candidate directory (only its budget is read). No model or GPU is used.
+  ```sh
+  F=$D/fidelity-wheels; mkdir -p $F
+  $PY scripts/build_test_site.py --fidelity-requirements requirements/test-site-fidelity.json > $F.txt
+  while read REQ; do $PY -m pip download -q --no-deps --only-binary=:all: -d $F "$REQ"; done < $F.txt
+  [ "$(ls $F/*.whl | wc -l)" = 19 ] || { echo FIDELITY_DOWNLOAD_FAILED; exit 1; }
+  $PY scripts/build_test_site.py --wheels $E/devset/wheels --docker-dir $E/devset/docker \
+    --extra-wheel pytest_timeout=f6f50101443ce70ad325ceb4473c4255e9d74e3c7cd0ef827309dfa4c0d975c6=$D/extra-wheels/pytest_timeout-2.1.0-py3-none-any.whl \
+    --fidelity-lock requirements/test-site-fidelity.json --fidelity-wheels $F --output /opt/eval-tools-fid/site-packages
+  chmod -R a-w,a+rX /opt/eval-tools-fid
+  . /workspace/prep.sh   # egress guard + evaluator user
+  for S in fid:/opt/eval-tools-fid ctl:/opt/eval-tools; do
+    $AS $PY scripts/qualify_verifier.py --isolation egress-guard --tasks $E/devset/tasks.jsonl --data-root $E/devset \
+      --submission $E/cands/v6 --test-site ${S#*:}/site-packages --test-site-order append --concurrency 8 \
+      --all-tasks --output $RUNS/census-${S%%:*}
+  done
+  $PY scripts/qualify_verifier.py --compare $RUNS/census-fid/receipt.json $RUNS/census-ctl/receipt.json | tee $RUNS/census-compare.json
+  ```
+- **Acceptance (written before the census):**
+  1. No task valid on the control site (gold passes, empty fails) becomes invalid on the fixed site; otherwise the shim's tail paths or pins are wrong.
+  2. requests_7309 and requests_7315 no longer pass with the empty patch, and no requests task does.
+  3. At least 15 of the 19 inline_snapshot/dirty_equals fastapi tasks pass with gold.
+  4. rich_3130 and rich_4079 pass with gold.
+
+  If all four hold, the gate universe becomes the fixed site's valid set (recorded with the census receipt sha256). If not, report and keep the control site. Archive both census directories to R2, verify, and delete the pod as usual.
