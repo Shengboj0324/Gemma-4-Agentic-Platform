@@ -1,0 +1,155 @@
+{
+ "description": "Test-site fidelity pins (scripts/build_test_site.py --fidelity-lock; selected per sandbox by zenithsync/test_site_shim.py). Per group (* = every workspace, else a top-level package the workspace provides) and distribution, the entry whose `from` date is the latest on or before the committer date of the task base commit applies (the first entry for earlier dates). `from` is the first release date of that minor series; the pinned version is its last patch release. Sources: PyPI JSON (filename, sha256, size). Pygments: 2.19 changed Python whitespace tokens (Text -> Text.Whitespace) and 2.21 recoloured monokai Name.Builtin (#f8f8f2 -> #a6e22e); rich tests pin the ANSI output of the release current when they were written. The fastapi group supplies the test-only imports absent from the official wheels and image (inline_snapshot with asttokens and executing, dirty_equals) and typing_inspection at the evaluator venv version.",
+ "groups": {
+  "*": {
+   "pygments": [
+    {
+     "from": "2023-04-10",
+     "sha256": "db2db3deb4b4179f399a09054b023b6a586b76499d36965813c71aa8ed7b5fd1",
+     "size_bytes": 1146422,
+     "version": "2.15.1",
+     "wheel": "Pygments-2.15.1-py3-none-any.whl"
+    },
+    {
+     "from": "2023-08-06",
+     "sha256": "13fc09fa63bc8d8671a6d247e1eb303c4b343eaee81d861f3404db2935653692",
+     "size_bytes": 1164750,
+     "version": "2.16.1",
+     "wheel": "Pygments-2.16.1-py3-none-any.whl"
+    },
+    {
+     "from": "2023-11-18",
+     "sha256": "b27c2826c47d0f3219f29554824c30c5e8945175d888647acd804ddd04af846c",
+     "size_bytes": 1179756,
+     "version": "2.17.2",
+     "wheel": "pygments-2.17.2-py3-none-any.whl"
+    },
+    {
+     "from": "2024-05-04",
+     "sha256": "b8e6aca0523f3ab76fee51799c488e38782ac06eafcf95e7ba832985c8e7b13a",
+     "size_bytes": 1205513,
+     "version": "2.18.0",
+     "wheel": "pygments-2.18.0-py3-none-any.whl"
+    },
+    {
+     "from": "2025-01-05",
+     "sha256": "86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b",
+     "size_bytes": 1225217,
+     "version": "2.19.2",
+     "wheel": "pygments-2.19.2-py3-none-any.whl"
+    },
+    {
+     "from": "2026-03-29",
+     "sha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
+     "size_bytes": 1231151,
+     "version": "2.20.0",
+     "wheel": "pygments-2.20.0-py3-none-any.whl"
+    },
+    {
+     "from": "2026-08-17",
+     "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+     "size_bytes": 1250147,
+     "version": "2.21.0",
+     "wheel": "pygments-2.21.0-py3-none-any.whl"
+    }
+   ]
+  },
+  "fastapi": {
+   "asttokens": [
+    {
+     "from": "2025-11-15",
+     "sha256": "15a3ebc0f43c2d0a50eeafea25e19046c68398e487b9f1f5b517f7c0f40f976a",
+     "size_bytes": 27047,
+     "version": "3.0.1",
+     "wheel": "asttokens-3.0.1-py3-none-any.whl"
+    }
+   ],
+   "dirty-equals": [
+    {
+     "from": "2025-01-11",
+     "sha256": "ff4d027f5cfa1b69573af00f7ba9043ea652dbdce3fe5cbe828e478c7346db9c",
+     "size_bytes": 28226,
+     "version": "0.9.0",
+     "wheel": "dirty_equals-0.9.0-py3-none-any.whl"
+    },
+    {
+     "from": "2025-09-19",
+     "sha256": "bbf4a4eaafd56e371dafe2edf2265315ebd71a441b142ed801511aa33e4c3438",
+     "size_bytes": 28014,
+     "version": "0.10.0",
+     "wheel": "dirty_equals-0.10.0-py3-none-any.whl"
+    },
+    {
+     "from": "2025-11-17",
+     "sha256": "b1d7093273fc2f9be12f443a8ead954ef6daaf6746fd42ef3a5616433ee85286",
+     "size_bytes": 28051,
+     "version": "0.11",
+     "wheel": "dirty_equals-0.11-py3-none-any.whl"
+    }
+   ],
+   "executing": [
+    {
+     "from": "2025-09-01",
+     "sha256": "760643d3452b4d777d295bb167ccc74c64a81df23fb5e08eff250c425a4b2017",
+     "size_bytes": 28317,
+     "version": "2.2.1",
+     "wheel": "executing-2.2.1-py2.py3-none-any.whl"
+    }
+   ],
+   "inline-snapshot": [
+    {
+     "from": "2025-09-15",
+     "sha256": "310bc09d0ec226c00e003ec3a91592e44aa12d3c187af1a29e5a76843c59191e",
+     "size_bytes": 71096,
+     "version": "0.29.4",
+     "wheel": "inline_snapshot-0.29.4-py3-none-any.whl"
+    },
+    {
+     "from": "2025-10-15",
+     "sha256": "4e65fe9d6d266d5dcbab9a75aef65ade386ba257238e30e11ce4cebf9a4312c8",
+     "size_bytes": 71265,
+     "version": "0.30.1",
+     "wheel": "inline_snapshot-0.30.1-py3-none-any.whl"
+    },
+    {
+     "from": "2025-10-27",
+     "sha256": "7875a73c986a03388c7e758fb5cb8a43d2c3a20328aa1d851bfb4ed536c4496f",
+     "size_bytes": 71965,
+     "version": "0.31.1",
+     "wheel": "inline_snapshot-0.31.1-py3-none-any.whl"
+    },
+    {
+     "from": "2026-02-13",
+     "sha256": "6ea0e211daf9192aeb91ab82ba90e5bb628414696c9a5d3bc4db1c5ba459c4c6",
+     "size_bytes": 85439,
+     "version": "0.32.7",
+     "wheel": "inline_snapshot-0.32.7-py3-none-any.whl"
+    },
+    {
+     "from": "2026-05-12",
+     "sha256": "76b8c2c5899d27d3d464d1160eb3b8eee179ba635bb80a8e5e93220f10b60207",
+     "size_bytes": 89625,
+     "version": "0.33.0",
+     "wheel": "inline_snapshot-0.33.0-py3-none-any.whl"
+    },
+    {
+     "from": "2026-05-29",
+     "sha256": "743a514a08ffd0d2d62878b0208d4def5041585affa7db6b89f0ca2e23552361",
+     "size_bytes": 90717,
+     "version": "0.34.2",
+     "wheel": "inline_snapshot-0.34.2-py3-none-any.whl"
+    }
+   ],
+   "typing-inspection": [
+    {
+     "from": "2025-08-12",
+     "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+     "size_bytes": 14750,
+     "version": "0.4.4",
+     "wheel": "typing_inspection-0.4.4-py3-none-any.whl"
+    }
+   ]
+  }
+ },
+ "schema_version": 1
+}

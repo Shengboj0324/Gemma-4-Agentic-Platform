@@ -9,6 +9,7 @@ have caught it. No model is involved. Writes receipt.json and both result trees.
 """
 import argparse
 import asyncio
+from collections import Counter
 from datetime import datetime, timezone
 import json
 import os
@@ -56,18 +57,52 @@ def summarise(results_dir):
                            for r in rows if not r['resolved']}}
 
 
+def census(receipt):
+    """Tasks the environment can grade: the gold patch resolves and the empty patch does not."""
+    return set(receipt['gold']['resolved']) - set(receipt['empty']['resolved'])
+
+
+def compare_census(fixed, control):
+    """Two census receipts over the same tasks (e.g. a changed test site against the current one)."""
+    if sorted(fixed['tasks']) != sorted(control['tasks']):
+        raise ValueError('The two census receipts cover different tasks')
+    valid = {'fixed': census(fixed), 'control': census(control)}
+    by_repo = {name: dict(sorted(Counter(t.rsplit('_', 1)[0] for t in ids).items()))
+               for name, ids in valid.items()}
+    return {'gold_resolved': {'fixed': fixed['gold_resolved'], 'control': control['gold_resolved']},
+            'empty_resolved': {'fixed': sorted(fixed['empty']['resolved']),
+                               'control': sorted(control['empty']['resolved'])},
+            'valid': {name: len(ids) for name, ids in valid.items()}, 'valid_by_repo': by_repo,
+            'newly_valid': sorted(valid['fixed'] - valid['control']),
+            'regressed': sorted(valid['control'] - valid['fixed'])}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--tasks', type=Path, required=True)
-    parser.add_argument('--data-root', type=Path, required=True)
-    parser.add_argument('--submission', type=Path, required=True)
-    parser.add_argument('--task-id', action='append', required=True)
+    parser.add_argument('--compare', nargs=2, type=Path, metavar=('FIXED', 'CONTROL'),
+                        help='print the comparison of two census receipt.json files and exit')
+    parser.add_argument('--tasks', type=Path)
+    parser.add_argument('--data-root', type=Path)
+    parser.add_argument('--submission', type=Path)
+    parser.add_argument('--task-id', action='append', default=[])
+    parser.add_argument('--all-tasks', action='store_true', help='every task in --tasks')
     parser.add_argument('--concurrency', type=int, default=8)
     parser.add_argument('--test-site', type=Path)
     parser.add_argument('--test-site-order', choices=('append', 'prepend'), default='append')
-    parser.add_argument('--isolation', choices=netns.MODES, required=True)
-    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--isolation', choices=netns.MODES)
+    parser.add_argument('--output', type=Path)
     args = parser.parse_args()
+    if args.compare:
+        fixed, control = (json.loads(p.read_text()) for p in args.compare)
+        print(json.dumps(compare_census(fixed, control), indent=1))
+        return
+    for name in ('tasks', 'data_root', 'submission', 'isolation', 'output'):
+        if getattr(args, name) is None:
+            parser.error('--' + name.replace('_', '-') + ' is required')
+    if args.all_tasks:
+        args.task_id = [json.loads(line)['instance_id'] for line in args.tasks.read_text().splitlines() if line.strip()]
+    if not args.task_id:
+        parser.error('--task-id or --all-tasks required')
     if args.output.exists():
         raise FileExistsError(args.output)
     os.environ.update(KAGGLE_SANDBOX_DIR=str(args.data_root / 'sandbox'), LITELLM_LOCAL_MODEL_COST_MAP='True')
