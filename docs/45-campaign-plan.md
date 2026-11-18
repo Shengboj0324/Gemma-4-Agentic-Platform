@@ -493,5 +493,5 @@ Timeline (UTC; each date is a target, the gates decide):
 
 ### 11-18 13:42 UTC — round 9 rejected (v4: same resolved, more budget-exhausted runs); v2 stays
 - **lora-eval-8** (v2 vs v4, 129 + 129 rows, 0 infrastructure errors, behaviour gate passed 0.0% / 3.4%): v2 **34**, v4 **34**; v4-only 4, v2-only 4; **budget-exhausted-without-patch 15 vs 8**; total time 35,854 s vs 34,850 s (1.029×), projected sequential 10.7 h vs 10.3 h; path-traversal failures **16 vs 85** (mechanism worked). Non-inferiority rule: (1) 34 ≥ 34 pass; (2) +7 > 3 → **fail**; (3) pass; (4) 1.029 ≤ 1.05 pass; (5) pass. **v4 rejected; v2 stays the submission configuration.**
-- Pattern across v3 and v4: any added instruction cut edit calls (v3 369, v4 427, v2 762–813) and raised runs that end without a patch (25, 15 vs 8). v2's resolve rate on identical bytes across six runs: 33, 33, 30, 31, 33, 36, 34 (mean 32.9).
+- Pattern across v3 and v4: any added instruction cut edit calls (v3 369, v4 427, v2 762–813) and raised runs that end without a patch (25, 15 vs 8). v2's resolve rate on identical bytes across seven runs: 33, 33, 30, 31, 33, 36, 34 (mean 32.9).
 - Archive `runs/2026-11-18/lora-eval-8.tar` 39,649,280 B md5 `24b47745…`, verified by HEAD. RTX pod `kfeyg2qma67eei` to be deleted now (≈ 11.8 h × $2.69 ≈ $32).
